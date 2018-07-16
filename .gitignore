@@ -1,0 +1,7 @@
+#Intellij IDEA specific
+.idea
+*.iml
+target/
+
+#NPM specific
+node_modules/
