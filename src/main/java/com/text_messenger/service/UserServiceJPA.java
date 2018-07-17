@@ -4,10 +4,10 @@ import com.text_messenger.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class UserServiceJPA implements UserSerivce {
 
-  @Autowired
+  //@Autowired
   private UserRepository userRepository;
 
 
