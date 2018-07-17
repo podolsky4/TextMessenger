@@ -290,5 +290,11 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+#VS CODE
+.vscode/
+text-messenger-client/.vscode/
+
+node_modules/
+text-messenger-client/node_modules/
 # Windows shortcuts
 *.lnk
