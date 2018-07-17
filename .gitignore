@@ -3,6 +3,10 @@
 *.iml
 target/
 
+#VS CODE
+.vscode/
+text-messenger-client/.vscode/
+
 #NPM specific
 node_modules/
-front-end/node_modules/
+text-messenger-client/node_modules/
