@@ -3,9 +3,9 @@ import ReactSignupLoginComponent from 'react-signup-login-component';
 import css from '../styles/main.css';
 
 
-    
-    
-  
+
+
+
  
 const LoginPage = (props) => {
         
