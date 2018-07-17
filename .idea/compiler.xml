@@ -20,11 +20,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="text_messenger" />
         <module name="TextMessendger" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="TextMessendger" target="1.8" />
+      <module name="text_messenger" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
