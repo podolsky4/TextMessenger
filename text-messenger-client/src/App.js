@@ -1,33 +1,52 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import LoginPage from './Components/Login';// Import a component from another file
-import './styles/main.css'; // Tell Webpack that App.js uses these styles
-import classnames from 'classnames';
+import React, {Component} from "react";
+import {Link} from "react-router-dom";
 
+import "./App.css";
+import Routes from "./Routes";
+import Header from "./Components/Header";
 
+import {Nav, Navbar, NavItem} from "react-bootstrap";
+import {LinkContainer} from "react-router-bootstrap";
 
+const e = React.createElement;
 
 class App extends Component {
-  render() {
-    const loginform = React.createElement('LoginPage', {className: "loginPage"}, LoginPage);
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-
-        <div className={classnames('loginPage', this.props.styleName)}>
-        <LoginPage></LoginPage>
-        </div>
-
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="App container">
+                <Navbar  fluid collapseOnSelect>
+                    <Header></Header>
+                    <Navbar.Header>
+                        <Navbar.Brand>
+                            <Link to="/">texx</Link>
+                        </Navbar.Brand>
+                        <Navbar.Toggle />
+                    </Navbar.Header>
+                    <Navbar.Collapse>
+                        <Nav pullRight>
+                            <LinkContainer to="/signup">
+                                <NavItem>Signup</NavItem>
+                            </LinkContainer>
+                            <LinkContainer to="/login">
+                                <NavItem>Login</NavItem>
+                            </LinkContainer>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+                <Routes />
+            </div>
+        );
+    }
 }
 
+
+
+
+
 export default App;
+
+
+
+
+
+
