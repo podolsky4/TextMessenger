@@ -298,3 +298,4 @@ node_modules/
 text-messenger-client/node_modules/
 # Windows shortcuts
 *.lnk
+/text_messenger.iml

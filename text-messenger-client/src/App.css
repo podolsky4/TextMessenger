@@ -3,8 +3,10 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
+  animation: App-logo-move infinite 6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
   height: 80px;
+  position: relative;
 }
 
 .menu {
@@ -29,7 +31,18 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes App-logo-move {
+  0% { left: 0; }
+  25% { left: 60px; }
+  75% { left: -60px; }
+  100% { left: 0px; }
+}
+
+
+.App {
+  margin-top: 15px;
+}
+
+.App .navbar-brand {
+  font-weight: bold;
 }
