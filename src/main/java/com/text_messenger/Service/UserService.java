@@ -1,4 +1,4 @@
-package com.text_messenger.Service;
+package com.text_messenger.service;
 
 public class UserService {
 }
