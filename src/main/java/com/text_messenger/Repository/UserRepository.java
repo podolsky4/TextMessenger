@@ -1,4 +1,4 @@
-package com.text_messenger.Repository;
+package com.text_messenger.repository;
 
 public class UserRepository {
 }
