@@ -1,4 +1,4 @@
-package com.text_messenger.onctroller;
+package com.text_messenger.controller;
 
 public class UserController {
 }
