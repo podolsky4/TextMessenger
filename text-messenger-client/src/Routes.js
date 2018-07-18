@@ -1,7 +1,7 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import Home from "./Containers/Home/Home.js";
-import Login from "./Components/Login/Login2.js";
+import Login from "./Containers/Login/Login.js";
 import p404 from "./Containers/404/404";
 
 export default () =>

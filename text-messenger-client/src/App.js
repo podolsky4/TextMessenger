@@ -14,11 +14,11 @@ class App extends Component {
     render() {
         return (
             <div className="App container">
-                <Navbar fluid collapseOnSelect>
+                <Navbar  fluid collapseOnSelect>
                     <Header></Header>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <Link to="/">Scratch</Link>
+                            <Link to="/">texx</Link>
                         </Navbar.Brand>
                         <Navbar.Toggle />
                     </Navbar.Header>

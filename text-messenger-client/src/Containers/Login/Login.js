@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import {Button, ControlLabel, FormControl, FormGroup} from "react-bootstrap";
-// import './Login.css';
+// import "./Login.css";
 
 export default class Login extends Component {
-
     constructor(props) {
         super(props);
 
@@ -13,22 +12,20 @@ export default class Login extends Component {
         };
     }
 
-    validateForm = ()    => this.state.email.length > 0 && this.state.password.length > 0;
+    validateForm = () => this.state.email.length > 0 && this.state.password.length > 0;
 
-    handleChange = event => this.setState({[event.target.id]: event.target.value}) && console.log(event.target.id);
+    handleChange = event => this.setState({
+            [event.target.id]: event.target.value
+        });
+
 
     handleSubmit = event => event.preventDefault();
-
 
     render() {
         return (
             <div className="Login">
-
                 <form onSubmit={this.handleSubmit}>
-
-                    <FormGroup controlId="email"
-                               // bsSize="large"
-                        >
+                    <FormGroup controlId="email" bsSize="large">
                         <ControlLabel>Email</ControlLabel>
                         <FormControl
                             autoFocus
@@ -37,10 +34,7 @@ export default class Login extends Component {
                             onChange={this.handleChange}
                         />
                     </FormGroup>
-
-                    <FormGroup controlId="password"
-                               // bsSize="large"
-                        >
+                    <FormGroup controlId="password" bsSize="large">
                         <ControlLabel>Password</ControlLabel>
                         <FormControl
                             value={this.state.password}
@@ -48,7 +42,6 @@ export default class Login extends Component {
                             type="password"
                         />
                     </FormGroup>
-
                     <Button
                         block
                         bsSize="large"
@@ -57,9 +50,7 @@ export default class Login extends Component {
                     >
                         Login
                     </Button>
-
                 </form>
-
             </div>
         );
     }
