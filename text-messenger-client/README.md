@@ -1,7 +1,7 @@
-cd _text-messenger-client_
-
-**to install**
+**cd** _text-messenger-client_  
+  
+**to install**  
 `yarn`
-
-**to start**
+  
+**to start**  
 `yarn start` 
