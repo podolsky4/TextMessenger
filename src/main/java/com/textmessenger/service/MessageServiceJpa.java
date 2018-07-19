@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MessageServiceJpa implements MessageService {
 
-  private MessageRepository messageRepository;
+  private final MessageRepository messageRepository;
 
   public MessageServiceJpa(MessageRepository messageRepository) {
     this.messageRepository = messageRepository;
