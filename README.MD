@@ -1,14 +1,15 @@
-[![Build Status](https://travis-ci.org/podolsky4/TextMessenger.svg?branch=master)](https://travis-ci.org/podolsky4/TextMessenger)</br>
-Финальный проект - <b>TextMessenger</b> проект предполагает создание приложения с использованием всех знаний, которые вы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS.
+## Text Messenger
 
-1. Куратор проекта:
-  * Andrew Koziulia,
-  * Alexey Rykhalskiy	
-2. Участники проекта:
-  * Игорь Фандорин,
-  * fs1.ivan.d
+[![Build Status](https://travis-ci.org/podolsky4/TextMessenger.svg?branch=master)](https://travis-ci.org/podolsky4/TextMessenger)</br>
+<b>TextMessenger</b> проект предполагает создание приложения с использованием всех знаний, которые вы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS.
+
+### Contributors
+  * Andrew Koziulia - mentor	
+  * Igor Fandorin
+  * Ivan Durmanenko
   * full.iron
-  * IgorRudenko
+  * Igor Rudenko
   * Kostyantyn Matlayev
   * Yuri Podolsky
  
+##### <i>Copyright &copy 2018. DAN.IT Education. All rights reserved</i>
