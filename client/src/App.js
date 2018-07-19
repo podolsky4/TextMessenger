@@ -1,24 +1,18 @@
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import './App.css'
+import Router from './Components/Router'
 
 class App extends Component {
   render () {
-    let Home = () => <div>Hello React!</div>
-    let HelloRouter = () => <div>Hello React-Router!</div>
-    return (
-      <div className='App'>
-        with sass-compiler, ESLint
-        <h1>React Router</h1>
-        <Link to='/'>Home</Link>&nbsp;
-        <Link to='/hello'>Test Router</Link>
-        <hr/>
-        <Switch>
-          <Route exact path='/' render={Home}/>
-          <Route exact path='/hello' render={HelloRouter}/>
-        </Switch>
-      </div>
-    )
+    return (<div className='App'>
+      with sass-compiler, ESLint
+      <h1>React Router</h1>
+      <Link to='/'>Home</Link>&nbsp;
+      <Link to='/hello'>Test Router</Link>
+      <hr/>
+      <Router/>
+    </div>)
   }
 }
 
