@@ -15,10 +15,10 @@ public class Message {
   @Id
   private long id;
 
-  @Column(name = "fromUser")
+  @Column(name = "from_user")
   private User from;
 
-  @Column(name = "toUser")
+  @Column(name = "to_user")
   private User to;
 
   @Column(name = "message")
