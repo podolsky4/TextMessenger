@@ -2,6 +2,7 @@ package com.textmessenger.service;
 
 import com.textmessenger.model.User;
 import com.textmessenger.repository.UserRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceJpa implements UserService {
 
-  final UserRepository userRepository;
+  private UserRepository userRepository;
 
   public UserServiceJpa(UserRepository userRepository) {
     this.userRepository = userRepository;
