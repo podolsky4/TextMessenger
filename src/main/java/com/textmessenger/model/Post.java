@@ -1,5 +1,5 @@
 package com.textmessenger.model;
-
+import lombok.Data;
 
 public @Data class Post {
   int id;
