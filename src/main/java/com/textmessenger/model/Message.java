@@ -4,8 +4,11 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "messages")
@@ -13,6 +16,8 @@ import javax.persistence.Table;
 public class Message {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "message_id")
   private long id;
 
   @Column(name = "from_user")
@@ -23,4 +28,7 @@ public class Message {
 
   @Column(name = "message")
   private String message;
+
+  @Column(name = "created_date")
+  private Date date;
 }
