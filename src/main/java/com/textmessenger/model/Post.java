@@ -1,7 +1,9 @@
 package com.textmessenger.model;
+
 import lombok.Data;
 
-public @Data class Post {
+@Data
+public class Post {
   int id;
   String contextArticle;
   String dataArticle;
