@@ -28,16 +28,12 @@ public class UserController {
 
   @GetMapping
   public ResponseEntity<List<User>> retrieveUserList() {
-    List<User> userList = userService.findAll();
-    return (!userList.isEmpty())
-            ? new ResponseEntity<>(userList, HttpStatus.OK)
-            : new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<User> retrieveUser(@PathVariable int id) {
-    Optional<User> user = userService.findById(id);
+  public ResponseEntity<User> retrieveUser(@PathVariable long id) {
+    Optional<User> user = Optional.ofNullable(userService.readUser(id));
     return user
             .map(u -> new ResponseEntity<>(u, HttpStatus.OK))
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

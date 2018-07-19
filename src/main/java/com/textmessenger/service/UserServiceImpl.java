@@ -5,8 +5,6 @@ import com.textmessenger.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -18,12 +16,25 @@ public class UserServiceImpl implements UserService{
     this.userRepository = userRepository;
   }
 
-  public List<User> findAll() {
-    return userRepository.findAll();
+
+  @Override
+  public long createUser(User user) {
+    return 0;
   }
 
   @Override
-  public Optional<User> findById(int id) {
-    return userRepository.findById(id);
+  public User readUser(long id) {
+    return userRepository.findById(id).get();
   }
+
+  @Override
+  public void updateUser(long id, User user) {
+
+  }
+
+  @Override
+  public void deleteUser(long id) {
+
+  }
+
 }
