@@ -13,13 +13,25 @@
   "scripts": {
     "watch-compile-sass": "npm run build-sass && node-sass-chokidar src/ -o src/ --watch --recursive",
     "build-sass": "node-sass-chokidar src/ -o src/",
+    "stylelint-fix-sass": "stylelint --fix 'src/**/*.scss'",
+    "stylelint-dev": "stylelint 'src/**/*.scss' --cache --cache-location './.stylelintcache'; exit 0",
+    "stylelint-build": "stylelint 'src/**/*.scss'",
+    "watch-styles-sass": "npm-watch",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-compile-sass start-js",
-    "build": "npm run build-sass && react-scripts build",
+    "start": "npm-run-all -p watch-styles-sass watch-compile-sass start-js",
+    "build": "npm run stylelint && npm run build-sass && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "standard": "^10.0.3"
+  },
+  "watch": {
+    "stylelint-dev": {
+      "patterns": [
+        "/src/**/*.scss"
+      ],
+      "extensions": "scss"
+    }
   }
 }
