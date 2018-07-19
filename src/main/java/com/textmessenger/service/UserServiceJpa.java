@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceJpa implements UserService {
 
-  private UserRepository userRepository;
+  private final UserRepository userRepository;
 
   public UserServiceJpa(UserRepository userRepository) {
     this.userRepository = userRepository;
