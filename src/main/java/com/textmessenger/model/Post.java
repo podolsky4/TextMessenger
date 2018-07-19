@@ -1,7 +1,7 @@
 package com.textmessenger.model;
 
-@Data 
-public class Post {
+
+public @Data class Post {
   int id;
   String contextArticle;
   String dataArticle;
