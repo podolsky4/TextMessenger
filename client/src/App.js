@@ -1,6 +1,6 @@
-import { Switch, Route, Link } from 'react-router-dom';
-import React, { Component } from 'react';
-import './App.css';
+import { Link, Route, Switch } from 'react-router-dom'
+import React, { Component } from 'react'
+import './App.css'
 
 class App extends Component {
   render() {
@@ -8,6 +8,7 @@ class App extends Component {
     let HelloRouter = () => <div>Hello React-Router!</div>;
     return (
         <div className="App">
+            with compiler
           <h1>React Router</h1>
           <Link to="/">Home</Link>&nbsp;
           <Link to="/hello">Test Router</Link><hr />
