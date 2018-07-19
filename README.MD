@@ -4,6 +4,7 @@
 <b>TextMessenger</b> проект предполагает создание приложения с использованием всех знаний, которые вы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS.
 
 ### Contributors
+
   * Andrey Koziulia - mentor	
   * Igor Fandorin
   * Ivan Durmanenko
