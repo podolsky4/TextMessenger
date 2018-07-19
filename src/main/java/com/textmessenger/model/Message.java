@@ -8,31 +8,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
-@Table(name = "users")
+@Table(name = "messages")
 @Data
-public class User {
+public class Message {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "user_id")
+  @Column(name = "message_id")
   private long id;
 
-  @Column(name = "name")
-  private String name;
+  @Column(name = "from_user")
+  private User from;
 
-  @Column(name = "user_name")
-  private String userName;
+  @Column(name = "to_user")
+  private User to;
 
-  @Column(name = "surname")
-  private String surname;
+  @Column(name = "message")
+  private String message;
 
-  @Column(name = "email")
-  private String email;
-
-  @Column(name = "password")
-  private char[] password;
-
-
+  @Column(name = "created_date")
+  private Date date;
 }
