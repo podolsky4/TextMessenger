@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE users (
-    id bigint NOT NULL auto_increment,
+    id int(11) NOT NULL auto_increment,
     login varchar(50) NOT NULL,
     email varchar(50) NOT NULL,
     regdate TIMESTAMP NOT NULL,
