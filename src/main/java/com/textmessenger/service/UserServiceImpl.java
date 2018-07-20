@@ -8,16 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class UserServiceJpa implements UserService {
+public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
 
-  public UserServiceJpa(UserRepository userRepository) {
+  public UserServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 
   @Override
-  @Transactional
   public long createUser(User user) {
     return userRepository.save(user).getId();
   }
@@ -28,7 +27,6 @@ public class UserServiceJpa implements UserService {
   }
 
   @Override
-  @Transactional
   public void updateUser(long id, User user) {
     User existing = userRepository.getOne(id);
 
@@ -38,7 +36,6 @@ public class UserServiceJpa implements UserService {
   }
 
   @Override
-  @Transactional
   public void deleteUser(long id) {
     userRepository.delete(userRepository.getOne(id));
   }
