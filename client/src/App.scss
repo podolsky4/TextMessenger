@@ -1,5 +1,9 @@
-$color-bg: #e9967a;
-
-body {
-  background: $color-bg;
+.header{
+  padding: 20px;
+  background: black;
+}
+.header > a {
+  margin-right: 20px;
+  text-decoration: none;
+  color: white;
 }
