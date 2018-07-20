@@ -20,7 +20,7 @@ public class UserController {
 
   private final UserService userService;
 
-  public UserController(UserService userService){
+  public UserController(UserService userService) {
     this.userService = userService;
   }
 
@@ -47,6 +47,4 @@ public class UserController {
     userService.deleteUser(id);
     return ResponseEntity.ok().body("user with id: " + id + " deleted");
   }
-
-
 }
