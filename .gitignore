@@ -103,7 +103,7 @@ buildNumber.properties
 *.css.map
 *.sass.map
 *.scss.map
-
+*.css
 # Logs
 logs
 *.log
@@ -294,3 +294,6 @@ node_modules/
 # Windows shortcuts
 *.lnk
 /client/package-lock.json
+src/Containers/
+yarn.lock
+src/index.css
