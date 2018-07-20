@@ -10,8 +10,8 @@ class App extends Component {
       <h1>React Router</h1>
       <Link to='/'>Home</Link>&nbsp;
       <Link to='/hello'>Test Router</Link>
-      <hr/>
-      <Router/>
+      <hr />
+      <Router />
     </div>)
   }
 }

@@ -29,11 +29,11 @@ public class Message {
   private long id;
 
   @ManyToOne
-  @JoinColumn(name = "from")
+  @JoinColumn(name = "messagesRecieved")
   private User from;
 
   @ManyToOne
-  @JoinColumn(name = "to")
+  @JoinColumn(name = "messagesSended")
   private User to;
 
   @Column(name = "message")

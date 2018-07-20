@@ -2,6 +2,11 @@ dist: trusty
 
 language: java
 
+cache:
+  directories:
+   - $HOME/.m2
+  - ./client/node_modules/
+
 jdk:
   - oraclejdk8
 
@@ -11,7 +16,3 @@ before_script:
 script:
    - mvn clean test
    - npm run build --prefix client/
-
-cache:
-  directories:
-  - ./client/node_modules/
