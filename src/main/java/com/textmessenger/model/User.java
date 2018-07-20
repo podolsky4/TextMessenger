@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -33,6 +35,12 @@ public class User {
 
   @Column(name = "password")
   private char[] password;
+
+  @OneToMany(mappedBy = "from")
+  private List<Message> messagesRecieved;
+
+  @OneToMany(mappedBy = "to")
+  private List<Message> messagesSended;
 
 
 }
