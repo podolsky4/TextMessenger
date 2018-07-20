@@ -8,16 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class MessageServiceJpa implements MessageService {
+public class MessageServiceImpl implements MessageService {
 
   private final MessageRepository messageRepository;
 
-  public MessageServiceJpa(MessageRepository messageRepository) {
+  public MessageServiceImpl(MessageRepository messageRepository) {
     this.messageRepository = messageRepository;
   }
 
   @Override
-  @Transactional
   public long createMessage(Message message) {
     return messageRepository.save(message).getId();
   }
@@ -28,7 +27,6 @@ public class MessageServiceJpa implements MessageService {
   }
 
   @Override
-  @Transactional
   public void updateMessage(long id, Message message) {
     Message existing = messageRepository.getOne(id);
 
@@ -38,7 +36,6 @@ public class MessageServiceJpa implements MessageService {
   }
 
   @Override
-  @Transactional
   public void deleteMessage(long id) {
     messageRepository.delete(messageRepository.getOne(id));
   }
