@@ -12,6 +12,9 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,11 +31,13 @@ public class Message {
   @Column(name = "message_id")
   private long id;
 
-  @Column(name = "from_user")
-  private long from;
+  @ManyToOne
+  @JoinColumn(name = "from")
+  private User from;
 
-  @Column(name = "to_user")
-  private long to;
+  @ManyToOne
+  @JoinColumn(name = "to")
+  private User to;
 
   @Column(name = "message")
   private String message;
