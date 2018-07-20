@@ -5,14 +5,17 @@ import Router from './Components/Router'
 
 class App extends Component {
   render () {
-    return (<div className='App'>
-      with sass-compiler, ESLint
-      <h1>React Router</h1>
-      <Link to='/'>Home</Link>&nbsp;
-      <Link to='/hello'>Test Router</Link>
-      <hr/>
-      <Router/>
-    </div>)
+    return (
+        <div className='app'>
+      <div className='header'>
+        <Link to='/'>Home</Link>
+        <Link to='/feed'>Feed</Link>
+        <Link to='/favorites'>Favorites</Link>
+        <Link to='/messages'>Messages</Link>
+        <Link to='/notifications'>Notifications</Link>
+        </div>
+        <Router/>
+      </div>)
   }
 }
 
