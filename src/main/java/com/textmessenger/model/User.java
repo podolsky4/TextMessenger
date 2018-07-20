@@ -42,5 +42,8 @@ public class User {
   @OneToMany(mappedBy = "to")
   private List<Message> messagesSended;
 
+  @OneToMany(mappedBy = "user")
+  private List<Post> posts;
+
 
 }
