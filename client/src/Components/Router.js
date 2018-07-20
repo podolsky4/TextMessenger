@@ -9,8 +9,8 @@ class Router extends Component {
 
     return (
       <Switch>
-        <Route exact path='/' render={Home}/>
-        <Route exact path='/hello' render={HelloRouter}/>
+        <Route exact path='/' render={Home} />
+        <Route exact path='/hello' render={HelloRouter} />
       </Switch>
     )
   }
