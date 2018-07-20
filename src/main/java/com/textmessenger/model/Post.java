@@ -2,12 +2,7 @@ package com.textmessenger.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -24,4 +19,8 @@ public class Post {
 
   @Column(name = "data_article")
   String dataArticle;
+
+  @ManyToOne
+  @JoinColumn(name = "posts")
+  private User user;
 }
