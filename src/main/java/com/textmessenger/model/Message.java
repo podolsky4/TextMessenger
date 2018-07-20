@@ -1,5 +1,7 @@
 package com.textmessenger.model;
 
+import com.textmessenger.model.User;
+
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,10 +29,10 @@ public class Message {
   private long id;
 
   @Column(name = "from_user")
-  private User from;
+  private long from;
 
   @Column(name = "to_user")
-  private User to;
+  private long to;
 
   @Column(name = "message")
   private String message;
