@@ -293,6 +293,4 @@ node_modules/
 # Windows shortcuts
 *.lnk
 /client/package-lock.json
-src/Containers/
 yarn.lock
-src/index.css
