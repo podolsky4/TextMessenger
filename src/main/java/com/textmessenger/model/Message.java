@@ -2,6 +2,7 @@ package com.textmessenger.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
@@ -29,18 +30,23 @@ public class Message {
   private long id;
 
   @ManyToOne
-  @JoinColumn(name = "messagesRecieved")
+  @JoinColumn(name = "from_user_id")
   private User from;
 
   @ManyToOne
-  @JoinColumn(name = "messagesSended")
+  @JoinColumn(name = "to_user_id")
   private User to;
 
   @Column(name = "message")
   private String message;
 
-  @Column(name = "created_date")
+  @Column(nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @CreatedDate
-  private Date date;
+  private Date createdDate;
+
+  @Column(nullable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  @LastModifiedDate
+  private Date updatedDate;
 }

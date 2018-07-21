@@ -28,6 +28,6 @@ public class Post {
   String dataArticle;
 
   @ManyToOne
-  @JoinColumn(name = "posts")
+  @JoinColumn(name = "user_id")
   private User user;
 }
