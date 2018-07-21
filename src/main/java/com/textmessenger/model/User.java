@@ -1,5 +1,6 @@
 package com.textmessenger.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -34,6 +35,7 @@ public class User {
   private String email;
 
   @Column(name = "password")
+  @JsonIgnore
   private char[] password;
 
   @OneToMany(mappedBy = "from")
