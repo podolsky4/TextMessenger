@@ -2,7 +2,6 @@ package com.textmessenger.service;
 
 import com.textmessenger.model.Message;
 import com.textmessenger.repository.MessageRepository;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

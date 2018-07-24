@@ -1,6 +1,6 @@
 package com.textmessenger.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,10 +26,11 @@ import java.util.List;
 @Table(name = "user")
 @Data
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_id")
   private long id;
 
@@ -40,7 +41,6 @@ public class User {
   private String email;
 
   @Column(name = "user_password")
-  @JsonIgnore
   private String password;
 
   @Column(name = "user_first_name")
