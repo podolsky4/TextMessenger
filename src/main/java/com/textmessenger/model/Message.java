@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table(name = "messages")
+@Table(name = "message")
 @Data
 @EntityListeners(AuditingEntityListener.class)
 public class Message {
@@ -29,16 +29,16 @@ public class Message {
   @Column(name = "message_id")
   private long id;
 
-  @ManyToOne
-  @JoinColumn(name = "from_user_id")
-  private User from;
+  @Column(name = "message_content")
+  private String content;
 
   @ManyToOne
-  @JoinColumn(name = "to_user_id")
-  private User to;
+  @JoinColumn(name = "dialog_id")
+  private Dialog dialog;
 
-  @Column(name = "message")
-  private String message;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
   @Column(nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)

@@ -12,38 +12,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "post")
+@Table(name = "dialog")
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class Post {
+public class Dialog {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "post_id")
-  long id;
+  @Column(name = "dialog_id")
+  private long id;
 
-  @Column(name = "post_content")
-  String content;
+  @OneToMany(mappedBy = "dialog")
+  private List<Message> messages;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
-
-  @OneToMany(mappedBy = "post")
-  private List<Comment> comments;
-
-  @ManyToMany(mappedBy = "favorites")
-  private List<User> likes;
+  @ManyToMany(mappedBy = "dialogs")
+  private List<User> users;
 
   @Column(nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
