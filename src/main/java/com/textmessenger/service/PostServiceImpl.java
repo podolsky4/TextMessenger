@@ -56,17 +56,20 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public Optional<List<Post>> getPostToPage(int number, int limit) {
-    return Optional.of(postRepository.findAll().stream().skip(number * limit).limit(limit).collect(Collectors.toList()));
+    return Optional.of(postRepository.findAll().stream().skip(number * limit).limit(limit)
+            .collect(Collectors.toList()));
   }
 
   @Override
   public Optional<List<Post>> getUserPost(User user) {
-    return Optional.of(postRepository.findAll().stream().filter(e -> e.getUser().equals(user)).collect(Collectors.toList()));
+    return Optional.of(postRepository.findAll().stream().filter(e -> e.getUser().equals(user))
+            .collect(Collectors.toList()));
   }
 
   @Override
   public void deleteAllPostsByUserId(User user) {
-    List<Post> collect = postRepository.findAll().stream().filter(e -> e.getUser().equals(user)).collect(Collectors.toList());
+    List<Post> collect = postRepository.findAll().stream().filter(e -> e.getUser().equals(user))
+            .collect(Collectors.toList());
     for (Post p : collect) {
       postRepository.delete(p);
     }
