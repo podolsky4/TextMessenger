@@ -69,16 +69,14 @@ public class User {
   @JoinTable(
           name = "user_dialog",
           joinColumns = {@JoinColumn(name = "user_id")},
-          inverseJoinColumns = {@JoinColumn(name = "dialog_id")}
-  )
+          inverseJoinColumns = {@JoinColumn(name = "dialog_id")})
   private List<Dialog> dialogs;
 
   @ManyToMany
   @JoinTable(
           name = "favorites",
           joinColumns = {@JoinColumn(name = "user_id")},
-          inverseJoinColumns = {@JoinColumn(name = "post_id")}
-  )
+          inverseJoinColumns = {@JoinColumn(name = "post_id")})
   private List<Post> favorites;
 
   @Column(nullable = false, updatable = false)
