@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -19,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import java.util.List;
 public class User {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "user_id")
   private long id;
 
@@ -66,28 +67,24 @@ public class User {
 
 
   @ManyToMany
-  @JoinTable(
-          name = "user_dialog",
+  @JoinTable(name = "user_dialog",
           joinColumns = {@JoinColumn(name = "user_id")},
           inverseJoinColumns = {@JoinColumn(name = "dialog_id")})
   private List<Dialog> dialogs;
 
-  @ManyToMany
-  @JoinTable(
-          name = "favorites",
-          joinColumns = {@JoinColumn(name = "user_id")},
-          inverseJoinColumns = {@JoinColumn(name = "post_id")})
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinTable(name = "favorites",
+          joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false)},
+          inverseJoinColumns = {@JoinColumn(name = "post_id", nullable = false, updatable = false)})
   private List<Post> favorites;
 
-  @Column(nullable = false, updatable = false)
+  @Column(name = "created_date", nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @CreatedDate
   private Date createdDate;
 
-  @Column(nullable = false)
+  @Column(name = "last_update", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @LastModifiedDate
   private Date updatedDate;
-
-
 }

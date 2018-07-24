@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -42,12 +41,12 @@ public class Message {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @Column(nullable = false, updatable = false)
+  @Column(name = "created_date", nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @CreatedDate
   private Date createdDate;
 
-  @Column(nullable = false)
+  @Column(name = "last_update", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @LastModifiedDate
   private Date updatedDate;

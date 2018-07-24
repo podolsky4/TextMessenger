@@ -1,7 +1,3 @@
-insert into users ( login, `e-mail`, `registration-date`, password, gender) VALUES ('test','test@gmail.com',CURRENT_TIMESTAMP,'test','Male');
-insert into users ( login, `e-mail`, `registration-date`, password, gender) VALUES ('test1','test1@gmail.com',CURRENT_TIMESTAMP,'test1','Female');
-insert into users ( login, `e-mail`, `registration-date`, password, gender) VALUES ('test2','test2@gmail.com',CURRENT_TIMESTAMP,'test2','Male');
-insert into users ( login, `e-mail`, `registration-date`, password, gender) VALUES ('test3','test3@gmail.com',CURRENT_TIMESTAMP,'test3','Female');
-insert into users ( login, `e-mail`, `registration-date`, password, gender) VALUES ('test4','test4@gmail.com',CURRENT_TIMESTAMP,'test4','Male');
-insert into users ( login, `e-mail`, `registration-date`, password, gender) VALUES ('test5','test5@gmail.com',CURRENT_TIMESTAMP,'test5','Female');
-insert into users ( login, `e-mail`, `registration-date`, password, gender) VALUES ('test6','test6@gmail.com',CURRENT_TIMESTAMP,'test6','Male');
+INSERT INTO `user` (`user_id`, `user_login`, `user_email`, `user_password`, `created_date`, `last_update`) VALUES (1, 'johny', 'j.ter@gmail.com', 'afgadh1334FDSADS', '2006-02-15 04:34:33', '2010-07-02 12:06:36');
+
+INSERT INTO `post` (`post_id`, `post_content`, `created_date`, `last_update`, `user_id`) VALUES (1, 'How can we create a better future', '2008-03-01 17:04:33', '2008-03-02 12:06:36', 1);
