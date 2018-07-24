@@ -1,4 +1,11 @@
 ###
+#   Server port
+###
+
+server:
+  port: 9000
+
+###
 #   Database Settings
 ###
 spring:
