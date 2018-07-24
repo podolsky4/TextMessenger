@@ -43,7 +43,8 @@ public class PostController {
   }
 
   @GetMapping("/page/{number}/{limit}")
-  public ResponseEntity<Optional<List<Post>>> getPostToPage(@PathVariable("number") int number, @PathVariable("limit") int limit) {
+  public ResponseEntity<Optional<List<Post>>> getPostToPage(@PathVariable("number") int number,
+                                                            @PathVariable("limit") int limit) {
     return ResponseEntity.ok().body(postService.getPostToPage(number, limit));
   }
 
