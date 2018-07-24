@@ -27,31 +27,31 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Post {
 
-      @Id
-      @GeneratedValue(strategy = GenerationType.IDENTITY)
-      @Column(name = "post_id")
-      long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "post_id")
+  long id;
 
-      @Column(name = "post_content")
-      String content;
+  @Column(name = "post_content")
+  String content;
 
-      @ManyToOne
-      @JoinColumn(name = "user_id")
-      private User user;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
-      @OneToMany(mappedBy = "post")
-      private List<Comment> comments;
+  @OneToMany(mappedBy = "post")
+  private List<Comment> comments;
 
-      @ManyToMany(mappedBy = "favorites")
-      private List<User> likes;
+  @ManyToMany(mappedBy = "favorites")
+  private List<User> likes;
 
-      @Column(nullable = false, updatable = false)
-      @Temporal(TemporalType.TIMESTAMP)
-      @CreatedDate
-      private Date createdDate;
+  @Column(nullable = false, updatable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  @CreatedDate
+  private Date createdDate;
 
-      @Column(nullable = false)
-      @Temporal(TemporalType.TIMESTAMP)
-      @LastModifiedDate
-      private Date updatedDate;
+  @Column(nullable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  @LastModifiedDate
+  private Date updatedDate;
 }
