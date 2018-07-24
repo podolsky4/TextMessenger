@@ -25,24 +25,24 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Dialog {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "dialog_id")
-  private long id;
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      @Column(name = "dialog_id")
+      private long id;
 
-  @OneToMany(mappedBy = "dialog")
-  private List<Message> messages;
+      @OneToMany(mappedBy = "dialog")
+      private List<Message> messages;
 
-  @ManyToMany(mappedBy = "dialogs")
-  private List<User> users;
+      @ManyToMany(mappedBy = "dialogs")
+      private List<User> users;
 
-  @Column(nullable = false, updatable = false)
-  @Temporal(TemporalType.TIMESTAMP)
-  @CreatedDate
-  private Date createdDate;
+      @Column(nullable = false, updatable = false)
+      @Temporal(TemporalType.TIMESTAMP)
+      @CreatedDate
+      private Date createdDate;
 
-  @Column(nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
-  @LastModifiedDate
-  private Date updatedDate;
+      @Column(nullable = false)
+      @Temporal(TemporalType.TIMESTAMP)
+      @LastModifiedDate
+      private Date updatedDate;
 }

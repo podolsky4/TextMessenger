@@ -28,68 +28,68 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "user_id")
-  private long id;
+      @Id
+      @GeneratedValue(strategy = GenerationType.AUTO)
+      @Column(name = "user_id")
+      private long id;
 
-  @Column(name = "user_login")
-  private String login;
+      @Column(name = "user_login")
+      private String login;
 
-  @Column(name = "user_email")
-  private String email;
+      @Column(name = "user_email")
+      private String email;
 
-  @Column(name = "user_password")
-  @JsonIgnore
-  private String password;
+      @Column(name = "user_password")
+      @JsonIgnore
+      private String password;
 
-  @Column(name = "user_first_name")
-  private String firstName;
+      @Column(name = "user_first_name")
+      private String firstName;
 
-  @Column(name = "user_last_name")
-  private String lastName;
+      @Column(name = "user_last_name")
+      private String lastName;
 
-  @Column(name = "user_address")
-  private String address;
+      @Column(name = "user_address")
+      private String address;
 
-  @Column(name = "user_profile_photo")
-  private String profilePhoto;
+      @Column(name = "user_profile_photo")
+      private String profilePhoto;
 
-  @Column(name = "user_profile_header")
-  private String profileHeader;
+      @Column(name = "user_profile_header")
+      private String profileHeader;
 
-  @Column(name = "user_date_birthday")
-  private Date dateBirthday;
+      @Column(name = "user_date_birthday")
+      private Date dateBirthday;
 
-  @OneToMany(mappedBy = "user")
-  private List<Post> posts;
+      @OneToMany(mappedBy = "user")
+      private List<Post> posts;
 
 
-  @ManyToMany
-  @JoinTable(
-          name = "user_dialog",
-          joinColumns = {@JoinColumn(name = "user_id")},
-          inverseJoinColumns = {@JoinColumn(name = "dialog_id")}
-  )
-  private List<Dialog> dialogs;
+      @ManyToMany
+      @JoinTable(
+              name = "user_dialog",
+              joinColumns = {@JoinColumn(name = "user_id")},
+              inverseJoinColumns = {@JoinColumn(name = "dialog_id")}
+      )
+      private List<Dialog> dialogs;
 
-  @ManyToMany
-  @JoinTable(
-          name = "favorites",
-          joinColumns = {@JoinColumn(name = "user_id")},
-          inverseJoinColumns = {@JoinColumn(name = "post_id")}
-  )
-  private List<Post> favorites;
+      @ManyToMany
+      @JoinTable(
+              name = "favorites",
+              joinColumns = {@JoinColumn(name = "user_id")},
+              inverseJoinColumns = {@JoinColumn(name = "post_id")}
+      )
+      private List<Post> favorites;
 
-  @Column(nullable = false, updatable = false)
-  @Temporal(TemporalType.TIMESTAMP)
-  @CreatedDate
-  private Date createdDate;
+      @Column(nullable = false, updatable = false)
+      @Temporal(TemporalType.TIMESTAMP)
+      @CreatedDate
+      private Date createdDate;
 
-  @Column(nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
-  @LastModifiedDate
-  private Date updatedDate;
+      @Column(nullable = false)
+      @Temporal(TemporalType.TIMESTAMP)
+      @LastModifiedDate
+      private Date updatedDate;
 
 
 }

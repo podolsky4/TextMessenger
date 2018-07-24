@@ -10,34 +10,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MessageServiceImpl implements MessageService {
 
-  private final MessageRepository messageRepository;
+      private final MessageRepository messageRepository;
 
-  public MessageServiceImpl(MessageRepository messageRepository) {
-    this.messageRepository = messageRepository;
-  }
+      public MessageServiceImpl(MessageRepository messageRepository) {
+            this.messageRepository = messageRepository;
+      }
 
-  @Override
-  public long createMessage(Message message) {
-    return messageRepository.save(message).getId();
-  }
+      @Override
+      public long createMessage(Message message) {
+            return messageRepository.save(message).getId();
+      }
 
-  @Override
-  public Message readMessage(long id) {
-    return messageRepository.getOne(id);
-  }
+      @Override
+      public Message readMessage(long id) {
+            return messageRepository.getOne(id);
+      }
 
-  @Override
-  public void updateMessage(long id, Message message) {
-    Message existing = messageRepository.getOne(id);
+      @Override
+      public void updateMessage(long id, Message message) {
+            Message existing = messageRepository.getOne(id);
 
-    message.setId(existing.getId());
+            message.setId(existing.getId());
 
-    messageRepository.save(message);
-  }
+            messageRepository.save(message);
+      }
 
-  @Override
-  public void deleteMessage(long id) {
-    messageRepository.delete(messageRepository.getOne(id));
-  }
+      @Override
+      public void deleteMessage(long id) {
+            messageRepository.delete(messageRepository.getOne(id));
+      }
 }
 

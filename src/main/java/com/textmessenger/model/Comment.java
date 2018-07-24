@@ -24,31 +24,31 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "comment_id")
-  private long id;
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      @Column(name = "comment_id")
+      private long id;
 
-  @Column(name = "comment_content")
-  private String content;
+      @Column(name = "comment_content")
+      private String content;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+      @ManyToOne
+      @JoinColumn(name = "user_id")
+      private User user;
 
-  @ManyToOne
-  @JoinColumn(name = "post_id")
-  private Post post;
+      @ManyToOne
+      @JoinColumn(name = "post_id")
+      private Post post;
 
-  @Column(nullable = false, updatable = false)
-  @Temporal(TemporalType.TIMESTAMP)
-  @CreatedDate
-  private Date createdDate;
+      @Column(nullable = false, updatable = false)
+      @Temporal(TemporalType.TIMESTAMP)
+      @CreatedDate
+      private Date createdDate;
 
-  @Column(nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
-  @LastModifiedDate
-  private Date updatedDate;
+      @Column(nullable = false)
+      @Temporal(TemporalType.TIMESTAMP)
+      @LastModifiedDate
+      private Date updatedDate;
 
 
 }
