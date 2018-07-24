@@ -2,19 +2,30 @@ package com.textmessenger.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
   @Id
@@ -22,30 +33,61 @@ public class User {
   @Column(name = "user_id")
   private long id;
 
-  @Column(name = "name")
-  private String name;
+  @Column(name = "user_login")
+  private String login;
 
-  @Column(name = "user_name")
-  private String userName;
-
-  @Column(name = "surname")
-  private String surname;
-
-  @Column(name = "email")
+  @Column(name = "user_email")
   private String email;
 
-  @Column(name = "password")
+  @Column(name = "user_password")
   @JsonIgnore
-  private char[] password;
+  private String password;
 
-  @OneToMany(mappedBy = "from")
-  private List<Message> messagesRecieved;
+  @Column(name = "user_first_name")
+  private String firstName;
 
-  @OneToMany(mappedBy = "to")
-  private List<Message> messagesSended;
+  @Column(name = "user_last_name")
+  private String lastName;
+
+  @Column(name = "user_address")
+  private String address;
+
+  @Column(name = "user_profile_photo")
+  private String profilePhoto;
+
+  @Column(name = "user_profile_header")
+  private String profileHeader;
+
+  @Column(name = "user_date_birthday")
+  private Date dateBirthday;
 
   @OneToMany(mappedBy = "user")
   private List<Post> posts;
+
+
+  @ManyToMany
+  @JoinTable(
+          name = "user_dialog",
+          joinColumns = {@JoinColumn(name = "user_id")},
+          inverseJoinColumns = {@JoinColumn(name = "dialog_id")})
+  private List<Dialog> dialogs;
+
+  @ManyToMany
+  @JoinTable(
+          name = "favorites",
+          joinColumns = {@JoinColumn(name = "user_id")},
+          inverseJoinColumns = {@JoinColumn(name = "post_id")})
+  private List<Post> favorites;
+
+  @Column(nullable = false, updatable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  @CreatedDate
+  private Date createdDate;
+
+  @Column(nullable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  @LastModifiedDate
+  private Date updatedDate;
 
 
 }

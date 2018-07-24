@@ -11,39 +11,34 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "post")
+@Table(name = "comment")
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class Post {
+public class Comment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "post_id")
-  long id;
+  @Column(name = "comment_id")
+  private long id;
 
-  @Column(name = "post_content")
-  String content;
+  @Column(name = "comment_content")
+  private String content;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "post")
-  private List<Comment> comments;
-
-  @ManyToMany(mappedBy = "favorites")
-  private List<User> likes;
+  @ManyToOne
+  @JoinColumn(name = "post_id")
+  private Post post;
 
   @Column(nullable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
@@ -54,4 +49,6 @@ public class Post {
   @Temporal(TemporalType.TIMESTAMP)
   @LastModifiedDate
   private Date updatedDate;
+
+
 }
