@@ -52,7 +52,8 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public Optional<List<Post>> getPostToPage(int number, int limit) {
-    return Optional.of(postRepository.findAll().stream().skip(number * limit).limit(limit).collect(Collectors.toList()));
+    return Optional.of(postRepository.findAll().stream().skip(number * limit)
+            .limit(limit).collect(Collectors.toList()));
   }
 
   @Override

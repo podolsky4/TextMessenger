@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -27,29 +25,26 @@ public class DialogController {
   }
 
   @PostMapping
-  public ResponseEntity<?> createDialog(@RequestBody Dialog dialog) {
+  public ResponseEntity.BodyBuilder createDialog(@RequestBody Dialog dialog) {
     dialogService.createDialog(dialog);
-    URI location = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .build().toUri();
-    return ResponseEntity.created(location).build();
+    return ResponseEntity.status(200);
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<Dialog> readDialog(@PathVariable("id") long id) {
-    return Optional.ofNullable(ResponseEntity.ok().body(dialogService.readDialog(id)))
+    return Optional.of(ResponseEntity.ok().body(dialogService.readDialog(id)))
             .orElse(ResponseEntity.notFound().build());
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<?> updateDialog(@PathVariable("id") long id, @RequestBody Dialog dialog) {
-    dialogService.updateDialog(id, dialog);
-    return ResponseEntity.ok().body(dialogService.readDialog(id) + " is updated");
+  public ResponseEntity.BodyBuilder updateDialog(@PathVariable("id") Dialog oldDialog, @RequestBody Dialog dialog) {
+    dialogService.updateDialog(oldDialog, dialog);
+    return ResponseEntity.status(200);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteDialog(@PathVariable("id") long id) {
+  public ResponseEntity.BodyBuilder deleteDialog(@PathVariable("id") long id) {
     dialogService.deleteDialog(id);
-    return ResponseEntity.ok().body("dialog with id: " + id + " deleted");
+    return ResponseEntity.status(200);
   }
 }
