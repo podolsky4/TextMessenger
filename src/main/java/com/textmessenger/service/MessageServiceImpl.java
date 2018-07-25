@@ -32,6 +32,7 @@ public class MessageServiceImpl implements MessageService {
   public void updateMessage(Message oldMessage, Message message) {
     messageRepository.updateMessageByNewMwssage(oldMessage, message);
   }
+
   @Override
   public void deleteMessage(Message message) {
     messageRepository.deleteMessageById(message);
