@@ -44,7 +44,7 @@ public class CommentController {
   }
 
   @DeleteMapping
-  ResponseEntity<?> deleteComment(@RequestBody Comment comment){
+  ResponseEntity<?> deleteComment(@RequestBody Comment comment) {
     commentService.deleteComment(comment);
     return ResponseEntity.ok().build();
   }
