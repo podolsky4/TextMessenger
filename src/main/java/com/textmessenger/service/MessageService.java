@@ -4,12 +4,13 @@ import com.textmessenger.model.Dialog;
 import com.textmessenger.model.Message;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MessageService {
 
   void createMessage(Message message);
 
-  Message readMessage(long id);
+  Optional<Message> readMessage(Message message);
 
   void updateMessage(Message oldMessage, Message message);
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -24,8 +25,8 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public Message readMessage(long id) {
-    return messageRepository.getOne(id);
+  public Optional<Message> readMessage(Message message) {
+    return messageRepository.findById(message.getId());
   }
 
   @Override

@@ -24,8 +24,8 @@ public class MessageController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Optional<Message>> getMessageById(@PathVariable("id") long id) {
-    return ResponseEntity.ok().body(Optional.ofNullable(messageService.readMessage(id)));
+  public ResponseEntity<Optional<Message>> getMessageById(@PathVariable("id") Message message) {
+    return ResponseEntity.ok().body(messageService.readMessage(message));
   }
 
   @GetMapping("/dialog/{id}")
