@@ -17,7 +17,7 @@ import java.net.URI;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/dialogs")
+@RequestMapping("/dialogs")
 public class DialogController {
 
   private final DialogService dialogService;
@@ -26,7 +26,7 @@ public class DialogController {
     this.dialogService = dialogService;
   }
 
-  @PostMapping("/user")
+  @PostMapping
   public ResponseEntity<?> createDialog(@RequestBody Dialog dialog) {
     dialogService.createDialog(dialog);
     URI location = ServletUriComponentsBuilder
