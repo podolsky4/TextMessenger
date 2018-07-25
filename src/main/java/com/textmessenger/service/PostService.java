@@ -10,17 +10,12 @@ public interface PostService {
 
   void createPost(User user, Post post);
 
-  Post readPost(long id);
-
   void updatePost(Post post);
 
-  void deletePost(long id);
-
-  Optional<Post> getById(long id);
+  void deletePost(Post post);
 
   Optional<List<Post>> getAll();
 
-  Optional<List<Post>> getPostToPage(int number, int limit);
 
   List<Post> getUserPost(User user);
 }

@@ -10,8 +10,6 @@ public interface MessageService {
 
   void createMessage(Message message);
 
-  Optional<Message> readMessage(Message message);
-
   void updateMessage(Message message);
 
   void deleteMessage(Message message);

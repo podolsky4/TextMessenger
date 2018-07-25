@@ -27,34 +27,18 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public Post readPost(long id) {
-    return postRepository.getOne(id);
-  }
-
-  @Override
   public void updatePost(Post post) {
     postRepository.save(post);
   }
 
   @Override
-  public void deletePost(long id) {
-    postRepository.deleteById(id);
-  }
-
-  @Override
-  public Optional<Post> getById(long id) {
-    return postRepository.findById(id);
+  public void deletePost(Post post) {
+    postRepository.delete(post);
   }
 
   @Override
   public Optional<List<Post>> getAll() {
     return Optional.of(postRepository.findAll());
-  }
-
-  @Override
-  public Optional<List<Post>> getPostToPage(int number, int limit) {
-    return Optional.of(postRepository.findAll().stream().skip(number * limit)
-            .limit(limit).collect(Collectors.toList()));
   }
 
   @Override

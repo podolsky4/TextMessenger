@@ -22,11 +22,6 @@ public class MessageController {
     this.messageService = messageService;
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<?> getMessageById(@PathVariable("id") Message message) {
-    return Optional.of(ResponseEntity.ok().body(messageService.readMessage(message)))
-            .orElse(ResponseEntity.noContent().build());
-  }
 
   @GetMapping("/dialog/{id}")
   public ResponseEntity<?> getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
@@ -48,8 +43,8 @@ public class MessageController {
             .orElse(ResponseEntity.badRequest()).build();
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteMessageById(@PathVariable("id") Message message) {
+  @DeleteMapping
+  public ResponseEntity<?> deleteMessageById(@RequestBody Message message) {
     messageService.deleteMessage(message);
     return ResponseEntity.ok().build();
   }

@@ -4,6 +4,7 @@ import com.textmessenger.model.Comment;
 import com.textmessenger.model.Post;
 import com.textmessenger.service.CommentService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,12 @@ public class CommentController {
   @PutMapping
   ResponseEntity<?> updateComment(@RequestBody Comment comment) {
     commentService.updateComment(comment);
+    return ResponseEntity.ok().build();
+  }
+
+  @DeleteMapping
+  ResponseEntity<?> deleteComment(@RequestBody Comment comment){
+    commentService.deleteComment(comment);
     return ResponseEntity.ok().build();
   }
 

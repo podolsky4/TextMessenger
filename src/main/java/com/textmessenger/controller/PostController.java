@@ -26,28 +26,11 @@ public class PostController {
     this.postService = postService;
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<?> getPost(@PathVariable long id) {
-    return Optional.of(ResponseEntity.ok().body(postService.getById(id)))
-            .orElse(ResponseEntity.noContent().build());
-  }
-
-  @GetMapping
-  public ResponseEntity<?> getAll() {
-    return Optional.of(ResponseEntity.ok().body(postService.getAll()))
-            .orElse(ResponseEntity.noContent().build());
-  }
 
   @PostMapping("/user/{id}")
   public ResponseEntity<?> createPost(@PathVariable("id") User user, @RequestBody Post post) {
     postService.createPost(user, post);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
-  }
-
-  @GetMapping("/page/{number}/{limit}")
-  public ResponseEntity<?> getPostToPage(@PathVariable("number") int number,
-                                         @PathVariable("limit") int limit) {
-    return ResponseEntity.ok().body(postService.getPostToPage(number, limit));
   }
 
   @PutMapping
@@ -62,9 +45,9 @@ public class PostController {
             .orElse(ResponseEntity.noContent().build());
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<?> deletePostById(@PathVariable("id") Post post) {
-    postService.deletePost(post.getId());
+  @DeleteMapping
+  public ResponseEntity<?> deletePostById(@RequestBody Post post) {
+    postService.deletePost(post);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 

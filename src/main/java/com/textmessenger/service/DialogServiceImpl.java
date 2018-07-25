@@ -36,4 +36,5 @@ public class DialogServiceImpl implements DialogService {
   public void deleteDialog(long id) {
     dialogRepository.delete(dialogRepository.getOne(id));
   }
+
 }
