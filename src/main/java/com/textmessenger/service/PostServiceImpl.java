@@ -22,10 +22,7 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public void createPost(User user, Post post) {
-    System.out.println("user in service " + user);
-    System.out.println("post in service " + post);
-    post.setUser(user);
-    postRepository.save(post);
+    postRepository.createPostWithUser(user, post);
   }
 
   @Override
@@ -35,8 +32,7 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public void updatePost(Post oldPost, Post post) {
-    post.setId(oldPost.getId());
-    postRepository.save(post);
+    postRepository.updateOldPostWithNewPost(oldPost, post);
   }
 
   @Override
@@ -56,22 +52,16 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public Optional<List<Post>> getPostToPage(int number, int limit) {
-    return Optional.of(postRepository.findAll().stream().skip(number * limit).limit(limit)
-            .collect(Collectors.toList()));
+    return Optional.of(postRepository.findAll().stream().skip(number * limit).limit(limit).collect(Collectors.toList()));
   }
 
   @Override
   public Optional<List<Post>> getUserPost(User user) {
-    return Optional.of(postRepository.findAll().stream().filter(e -> e.getUser().equals(user))
-            .collect(Collectors.toList()));
+    return postRepository.findAllPostsByUser(user);
   }
 
   @Override
   public void deleteAllPostsByUserId(User user) {
-    List<Post> collect = postRepository.findAll().stream().filter(e -> e.getUser().equals(user))
-            .collect(Collectors.toList());
-    for (Post p : collect) {
-      postRepository.delete(p);
-    }
+    postRepository.deleteAllByUser(user);
   }
 }
