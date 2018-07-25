@@ -19,32 +19,33 @@ import java.util.Optional;
 public class MessageController {
   private final MessageService messageService;
 
-  MessageController (MessageService messageService){
-    this.messageService=messageService;
+  MessageController(MessageService messageService) {
+    this.messageService = messageService;
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Optional<Message>> getMessageById(@PathVariable("id") long id){
+  public ResponseEntity<Optional<Message>> getMessageById(@PathVariable("id") long id) {
     return ResponseEntity.ok().body(Optional.ofNullable(messageService.readMessage(id)));
   }
 
   @GetMapping("/dialog/{id}")
-  public ResponseEntity<Optional<List<Message>>> getAllMessagesByDialog(@PathVariable("id")Dialog dialog){
+  public ResponseEntity<Optional<List<Message>>> getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
     return ResponseEntity.ok().body(Optional.ofNullable(messageService.getMessagesFromDialog(dialog)));
   }
 
   @PostMapping("/{id]")
-  public void addMessageToDialog(@PathVariable("id") Dialog dialog, @RequestBody Message message){
+  public void addMessageToDialog(@PathVariable("id") Dialog dialog, @RequestBody Message message) {
     message.setDialog(dialog);
     messageService.createMessage(message);
   }
 
   @PutMapping("/{id}")
-  public void updateMessageById(@PathVariable("id") long id , @RequestBody Message message){
-    messageService.updateMessage(id,message);
+  public void updateMessageById(@PathVariable("id") long id, @RequestBody Message message) {
+    messageService.updateMessage(id, message);
   }
+
   @DeleteMapping("/{id}")
-  public void deleteMessageById(@PathVariable("id") long id){
+  public void deleteMessageById(@PathVariable("id") long id) {
     messageService.deleteMessage(id);
   }
 }
