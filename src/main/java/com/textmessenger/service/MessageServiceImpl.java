@@ -45,7 +45,7 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   public List<Message> getMessagesFromDialog(Dialog dialog) {
-    return messageRepository.findAll().stream().filter(e -> e.getDialog().equals(dialog)).collect(Collectors.toList());
+    return messageRepository.getAllMessagesByDialog(dialog);
   }
 }
 
