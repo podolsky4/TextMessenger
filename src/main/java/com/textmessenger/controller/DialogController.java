@@ -17,7 +17,7 @@ import java.net.URI;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/dialogs")
+@RequestMapping("/dialogs")
 public class DialogController {
 
   private final DialogService dialogService;

@@ -5,6 +5,8 @@ REST architecture (simple example to start)
 |api/users/| |create new User| | |
 |api/users/{id} | return User where user_id={id} | | return status of update User where user_id={id} | return id User was delete where user_id={id}|
 | | | | | |
+| | | | | |
+| | | | | |
 |api/posts/|return all posts| | | |
 |api/posts/{id} |return post by Id| create post allows to user {id}|  update post where is oldPost_id={id} | delete post by {id}|
 |api/posts/user/{id}| return list<Post> allow user where id={id}| | |delete all posts where user_id={id}|
