@@ -26,11 +26,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void updateUser(long id, User user) {
-    User existing = userRepository.getOne(id);
-
-    user.setId(existing.getId());
-
+  public void updateUser(User user) {
     userRepository.save(user);
   }
 

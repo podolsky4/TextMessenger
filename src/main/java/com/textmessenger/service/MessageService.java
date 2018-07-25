@@ -1,15 +1,20 @@
 package com.textmessenger.service;
 
+import com.textmessenger.model.Dialog;
 import com.textmessenger.model.Message;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface MessageService {
 
-  long createMessage(Message message);
+  void createMessage(Message message);
 
-  Message readMessage(long id);
+  Optional<Message> readMessage(Message message);
 
-  void updateMessage(long id, Message message);
+  void updateMessage(Message message);
 
-  void deleteMessage(long id);
+  void deleteMessage(Message message);
 
+  List<Message> getMessagesFromDialog(Dialog dialog);
 }

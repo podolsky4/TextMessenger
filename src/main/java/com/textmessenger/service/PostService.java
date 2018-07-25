@@ -12,7 +12,7 @@ public interface PostService {
 
   Post readPost(long id);
 
-  void updatePost(Post oldPost, Post post);
+  void updatePost(Post post);
 
   void deletePost(long id);
 
@@ -23,6 +23,4 @@ public interface PostService {
   Optional<List<Post>> getPostToPage(int number, int limit);
 
   Optional<List<Post>> getUserPost(User user);
-
-  void deleteAllPostsByUserId(User user);
 }

@@ -4,11 +4,11 @@ import com.textmessenger.model.Dialog;
 
 public interface DialogService {
 
-  long createDialog(Dialog dialog);
+  void createDialog(Dialog dialog);
 
   Dialog readDialog(long id);
 
-  void updateDialog(long id, Dialog dialog);
+  void updateDialog(Dialog dialog);
 
   void deleteDialog(long id);
 }

@@ -1,9 +1,13 @@
 package com.textmessenger.service;
 
+import com.textmessenger.model.Dialog;
 import com.textmessenger.model.Message;
 import com.textmessenger.repository.MessageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -16,27 +20,28 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public long createMessage(Message message) {
-    return messageRepository.save(message).getId();
-  }
-
-  @Override
-  public Message readMessage(long id) {
-    return messageRepository.getOne(id);
-  }
-
-  @Override
-  public void updateMessage(long id, Message message) {
-    Message existing = messageRepository.getOne(id);
-
-    message.setId(existing.getId());
-
+  public void createMessage(Message message) {
     messageRepository.save(message);
   }
 
   @Override
-  public void deleteMessage(long id) {
-    messageRepository.delete(messageRepository.getOne(id));
+  public Optional<Message> readMessage(Message message) {
+    return messageRepository.findById(message.getId());
+  }
+
+  @Override
+  public void updateMessage(Message message) {
+    messageRepository.save(message);
+  }
+
+  @Override
+  public void deleteMessage(Message message) {
+    messageRepository.deleteById(message);
+  }
+
+  @Override
+  public List<Message> getMessagesFromDialog(Dialog dialog) {
+    return messageRepository.findByDialog(dialog);
   }
 }
 

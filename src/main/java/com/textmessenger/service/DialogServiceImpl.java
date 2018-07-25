@@ -16,8 +16,8 @@ public class DialogServiceImpl implements DialogService {
   }
 
   @Override
-  public long createDialog(Dialog dialog) {
-    return dialogRepository.save(dialog).getId();
+  public void createDialog(Dialog dialog) {
+    dialogRepository.save(dialog);
   }
 
   @Override
@@ -26,11 +26,7 @@ public class DialogServiceImpl implements DialogService {
   }
 
   @Override
-  public void updateDialog(long id, Dialog dialog) {
-    Dialog existing = dialogRepository.getOne(id);
-
-    dialog.setId(existing.getId());
-
+  public void updateDialog(Dialog dialog) {
     dialogRepository.save(dialog);
   }
 
