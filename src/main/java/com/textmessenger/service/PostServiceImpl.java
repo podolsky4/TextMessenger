@@ -22,7 +22,8 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public void createPost(User user, Post post) {
-    postRepository.createPostWithUser(user, post);
+    post.setUser(user);
+    postRepository.save(post);
   }
 
   @Override
@@ -57,8 +58,8 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public Optional<List<Post>> getUserPost(User user) {
-    return postRepository.findAllPostsByUser(user);
+  public List<Post> getUserPost(User user) {
+    return postRepository.findPostsByUser(user);
   }
 
 }

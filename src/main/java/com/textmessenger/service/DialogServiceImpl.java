@@ -1,9 +1,12 @@
 package com.textmessenger.service;
 
 import com.textmessenger.model.Dialog;
+import com.textmessenger.model.User;
 import com.textmessenger.repository.DialogRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -20,9 +23,8 @@ public class DialogServiceImpl implements DialogService {
     dialogRepository.save(dialog);
   }
 
-  @Override
-  public Dialog readDialog(long id) {
-    return dialogRepository.getOne(id);
+  public List<Dialog> getDialogsByUser(User user) {
+    return dialogRepository.findDialogsByUsers(user);
   }
 
   @Override

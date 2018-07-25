@@ -22,5 +22,5 @@ public interface PostService {
 
   Optional<List<Post>> getPostToPage(int number, int limit);
 
-  Optional<List<Post>> getUserPost(User user);
+  List<Post> getUserPost(User user);
 }

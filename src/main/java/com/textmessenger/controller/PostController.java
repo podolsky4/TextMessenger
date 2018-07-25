@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,39 +27,45 @@ public class PostController {
   }
 
   @GetMapping("/{id}")
-  public Optional<Post> getPost(@PathVariable long id) {
-    return postService.getById(id);
+  public ResponseEntity<?> getPost(@PathVariable long id) {
+    return Optional.of(ResponseEntity.ok().body(postService.getById(id)))
+            .orElse(ResponseEntity.noContent().build());
   }
 
   @GetMapping
-  public ResponseEntity<Optional<List<Post>>> getAll() {
-    return ResponseEntity.ok().body(postService.getAll());
+  public ResponseEntity<?> getAll() {
+    return Optional.of(ResponseEntity.ok().body(postService.getAll()))
+            .orElse(ResponseEntity.noContent().build());
   }
 
-  @PostMapping("/{id}")
-  public void createPost(@PathVariable("id") User user, @RequestBody Post post) {
+  @PostMapping("/user/{id}")
+  public ResponseEntity<?> createPost(@PathVariable("id") User user, @RequestBody Post post) {
     postService.createPost(user, post);
+    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
 
   @GetMapping("/page/{number}/{limit}")
-  public ResponseEntity<Optional<List<Post>>> getPostToPage(@PathVariable("number") int number,
-                                                            @PathVariable("limit") int limit) {
+  public ResponseEntity<?> getPostToPage(@PathVariable("number") int number,
+                                         @PathVariable("limit") int limit) {
     return ResponseEntity.ok().body(postService.getPostToPage(number, limit));
   }
 
   @PutMapping
-  public void updatePost(@RequestBody Post post) {
+  public ResponseEntity<?> updatePost(@RequestBody Post post) {
     postService.updatePost(post);
+    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<Optional<List<Post>>> getUserPost(@PathVariable("id") User user) {
-    return ResponseEntity.ok().body(postService.getUserPost(user));
+  public ResponseEntity<?> getUserPost(@PathVariable("id") User user) {
+    return Optional.of(ResponseEntity.ok().body(postService.getUserPost(user)))
+            .orElse(ResponseEntity.noContent().build());
   }
 
   @DeleteMapping("/{id}")
-  public void deletePostById(@PathVariable("id") Post post) {
+  public ResponseEntity<?> deletePostById(@PathVariable("id") Post post) {
     postService.deletePost(post.getId());
+    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
 }
