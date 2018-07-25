@@ -36,9 +36,9 @@ public class DialogController {
             .orElse(ResponseEntity.notFound().build());
   }
 
-  @PutMapping("/{id}")
-  public ResponseEntity.BodyBuilder updateDialog(@PathVariable("id") Dialog oldDialog, @RequestBody Dialog dialog) {
-    dialogService.updateDialog(oldDialog, dialog);
+  @PutMapping
+  public ResponseEntity.BodyBuilder updateDialog(@RequestBody Dialog dialog) {
+    dialogService.updateDialog(dialog);
     return ResponseEntity.status(200);
   }
 

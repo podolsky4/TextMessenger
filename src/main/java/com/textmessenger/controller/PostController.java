@@ -48,9 +48,9 @@ public class PostController {
     return ResponseEntity.ok().body(postService.getPostToPage(number, limit));
   }
 
-  @PutMapping("/{id}")
-  public void updatePost(@PathVariable("id") Post oldPost, @RequestBody Post post) {
-    postService.updatePost(oldPost, post);
+  @PutMapping
+  public void updatePost(@RequestBody Post post) {
+    postService.updatePost(post);
   }
 
   @GetMapping("/user/{id}")
@@ -63,8 +63,4 @@ public class PostController {
     postService.deletePost(post.getId());
   }
 
-  @DeleteMapping("/user/{id}")
-  public void deleteAllPostsByUserId(@PathVariable("id") User user) {
-    postService.deleteAllPostsByUserId(user);
-  }
 }

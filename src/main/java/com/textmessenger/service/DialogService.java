@@ -8,7 +8,7 @@ public interface DialogService {
 
   Dialog readDialog(long id);
 
-  void updateDialog(Dialog oldDialog, Dialog dialog);
+  void updateDialog(Dialog dialog);
 
   void deleteDialog(long id);
 }

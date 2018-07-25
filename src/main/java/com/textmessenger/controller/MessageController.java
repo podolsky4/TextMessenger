@@ -39,9 +39,9 @@ public class MessageController {
     messageService.createMessage(message);
   }
 
-  @PutMapping("/{id}")
-  public void updateMessageById(@PathVariable("id") Message oldMessage, @RequestBody Message message) {
-    messageService.updateMessage(oldMessage, message);
+  @PutMapping
+  public void updateMessageById(@RequestBody Message message) {
+    messageService.updateMessage(message);
   }
 
   @DeleteMapping("/{id}")

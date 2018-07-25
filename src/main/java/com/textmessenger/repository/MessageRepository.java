@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-  List<Message> getAllMessagesByDialog(Dialog dialog);
+  List<Message> findByDialog(Dialog dialog);
 
-  void deleteMessageById(Message message);
+  void deleteById(Message message);
 
-  void updateOldMessageByNewMessage(Message oldMessage, Message newMessage);
+
 }

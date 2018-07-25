@@ -30,18 +30,18 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public void updateMessage(Message oldMessage, Message message) {
-    messageRepository.updateOldMessageByNewMessage(oldMessage, message);
+  public void updateMessage(Message message) {
+    messageRepository.save(message);
   }
 
   @Override
   public void deleteMessage(Message message) {
-    messageRepository.deleteMessageById(message);
+    messageRepository.deleteById(message);
   }
 
   @Override
   public List<Message> getMessagesFromDialog(Dialog dialog) {
-    return messageRepository.getAllMessagesByDialog(dialog);
+    return messageRepository.findByDialog(dialog);
   }
 }
 

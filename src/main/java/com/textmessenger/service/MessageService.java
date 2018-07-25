@@ -12,7 +12,7 @@ public interface MessageService {
 
   Optional<Message> readMessage(Message message);
 
-  void updateMessage(Message oldMessage, Message message);
+  void updateMessage(Message message);
 
   void deleteMessage(Message message);
 

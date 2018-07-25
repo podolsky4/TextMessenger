@@ -31,8 +31,8 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public void updatePost(Post oldPost, Post post) {
-    postRepository.updateOldPostWithNewPost(oldPost, post);
+  public void updatePost(Post post) {
+    postRepository.save(post);
   }
 
   @Override
@@ -61,8 +61,4 @@ public class PostServiceImpl implements PostService {
     return postRepository.findAllPostsByUser(user);
   }
 
-  @Override
-  public void deleteAllPostsByUserId(User user) {
-    postRepository.deleteAllByUser(user);
-  }
 }

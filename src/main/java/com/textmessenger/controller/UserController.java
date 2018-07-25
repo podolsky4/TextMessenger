@@ -37,14 +37,14 @@ public class UserController {
 
   @GetMapping("/{id}")
   public ResponseEntity<User> readUser(@PathVariable("id") long id) {
-    return Optional.ofNullable(ResponseEntity.ok().body(userService.readUser(id)))
+    return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
             .orElse(ResponseEntity.notFound().build());
   }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<?> updateUser(@PathVariable("id") long id, @RequestBody User user) {
-    userService.updateUser(id, user);
-    return ResponseEntity.ok().body(userService.readUser(id) + " is updated");
+  @PutMapping
+  public ResponseEntity<User> updateUser(@RequestBody User user) {
+    userService.updateUser(user);
+    return ResponseEntity.ok().build();
   }
 
   @DeleteMapping("/{id}")

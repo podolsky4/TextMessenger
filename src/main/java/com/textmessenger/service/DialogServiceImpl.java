@@ -26,8 +26,8 @@ public class DialogServiceImpl implements DialogService {
   }
 
   @Override
-  public void updateDialog(Dialog oldDialog, Dialog dialog) {
-    dialogRepository.updateOldDialogByNewDialog(oldDialog, dialog);
+  public void updateDialog(Dialog dialog) {
+    dialogRepository.save(dialog);
   }
 
   @Override
