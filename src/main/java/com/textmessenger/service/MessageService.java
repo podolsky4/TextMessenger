@@ -1,6 +1,10 @@
 package com.textmessenger.service;
 
+import com.textmessenger.model.Dialog;
 import com.textmessenger.model.Message;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface MessageService {
 
@@ -12,4 +16,5 @@ public interface MessageService {
 
   void deleteMessage(long id);
 
+  List<Message> getMessagesFromDialog(Dialog dialog);
 }
