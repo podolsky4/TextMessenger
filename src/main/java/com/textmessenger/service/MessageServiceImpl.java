@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,17 +29,12 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public void updateMessage(long id, Message message) {
-    Message existing = messageRepository.getOne(id);
-
-    message.setId(existing.getId());
-
-    messageRepository.save(message);
+  public void updateMessage(Message oldMessage, Message message) {
+    messageRepository.updateMessageByNewMwssage(oldMessage, message);
   }
-
   @Override
-  public void deleteMessage(long id) {
-    messageRepository.delete(messageRepository.getOne(id));
+  public void deleteMessage(Message message) {
+    messageRepository.deleteMessageById(message);
   }
 
   @Override

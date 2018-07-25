@@ -33,19 +33,19 @@ public class MessageController {
     return ResponseEntity.ok().body(Optional.ofNullable(messageService.getMessagesFromDialog(dialog)));
   }
 
-  @PostMapping("/{id]")
+  @PostMapping("/{id}")
   public void addMessageToDialog(@PathVariable("id") Dialog dialog, @RequestBody Message message) {
     message.setDialog(dialog);
     messageService.createMessage(message);
   }
 
   @PutMapping("/{id}")
-  public void updateMessageById(@PathVariable("id") long id, @RequestBody Message message) {
-    messageService.updateMessage(id, message);
+  public void updateMessageById(@PathVariable("id") Message oldMessage, @RequestBody Message message) {
+    messageService.updateMessage(oldMessage, message);
   }
 
   @DeleteMapping("/{id}")
-  public void deleteMessageById(@PathVariable("id") long id) {
-    messageService.deleteMessage(id);
+  public void deleteMessageById(@PathVariable("id") Message message) {
+    messageService.deleteMessage(message);
   }
 }

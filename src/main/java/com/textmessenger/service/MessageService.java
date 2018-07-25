@@ -11,9 +11,9 @@ public interface MessageService {
 
   Message readMessage(long id);
 
-  void updateMessage(long id, Message message);
+  void updateMessage(Message oldMessage, Message message);
 
-  void deleteMessage(long id);
+  void deleteMessage(Message message);
 
   List<Message> getMessagesFromDialog(Dialog dialog);
 }

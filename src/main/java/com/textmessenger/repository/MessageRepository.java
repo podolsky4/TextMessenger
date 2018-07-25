@@ -11,4 +11,8 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
   List<Message> getAllMessagesByDialog(Dialog dialog);
+
+  void deleteMessageById(Message message);
+
+  void updateMessageByNewMwssage(Message oldMessage, Message newMessage);
 }
