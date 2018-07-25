@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MessageService {
 
-  long createMessage(Message message);
+  void createMessage(Message message);
 
   Message readMessage(long id);
 

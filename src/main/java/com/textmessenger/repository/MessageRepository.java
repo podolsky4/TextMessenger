@@ -14,5 +14,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
   void deleteMessageById(Message message);
 
-  void updateMessageByNewMwssage(Message oldMessage, Message newMessage);
+  void updateOldMessageByNewMessage(Message oldMessage, Message newMessage);
 }

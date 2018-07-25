@@ -19,8 +19,8 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public long createMessage(Message message) {
-    return messageRepository.save(message).getId();
+  public void createMessage(Message message) {
+    messageRepository.save(message);
   }
 
   @Override
@@ -30,7 +30,7 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   public void updateMessage(Message oldMessage, Message message) {
-    messageRepository.updateMessageByNewMwssage(oldMessage, message);
+    messageRepository.updateOldMessageByNewMessage(oldMessage, message);
   }
 
   @Override
