@@ -26,7 +26,7 @@ public class DialogController {
     this.dialogService = dialogService;
   }
 
-  @PostMapping("/user")
+  @PostMapping
   public ResponseEntity<?> createDialog(@RequestBody Dialog dialog) {
     dialogService.createDialog(dialog);
     URI location = ServletUriComponentsBuilder
