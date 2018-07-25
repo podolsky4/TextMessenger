@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/posts")
+@RequestMapping("/posts")
 public class PostController {
 
   private final PostService postService;
@@ -48,7 +48,7 @@ public class PostController {
     return ResponseEntity.ok().body(postService.getPostToPage(number, limit));
   }
 
-  @PutMapping("/update/{id}")
+  @PutMapping("/{id}")
   public void updatePost(@PathVariable("id") Post oldPost, @RequestBody Post post) {
     postService.updatePost(oldPost, post);
   }
