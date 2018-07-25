@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -27,40 +26,29 @@ public class PostController {
     this.postService = postService;
   }
 
-  @GetMapping("/{id}")
-  public Optional<Post> getPost(@PathVariable long id) {
-    return postService.getById(id);
-  }
 
-  @GetMapping
-  public ResponseEntity<Optional<List<Post>>> getAll() {
-    return ResponseEntity.ok().body(postService.getAll());
-  }
-
-  @PostMapping("/{id}")
-  public void createPost(@PathVariable("id") User user, @RequestBody Post post) {
+  @PostMapping("/user/{id}")
+  public ResponseEntity<?> createPost(@PathVariable("id") User user, @RequestBody Post post) {
     postService.createPost(user, post);
-  }
-
-  @GetMapping("/page/{number}/{limit}")
-  public ResponseEntity<Optional<List<Post>>> getPostToPage(@PathVariable("number") int number,
-                                                            @PathVariable("limit") int limit) {
-    return ResponseEntity.ok().body(postService.getPostToPage(number, limit));
+    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
 
   @PutMapping
-  public void updatePost(@RequestBody Post post) {
+  public ResponseEntity<?> updatePost(@RequestBody Post post) {
     postService.updatePost(post);
+    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<Optional<List<Post>>> getUserPost(@PathVariable("id") User user) {
-    return ResponseEntity.ok().body(postService.getUserPost(user));
+  public ResponseEntity<?> getUserPost(@PathVariable("id") User user) {
+    return Optional.of(ResponseEntity.ok().body(postService.getUserPost(user)))
+            .orElse(ResponseEntity.noContent().build());
   }
 
-  @DeleteMapping("/{id}")
-  public void deletePostById(@PathVariable("id") Post post) {
-    postService.deletePost(post.getId());
+  @DeleteMapping
+  public ResponseEntity<?> deletePostById(@RequestBody Post post) {
+    postService.deletePost(post);
+    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
 }

@@ -1,6 +1,7 @@
 package com.textmessenger.controller;
 
 import com.textmessenger.model.Dialog;
+import com.textmessenger.model.User;
 import com.textmessenger.service.DialogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -24,27 +26,25 @@ public class DialogController {
     this.dialogService = dialogService;
   }
 
-  @PostMapping
-  public ResponseEntity.BodyBuilder createDialog(@RequestBody Dialog dialog) {
+  @PostMapping("/user/{id}")
+  public ResponseEntity createDialog(@PathVariable("id") User user,@RequestBody Dialog dialog) {
+    List<User> users = dialog.getUsers();
+    users.add(user);
+    dialog.setUsers(users);
     dialogService.createDialog(dialog);
-    return ResponseEntity.status(200);
+    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Dialog> readDialog(@PathVariable("id") long id) {
-    return Optional.of(ResponseEntity.ok().body(dialogService.readDialog(id)))
-            .orElse(ResponseEntity.notFound().build());
+  @GetMapping("user/{id}")
+  public ResponseEntity<?> readDialog(@PathVariable("id") User user) {
+    return Optional.of(ResponseEntity.ok().body(dialogService.getDialogsByUser(user)))
+            .orElse(ResponseEntity.noContent().build());
   }
 
   @PutMapping
-  public ResponseEntity.BodyBuilder updateDialog(@RequestBody Dialog dialog) {
+  public ResponseEntity updateDialog(@RequestBody Dialog dialog) {
     dialogService.updateDialog(dialog);
-    return ResponseEntity.status(200);
+    return Optional.of(ResponseEntity.status(200)).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity.BodyBuilder deleteDialog(@PathVariable("id") long id) {
-    dialogService.deleteDialog(id);
-    return ResponseEntity.status(200);
-  }
 }

@@ -22,12 +22,8 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public void createPost(User user, Post post) {
-    postRepository.createPostWithUser(user, post);
-  }
-
-  @Override
-  public Post readPost(long id) {
-    return postRepository.getOne(id);
+    post.setUser(user);
+    postRepository.save(post);
   }
 
   @Override
@@ -36,13 +32,8 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public void deletePost(long id) {
-    postRepository.deleteById(id);
-  }
-
-  @Override
-  public Optional<Post> getById(long id) {
-    return postRepository.findById(id);
+  public void deletePost(Post post) {
+    postRepository.delete(post);
   }
 
   @Override
@@ -51,14 +42,8 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public Optional<List<Post>> getPostToPage(int number, int limit) {
-    return Optional.of(postRepository.findAll().stream().skip(number * limit)
-            .limit(limit).collect(Collectors.toList()));
-  }
-
-  @Override
-  public Optional<List<Post>> getUserPost(User user) {
-    return postRepository.findAllPostsByUser(user);
+  public List<Post> getUserPost(User user) {
+    return postRepository.findPostsByUser(user);
   }
 
 }

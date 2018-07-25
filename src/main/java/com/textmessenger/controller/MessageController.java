@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController("/messages")
@@ -23,29 +22,30 @@ public class MessageController {
     this.messageService = messageService;
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Optional<Message>> getMessageById(@PathVariable("id") Message message) {
-    return ResponseEntity.ok().body(messageService.readMessage(message));
-  }
 
   @GetMapping("/dialog/{id}")
-  public ResponseEntity<Optional<List<Message>>> getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
-    return ResponseEntity.ok().body(Optional.ofNullable(messageService.getMessagesFromDialog(dialog)));
+  public ResponseEntity<?> getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
+    return Optional.of(ResponseEntity.ok().body(messageService.getMessagesFromDialog(dialog)))
+            .orElse(ResponseEntity.noContent().build());
   }
 
-  @PostMapping("/{id}")
-  public void addMessageToDialog(@PathVariable("id") Dialog dialog, @RequestBody Message message) {
+  @PostMapping("dialog/{id}")
+  public ResponseEntity<?> addMessageToDialog(@PathVariable("id") Dialog dialog, @RequestBody Message message) {
     message.setDialog(dialog);
     messageService.createMessage(message);
+    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
 
   @PutMapping
-  public void updateMessageById(@RequestBody Message message) {
+  public ResponseEntity<?> updateMessageById(@RequestBody Message message) {
     messageService.updateMessage(message);
+    return Optional.of(ResponseEntity.ok())
+            .orElse(ResponseEntity.badRequest()).build();
   }
 
-  @DeleteMapping("/{id}")
-  public void deleteMessageById(@PathVariable("id") Message message) {
+  @DeleteMapping
+  public ResponseEntity<?> deleteMessageById(@RequestBody Message message) {
     messageService.deleteMessage(message);
+    return ResponseEntity.ok().build();
   }
 }

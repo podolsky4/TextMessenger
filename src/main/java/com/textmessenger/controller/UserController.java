@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -29,20 +27,17 @@ public class UserController {
   @PostMapping("/user")
   public ResponseEntity<?> createUser(@RequestBody User user) {
     userService.createUser(user);
-    URI location = ServletUriComponentsBuilder
-            .fromCurrentRequest()
-            .build().toUri();
-    return ResponseEntity.created(location).build();
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<User> readUser(@PathVariable("id") long id) {
+  public ResponseEntity<?> readUser(@PathVariable("id") long id) {
     return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
             .orElse(ResponseEntity.notFound().build());
   }
 
   @PutMapping
-  public ResponseEntity<User> updateUser(@RequestBody User user) {
+  public ResponseEntity<?> updateUser(@RequestBody User user) {
     userService.updateUser(user);
     return ResponseEntity.ok().build();
   }
@@ -50,6 +45,6 @@ public class UserController {
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
     userService.deleteUser(id);
-    return ResponseEntity.ok().body("user with id: " + id + " deleted");
+    return ResponseEntity.ok().build();
   }
 }

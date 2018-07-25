@@ -25,11 +25,6 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public Optional<Message> readMessage(Message message) {
-    return messageRepository.findById(message.getId());
-  }
-
-  @Override
   public void updateMessage(Message message) {
     messageRepository.save(message);
   }
