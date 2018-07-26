@@ -1,0 +1,17 @@
+$color-bg: #e9967a;
+
+body {
+  padding: 10% 15%;
+  background: $color-bg;
+}
+
+.header {
+  padding: 10px 20px;
+  background-color: black;
+}
+
+.header > a {
+  padding-right: 20px;
+  color: white;
+  text-decoration: none;
+}

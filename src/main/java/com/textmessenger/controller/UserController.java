@@ -3,6 +3,7 @@ package com.textmessenger.controller;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(value = "http://localhost:3000")
 @RequestMapping("/users")
 public class UserController {
 
@@ -26,8 +28,9 @@ public class UserController {
 
   @PostMapping("/user")
   public ResponseEntity<?> createUser(@RequestBody User user) {
+    System.out.println(user);
     userService.createUser(user);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.status(201).build();
   }
 
   @GetMapping("/{id}")
