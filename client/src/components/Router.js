@@ -5,6 +5,7 @@ import Feed from './Feed'
 import Favorites from './Favorites'
 import Dialogs from './Dialogs'
 import Notifications from './Notifications'
+import Login from './LogIn'
 
 class Router extends Component {
   render () {
@@ -15,6 +16,7 @@ class Router extends Component {
         <Route exact path='/favorites' component={Favorites}/>
         <Route exact path='/dialogs' component={Dialogs}/>
         <Route exact path='/notifications' component={Notifications}/>
+        <Route exact path='/login' component={Login}/>
       </Switch>
     )
   }
