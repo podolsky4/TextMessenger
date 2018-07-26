@@ -1,7 +1,6 @@
 ###
 #   Server port
 ###
-
 server:
   port: 9000
 
@@ -10,15 +9,17 @@ server:
 ###
 spring:
   datasource:
-    url: jdbc:h2:mem:textmessenger-dev;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;
     platform: h2
-    username: admin
-    password: 12345
+    username: sa
+    password:
     driverClassName: org.h2.Driver
+    schema: classpath*:sql/schema.sql
+    data: classpath*:sql/data.sql
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate:
         show_sql: true
@@ -33,5 +34,5 @@ spring:
       enabled: true
       path: /console
       settings:
-        trace: false
-        web-allow-others: false
+        trace: true
+        web-allow-others: true
