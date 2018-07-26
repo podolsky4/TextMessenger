@@ -1,66 +1,105 @@
 import React, { Component } from 'react'
 
 class LogIn extends Component {
-  constructor () {
-    super()
-    this.handleSubmit = this.handleSubmit.bind(this)
+  constructor (props) {
+    super(props);
+    this.state={
+      login:'',
+      email:'',
+      password:'',
+      firstName:'',
+      lastName:'',
+      address:'',
+      profileHeader:'',
+      profilePhoto:'',
+      dateBirthday:''
+    };
   }
 
-  handleSubmit (event) {
-    event.preventDefault()
-    let data = {
-      login: document.getElementById('login').value,
-      email: document.getElementById('email').value,
-      password: document.getElementById('password').value,
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
-      address: document.getElementById('address').value,
-      profilePhoto: document.getElementById('profilePhoto').value,
-      profileHeader: document.getElementById('profileHeader').value,
-      dateBirthday: document.getElementById('dateBirthday').value
-    }
-    console.log(JSON.stringify(data))
+  // handleSubmit (event) {
+  //   event.preventDefault();
+  //   let data = this.state;
+  //   console.log(JSON.stringify(data));
+  //   fetch('http://localhost:9000/users/user',
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data)
+  //     }).then(res => console.log(res.status))
+  //
+  // }
+
+  change = e => {
+    this.setState({
+      [e.target.name]:e.target.value
+    });
+  };
+
+  onSubmit = e =>{
+    e.preventDefault();
+    let data = this.state;
     fetch('http://localhost:9000/users/user',
-      {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      }).then(res => console.log(res.status))
-
-  }
+         {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(data)
+         }).then(res => console.log(res.status))
+  };
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="login">Login</label>
-        <input id="login" name="login" type="text"/>
-
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email"/>
-
-        <label htmlFor="password">Password</label>
-        <input id="password" name="password" type="text"/>
-
-        <label htmlFor="firstName">First name</label>
-        <input id="firstName" name="firstName" type="text"/>
-
-        <label htmlFor="lastName">Last name</label>
-        <input id="lastName" name="lastName" type="text"/>
-
-        <label htmlFor="address">Address</label>
-        <input id="address" name="address" type="text"/>
-
-        <label htmlFor="profileHeader">profile Header</label>
-        <input id="profileHeader" name="profileHeader" type="text"/>
-
-        <label htmlFor="profilePhoto">profile Photo</label>
-        <input id="profilePhoto" name="profilePhoto" type="text"/>
-
-        <label htmlFor="dateBirthday">dateBirthday</label>
-        <input id="dateBirthday" name="dateBirthday" type="text"/>
+      <form onSubmit={e=>this.onSubmit(e)}>
+        <label>
+          Login:
+          <input id="login" name="login" type="text" onChange={e=>this.change(e)}/>
+        </label>
+        <br />
+        <label >
+          Email:
+          <input id="email" name="email" type="email" onChange={e=>this.change(e)}/>
+        </label>
+        <br />
+        <label>
+          Password:
+          <input id="password" name="password" type="text" onChange={e=>this.change(e)}/>
+        </label>
+        <br />
+        <label>
+          First name:
+         <input id="firstName" name="firstName" type="text" onChange={e=>this.change(e)}/>
+        </label>
+        <br />
+        <label>
+          Last name:
+          <input id="lastName" name="lastName" type="text" onChange={e=>this.change(e)}/>
+        </label>
+        <br />
+        <label>
+          Address:
+          <input id="address" name="address" type="text" onChange={e=>this.change(e)}/>
+        </label>
+        <br />
+        <label>
+          Profile Header:
+          <input id="profileHeader" name="profileHeader" type="text" onChange={e=>this.change(e)}/>
+        </label>
+        <br />
+        <label>
+          Profile Photo:
+          <input id="profilePhoto" name="profilePhoto" type="text" onChange={e=>this.change(e)}/>
+        </label>
+        <br />
+        <label >
+          Date Birthday:
+          <input id="dateBirthday" name="dateBirthday" type="text" onChange={e=>this.change(e)}/>
+        </label>
+        <br />
         <button>Log In</button>
       </form>
     )
