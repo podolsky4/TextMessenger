@@ -10,15 +10,15 @@ server:
 ###
 spring:
   datasource:
-    url: jdbc:h2:mem:example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:textmessenger-dev;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     platform: h2
-    username: sa
-    password:
+    username: admin
+    password: 12345
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true

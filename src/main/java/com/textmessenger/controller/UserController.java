@@ -1,6 +1,6 @@
 package com.textmessenger.controller;
 
-import com.textmessenger.model.User;
+import com.textmessenger.model.entity.User;
 import com.textmessenger.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

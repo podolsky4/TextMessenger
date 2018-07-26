@@ -1,6 +1,6 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.User;
+import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public long createUser(User user) {
-    return userRepository.save(user).getId();
+  public User createUser(User user) {
+    return userRepository.save(user);
   }
 
   @Override

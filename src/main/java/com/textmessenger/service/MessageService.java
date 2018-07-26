@@ -1,10 +1,9 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.Dialog;
-import com.textmessenger.model.Message;
+import com.textmessenger.model.entity.Dialog;
+import com.textmessenger.model.entity.Message;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MessageService {
 

@@ -1,7 +1,7 @@
 package com.textmessenger.repository;
 
-import com.textmessenger.model.Comment;
-import com.textmessenger.model.Post;
+import com.textmessenger.model.entity.Comment;
+import com.textmessenger.model.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,10 +1,10 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.User;
+import com.textmessenger.model.entity.User;
 
 public interface UserService {
 
-  long createUser(User user);
+  User createUser(User user);
 
   User readUser(long id);
 
