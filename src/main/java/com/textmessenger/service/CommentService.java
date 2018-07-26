@@ -1,7 +1,7 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.Comment;
-import com.textmessenger.model.Post;
+import com.textmessenger.model.entity.Comment;
+import com.textmessenger.model.entity.Post;
 
 import java.util.List;
 

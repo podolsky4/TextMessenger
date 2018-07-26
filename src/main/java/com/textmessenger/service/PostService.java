@@ -1,7 +1,7 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.Post;
-import com.textmessenger.model.User;
+import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
 
 import java.util.List;
 import java.util.Optional;

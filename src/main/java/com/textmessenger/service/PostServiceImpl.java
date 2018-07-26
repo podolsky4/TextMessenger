@@ -1,7 +1,7 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.Post;
-import com.textmessenger.model.User;
+import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
