@@ -16,22 +16,6 @@ class LogIn extends Component {
     };
   }
 
-  // handleSubmit (event) {
-  //   event.preventDefault();
-  //   let data = this.state;
-  //   console.log(JSON.stringify(data));
-  //   fetch('http://localhost:9000/users/user',
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data)
-  //     }).then(res => console.log(res.status))
-  //
-  // }
-
   change = e => {
     this.setState({
       [e.target.name]:e.target.value
