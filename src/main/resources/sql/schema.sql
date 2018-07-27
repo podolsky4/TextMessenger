@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `last_name`      VARCHAR(60),
   `address`        VARCHAR(255),
   `profile_photo`  VARCHAR(255),
-  `profile_banner` VARCHAR(255),
+  `profile_header` VARCHAR(255),
   `birthday`       DATE,
   `created_at`     TIMESTAMP    NOT NULL,
   `last_update`    TIMESTAMP    NULL,
