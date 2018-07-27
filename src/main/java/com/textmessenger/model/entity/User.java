@@ -51,11 +51,11 @@ public class User extends BaseEntity {
   @Column(name = "profile_photo")
   private String profilePhoto;
 
-  @Column(name = "profile_banner")
-  private String profileBanner;
+  @Column(name = "profile_header")
+  private String profileHeader;
 
   @Column(name = "birthday")
-  private LocalDate birthday;
+  private LocalDate dateBirthday;
 
   @OneToMany(mappedBy = "user")
   @JsonIgnore
