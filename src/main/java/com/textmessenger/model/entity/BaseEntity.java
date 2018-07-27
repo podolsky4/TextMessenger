@@ -1,9 +1,8 @@
 package com.textmessenger.model.entity;
 
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
-import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;

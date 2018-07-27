@@ -6,6 +6,7 @@ import com.textmessenger.model.entity.Post;
 import java.util.List;
 
 public interface CommentService {
+
   void createComment(Post post, Comment comment);
 
   List<Comment> findAllPostFromPost(Post post);
