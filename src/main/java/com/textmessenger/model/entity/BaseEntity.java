@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
  */
 
 @MappedSuperclass
+@Data
 abstract class BaseEntity {
 
   // Primary key for entity
