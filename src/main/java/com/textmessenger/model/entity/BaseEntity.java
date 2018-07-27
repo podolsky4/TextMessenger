@@ -3,6 +3,8 @@ package com.textmessenger.model.entity;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
  */
 
 @MappedSuperclass
+@Data
 abstract class BaseEntity {
 
   // Primary key for entity
