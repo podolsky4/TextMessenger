@@ -51,7 +51,7 @@ class LogIn extends Component {
         <br />
         <label>
           Password:
-          <input id="password" name="password" type="text" onChange={e=>this.change(e)}/>
+          <input id="password" name="password" type="password" onChange={e=>this.change(e)}/>
         </label>
         <br />
         <label>
@@ -81,7 +81,7 @@ class LogIn extends Component {
         <br />
         <label >
           Date Birthday:
-          <input id="dateBirthday" name="dateBirthday" type="text" onChange={e=>this.change(e)}/>
+          <input id="dateBirthday" name="dateBirthday" type="date" onChange={e=>this.change(e)}/>
         </label>
         <br />
         <button>Log In</button>
