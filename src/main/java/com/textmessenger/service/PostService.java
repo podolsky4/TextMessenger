@@ -16,6 +16,5 @@ public interface PostService {
 
   Optional<List<Post>> getAll();
 
-
   List<Post> getUserPost(User user);
 }

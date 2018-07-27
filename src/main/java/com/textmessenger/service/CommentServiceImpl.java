@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 @Transactional
 public class CommentServiceImpl implements CommentService {
+
   private final CommentRepository commentRepository;
 
   CommentServiceImpl(CommentRepository commentRepository) {
