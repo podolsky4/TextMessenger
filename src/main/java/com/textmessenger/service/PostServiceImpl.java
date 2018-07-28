@@ -3,6 +3,7 @@ package com.textmessenger.service;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.PostRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,12 +38,17 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public Optional<List<Post>> getAll() {
-    return Optional.of(postRepository.findAll());
+
+    return Optional.of(postRepository.findAll(orderBy()));
   }
 
   @Override
   public List<Post> getUserPost(User user) {
     return postRepository.findPostsByUser(user);
+  }
+
+  private Sort orderBy() {
+    return new Sort(Sort.Direction.DESC, "createdDate");
   }
 
 }
