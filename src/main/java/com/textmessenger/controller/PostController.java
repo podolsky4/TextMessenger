@@ -4,6 +4,7 @@ import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.service.PostService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/posts")
+@CrossOrigin(value = "http://localhost:3000")
 public class PostController {
 
   private final PostService postService;
@@ -26,6 +28,10 @@ public class PostController {
     this.postService = postService;
   }
 
+  @GetMapping
+  public ResponseEntity<?> getAllPosts() {
+    return ResponseEntity.ok().body(postService.getAll());
+  }
 
   @PostMapping("/user/{id}")
   public ResponseEntity<?> createPost(@PathVariable("id") User user, @RequestBody Post post) {
