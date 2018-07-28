@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import {connect} from 'react-redux'
+import {createUser} from '../actions/userActions'
 class LogIn extends Component {
   constructor (props) {
     super(props);
@@ -33,7 +34,7 @@ class LogIn extends Component {
              'Content-Type': 'application/json',
            },
            body: JSON.stringify(data)
-         }).then(res => console.log(res.status))
+         }).then(()=>this.props.createUser(this.state.login));
   };
 
   render () {
@@ -90,4 +91,15 @@ class LogIn extends Component {
   }
 }
 
-export default LogIn
+const  mapDispatchToProps = dispatch=> {
+  return{
+    createUser: (some) => dispatch(createUser(some))
+  }
+}
+const mapStateToProps = state =>{
+  return {
+    user: state.user
+  }
+}
+
+export default  connect(mapStateToProps, mapDispatchToProps)(LogIn);

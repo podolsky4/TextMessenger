@@ -12,9 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -22,11 +20,11 @@ import java.util.Set;
 @Table(name = "dialog")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Dialog extends BaseEntity{
+public class Dialog extends BaseEntity {
 
   @OneToMany(mappedBy = "dialog", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Message> messages = new ArrayList<>();
 
   @ManyToMany(mappedBy = "dialogs")
-  private Set<User> users = new HashSet<>();
+  private List<User> users = new ArrayList<>();
 }

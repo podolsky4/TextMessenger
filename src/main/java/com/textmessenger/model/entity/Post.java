@@ -15,9 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -37,6 +35,6 @@ public class Post extends BaseEntity {
   private List<Comment> comments = new ArrayList<>();
 
   @ManyToMany(mappedBy = "favorites")
-  private Set<User> likers = new HashSet<>();
+  private List<User> likers = new ArrayList<>();
 
 }
