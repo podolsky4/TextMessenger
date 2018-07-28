@@ -22,7 +22,7 @@ import java.util.Set;
 @Table(name = "dialog")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Dialog extends BaseEntity{
+public class Dialog extends BaseEntity {
 
   @OneToMany(mappedBy = "dialog", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Message> messages = new ArrayList<>();

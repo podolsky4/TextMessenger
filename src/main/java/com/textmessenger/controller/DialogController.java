@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,7 +26,7 @@ public class DialogController {
   }
 
   @PostMapping("/user/{id}")
-  public ResponseEntity createDialog(@PathVariable("id") User user,@RequestBody Dialog dialog) {
+  public ResponseEntity createDialog(@PathVariable("id") User user, @RequestBody Dialog dialog) {
     Set<User> users = dialog.getUsers();
     users.add(user);
     dialog.setUsers(users);

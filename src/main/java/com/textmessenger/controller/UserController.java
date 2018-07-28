@@ -50,7 +50,7 @@ public class UserController {
   }
 
   @GetMapping("/bylogin/{login}")
-  public ResponseEntity<?> getUserByLogin(@PathVariable("login") String login){
+  public ResponseEntity<?> getUserByLogin(@PathVariable("login") String login) {
     return ResponseEntity.ok().body(userService.getUserByLogin(login));
   }
 }
