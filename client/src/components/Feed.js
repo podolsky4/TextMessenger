@@ -3,17 +3,20 @@ import {connect} from 'react-redux'
 import {loadPosts} from '../actions/postsActions';
 
 class Feed extends Component {
+
   constructor(props){
     super(props);
     this.state ={
       text:''
     }
   }
+
   componentDidMount () {
     if(this.props.posts.length===0){
       this.props.loadPosts();
     }
   }
+
   change = e => {
     this.setState({
       [e.target.name]:e.target.value
@@ -45,6 +48,7 @@ class Feed extends Component {
           <br />
         <button>Опубликовать</button>
         </form>
+
       <ul>
         {posts.map((post,index)=>
           <li key={index}>{post.content}</li>
