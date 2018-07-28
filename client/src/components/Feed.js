@@ -4,7 +4,7 @@ import {loadPosts} from '../actions/postsActions';
 
 class Feed extends Component {
   componentDidMount () {
-    if(this.props.posts.length==0){
+    if(this.props.posts.length===0){
       this.props.loadPosts();
     }
   }
