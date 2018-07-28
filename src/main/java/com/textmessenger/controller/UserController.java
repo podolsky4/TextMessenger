@@ -28,9 +28,7 @@ public class UserController {
 
   @PostMapping("/user")
   public ResponseEntity<?> createUser(@RequestBody User user) {
-    System.out.println(user);
-    userService.createUser(user);
-    return ResponseEntity.status(201).build();
+    return ResponseEntity.status(201).body(userService.createUser(user));
   }
 
   @GetMapping("/{id}")
@@ -49,5 +47,10 @@ public class UserController {
   public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
     userService.deleteUser(id);
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/bylogin/{login}")
+  public ResponseEntity<?> getUserByLogin(@PathVariable("login") String login){
+    return ResponseEntity.ok().body(userService.getUserByLogin(login));
   }
 }
