@@ -28,5 +28,5 @@ public class Dialog extends BaseEntity {
   private List<Message> messages = new ArrayList<>();
 
   @ManyToMany(mappedBy = "dialogs")
-  private Set<User> users = new HashSet<>();
+  private List<User> users = new ArrayList<>();
 }

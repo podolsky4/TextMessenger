@@ -37,6 +37,6 @@ public class Post extends BaseEntity {
   private List<Comment> comments = new ArrayList<>();
 
   @ManyToMany(mappedBy = "favorites")
-  private Set<User> likers = new HashSet<>();
+  private List<User> likers = new ArrayList<>();
 
 }

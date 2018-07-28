@@ -70,12 +70,12 @@ public class User extends BaseEntity {
           joinColumns = {@JoinColumn(name = "user_id")},
           inverseJoinColumns = {@JoinColumn(name = "dialog_id")})
   @JsonIgnore
-  private Set<Dialog> dialogs = new HashSet<>();
+  private List<Dialog> dialogs = new ArrayList<>();
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinTable(name = "favorites",
           joinColumns = {@JoinColumn(name = "user_id")},
           inverseJoinColumns = {@JoinColumn(name = "post_id")})
   @JsonIgnore
-  private Set<Post> favorites = new HashSet<>();
+  private List<Post> favorites = new ArrayList<>();
 }
