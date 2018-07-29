@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {readUserProfile} from '../actions/userProfileActions';
-import {UPDATE_USER_BIRTHDAY, UPDATE_USER_ADRESS, UPDATE_USER_LASTNAME, UPDATE_USER_NAME, UPDATE_USER_PASSWORD, UPDATE_USER_PROFILE_HEADER, UPDATE_USER_PROFILE_PHOTO} from '../actions/types';
+import {createUser} from "../actions/userActions";
 
 class Profile extends Component {
   constructor (props) {
@@ -15,42 +14,74 @@ class Profile extends Component {
       address:'',
       profileHeader:'',
       profilePhoto:'',
-      dateBirthday:''
+      dateBirthday:'',
+      readOnly: true,
+      disabled: true
     };
   }
+
+  change = e => {
+    this.setState({
+      [e.target.name]:e.target.value
+    });
+  };
+
+  editableField = prevState => {
+    this.setState({
+      readOnly: !prevState.readOnly,
+      disabled: !prevState.disabled
+    })
+  };
+
+  updateUser = e => {
+    e.preventDefault();
+    let data = this.state;
+    fetch('http://localhost:9000/users/user',
+        {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        }).then(()=>this.props.loadUser(this.state.login));
+  };
+
+
+
   render () {
     return (
         <div>
-          <h1>
-            Hello, {readUserProfile.firstName}
-          </h1>
-          <h2>
-            Your age is: {readUserProfile.dateBirthday}
-          </h2>
-          <form></form>
-          <form></form>
-          <form></form>
-          <form></form>
-          <form></form>
-          <form></form>
+          <form>
+            <h1>Hello, {this.state.firstName} {this.state.lastName} </h1>
+            <p>your are login with {this.state.login} and email {this.state.email}</p>
+            <input id='password-change' name='password' type='password' value={this.state.password} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            <input id='firstName-change' name='firstName' type='text' value={this.state.firstName} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            <input id='lastName-change' name='lastName' type='text' value={this.state.lastName} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            <input id='address-change' name='address' type='text' value={this.state.address} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            <input id='profileHeader-change' name='profileHeader' type='url' value={this.state.profileHeader} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            <input id='profilePhoto-change' name='profilePhoto' type='url' value={this.state.profilePhoto} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
+            <input type='button' name='Apply' value='Apply' onClick={ e => this.updateUser(e)} disabled={this.state.disabled}/>
+          </form>
         </div>
     )
   }
 };
 
+
+
 const mapStateToProps = state => {
   return {
-    readUserProfile: state.user
+    user: state.user
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeUserName: newName => dispatch({
-      type: UPDATE_USER_NAME,
-      payload: newName
-    })
+    loadUser: (login) => dispatch(createUser(login))
   }
 };
 
-export default connect(mapStateToProps, MapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
