@@ -36,14 +36,16 @@ class Profile extends Component {
   updateUser = e => {
     e.preventDefault();
     let data = this.state;
-    fetch('http://localhost:9000/users/user',
+    const updatedData = {...data, id: this.setState({id: this.state.id})};
+
+    fetch('http://localhost:9000/users/',
         {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(updatedData)
         }).then(()=>this.props.loadUser(this.state.login));
     this.editableField();
   };
@@ -54,13 +56,34 @@ class Profile extends Component {
             <h1>Hello, {this.state.firstName} {this.state.lastName} </h1>
             <p>your are login with {this.state.login} and email {this.state.email}</p>
           <form>
-            <input id='password-change' name='password' type='password' onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
-            <input id='firstName-change' name='firstName' type='text' value={this.state.firstName} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
-            <input id='lastName-change' name='lastName' type='text' value={this.state.lastName} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
-            <input id='address-change' name='address' type='text' value={this.state.address} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
-            <input id='profileHeader-change' name='profileHeader' type='url' value={this.state.profileHeader} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
-            <input id='profilePhoto-change' name='profilePhoto' type='url' value={this.state.profilePhoto} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
-            <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            <label>
+              password:
+              <input id='password-change' name='password' type='password' onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            </label>
+            <label>
+              name:
+              <input id='firstName-change' name='firstName' type='text' value={this.state.firstName} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            </label>
+            <label>
+              surname:
+              <input id='lastName-change' name='lastName' type='text' value={this.state.lastName} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            </label>
+            <label>
+              address:
+              <input id='address-change' name='address' type='text' value={this.state.address} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            </label>
+            <label>
+              url to avatar:
+              <input id='profileHeader-change' name='profileHeader' type='url' value={this.state.profileHeader} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            </label>
+            <label>
+              url to photo:
+              <input id='profilePhoto-change' name='profilePhoto' type='url' value={this.state.profilePhoto} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            </label>
+            <label>
+              birthday:
+              <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+            </label>
             <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
             <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)} disabled={this.state.disabled}/>
           </form>
@@ -73,7 +96,8 @@ class Profile extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    id: state.id
   }
 };
 
