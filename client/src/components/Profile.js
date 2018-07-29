@@ -26,10 +26,10 @@ class Profile extends Component {
     });
   };
 
-  editableField = prevState => {
+  editableField = () => {
     this.setState({
-      readOnly: !prevState.readOnly,
-      disabled: !prevState.disabled
+      readOnly: !this.state.readOnly,
+      disabled: !this.state.disabled
     })
   };
 
@@ -45,17 +45,16 @@ class Profile extends Component {
           },
           body: JSON.stringify(data)
         }).then(()=>this.props.loadUser(this.state.login));
+    this.editableField();
   };
-
-
 
   render () {
     return (
         <div>
-          <form>
             <h1>Hello, {this.state.firstName} {this.state.lastName} </h1>
             <p>your are login with {this.state.login} and email {this.state.email}</p>
-            <input id='password-change' name='password' type='password' value={this.state.password} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+          <form>
+            <input id='password-change' name='password' type='password' onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
             <input id='firstName-change' name='firstName' type='text' value={this.state.firstName} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
             <input id='lastName-change' name='lastName' type='text' value={this.state.lastName} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
             <input id='address-change' name='address' type='text' value={this.state.address} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
@@ -63,7 +62,7 @@ class Profile extends Component {
             <input id='profilePhoto-change' name='profilePhoto' type='url' value={this.state.profilePhoto} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
             <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday} onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
             <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
-            <input type='button' name='Apply' value='Apply' onClick={ e => this.updateUser(e)} disabled={this.state.disabled}/>
+            <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)} disabled={this.state.disabled}/>
           </form>
         </div>
     )
