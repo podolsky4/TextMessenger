@@ -6,15 +6,15 @@ class Profile extends Component {
   constructor (props) {
     super(props);
     this.state={
-      login:'',
-      email:'',
-      password:'',
-      firstName:'',
-      lastName:'',
-      address:'',
-      profileHeader:'',
-      profilePhoto:'',
-      dateBirthday:'',
+      login:this.props.user.login,
+      email:this.props.user.email,
+      password:this.props.user.password,
+      firstName:this.props.user.firstName,
+      lastName:this.props.user.lastName,
+      address:this.props.user.address,
+      profileHeader:this.props.user.profileHeader,
+      profilePhoto: this.props.user.profilePhoto,
+      dateBirthday:this.props.user.dateBirthday,
       readOnly: true,
       disabled: true
     };
@@ -35,8 +35,18 @@ class Profile extends Component {
 
   updateUser = e => {
     e.preventDefault();
-    let data = this.state;
-    const updatedData = {...data, id: this.setState({id: this.state.id})};
+    const updatedData = {
+      id:this.props.user.id,
+      login:this.state.login,
+      email:this.state.email,
+      password:this.state.password,
+      firstName:this.state.firstName,
+      lastName:this.state.lastName,
+      address:this.state.address,
+      profileHeader:this.state.profileHeader,
+      profilePhoto: this.state.profilePhoto,
+      dateBirthday:this.state.dateBirthday,
+    };
 
     fetch('http://localhost:9000/users/',
         {
@@ -53,12 +63,12 @@ class Profile extends Component {
   render () {
     return (
         <div>
-            <h1>Hello, {this.state.firstName} {this.state.lastName} </h1>
-            <p>your are login with {this.state.login} and email {this.state.email}</p>
+            <h1>Hello, {this.props.user.firstName} {this.props.user.lastName} </h1>
+            <p>your are login with {this.props.user.login} and email {this.props.user.email}</p>
           <form>
             <label>
               password:
-              <input id='password-change' name='password' type='password' onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
+              <input id='password-change' name='password' type='password'  onChange={e=>this.change(e)} readOnly={this.state.readOnly}/>
             </label>
             <label>
               name:
