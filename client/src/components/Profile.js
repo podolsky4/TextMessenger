@@ -3,6 +3,22 @@ import {connect} from 'react-redux';
 import {createUser} from "../actions/userActions";
 
 class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: this.props.user.login,
+      email: this.props.user.email,
+      password: this.props.user.password,
+      firstName: this.props.user.firstName,
+      lastName: this.props.user.lastName,
+      address: this.props.user.address,
+      profileHeader: this.props.user.profileHeader,
+      profilePhoto: this.props.user.profilePhoto,
+      dateBirthday: this.props.user.dateBirthday,
+      readOnly: true,
+      disabled: true
+    };
+  }
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -31,22 +47,6 @@ class Profile extends Component {
     this.editableField();
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: this.props.user.login,
-      email: this.props.user.email,
-      password: this.props.user.password,
-      firstName: this.props.user.firstName,
-      lastName: this.props.user.lastName,
-      address: this.props.user.address,
-      profileHeader: this.props.user.profileHeader,
-      profilePhoto: this.props.user.profilePhoto,
-      dateBirthday: this.props.user.dateBirthday,
-      readOnly: true,
-      disabled: true
-    };
-  }
 
   render() {
     return (
