@@ -10,6 +10,7 @@ class Header extends Component {
       <Link to='/dialogs'>Dialogs</Link>
       <Link to='/notifications'>Notifications</Link>
       <Link className='login' to='/login'>CreateUser</Link>
+      <Link to='/profile'>MyProfile</Link>
     </div>
   }
 }
