@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 class Notifications extends Component {
-  render () {
+  render() {
     return (
-      <a>Notifications page</a>
+        <a>Notifications page</a>
     )
   }
 }
