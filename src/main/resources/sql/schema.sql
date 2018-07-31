@@ -24,8 +24,8 @@ CREATE TABLE IF NOT EXISTS `user_rel` (
   `following_id` BIGINT NOT NULL ,
   `follower_id` BIGINT NOT NULL ,
   PRIMARY KEY (`following_id`, `follower_id`) ,
-  INDEX `fk_person_has_person_person1_idx` (`following_id` ASC) ,
-  INDEX `fk_person_has_person_person_idx` (`follower_id` ASC) ,
+  --INDEX `fk_person_has_person_person1_idx` (`following_id` ASC) ,
+  --INDEX `fk_person_has_person_person_idx` (`follower_id` ASC) ,
   CONSTRAINT `fk_person_has_person_person`
   FOREIGN KEY (`follower_id`)
   REFERENCES `user` (`id`)
