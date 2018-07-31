@@ -43,5 +43,10 @@
       ],
       "extensions": "scss"
     }
+  },
+  "proxy": {
+    "/": {
+      "target": "http://localhost:9000/"
+    }
   }
 }

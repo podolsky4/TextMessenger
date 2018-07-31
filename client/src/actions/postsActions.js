@@ -1,7 +1,7 @@
 import {LOAD_POSTS} from './types'
 
 export const createLoadPosts = (id, content) => dispatch => {
-  fetch(`http://localhost:9000/posts/user/${id}`,
+  fetch(`/user/${id}`,
     {
       method: 'POST',
       headers: {
@@ -14,7 +14,7 @@ export const createLoadPosts = (id, content) => dispatch => {
 }
 
 export const loadPosts = () => dispatch => {
-  fetch(`http://localhost:9000/posts`)
+  fetch(`/posts`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
 }
