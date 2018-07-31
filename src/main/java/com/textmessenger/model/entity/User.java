@@ -56,18 +56,16 @@ public class User extends BaseEntity {
   private LocalDate dateBirthday;
 
   @OneToMany(mappedBy = "user")
-  @JsonIgnore
   private List<Post> posts = new ArrayList<>();
 
   @OneToMany(mappedBy = "commentator")
-  @JsonIgnore
   private List<Comment> comments = new ArrayList<>();
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinTable(name = "user_dialog",
           joinColumns = {@JoinColumn(name = "user_id")},
           inverseJoinColumns = {@JoinColumn(name = "dialog_id")})
-  @JsonIgnore
+  @JsonIgnoreProperties(value = "users", allowSetters = true)
   private List<Dialog> dialogs = new ArrayList<>();
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -76,4 +74,18 @@ public class User extends BaseEntity {
           inverseJoinColumns = {@JoinColumn(name = "post_id")})
   @JsonIgnore
   private List<Post> favorites = new ArrayList<>();
+
+  @ManyToMany(mappedBy = "following")
+  @JoinTable(name="UserRel",
+          joinColumns={@JoinColumn(name="ParentId")},
+          inverseJoinColumns={@JoinColumn(name="UserId")})
+  @JsonIgnoreProperties(value = "following", allowSetters = true)
+  private List<User> followers = new ArrayList<>();
+
+  @ManyToMany()
+  @JoinTable(name="UserRel",
+          joinColumns={@JoinColumn(name="UserId")},
+          inverseJoinColumns={@JoinColumn(name="ParentId")})
+  @JsonIgnoreProperties(value = "followers", allowSetters = true)
+  private List<User> following = new ArrayList<>();
 }

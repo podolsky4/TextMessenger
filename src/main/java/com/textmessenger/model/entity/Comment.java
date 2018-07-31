@@ -28,9 +28,11 @@ public class Comment extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   @CreatedBy
+  @JsonIgnoreProperties(value = "comments", allowSetters = true)
   private User commentator;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "post_id")
+  @JsonIgnoreProperties(value = "comments", allowSetters = true)
   private Post post;
 }
