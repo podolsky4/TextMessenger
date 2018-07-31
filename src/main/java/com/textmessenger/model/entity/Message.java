@@ -27,6 +27,7 @@ public class Message extends BaseEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "dialog_id")
+  @JsonIgnoreProperties(value = "messages", allowSetters = true)
   private Dialog dialog;
 
   @ManyToOne(fetch = FetchType.LAZY)

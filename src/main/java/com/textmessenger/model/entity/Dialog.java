@@ -26,5 +26,6 @@ public class Dialog extends BaseEntity {
   private List<Message> messages = new ArrayList<>();
 
   @ManyToMany(mappedBy = "dialogs")
+  @JsonIgnoreProperties(value = "dialogs", allowSetters = true)
   private List<User> users = new ArrayList<>();
 }
