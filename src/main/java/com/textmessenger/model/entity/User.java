@@ -75,14 +75,14 @@ public class User extends BaseEntity {
   @JsonIgnore
   private List<Post> favorites = new ArrayList<>();
 
-  @ManyToMany(mappedBy = "following")
+  @ManyToMany
   @JoinTable(name = "user_rel",
           joinColumns = {@JoinColumn(name = "following_id")},
           inverseJoinColumns = {@JoinColumn(name = "follower_id")})
   @JsonIgnoreProperties(value = "following", allowSetters = true)
   private List<User> followers = new ArrayList<>();
 
-  @ManyToMany()
+  @ManyToMany
   @JoinTable(name = "user_rel",
           joinColumns = {@JoinColumn(name = "follower_id")},
           inverseJoinColumns = {@JoinColumn(name = "following_id")})
