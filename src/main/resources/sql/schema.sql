@@ -18,6 +18,27 @@ CREATE TABLE IF NOT EXISTS `user` (
 );
 
 --
+-- Create table user to user many to many self join
+--
+CREATE TABLE IF NOT EXISTS `user_rel` (
+  `following_id` BIGINT NOT NULL ,
+  `follower_id` BIGINT NOT NULL ,
+  PRIMARY KEY (`following_id`, `follower_id`) ,
+  INDEX `fk_person_has_person_person1_idx` (`follower_id` ASC) ,
+  INDEX `fk_person_has_person_person_idx` (`following_id` ASC) ,
+  CONSTRAINT `fk_person_has_person_person`
+  FOREIGN KEY (`following_id`)
+  REFERENCES `user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+  CONSTRAINT `fk_person_has_person_person1`
+  FOREIGN KEY (`follower_id`)
+  REFERENCES `user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+);
+
+--
 -- Create table post
 --
 CREATE TABLE IF NOT EXISTS `post` (
