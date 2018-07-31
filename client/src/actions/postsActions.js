@@ -1,11 +1,10 @@
 import {LOAD_POSTS} from './types'
 
 export const createLoadPosts = (id, content) => dispatch => {
-  fetch(`/user/${id}`,
+  fetch(`/posts/user/${id}`,
     {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({'content': content})

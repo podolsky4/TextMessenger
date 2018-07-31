@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createUser} from '../actions/userActions'
+import {createUser, loadUser} from '../actions/userActions'
 
 class LogIn extends Component {
   change = e => {
@@ -11,15 +11,7 @@ class LogIn extends Component {
   onSubmit = e => {
     e.preventDefault()
     let data = this.state
-    fetch('http://localhost:9000/users/user',
-      {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      }).then(() => this.props.createUser(this.state.login))
+    this.props.createUser(data)
   };
 
   constructor (props) {
@@ -93,7 +85,8 @@ class LogIn extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createUser: (some) => dispatch(createUser(some))
+    createUser: (data) => dispatch(createUser(data)),
+    loadUser: (some) => dispatch(loadUser(some))
   }
 }
 const mapStateToProps = state => {
