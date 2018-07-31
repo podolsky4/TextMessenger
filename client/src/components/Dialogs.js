@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 
 class Dialog extends Component {
-  render() {
+  render () {
     return (
-        <a>Hello from Dialog page</a>
+      <a>Hello from Dialog page</a>
     )
   }
 }
