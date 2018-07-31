@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 
 class HomePage extends Component {
-  render() {
+  render () {
     return (
-        <a>Welcome to the Home Page</a>
+      <a>Welcome to the Home Page</a>
     )
   }
 }

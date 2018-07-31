@@ -2,9 +2,17 @@ import React, {Component} from 'react'
 import './App.css'
 import Router from './Router'
 import Header from './Header'
+import {getUser} from '../actions/userActions'
+import {connect} from 'react-redux'
 
 class App extends Component {
-  render() {
+  componentDidMount () {
+    if (this.props.user.length === 0) {
+      this.props.loadUser()
+    }
+  }
+
+  render () {
     return (<div>
       <Header/>
       <Router/>
@@ -12,4 +20,15 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    loadUser: () => dispatch(getUser())
+
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)
