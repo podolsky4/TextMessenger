@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createLoadPosts, loadPosts} from '../actions/postsActions'
+import Posts from './Posts'
 
 class Feed extends Component {
   change = e => {
@@ -27,7 +28,6 @@ class Feed extends Component {
   }
 
   render () {
-    const {posts} = this.props
     return (
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
@@ -40,12 +40,7 @@ class Feed extends Component {
           <br/>
           <button>Опубликовать</button>
         </form>
-
-        <ul>
-          {posts.map((post, index) =>
-            <li key={index}>{post.content}</li>
-          )}
-        </ul>
+        <Posts/>
       </div>
     )
   }
