@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom'
 import React, {Component} from 'react'
 
 class Header extends Component {
-  render() {
+  render () {
     return <div className="header">
       <Link to='/'>Home</Link>
       <Link to='/feed'>Feeds</Link>
