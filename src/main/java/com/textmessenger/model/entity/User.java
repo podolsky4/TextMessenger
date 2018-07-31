@@ -84,7 +84,7 @@ public class User extends BaseEntity {
 
   @ManyToMany()
   @JoinTable(name = "UserRel",
-          joinColumns = {@JoinColumn(name="UserId")},
+          joinColumns = {@JoinColumn(name = "UserId")},
           inverseJoinColumns = {@JoinColumn(name = "ParentId")})
   @JsonIgnoreProperties(value = "followers", allowSetters = true)
   private List<User> following = new ArrayList<>();
