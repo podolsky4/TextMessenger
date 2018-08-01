@@ -69,6 +69,6 @@ public class UserController {
 
   @GetMapping("/favorites/{id}")
   public ResponseEntity<?> getFavorites(@PathVariable("id") User user) {
-    return ResponseEntity.status(200).body(userService.getFavoritesByID(user.getId()));
+    return ResponseEntity.status(200).body(userService.getFavoritesById(user.getId()));
   }
 }

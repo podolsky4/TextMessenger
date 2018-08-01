@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<Post> getFavoritesByID(Long id) {
+  public List<Post> getFavoritesById(Long id) {
     return userRepository.getOne(id).getFavorites();
   }
 }

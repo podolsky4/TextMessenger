@@ -21,5 +21,5 @@ public interface UserService {
 
   void deleteFromFavorites(Post post, User user);
 
-  List<Post> getFavoritesByID(Long id);
+  List<Post> getFavoritesById(Long id);
 }
