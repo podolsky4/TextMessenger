@@ -46,8 +46,9 @@
       "extensions": "scss"
     }
   },
+  "homepage": "http:///twitter/",
   "proxy": {
-    "/": {
+    "/api": {
       "target": "http://localhost:9000/"
     }
   }
