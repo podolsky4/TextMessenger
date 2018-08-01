@@ -2,11 +2,11 @@ import {CREATE_USER} from './types.js'
 
 export const createUser = (data) => dispatch => {
   let login = data.login
+  console.log(login)
   fetch('/users/user',
     {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)

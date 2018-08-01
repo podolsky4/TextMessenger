@@ -4,6 +4,7 @@ import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ public class UserController {
             .orElse(ResponseEntity.notFound().build());
   }
 
+  @CrossOrigin
   @PutMapping
   public ResponseEntity<?> updateUser(@RequestBody User user) {
     userService.updateUser(user);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createUser} from '../actions/userActions'
+import { loadUser} from '../actions/userActions'
 
 class Profile extends Component {
   constructor (props) {
@@ -8,13 +8,13 @@ class Profile extends Component {
     this.state = {
       login: this.props.user.login,
       email: this.props.user.email,
-      password: this.props.user.password,
-      firstName: this.props.user.firstName,
-      lastName: this.props.user.lastName,
-      address: this.props.user.address,
-      profileHeader: this.props.user.profileHeader,
-      profilePhoto: this.props.user.profilePhoto,
-      dateBirthday: this.props.user.dateBirthday,
+      password: this.props.user.password === null ? '' : this.props.user.password,
+      firstName: this.props.user.firstName === null ? '' : this.props.user.firstName,
+      lastName: this.props.user.lastName === null ? '' : this.props.user.lastName,
+      address: this.props.user.address === null ? '' : this.props.user.address,
+      profileHeader: this.props.user.profileHeader === null ? '' : this.props.user.profileHeader,
+      profilePhoto: this.props.user.profilePhoto === null ? '' : this.props.user.profilePhoto,
+      dateBirthday: this.props.user.dateBirthday === null ? '' : this.props.user.dateBirthday,
       readOnly: true,
       disabled: true
     }
@@ -43,7 +43,7 @@ class Profile extends Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(up)
-      }).then(() => this.props.loadUser(this.state.login))
+      }).then(() => this.props.loadUser(this.props.user.login))
     this.editableField()
   };
 
@@ -106,7 +106,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUser: (login) => dispatch(createUser(login))
+    loadUser: (login) => dispatch(loadUser(login))
   }
 }
 

@@ -1,5 +1,6 @@
 package com.textmessenger.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
@@ -56,6 +57,7 @@ public class User extends BaseEntity {
   private LocalDate dateBirthday;
 
   @OneToMany(mappedBy = "user")
+  @JsonIgnore
   private List<Post> posts = new ArrayList<>();
 
   @OneToMany(mappedBy = "commentator")
@@ -72,7 +74,7 @@ public class User extends BaseEntity {
   @JoinTable(name = "favorites",
           joinColumns = {@JoinColumn(name = "user_id")},
           inverseJoinColumns = {@JoinColumn(name = "post_id")})
-  @JsonManagedReference
+  @JsonIgnore
   private List<Post> favorites = new ArrayList<>();
 
   @ManyToMany
