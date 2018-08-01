@@ -1,7 +1,7 @@
 import {LOAD_POSTS} from './types'
 
 export const createLoadPosts = (id, content) => dispatch => {
-  fetch(`/posts/user/${id}`,
+  fetch(`/api/posts/user/${id}`,
     {
       method: 'POST',
       headers: {
@@ -13,7 +13,7 @@ export const createLoadPosts = (id, content) => dispatch => {
 }
 
 export const addedLikers = (id, user) => dispatch => {
-  fetch(`/users/post/${id}`,
+  fetch(`/api/users/post/${id}`,
     {
       method: 'PUT',
       headers: {
@@ -25,7 +25,7 @@ export const addedLikers = (id, user) => dispatch => {
 }
 
 export const loadPosts = () => dispatch => {
-  fetch(`/posts`)
+  fetch(`/api/posts`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
 }

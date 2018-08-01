@@ -3,7 +3,7 @@ import {CREATE_USER} from './types.js'
 export const createUser = (data) => dispatch => {
   let login = data.login
   console.log(login)
-  fetch('/users/user',
+  fetch('/api/users/user',
     {
       method: 'POST',
       headers: {
@@ -14,13 +14,13 @@ export const createUser = (data) => dispatch => {
 }
 
 export const loadUser = (login) => dispatch => {
-  fetch(`/users/bylogin/${login}`)
+  fetch(`/api/users/bylogin/${login}`)
     .then(res => res.json())
     .then(data => dispatch({type: CREATE_USER, payload: data}))
 }
 
 export const getUser = () => dispatch => {
-  fetch(`/users/1`)
+  fetch(`/api/users/1`)
     .then(res => res.json())
     .then(data => dispatch({type: CREATE_USER, payload: data}))
 }
