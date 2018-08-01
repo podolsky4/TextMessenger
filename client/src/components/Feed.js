@@ -28,6 +28,12 @@ class Feed extends Component {
   }
 
   render () {
+    const {posts} = this.props
+
+    if (!posts) {
+      return <a> Loading ...</a>
+    }
+
     return (
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>

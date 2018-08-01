@@ -35,7 +35,7 @@ class Profile extends Component {
     let data = this.state
     const up = {...data, id: this.props.user.id}
 
-    fetch('http://localhost:9000/users/',
+    fetch('http://localhost:9000/api/users/',
       {
         method: 'PUT',
         headers: {

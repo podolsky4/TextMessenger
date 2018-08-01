@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
+@CrossOrigin
 public class UserController {
 
   private final UserService userService;
@@ -37,7 +38,6 @@ public class UserController {
             .orElse(ResponseEntity.notFound().build());
   }
 
-  @CrossOrigin
   @PutMapping
   public ResponseEntity<?> updateUser(@RequestBody User user) {
     userService.updateUser(user);
