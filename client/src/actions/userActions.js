@@ -12,6 +12,17 @@ export const createUser = (data) => dispatch => {
       body: JSON.stringify(data)
     }).then(() => dispatch(loadUser(login)))
 }
+export const updateUser = (data, login) => dispatch => {
+  fetch('http://localhost:9000/api/users/',
+    {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(() => dispatch(loadUser(login)))
+}
 
 export const loadUser = (login) => dispatch => {
   fetch(`/api/users/bylogin/${login}`)

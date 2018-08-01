@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import { loadUser} from '../actions/userActions'
+import {updateUser, loadUser} from '../actions/userActions'
 
 class Profile extends Component {
   constructor (props) {
@@ -34,16 +34,7 @@ class Profile extends Component {
     e.preventDefault()
     let data = this.state
     const up = {...data, id: this.props.user.id}
-
-    fetch('http://localhost:9000/api/users/',
-      {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(up)
-      }).then(() => this.props.loadUser(this.props.user.login))
+    this.props.updateUser(up, this.props.user.login)
     this.editableField()
   };
 
@@ -106,7 +97,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUser: (login) => dispatch(loadUser(login))
+    loadUser: (login) => dispatch(loadUser(login)),
+    updateUser: (data, login) => dispatch(updateUser(data, login))
   }
 }
 
