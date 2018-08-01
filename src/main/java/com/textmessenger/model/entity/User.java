@@ -1,7 +1,7 @@
 package com.textmessenger.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -72,7 +72,7 @@ public class User extends BaseEntity {
   @JoinTable(name = "favorites",
           joinColumns = {@JoinColumn(name = "user_id")},
           inverseJoinColumns = {@JoinColumn(name = "post_id")})
-  @JsonIgnore
+  @JsonManagedReference
   private List<Post> favorites = new ArrayList<>();
 
   @ManyToMany

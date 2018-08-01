@@ -1,5 +1,6 @@
 package com.textmessenger.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,7 @@ import java.util.List;
 @Table(name = "post")
 @Data
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post extends BaseEntity {
 
   @Column(name = "content")
@@ -35,8 +37,8 @@ public class Post extends BaseEntity {
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments = new ArrayList<>();
-
   @ManyToMany(mappedBy = "favorites")
+  @JsonBackReference
   private List<User> likers = new ArrayList<>();
 
 }
