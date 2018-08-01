@@ -1,6 +1,16 @@
 import React, {Component} from 'react'
+import {addedLikers} from '../actions/postsActions'
+import {connect} from 'react-redux'
 
-export default class Post extends Component {
+class Post extends Component {
+  handleLike = e => {
+    if (e.target.className === 'like') {
+      console.log(e.target.className)
+      e.target.className = 'likers'
+      console.log(e.target.className)
+      this.props.addedLiker(this.props.post.id, this.props.user)
+    }
+  }
   render () {
     return (
       <div className="post"
@@ -21,7 +31,7 @@ export default class Post extends Component {
           {this.props.post.content}
         </p>
         <footer>
-          <a className="like">Like</a>
+          <a className="like" onClick={event => this.handleLike(event)}>Like</a>
           <a className="retwite">Retwite</a>
           <a className="comment">Comment</a>
         </footer>
@@ -29,3 +39,15 @@ export default class Post extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    addedLiker: (id, user) => dispatch(addedLikers(id, user))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Post)
