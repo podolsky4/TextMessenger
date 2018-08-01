@@ -66,4 +66,9 @@ public class UserController {
     userService.deleteFromFavorites(post, user);
     return ResponseEntity.status(204).build();
   }
+
+  @GetMapping("/favorites/{id}")
+  public ResponseEntity<?> getFavorites(@PathVariable("id") User user) {
+    return ResponseEntity.status(200).body(userService.getFavoritesByID(user.getId()));
+  }
 }

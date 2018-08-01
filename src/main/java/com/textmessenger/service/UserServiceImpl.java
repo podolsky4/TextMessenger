@@ -6,6 +6,8 @@ import com.textmessenger.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -53,5 +55,10 @@ public class UserServiceImpl implements UserService {
     User userByLogin = userRepository.findUserByLogin(user.getLogin());
     userByLogin.getFavorites().add(post);
     userRepository.save(userByLogin);
+  }
+
+  @Override
+  public List<Post> getFavoritesByID(Long id) {
+    return userRepository.getOne(id).getFavorites();
   }
 }

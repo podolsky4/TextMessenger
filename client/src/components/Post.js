@@ -1,18 +1,24 @@
 import React, {Component} from 'react'
-import {addedLikers, deleteLikers} from '../actions/postsActions'
+import {addedLikers, deleteLikers, loadFavorites} from '../actions/postsActions'
 import {connect} from 'react-redux'
 
 class Post extends Component {
+  componentDidMount () {
+    this.props.loadFavorites(this.props.user.id)
+  }
   handleLike = e => {
     if (e.target.className === 'like') {
-      e.target.className = 'likers'
+      e.target.className = 'likes'
       this.props.addedLiker(this.props.post.id, this.props.user)
     } else {
       e.target.className = 'like'
       this.props.deleteLiker(this.props.post.id, this.props.user)
     }
   }
+
   render () {
+    const {favorites} = this.props
+
     return (
       <div className="post"
         key={this.props.post.id}>
@@ -32,7 +38,8 @@ class Post extends Component {
           {this.props.post.content}
         </p>
         <footer>
-          <a className="like" onClick={event => this.handleLike(event)}>Like</a>
+          <a className={favorites.find(post => post.id === this.props.post.id) === undefined ? 'like' : 'likes'}
+            onClick={event => this.handleLike(event)}>Like</a>
           <a className="retwite">Retwite</a>
           <a className="comment">Comment</a>
         </footer>
@@ -43,13 +50,15 @@ class Post extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    favorites: state.favorites
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     addedLiker: (id, user) => dispatch(addedLikers(id, user)),
-    deleteLiker: (id, user) => dispatch(deleteLikers(id, user))
+    deleteLiker: (id, user) => dispatch(deleteLikers(id, user)),
+    loadFavorites: (id) => dispatch(loadFavorites(id))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Post)
