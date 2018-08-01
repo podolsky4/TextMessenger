@@ -156,6 +156,7 @@ class Post extends React.Component {
             </CardContent>
           </Collapse>
         </Card>
+
       </div>
     );
   }
@@ -165,4 +166,14 @@ Post.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Post);
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    addedLiker: (id, user) => dispatch(addedLikers(id, user))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Post))
