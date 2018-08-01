@@ -1,14 +1,15 @@
 import React, {Component} from 'react'
-import {addedLikers} from '../actions/postsActions'
+import {addedLikers, deleteLikers} from '../actions/postsActions'
 import {connect} from 'react-redux'
 
 class Post extends Component {
   handleLike = e => {
     if (e.target.className === 'like') {
-      console.log(e.target.className)
       e.target.className = 'likers'
-      console.log(e.target.className)
       this.props.addedLiker(this.props.post.id, this.props.user)
+    } else {
+      e.target.className = 'like'
+      this.props.deleteLiker(this.props.post.id, this.props.user)
     }
   }
   render () {
@@ -47,7 +48,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    addedLiker: (id, user) => dispatch(addedLikers(id, user))
+    addedLiker: (id, user) => dispatch(addedLikers(id, user)),
+    deleteLiker: (id, user) => dispatch(deleteLikers(id, user))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

@@ -23,6 +23,17 @@ export const addedLikers = (id, user) => dispatch => {
     })
     .then(() => dispatch(loadPosts()))
 }
+export const deleteLikers = (id, user) => dispatch => {
+  fetch(`/api/users/post/${id}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+    .then(() => dispatch(loadPosts()))
+}
 
 export const loadPosts = () => dispatch => {
   fetch(`/api/posts`)

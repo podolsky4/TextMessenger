@@ -57,8 +57,13 @@ public class UserController {
 
   @PutMapping("/post/{id}")
   public ResponseEntity<?> addToFavorites(@PathVariable("id") Post post, @RequestBody User user) {
-    user.getFavorites().add(post);
-    userService.updateUser(user);
+    userService.addLikers(post, user);
+    return ResponseEntity.status(201).build();
+  }
+
+  @DeleteMapping("/post/{id}")
+  public ResponseEntity<?> deleteFromFavorites(@PathVariable("id") Post post, @RequestBody User user) {
+    userService.deleteFromFavorites(post, user);
     return ResponseEntity.status(204).build();
   }
 }
