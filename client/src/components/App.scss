@@ -95,3 +95,14 @@ header {
   font-weight: 400;
   line-height: 21px;
 }
+
+footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  border-top: 1px solid grey;
+}
+
+footer > a {
+  cursor: pointer;
+}

@@ -20,8 +20,12 @@ export default class Post extends Component {
         <p className="post_content">
           {this.props.post.content}
         </p>
+        <footer>
+          <a className="like">Like</a>
+          <a className="retwite">Retwite</a>
+          <a className="comment">Comment</a>
+        </footer>
       </div>
-
     )
   }
 }
