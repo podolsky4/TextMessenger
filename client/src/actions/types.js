@@ -1,2 +1,3 @@
 export const CREATE_USER = 'CREATE_USER'
 export const LOAD_POSTS = 'LOAD_POSTS'
+export const LOAD_FAVORITES = 'LOAD_FAVORITES'
