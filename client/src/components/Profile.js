@@ -31,11 +31,11 @@ class Profile extends Component {
     })
   };
   updateUser = e => {
-    const {user} = this.props
+    const {user, updateUser} = this.props
     e.preventDefault()
     let data = this.state
     const up = {...data, id: user.id}
-    this.props.updateUser(up,user.login)
+    updateUser(up,user.login)
     this.editableField()
   };
 

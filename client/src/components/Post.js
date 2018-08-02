@@ -4,17 +4,17 @@ import {connect} from 'react-redux'
 
 class Post extends Component {
   componentWillMount () {
-    const {favorites, user} = this.props
+    const {favorites, user, loadFavorites} = this.props
     if (favorites.length === 0) {
-      this.props.loadFavorites(user.id)
+      loadFavorites(user.id)
     }
   }
   handleLike = e => {
-    const {post, user} = this.props
+    const {post, user, addedLiker, deleteLiker} = this.props
     if (e.target.className === 'like') {
-      this.props.addedLiker(post.id, user)
+      addedLiker(post.id, user)
     } else {
-      this.props.deleteLiker(post.id, user)
+      deleteLiker(post.id, user)
     }
   }
 

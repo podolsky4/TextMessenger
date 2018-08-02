@@ -12,15 +12,15 @@ class Feed extends Component {
     }
   }
   componentDidMount () {
-    const {posts, favorites, user} = this.props
+    const {posts, favorites, user, loadPosts, loadFavorites, loadUser} = this.props
     if (posts.length === 0) {
-      this.props.loadPosts()
+      loadPosts()
     }
     if (favorites.length === 0) {
-      this.props.loadFavorites(user.id)
+      loadFavorites(user.id)
     }
     if (user.length === 0) {
-      this.props.loadUser()
+      loadUser()
     }
   }
   change = e => {
@@ -35,9 +35,9 @@ class Feed extends Component {
   }
 
   onSubmit = e => {
-    const {user} = this.props
+    const {user, createPost} = this.props
     e.preventDefault()
-    this.props.createPost(user.id, this.state.text)
+    createPost(user.id, this.state.text)
     this.reset()
   };
   myFunction (e) {
