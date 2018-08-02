@@ -17,7 +17,7 @@ class Feed extends Component {
       this.props.loadPosts()
     }
     if (favorites.length === 0) {
-      this.props.loadFavorites(this.props.user.id)
+      this.props.loadFavorites(user.id)
     }
     if (user.length === 0) {
       this.props.loadUser()

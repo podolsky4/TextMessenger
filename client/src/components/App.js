@@ -7,7 +7,8 @@ import {connect} from 'react-redux'
 
 class App extends Component {
   componentDidMount () {
-    if (this.props.user.length === 0) {
+    const {user} = this.props
+    if (user.length === 0) {
       this.props.loadUser()
     }
   }
