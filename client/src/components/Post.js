@@ -39,7 +39,7 @@ class Post extends Component {
           {this.props.post.content}
         </p>
         <footer>
-          <a className={favorites.some(post => post.id === this.props.post.id) === false ? 'like' : 'likes'}
+          <a className={favorites.some(post => post.id === this.props.post.id) ? 'like' : 'likes'}
             onClick={event => this.handleLike(event)}>Like</a>
           <a className="retwite">Retwite</a>
           <a className="comment">Comment</a>
