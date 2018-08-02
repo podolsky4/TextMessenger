@@ -26,7 +26,7 @@ public class DialogController {
   }
 
   @PostMapping("/user/{id}")
-  public ResponseEntity createDialog(@PathVariable("id") User user, @RequestBody Dialog dialog) {
+  public ResponseEntity createDialog(@PathVariable("id")long id, User user, @RequestBody Dialog dialog) {
     List<User> users = dialog.getUsers();
     users.add(user);
     dialog.setUsers(users);
@@ -34,8 +34,8 @@ public class DialogController {
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
-  @GetMapping("user/{id}")
-  public ResponseEntity<?> readDialog(@PathVariable("id") User user) {
+  @GetMapping("/user/{id}")
+  public ResponseEntity<?> readDialog(@PathVariable("id")long id, User user) {
     return Optional.of(ResponseEntity.ok().body(dialogService.getDialogsByUser(user)))
             .orElse(ResponseEntity.noContent().build());
   }

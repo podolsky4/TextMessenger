@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {loadDialog} from "../actions/dialogActions";
 
 class Dialog extends Component {
+
   render () {
     return (
       <a>Hello from Dialog page</a>
@@ -8,4 +11,4 @@ class Dialog extends Component {
   }
 }
 
-export default Dialog
+export default connect()(Dialog)
