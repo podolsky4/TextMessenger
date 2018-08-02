@@ -12,7 +12,7 @@ class Favorites extends Component {
     return (
       <div>
         <h1>Your liked posts</h1>
-        <Posts posts={favorites.reverse()}/>
+        <Posts posts={favorites}/>
       </div>
     )
   }
