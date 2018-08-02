@@ -31,18 +31,20 @@ class Profile extends Component {
     })
   };
   updateUser = e => {
+    const {user, updateUser} = this.props
     e.preventDefault()
     let data = this.state
-    const up = {...data, id: this.props.user.id}
-    this.props.updateUser(up, this.props.user.login)
+    const up = {...data, id: user.id}
+    updateUser(up,user.login)
     this.editableField()
   };
 
   render () {
+    const {user} = this.props
     return (
       <div>
-        <h1>Hello, {this.props.user.firstName} {this.props.user.lastName} </h1>
-        <p>your are login with {this.props.user.login} and email {this.props.user.email}</p>
+        <h1>Hello, {user.firstName} {user.lastName} </h1>
+        <p>your are login with {user.login} and email {user.email}</p>
         <form>
           <label>
               password:

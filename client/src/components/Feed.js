@@ -1,51 +1,68 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createLoadPosts, loadPosts} from '../actions/postsActions'
+import {createLoadPosts, loadPosts, loadFavorites} from '../actions/postsActions'
+import {getUser} from '../actions/userActions'
 import Posts from './Posts'
 
 class Feed extends Component {
-  change = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  };
-  onSubmit = e => {
-    e.preventDefault()
-    this.props.createPost(this.props.user.id, this.state.text)
-    e.target.reset()
-  };
-
   constructor (props) {
     super(props)
     this.state = {
       text: ''
     }
   }
-
   componentDidMount () {
-    if (this.props.posts.length === 0) {
-      this.props.loadPosts()
+    const {posts, favorites, user, loadPosts, loadFavorites, loadUser} = this.props
+    if (posts.length === 0) {
+      loadPosts()
+    }
+    if (favorites.length === 0) {
+      loadFavorites(user.id)
+    }
+    if (user.length === 0) {
+      loadUser()
     }
   }
+  change = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  };
 
+  reset = () => {
+    this.setState({text: ''})
+    document.getElementById('content').value = ''
+  }
+
+  onSubmit = e => {
+    const {user, createPost} = this.props
+    e.preventDefault()
+    createPost(user.id, this.state.text)
+    this.reset()
+  };
+  myFunction (e) {
+    if (e.key === 'Enter') {
+      this.onSubmit(e)
+    } else {
+      this.setState({
+        [e.target.name]: e.target.value
+      })
+    }
+  }
   render () {
     const {posts} = this.props
-
-    if (!posts) {
-      return <a> Loading ...</a>
-    }
-
     return (
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
-          <label>
-              Чем делимся:
-            <br/>
-            <textarea rows={5} cols={60} maxLength={280} id="content" name="text" type="text"
-              onChange={e => this.change(e)}/>
-          </label>
-          <br/>
-          <button>Опубликовать</button>
+          <textarea defaultValue=""
+            placeholder="Что нового?"
+            maxLength={280}
+            id="content"
+            name="text"
+            type="text"
+            onKeyUp={event => this.myFunction(event)}
+          />
+          <button className="btn-create-post">Опубликовать</button>
         </form>
         <Posts posts={posts}/>
       </div>
@@ -63,7 +80,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadPosts: () => dispatch(loadPosts()),
-    createPost: (id, content) => dispatch(createLoadPosts(id, content))
+    createPost: (id, content) => dispatch(createLoadPosts(id, content)),
+    loadFavorites: (id) => dispatch(loadFavorites(id)),
+    loadUser: () => dispatch(getUser())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Feed)
