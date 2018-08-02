@@ -12,13 +12,14 @@ class Feed extends Component {
     }
   }
   componentDidMount () {
-    if (this.props.posts.length === 0) {
+    const {posts, favorites, user} = this.props
+    if (posts.length === 0) {
       this.props.loadPosts()
     }
-    if (this.props.favorites.length === 0) {
+    if (favorites.length === 0) {
       this.props.loadFavorites(this.props.user.id)
     }
-    if (this.props.user.length === 0) {
+    if (user.length === 0) {
       this.props.loadUser()
     }
   }
@@ -34,8 +35,9 @@ class Feed extends Component {
   }
 
   onSubmit = e => {
+    const {user} = this.props
     e.preventDefault()
-    this.props.createPost(this.props.user.id, this.state.text)
+    this.props.createPost(user.id, this.state.text)
     this.reset()
   };
   myFunction (e) {
@@ -49,11 +51,6 @@ class Feed extends Component {
   }
   render () {
     const {posts} = this.props
-
-    if (!posts) {
-      return <a> Loading ...</a>
-    }
-
     return (
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
