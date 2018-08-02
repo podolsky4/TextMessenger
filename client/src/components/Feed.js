@@ -1,33 +1,52 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createLoadPosts, loadPosts} from '../actions/postsActions'
+import {createLoadPosts, loadPosts, loadFavorites} from '../actions/postsActions'
+import {getUser} from '../actions/userActions'
 import Posts from './Posts'
 
 class Feed extends Component {
-  change = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  };
-  onSubmit = e => {
-    e.preventDefault()
-    this.props.createPost(this.props.user.id, this.state.text)
-    e.target.reset()
-  };
-
   constructor (props) {
     super(props)
     this.state = {
       text: ''
     }
   }
-
   componentDidMount () {
     if (this.props.posts.length === 0) {
       this.props.loadPosts()
     }
+    if (this.props.favorites.length === 0) {
+      this.props.loadFavorites(this.props.user.id)
+    }
+    if (this.props.user.length === 0) {
+      this.props.loadUser()
+    }
+  }
+  change = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  };
+
+  reset = () => {
+    this.setState({text: ''})
+    document.getElementById('content').value = ''
   }
 
+  onSubmit = e => {
+    e.preventDefault()
+    this.props.createPost(this.props.user.id, this.state.text)
+    this.reset()
+  };
+  myFunction (e) {
+    if (e.key === 'Enter') {
+      this.onSubmit(e)
+    } else {
+      this.setState({
+        [e.target.name]: e.target.value
+      })
+    }
+  }
   render () {
     const {posts} = this.props
 
@@ -41,8 +60,8 @@ class Feed extends Component {
           <label>
               Чем делимся:
             <br/>
-            <textarea rows={5} cols={60} maxLength={280} id="content" name="text" type="text"
-              onChange={e => this.change(e)}/>
+            <textarea defaultValue="" rows={5} cols={60} maxLength={280} id="content" name="text" type="text"
+              onKeyUp={event => this.myFunction(event)}/>
           </label>
           <br/>
           <button>Опубликовать</button>
@@ -63,7 +82,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadPosts: () => dispatch(loadPosts()),
-    createPost: (id, content) => dispatch(createLoadPosts(id, content))
+    createPost: (id, content) => dispatch(createLoadPosts(id, content)),
+    loadFavorites: (id) => dispatch(loadFavorites(id)),
+    loadUser: () => dispatch(getUser())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Feed)

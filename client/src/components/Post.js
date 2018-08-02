@@ -4,7 +4,9 @@ import {connect} from 'react-redux'
 
 class Post extends Component {
   componentWillMount () {
-    this.props.loadFavorites(this.props.user.id)
+    if (this.props.favorites.length === 0) {
+      this.props.loadFavorites(this.props.user.id)
+    }
   }
   handleLike = e => {
     if (e.target.className === 'like') {
@@ -37,7 +39,7 @@ class Post extends Component {
           {this.props.post.content}
         </p>
         <footer>
-          <a className={favorites.find(post => post.id === this.props.post.id) === undefined ? 'like' : 'likes'}
+          <a className={favorites.some(post => post.id === this.props.post.id) === false ? 'like' : 'likes'}
             onClick={event => this.handleLike(event)}>Like</a>
           <a className="retwite">Retwite</a>
           <a className="comment">Comment</a>
