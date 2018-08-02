@@ -5,7 +5,8 @@ import Posts from './Posts'
 
 class Favorites extends Component {
   componentWillMount () {
-    if (this.props.favorites.length === 0) {
+    const {favorites} = this.props
+    if (favorites.length === 0) {
       this.props.loadFavorites(this.props.user.id)
     }
   }
