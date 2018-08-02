@@ -54,14 +54,15 @@ class Feed extends Component {
     return (
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
-          <label>
-              Чем делимся:
-            <br/>
-            <textarea defaultValue="" rows={5} cols={60} maxLength={280} id="content" name="text" type="text"
-              onKeyUp={event => this.myFunction(event)}/>
-          </label>
-          <br/>
-          <button>Опубликовать</button>
+          <textarea defaultValue=""
+            placeholder="Что нового?"
+            maxLength={280}
+            id="content"
+            name="text"
+            type="text"
+            onKeyUp={event => this.myFunction(event)}
+          />
+          <button className="btn-create-post">Опубликовать</button>
         </form>
         <Posts posts={posts}/>
       </div>
