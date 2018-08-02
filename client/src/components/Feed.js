@@ -12,6 +12,7 @@ class Feed extends Component {
   onSubmit = e => {
     e.preventDefault()
     this.props.createPost(this.props.user.id, this.state.text)
+    e.target.reset()
   };
 
   constructor (props) {
@@ -28,6 +29,12 @@ class Feed extends Component {
   }
 
   render () {
+    const {posts} = this.props
+
+    if (!posts) {
+      return <a> Loading ...</a>
+    }
+
     return (
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
@@ -40,7 +47,7 @@ class Feed extends Component {
           <br/>
           <button>Опубликовать</button>
         </form>
-        <Posts/>
+        <Posts posts={posts}/>
       </div>
     )
   }
@@ -49,7 +56,8 @@ class Feed extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    posts: state.posts
+    posts: state.posts,
+    favorites: state.favorites
   }
 }
 const mapDispatchToProps = dispatch => {

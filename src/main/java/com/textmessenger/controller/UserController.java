@@ -1,5 +1,6 @@
 package com.textmessenger.controller;
 
+import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
+@CrossOrigin
 public class UserController {
 
   private final UserService userService;
@@ -51,5 +53,22 @@ public class UserController {
   @GetMapping("/bylogin/{login}")
   public ResponseEntity<?> getUserByLogin(@PathVariable("login") String login) {
     return ResponseEntity.ok().body(userService.getUserByLogin(login));
+  }
+
+  @PutMapping("/post/{id}")
+  public ResponseEntity<?> addToFavorites(@PathVariable("id") Post post, @RequestBody User user) {
+    userService.addLikers(post, user);
+    return ResponseEntity.status(201).build();
+  }
+
+  @DeleteMapping("/post/{id}")
+  public ResponseEntity<?> deleteFromFavorites(@PathVariable("id") Post post, @RequestBody User user) {
+    userService.deleteFromFavorites(post, user);
+    return ResponseEntity.status(204).build();
+  }
+
+  @GetMapping("/favorites/{id}")
+  public ResponseEntity<?> getFavorites(@PathVariable("id") User user) {
+    return ResponseEntity.status(200).body(userService.getFavoritesById(user.getId()));
   }
 }

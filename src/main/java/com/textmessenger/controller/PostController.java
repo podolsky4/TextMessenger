@@ -4,7 +4,6 @@ import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.service.PostService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 
 public class PostController {
 

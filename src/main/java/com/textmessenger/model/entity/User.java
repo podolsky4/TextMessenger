@@ -56,6 +56,7 @@ public class User extends BaseEntity {
   private LocalDate dateBirthday;
 
   @OneToMany(mappedBy = "user")
+  @JsonIgnore
   private List<Post> posts = new ArrayList<>();
 
   @OneToMany(mappedBy = "commentator")

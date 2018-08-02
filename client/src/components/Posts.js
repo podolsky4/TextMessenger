@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
 import Post from './Post'
 
 class Posts extends Component {
@@ -16,6 +15,4 @@ class Posts extends Component {
   }
 }
 
-export default connect(state => ({
-  posts: state.posts
-}))(Posts)
+export default Posts
