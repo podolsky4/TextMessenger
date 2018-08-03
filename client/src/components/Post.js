@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {addedLikers, deleteLikers, loadFavorites} from '../actions/postsActions'
+import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../actions/postsActions'
 import {connect} from 'react-redux'
 import Avatar from './Avatar'
 import UserInfo from './UserInfo'
@@ -8,7 +8,6 @@ import PostContent from './PostContent'
 import Like from './Like'
 import PostComment from './PostComment'
 import PostRetwite from './PostRetwite'
-import {retweet, unRetweet} from '../actions/postsActions'
 
 class Post extends Component {
   componentWillMount () {
@@ -26,11 +25,12 @@ class Post extends Component {
     }
   }
   handleRetwite = e => {
-    const {post, user, retweets, unRetweets} = this.props
+    const {post, user, retweets, unRetweets,postId} = this.props
     if (e.target.className === 'tweet') {
       retweets(user.id, post.id)
     } else {
-      unRetweets(post.id)
+      debugger
+      unRetweets(postId)
     }
   }
 
@@ -40,7 +40,7 @@ class Post extends Component {
     return (
 
       <div className="post"
-        key={post.id}>
+        key={`${post.id}  ${post.parentId}`}>
         {owner && owner.login}
         <header>
           <Avatar/>

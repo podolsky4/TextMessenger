@@ -21,8 +21,9 @@ export const retweet = (id, postId) => dispatch => {
     })
     .then(() => dispatch(loadPosts()))
 }
-export const unRetweet = (id, postId) => dispatch => {
-  fetch(`/api/posts/user/${postId}`,
+export const unRetweet = (postId) => dispatch => {
+  debugger
+  fetch(`/api/posts/${postId}`,
     {
       method: 'DELETE',
       headers: {

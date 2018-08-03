@@ -3,25 +3,25 @@ import Post from './Post'
 
 class Posts extends Component {
   render () {
-    const {posts,user} = this.props
-    let current = content => {
-      if (content.parent == null) {
-        let currentPost = posts.find(i => i.id === content.parent)
-        console.log(currentPost)
-        let who = user.id === content.user.id
+    const {posts, user} = this.props
+    let current = post => {
+      if (post.parentId == null) {
         return (
           <Post
-            key={currentPost.id}
-            post={currentPost}
-            owner={content.user}
-            whoo={who}
+            key={post.id}
+            post={post}
           />)
       } else {
+        let currentPost = posts.find(i => i.id === post.parentId)
+        console.log(currentPost)
+        let who = user.id === post.user.id
         return (
           <Post
-            key={content.id}
-            post={content}
-            whoo={false}
+            key={post.id}
+            post={currentPost}
+            owner={post.user}
+            whoo={who}
+            postId={post.id}
           />)
       }
     }

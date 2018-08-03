@@ -53,7 +53,7 @@ public class PostController {
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deletePostById(@PathVariable("id") Post post) {
     postService.deletePost(post);
-    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
+    return ResponseEntity.status(200).build();
   }
 
   @PostMapping("/user/{id}/post/{post_id}")
