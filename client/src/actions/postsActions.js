@@ -39,6 +39,11 @@ export const loadFavorites = (id) => dispatch => {
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_FAVORITES, payload: data}))
 }
+export const loadFavoritesByLogin = (login) => dispatch => {
+  fetch(`/api/users/favorites/login/${login}`)
+    .then(res => res.json())
+    .then(data => dispatch({type: LOAD_FAVORITES, payload: data}))
+}
 
 export const loadPosts = () => dispatch => {
   fetch(`/api/posts`)

@@ -68,7 +68,11 @@ public class UserController {
   }
 
   @GetMapping("/favorites/{id}")
-  public ResponseEntity<?> getFavorites(@PathVariable("id") User user) {
-    return ResponseEntity.status(200).body(userService.getFavoritesById(user.getId()));
+  public ResponseEntity<?> getFavorites(@PathVariable("id") long id) {
+    return ResponseEntity.status(200).body(userService.getFavoritesById(id));
+  }
+  @GetMapping("/favorites/login/{login}")
+  public ResponseEntity<?> getFavoritesByLogin(@PathVariable("login") String login) {
+    return ResponseEntity.status(200).body(userService.getFavoritesByLogin(login));
   }
 }
