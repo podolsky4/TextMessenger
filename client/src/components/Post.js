@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../actions/postsActions'
 import {connect} from 'react-redux'
 import Avatar from './Avatar'
-import UserInfo from './UserInfo'
+import UserHeaderInfo from './UserHeaderInfo'
 import DataInfo from './DataInfo'
 import PostContent from './PostContent'
 import Like from './Like'
@@ -44,7 +44,7 @@ class Post extends Component {
         {owner && owner.login}
         <header>
           <Avatar/>
-          <UserInfo user={post.user}/>
+          <UserHeaderInfo user={post.user}/>
           <DataInfo user={post.user}/>
         </header>
         <PostContent content={post.content}/>
