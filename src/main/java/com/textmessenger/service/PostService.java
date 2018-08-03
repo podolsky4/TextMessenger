@@ -18,5 +18,5 @@ public interface PostService {
 
   List<Post> getUserPost(User user);
 
-  void retwitPost(User user, Long post_id);
+  void retwitPost(User user, Long postId);
 }

@@ -52,10 +52,10 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public void retwitPost(User user, Long post_id) {
+  public void retwitPost(User user, Long postId) {
     Post retwite = new Post();
     retwite.setUser(user);
-    retwite.setParentId(post_id);
+    retwite.setParentId(postId);
     postRepository.save(retwite);
   }
 }
