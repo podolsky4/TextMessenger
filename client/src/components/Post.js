@@ -31,7 +31,6 @@ class Post extends Component {
     return (
       <div className="post"
         key={post.id}>
-        {post.user.login}
         <header>
           <Avatar/>
           <UserInfo user={post.user}/>
@@ -39,9 +38,7 @@ class Post extends Component {
         </header>
         <PostContent content={post.content}/>
         <footer>
-          <Like favorites={favorites} post={post}/>
-          <a className={favorites.some(p => p.id === post.id) ? 'like--checked' : 'like'}
-            onClick={event => this.handleLike(event)}>Like</a>
+          <Like favorites={favorites} post={post} handleLike={this.handleLike.bind(this)}/>
           <PostRetwite/>
           <PostComment/>
         </footer>
