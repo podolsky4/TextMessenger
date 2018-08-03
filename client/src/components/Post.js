@@ -14,7 +14,7 @@ class Post extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      comment: false
+      flag: false
     }
   }
   componentWillMount () {
@@ -40,11 +40,10 @@ class Post extends Component {
     }
   }
   handleComments = e => {
-    this.setState({comment: true})
+    this.setState({flag: true})
   }
   render () {
-    const {favorites, post, owner, whoo} = this.props
-
+    const {favorites, post, owner, whoo, user} = this.props
     return (
 
       <div className="post"
@@ -61,7 +60,7 @@ class Post extends Component {
           <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
           <PostComment handleComments={this.handleComments.bind(this)} />
         </footer>
-        {this.state.comment && <Comments comments={post.comment} />}
+        {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}
       </div>
     )
   }

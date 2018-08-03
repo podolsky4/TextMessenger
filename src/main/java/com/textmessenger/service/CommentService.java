@@ -2,12 +2,11 @@ package com.textmessenger.service;
 
 import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
 
 import java.util.List;
 
 public interface CommentService {
-
-  void createComment(Post post, Comment comment);
 
   List<Comment> findAllPostFromPost(Post post);
 
@@ -15,4 +14,5 @@ public interface CommentService {
 
   void deleteComment(Comment comment);
 
+  void createComment(Post post, User user, Comment comment);
 }

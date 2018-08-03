@@ -2,6 +2,7 @@ package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
 import com.textmessenger.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/api/comments")
 public class CommentController {
 
   private final CommentService commentService;
@@ -26,9 +27,11 @@ public class CommentController {
     this.commentService = commentService;
   }
 
-  @PostMapping("/post/{id}")
-  ResponseEntity<?> createComment(@PathVariable("id") Post post, @RequestBody Comment comment) {
-    commentService.createComment(post, comment);
+  @PostMapping("/post/{id}/user/{userId}")
+  ResponseEntity<?> createComment(@PathVariable("id") Post post,
+                                  @PathVariable("userId") User user,
+                                  @RequestBody Comment comment) {
+    commentService.createComment(post, user, comment);
     return ResponseEntity.ok().build();
   }
 
