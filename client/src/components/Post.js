@@ -29,7 +29,6 @@ class Post extends Component {
     if (e.target.className === 'tweet') {
       retweets(user.id, post.id)
     } else {
-      debugger
       unRetweets(postId)
     }
   }
@@ -41,7 +40,7 @@ class Post extends Component {
 
       <div className="post"
         key={`${post.id}  ${post.parentId}`}>
-        {owner && owner.login}
+        {owner && `Ретвитнул ${owner.login}`}
         <header>
           <Avatar/>
           <UserHeaderInfo user={post.user}/>
