@@ -22,4 +22,6 @@ public interface UserService {
   void deleteFromFavorites(Post post, User user);
 
   List<Post> getFavoritesById(Long id);
+
+  List<Post> getFavoritesByLogin(String login);
 }

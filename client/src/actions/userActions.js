@@ -1,4 +1,5 @@
 import {CREATE_USER} from './types.js'
+import {loadFavoritesByLogin} from './postsActions'
 
 export const createUser = (data) => dispatch => {
   let login = data.login
@@ -11,6 +12,7 @@ export const createUser = (data) => dispatch => {
       },
       body: JSON.stringify(data)
     }).then(() => dispatch(loadUser(login)))
+    .then(() => dispatch(loadFavoritesByLogin(login)))
 }
 export const updateUser = (data, login) => dispatch => {
   fetch('http://localhost:9000/api/users/',

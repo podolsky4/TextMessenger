@@ -63,4 +63,11 @@ public class UserServiceImpl implements UserService {
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return favorites;
   }
+
+  @Override
+  public List<Post> getFavoritesByLogin(String login) {
+    List<Post> favorites = userRepository.findUserByLogin(login).getFavorites();
+    favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
+    return favorites;
+  }
 }

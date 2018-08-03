@@ -29,6 +29,9 @@ public class Post extends BaseEntity {
   @Column(name = "content")
   private String content;
 
+  @Column(name = "parent_id")
+  private Long parentId;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   @JsonIgnoreProperties(value = "posts", allowSetters = true)
