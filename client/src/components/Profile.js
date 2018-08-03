@@ -35,7 +35,7 @@ class Profile extends Component {
     e.preventDefault()
     let data = this.state
     const up = {...data, id: user.id}
-    updateUser(up,user.login)
+    updateUser(up, user.login)
     this.editableField()
   };
 

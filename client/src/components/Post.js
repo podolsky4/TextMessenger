@@ -8,8 +8,15 @@ import PostContent from './PostContent'
 import Like from './Like'
 import PostComment from './PostComment'
 import PostRetwite from './PostRetwite'
+import Comments from './Comments'
 
 class Post extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      flag: false
+    }
+  }
   componentWillMount () {
     const {favorites, user, loadFavorites} = this.props
     if (favorites.length === 0) {
@@ -25,23 +32,23 @@ class Post extends Component {
     }
   }
   handleRetwite = e => {
-    const {post, user, retweets, unRetweets,postId} = this.props
+    const {post, user, retweets, unRetweets, postId} = this.props
     if (e.target.className === 'tweet') {
       retweets(user.id, post.id)
     } else {
-      debugger
       unRetweets(postId)
     }
   }
-
+  handleComments = e => {
+    this.setState({flag: true})
+  }
   render () {
-    const {favorites, post, owner, whoo} = this.props
-
+    const {favorites, post, owner, whoo, user} = this.props
     return (
 
       <div className="post"
         key={`${post.id}  ${post.parentId}`}>
-        {owner && owner.login}
+        {owner && `Ретвитнул ${owner.login}`}
         <header>
           <Avatar/>
           <UserHeaderInfo user={post.user}/>
@@ -51,8 +58,9 @@ class Post extends Component {
         <footer>
           <Like favorites={favorites} post={post} handleLike={this.handleLike.bind(this)}/>
           <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
-          <PostComment/>
+          <PostComment handleComments={this.handleComments.bind(this)} />
         </footer>
+        {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}
       </div>
     )
   }

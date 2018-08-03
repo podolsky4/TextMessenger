@@ -2,6 +2,7 @@ package com.textmessenger.service;
 
 import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +20,9 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public void createComment(Post post, Comment comment) {
+  public void createComment(Post post, User user, Comment comment) {
     comment.setPost(post);
+    comment.setCommentator(user);
     commentRepository.save(comment);
   }
 
