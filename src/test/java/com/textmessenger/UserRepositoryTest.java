@@ -28,7 +28,7 @@ public class UserRepositoryTest {
   public UserRepositoryTest() {
     // given user
     alex = new User();
-    alex.setLogin("alex007");
+    alex.setLogin("alex_retina");
     alex.setEmail("alex.retina@gmail.com");
     alex.setPassword("Asd17357coding_is_fun");
   }

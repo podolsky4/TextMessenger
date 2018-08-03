@@ -60,6 +60,7 @@ public class User extends BaseEntity {
   private List<Post> posts = new ArrayList<>();
 
   @OneToMany(mappedBy = "commentator")
+  @JsonIgnore
   private List<Comment> comments = new ArrayList<>();
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
