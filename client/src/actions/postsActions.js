@@ -11,6 +11,26 @@ export const createLoadPosts = (id, content) => dispatch => {
     })
     .then(() => dispatch(loadPosts()))
 }
+export const retweet = (id, postId) => dispatch => {
+  fetch(`/api/posts/user/${id}/post/${postId}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(() => dispatch(loadPosts()))
+}
+export const unRetweet = (id, postId) => dispatch => {
+  fetch(`/api/posts/user/${postId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(() => dispatch(loadPosts()))
+}
 
 export const addedLikers = (id, user) => dispatch => {
   fetch(`/api/users/post/${id}`,

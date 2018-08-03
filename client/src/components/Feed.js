@@ -50,7 +50,7 @@ class Feed extends Component {
     }
   }
   render () {
-    const {posts} = this.props
+    const {posts, user} = this.props
     return (
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
@@ -64,7 +64,7 @@ class Feed extends Component {
           />
           <button className="btn-create-post">Опубликовать</button>
         </form>
-        <Posts posts={posts}/>
+        <Posts posts={posts} user={user}/>
       </div>
     )
   }

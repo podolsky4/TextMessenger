@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 
 export default class PostRetwite extends Component {
   render () {
-    return <a className="retwite">Retwite</a>
+    const {whoo, handleRetwite} = this.props
+    return <a className={ whoo ? 'tweet--checked' : 'tweet'}
+      onClick={event => handleRetwite(event)}>Retweet</a>
   }
 }

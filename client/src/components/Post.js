@@ -8,6 +8,7 @@ import PostContent from './PostContent'
 import Like from './Like'
 import PostComment from './PostComment'
 import PostRetwite from './PostRetwite'
+import {retweet, unRetweet} from '../actions/postsActions'
 
 class Post extends Component {
   componentWillMount () {
@@ -24,13 +25,23 @@ class Post extends Component {
       deleteLiker(post.id, user)
     }
   }
+  handleRetwite = e => {
+    const {post, user, retweets, unRetweets} = this.props
+    if (e.target.className === 'tweet') {
+      retweets(user.id, post.id)
+    } else {
+      unRetweets(post.id)
+    }
+  }
 
   render () {
-    const {favorites, post} = this.props
+    const {favorites, post, owner, whoo} = this.props
 
     return (
+
       <div className="post"
         key={post.id}>
+        {owner && owner.login}
         <header>
           <Avatar/>
           <UserInfo user={post.user}/>
@@ -39,7 +50,7 @@ class Post extends Component {
         <PostContent content={post.content}/>
         <footer>
           <Like favorites={favorites} post={post} handleLike={this.handleLike.bind(this)}/>
-          <PostRetwite/>
+          <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
           <PostComment/>
         </footer>
       </div>
@@ -57,7 +68,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addedLiker: (id, user) => dispatch(addedLikers(id, user)),
     deleteLiker: (id, user) => dispatch(deleteLikers(id, user)),
-    loadFavorites: (id) => dispatch(loadFavorites(id))
+    loadFavorites: (id) => dispatch(loadFavorites(id)),
+    retweets: (id, postId) => dispatch(retweet(id, postId)),
+    unRetweets: (postId) => dispatch(unRetweet(postId))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

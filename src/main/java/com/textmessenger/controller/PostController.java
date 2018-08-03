@@ -50,8 +50,8 @@ public class PostController {
             .orElse(ResponseEntity.noContent().build());
   }
 
-  @DeleteMapping
-  public ResponseEntity<?> deletePostById(@RequestBody Post post) {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deletePostById(@PathVariable("id") Post post) {
     postService.deletePost(post);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
