@@ -1,6 +1,13 @@
 import React, {Component} from 'react'
 import {addedLikers, deleteLikers, loadFavorites} from '../actions/postsActions'
 import {connect} from 'react-redux'
+import Avatar from './Avatar'
+import UserInfo from './UserInfo'
+import DataInfo from './DataInfo'
+import PostContent from './PostContent'
+import Like from './Like'
+import PostComment from './PostComment'
+import PostRetwite from './PostRetwite'
 
 class Post extends Component {
   componentWillMount () {
@@ -19,32 +26,24 @@ class Post extends Component {
   }
 
   render () {
-    const {favorites} = this.props
-    const {user} = this.props.post
+    const {favorites, post} = this.props
 
     return (
       <div className="post"
-        key={this.props.post.id}>
+        key={post.id}>
+        {post.user.login}
         <header>
-          <img className="logo" alt="logo" src="https://www.ozilis.com/25038-large_default/plate-42-44-46.jpg"></img>
-          <div className="user_info">
-            <div className="post_login">{user.login}</div>
-            <div className="post_email">{user.email}</div>
-          </div>
-          <div className="data_info">
-            <div className="user_fullname">{`${user.firstName}  ${user.lastName}`}</div>
-            <div className="date_created">{user.createdDate}</div>
-          </div>
+          <Avatar/>
+          <UserInfo user={post.user}/>
+          <DataInfo user={post.user}/>
         </header>
-
-        <p className="post_content">
-          {this.props.post.content}
-        </p>
+        <PostContent content={post.content}/>
         <footer>
-          <a className={favorites.some(post => post.id === this.props.post.id) ? 'like--checked' : 'like'}
+          <Like favorites={favorites} post={post}/>
+          <a className={favorites.some(p => p.id === post.id) ? 'like--checked' : 'like'}
             onClick={event => this.handleLike(event)}>Like</a>
-          <a className="retwite">Retwite</a>
-          <a className="comment">Comment</a>
+          <PostRetwite/>
+          <PostComment/>
         </footer>
       </div>
     )

@@ -51,4 +51,11 @@ public class PostServiceImpl implements PostService {
     return new Sort(Sort.Direction.DESC, "createdDate");
   }
 
+  @Override
+  public void retwitPost(User user, Long post_id) {
+    Post retwite = new Post();
+    retwite.setUser(user);
+    retwite.setParentId(post_id);
+    postRepository.save(retwite);
+  }
 }
