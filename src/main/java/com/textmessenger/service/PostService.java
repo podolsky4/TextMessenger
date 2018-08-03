@@ -17,4 +17,6 @@ public interface PostService {
   Optional<List<Post>> getAll();
 
   List<Post> getUserPost(User user);
+
+  void retwitPost(User user, Long postId);
 }

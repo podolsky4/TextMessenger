@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createUser, loadUser} from '../actions/userActions'
+import {loadFavorites} from '../actions/postsActions'
 
 class LogIn extends Component {
   change = e => {
@@ -9,9 +10,10 @@ class LogIn extends Component {
     })
   };
   onSubmit = e => {
+    const {createUser} = this.props
     e.preventDefault()
     let data = this.state
-    this.props.createUser(data)
+    createUser(data)
   };
 
   constructor (props) {
@@ -86,7 +88,8 @@ class LogIn extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     createUser: (data) => dispatch(createUser(data)),
-    loadUser: (some) => dispatch(loadUser(some))
+    loadUser: (some) => dispatch(loadUser(some)),
+    loadFavorites: (id) => dispatch(loadFavorites(id))
   }
 }
 const mapStateToProps = state => {

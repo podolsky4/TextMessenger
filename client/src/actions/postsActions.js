@@ -11,6 +11,27 @@ export const createLoadPosts = (id, content) => dispatch => {
     })
     .then(() => dispatch(loadPosts()))
 }
+export const retweet = (id, postId) => dispatch => {
+  fetch(`/api/posts/user/${id}/post/${postId}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(() => dispatch(loadPosts()))
+}
+export const unRetweet = (postId) => dispatch => {
+  debugger
+  fetch(`/api/posts/${postId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(() => dispatch(loadPosts()))
+}
 
 export const addedLikers = (id, user) => dispatch => {
   fetch(`/api/users/post/${id}`,
@@ -36,6 +57,11 @@ export const deleteLikers = (id, user) => dispatch => {
 }
 export const loadFavorites = (id) => dispatch => {
   fetch(`/api/users/favorites/${id}`)
+    .then(res => res.json())
+    .then(data => dispatch({type: LOAD_FAVORITES, payload: data}))
+}
+export const loadFavoritesByLogin = (login) => dispatch => {
+  fetch(`/api/users/favorites/login/${login}`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_FAVORITES, payload: data}))
 }

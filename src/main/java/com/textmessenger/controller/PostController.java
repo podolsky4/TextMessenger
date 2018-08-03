@@ -50,10 +50,15 @@ public class PostController {
             .orElse(ResponseEntity.noContent().build());
   }
 
-  @DeleteMapping
-  public ResponseEntity<?> deletePostById(@RequestBody Post post) {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deletePostById(@PathVariable("id") Post post) {
     postService.deletePost(post);
-    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
+    return ResponseEntity.status(200).build();
   }
 
+  @PostMapping("/user/{id}/post/{postId}")
+  public ResponseEntity<?> retwitePost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
+    postService.retwitPost(user, postId);
+    return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
+  }
 }
