@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 export default class PostComment extends Component {
   render () {
-    return <a className="comment">Comment</a>
+    const {handleComments} = this.props
+    return <a className="comment" onClick={event => handleComments(event)}>Comment</a>
   }
 }

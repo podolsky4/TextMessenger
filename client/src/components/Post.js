@@ -8,8 +8,15 @@ import PostContent from './PostContent'
 import Like from './Like'
 import PostComment from './PostComment'
 import PostRetwite from './PostRetwite'
+import Comments from './Comments'
 
 class Post extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      comment: false
+    }
+  }
   componentWillMount () {
     const {favorites, user, loadFavorites} = this.props
     if (favorites.length === 0) {
@@ -25,14 +32,16 @@ class Post extends Component {
     }
   }
   handleRetwite = e => {
-    const {post, user, retweets, unRetweets,postId} = this.props
+    const {post, user, retweets, unRetweets, postId} = this.props
     if (e.target.className === 'tweet') {
       retweets(user.id, post.id)
     } else {
       unRetweets(postId)
     }
   }
-
+  handleComments = e => {
+    this.setState({comment: true})
+  }
   render () {
     const {favorites, post, owner, whoo} = this.props
 
@@ -50,8 +59,9 @@ class Post extends Component {
         <footer>
           <Like favorites={favorites} post={post} handleLike={this.handleLike.bind(this)}/>
           <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
-          <PostComment/>
+          <PostComment handleComments={this.handleComments.bind(this)} />
         </footer>
+        {this.state.comment && <Comments comments={post.comment} />}
       </div>
     )
   }
