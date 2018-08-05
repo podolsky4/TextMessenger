@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/dialogs")
+@RequestMapping("/api/dialogs")
 public class DialogController {
 
   private final DialogService dialogService;
@@ -26,7 +26,7 @@ public class DialogController {
   }
 
   @PostMapping("/user/{id}")
-  public ResponseEntity createDialog(@PathVariable("id")long id, User user, @RequestBody Dialog dialog) {
+  public ResponseEntity createDialog(@PathVariable("id") User user, @RequestBody Dialog dialog) {
     List<User> users = dialog.getUsers();
     users.add(user);
     dialog.setUsers(users);
@@ -35,7 +35,7 @@ public class DialogController {
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<?> readDialog(@PathVariable("id")long id, User user) {
+  public ResponseEntity<?> readDialog(@PathVariable("id") User user) {
     return Optional.of(ResponseEntity.ok().body(dialogService.getDialogsByUser(user)))
             .orElse(ResponseEntity.noContent().build());
   }
