@@ -15,14 +15,20 @@ class Dialogs extends Component {
     }
   }
 
+  handleCreateDialog = id => {
+
+  }
+
   render () {
     const {user, dialogs, getUser} = this.props
-    return (
+      return (
         <div>
           {dialogs.map(dialog => {
             <Dialog key = {dialog.id} data = {dialog}/>
           })}
-
+          <button onClick={this.handleCreateDialog(user.id)}>
+            Create new Dialog
+          </button>
         </div>
     )
   }

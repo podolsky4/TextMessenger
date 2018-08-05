@@ -6,9 +6,27 @@ class Dialog extends Component {
 
   }
 
+  handleAddUser = user => {
+
+  }
+
   render () {
+
+    const {user} = this.props
+
     return(
         <div>
+
+          <form>
+            <label>
+              Find user
+              <input/>
+            </label>
+            <button onClick={this.handleAddUser(user)}>
+              Add user
+            </button>
+          </form>
+
 
         </div>
     )
