@@ -42,10 +42,9 @@ INSERT INTO `dialog` (`created_at`, `last_update`) VALUES ('2008-01-27 14:39:07'
 INSERT INTO `dialog` (`created_at`, `last_update`) VALUES ('2009-01-27 14:39:07', '2009-02-10 16:42:00');
 
 -- Add connection between users and messages through dialog
-
 INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (6, 2);
 INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (7, 2);
 
 -- Add messages to dialog
-INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('hello', 2, 6, '2009-01-28 14:00:00');
-INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('nice to meet you', 2, 7, '2009-01-28 14:01:00');
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('hello', 2, 6, '2009-02-28 14:00:00');
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('nice to meet you', 2, 7, '2009-02-28 14:01:00');
