@@ -1,47 +1,66 @@
 import React, {Component} from 'react'
-import {addedLikers, deleteLikers, loadFavorites} from '../actions/postsActions'
+import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../actions/postsActions'
 import {connect} from 'react-redux'
+import Avatar from './Avatar'
+import UserHeaderInfo from './UserHeaderInfo'
+import DataInfo from './DataInfo'
+import PostContent from './PostContent'
+import Like from './Like'
+import PostComment from './PostComment'
+import PostRetwite from './PostRetwite'
+import Comments from './Comments'
 
 class Post extends Component {
-  componentWillMount () {
-    this.props.loadFavorites(this.props.user.id)
-  }
-  handleLike = e => {
-    if (e.target.className === 'like') {
-      this.props.addedLiker(this.props.post.id, this.props.user)
-    } else {
-      this.props.deleteLiker(this.props.post.id, this.props.user)
+  constructor (props) {
+    super(props)
+    this.state = {
+      flag: false
     }
   }
-
+  componentWillMount () {
+    const {favorites, user, loadFavorites} = this.props
+    if (favorites.length === 0) {
+      loadFavorites(user.id)
+    }
+  }
+  handleLike = e => {
+    const {post, user, addedLiker, deleteLiker} = this.props
+    if (e.target.className === 'like') {
+      addedLiker(post.id, user)
+    } else {
+      deleteLiker(post.id, user)
+    }
+  }
+  handleRetwite = e => {
+    const {post, user, retweets, unRetweets, postId} = this.props
+    if (e.target.className === 'tweet') {
+      retweets(user.id, post.id)
+    } else {
+      unRetweets(postId)
+    }
+  }
+  handleComments = e => {
+    this.setState({flag: true})
+  }
   render () {
-    const {favorites} = this.props
-    const {user} = this.props.post
-
+    const {favorites, post, owner, whoo, user} = this.props
     return (
-      <div className="post"
-        key={this.props.post.id}>
-        <header>
-          <img className="logo" alt="logo" src="https://www.ozilis.com/25038-large_default/plate-42-44-46.jpg"></img>
-          <div className="user_info">
-            <div className="post_login">{user.login}</div>
-            <div className="post_email">{user.email}</div>
-          </div>
-          <div className="data_info">
-            <div className="user_fullname">{`${user.firstName}  ${user.lastName}`}</div>
-            <div className="date_created">{user.createdDate}</div>
-          </div>
-        </header>
 
-        <p className="post_content">
-          {this.props.post.content}
-        </p>
+      <div className="post"
+        key={`${post.id}  ${post.parentId}`}>
+        {owner && `Ретвитнул ${owner.login}`}
+        <header>
+          <Avatar/>
+          <UserHeaderInfo user={post.user}/>
+          <DataInfo user={post.user}/>
+        </header>
+        <PostContent content={post.content}/>
         <footer>
-          <a className={favorites.find(post => post.id === this.props.post.id) === undefined ? 'like' : 'likes'}
-            onClick={event => this.handleLike(event)}>Like</a>
-          <a className="retwite">Retwite</a>
-          <a className="comment">Comment</a>
+          <Like favorites={favorites} post={post} handleLike={this.handleLike.bind(this)}/>
+          <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
+          <PostComment handleComments={this.handleComments.bind(this)} />
         </footer>
+        {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}
       </div>
     )
   }
@@ -57,7 +76,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addedLiker: (id, user) => dispatch(addedLikers(id, user)),
     deleteLiker: (id, user) => dispatch(deleteLikers(id, user)),
-    loadFavorites: (id) => dispatch(loadFavorites(id))
+    loadFavorites: (id) => dispatch(loadFavorites(id)),
+    retweets: (id, postId) => dispatch(retweet(id, postId)),
+    unRetweets: (postId) => dispatch(unRetweet(postId))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

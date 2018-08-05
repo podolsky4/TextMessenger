@@ -17,24 +17,38 @@ body {
 }
 
 .postCreator {
-  width: 500px;
-  background: grey;
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  margin: 30px auto;
 }
 
 textarea {
   resize: none;
+  width: 80%;
+  padding: 15px;
+  border: none;
+  border-radius: 15px;
+}
+
+.btn-create-post {
+  padding: 15px;
+  border-radius: 15px;
+  background-color: yellow;
+  color: blue;
+  font-size: 18px;
 }
 
 .posts {
   width: 80%;
   margin: auto;
   padding: 10px 0;
-  background: grey;
 }
 
 .post {
   margin: 5px;
   padding: 10px;
+  border-radius: 15px;
   background: #719fc7;
 }
 
@@ -107,6 +121,6 @@ footer > a {
   cursor: pointer;
 }
 
-.likes {
+.like--checked {
   color: red;
 }

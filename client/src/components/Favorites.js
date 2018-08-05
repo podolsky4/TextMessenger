@@ -5,7 +5,10 @@ import Posts from './Posts'
 
 class Favorites extends Component {
   componentWillMount () {
-    this.props.loadFavorites(this.props.user.id)
+    const {favorites, user, loadFavorites} = this.props
+    if (favorites.length === 0) {
+      loadFavorites(user.id)
+    }
   }
   render () {
     const {favorites} = this.props

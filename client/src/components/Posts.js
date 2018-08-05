@@ -3,13 +3,33 @@ import Post from './Post'
 
 class Posts extends Component {
   render () {
+    const {posts, user} = this.props
+    let current = post => {
+      if (post.parentId == null) {
+        return (
+          <Post
+            key={post.id}
+            post={post}
+          />)
+      } else {
+        let currentPost = posts.find(i => i.id === post.parentId)
+        console.log(currentPost)
+        let who = user.id === post.user.id
+        return (
+          <Post
+            key={post.id}
+            post={currentPost}
+            owner={post.user}
+            whoo={who}
+            postId={post.id}
+          />)
+      }
+    }
     return (
       <div className="posts">
-        {this.props.posts.map(content =>
-          <Post
-            key={content.id}
-            post={content}
-          />)}
+        {posts.map(content =>
+          current(content)
+        )}
       </div>
     )
   }
