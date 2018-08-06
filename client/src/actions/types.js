@@ -1,3 +1,5 @@
 export const CREATE_USER = 'CREATE_USER'
 export const LOAD_POSTS = 'LOAD_POSTS'
 export const LOAD_FAVORITES = 'LOAD_FAVORITES'
+export const START_LOADER = 'START_LOADER'
+export const STOP_LOADER = 'STOP_LOADER'
