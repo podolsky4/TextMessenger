@@ -25,11 +25,10 @@ class Posts extends Component {
           />)
       }
     }
+
     return (
       <div className="posts">
-        {posts.map(content =>
-          current(content)
-        )}
+        {posts.map(content => current(content))}
       </div>
     )
   }

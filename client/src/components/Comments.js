@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {createComment} from '../actions/postsActions'
 import Comment from './Comment'
 
+// Represents comments to our post
 class Comments extends Component {
   constructor (props) {
     super(props)

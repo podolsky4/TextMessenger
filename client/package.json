@@ -20,6 +20,7 @@
     "stylelint-config-standard": "^17.0.0",
     "stylelint-order": "^0.7.0",
     "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
     "prop-types": "latest"
   },
   "scripts": {

@@ -3,7 +3,8 @@ import React, {Component} from 'react'
 
 class Header extends Component {
   render () {
-    return <div className="header">
+    return (
+      <div className="header">
       <Link to='/'>Home</Link>
       <Link to='/feed'>Feeds</Link>
       <Link to='/favorites'>Favorites</Link>
@@ -12,6 +13,7 @@ class Header extends Component {
       <Link className='login' to='/login'>CreateUser</Link>
       <Link to='/profile'>MyProfile</Link>
     </div>
+    )
   }
 }
 
