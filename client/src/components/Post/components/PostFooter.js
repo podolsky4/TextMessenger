@@ -1,18 +1,3 @@
-<PostFooter favorites={favorites}
-            post={post}
-            handleLike={this.handleLike.bind(this)}
-            whoo={whoo}
-            handleRetwite={this.handleRetwite.bind(this)}
-            handleComments={this.handleComments.bind(this)}
->
-    <Like favorites post handleLike />
-    <PostRetwite whoo handleRetwite />
-    <PostComment handleComments />
-</PostFooter>
-
-
-
-
 import React, {Component} from 'react'
 import PostRetwite from './PostRetwite'
 import PostComment from './PostComment'
