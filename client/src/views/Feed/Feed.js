@@ -1,10 +1,11 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {createLoadPosts, loadPosts, loadFavorites} from '../actions/postsActions'
-import {getUser} from '../actions/userActions'
-import Posts from './Posts'
-import Loader from './Loader'
-import loader from "../reducers/loader";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { createLoadPosts, loadPosts, loadFavorites } from '../../actions/postsActions'
+import { getUser } from '../../actions/userActions'
+import Posts from '../../components/Posts'
+import Loader from '../../components/Loader'
+import loader from '../../reducers/loader'
+import './Feed.css'
 
 class Feed extends Component {
   constructor (props) {
@@ -13,7 +14,10 @@ class Feed extends Component {
       text: ''
     }
   }
+
   componentDidMount () {
+    console.log('componentDidMount in Feed.js')
+
     const {posts, favorites, user, loadPosts, loadFavorites, loadUser} = this.props
     if (posts.length === 0) {
       loadPosts()
@@ -25,11 +29,12 @@ class Feed extends Component {
       loadUser()
     }
   }
+
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
     })
-  };
+  }
 
   reset = () => {
     this.setState({text: ''})
@@ -41,7 +46,8 @@ class Feed extends Component {
     e.preventDefault()
     createPost(user.id, this.state.text)
     this.reset()
-  };
+  }
+
   myFunction (e) {
     if (e.key === 'Enter') {
       this.onSubmit(e)
@@ -51,6 +57,7 @@ class Feed extends Component {
       })
     }
   }
+
   render () {
     const {posts, user, fetching} = this.props
       console.log(fetching)
@@ -58,16 +65,16 @@ class Feed extends Component {
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
           <textarea defaultValue=""
-            placeholder="Что нового?"
-            maxLength={280}
-            id="content"
-            name="text"
-            type="text"
-            onKeyUp={event => this.myFunction(event)}
+                    placeholder="Что нового?"
+                    maxLength={280}
+                    id="content"
+                    name="text"
+                    type="text"
+                    onKeyUp={event => this.myFunction(event)}
           />
           <button className="btn-create-post">Опубликовать</button>
         </form>
-          {fetching && <Loader classes={loader}/>}
+          {fetching && <Loader classes={{progress: 'root'}}/>}
           {!fetching && <Posts posts={posts} user={user}/>}
       </div>
     )

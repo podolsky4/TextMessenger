@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateUser, loadUser} from '../actions/userActions'
-import View from './View'
+import {updateUser, loadUser} from '../../actions/userActions'
+import View from '../../components/View'
 
 class Profile extends Component {
   constructor (props) {

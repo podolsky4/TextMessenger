@@ -16,6 +16,6 @@ export function toggleLoader() {
                 type: STOP_LOADER,
                 payload: false
             })
-        }, 3000)
+        }, 500)
     }
 }
