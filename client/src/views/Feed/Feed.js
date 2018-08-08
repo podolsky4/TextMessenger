@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createLoadPosts, loadPosts, loadFavorites} from '../actions/postsActions'
-import {getUser} from '../actions/userActions'
-import Posts from './Posts'
-import Loader from './Loader'
-import loader from "../reducers/loader";
+import {createLoadPosts, loadPosts, loadFavorites} from '../../actions/postsActions'
+import {getUser} from '../../actions/userActions'
+import PostList from '../../components/Post/PostList'
+import Loader from '../../components/Loader/Loader'
+import loader from "../../reducers/loader";
 
 class Feed extends Component {
   constructor (props) {
@@ -68,7 +68,7 @@ class Feed extends Component {
           <button className="btn-create-post">Опубликовать</button>
         </form>
           {fetching && <Loader classes={loader}/>}
-          {!fetching && <Posts posts={posts} user={user}/>}
+          {!fetching && <PostList posts={posts} user={user}/>}
       </div>
     )
   }
