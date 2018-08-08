@@ -88,7 +88,7 @@ class Profile extends Component {
           </label>
 
           <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)}/>
-          <input value='Cancel' onClick={this.editableField}/>
+          <input type='button' name='Cancel'value='Cancel' onClick={this.editableField}/>
         </form>
         }
       </div>
