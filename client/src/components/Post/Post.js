@@ -1,14 +1,15 @@
-import React, {Component} from 'react'
-import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../actions/postsActions'
-import {connect} from 'react-redux'
-import Avatar from './Avatar'
-import UserHeaderInfo from './UserHeaderInfo'
-import DataInfo from './DataInfo'
+import React, { Component } from 'react'
+import { addedLikers, deleteLikers, loadFavorites, unRetweet, retweet } from '../../actions/postsActions'
+import { connect } from 'react-redux'
+import Avatar from '../Avatar'
+import UserHeaderInfo from '../UserHeaderInfo'
+import DataInfo from '../DataInfo'
 import PostContent from './PostContent'
 import Like from './Like'
 import PostComment from './PostComment'
 import PostRetwite from './PostRetwite'
-import Comments from './Comments'
+import Comments from '../Comments'
+import './Post.css'
 
 class Post extends Component {
   constructor (props) {
@@ -17,12 +18,15 @@ class Post extends Component {
       flag: false
     }
   }
+
   componentWillMount () {
+    console.log('componentWillMount in Post.js')
     const {favorites, user, loadFavorites} = this.props
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
   }
+
   handleLike = e => {
     const {post, user, addedLiker, deleteLiker} = this.props
     if (e.target.className === 'like') {
@@ -31,6 +35,7 @@ class Post extends Component {
       deleteLiker(post.id, user)
     }
   }
+
   handleRetwite = e => {
     const {post, user, retweets, unRetweets, postId} = this.props
     if (e.target.className === 'tweet') {
@@ -39,15 +44,17 @@ class Post extends Component {
       unRetweets(postId)
     }
   }
+
   handleComments = e => {
     this.setState({flag: true})
   }
+
   render () {
     const {favorites, post, owner, whoo, user} = this.props
     return (
 
       <div className="post"
-        key={`${post.id}  ${post.parentId}`}>
+           key={`${post.id}  ${post.parentId}`}>
         {owner && `Ретвитнул ${owner.login}`}
         <header>
           <Avatar/>
@@ -58,7 +65,7 @@ class Post extends Component {
         <footer>
           <Like favorites={favorites} post={post} handleLike={this.handleLike.bind(this)}/>
           <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
-          <PostComment handleComments={this.handleComments.bind(this)} />
+          <PostComment handleComments={this.handleComments.bind(this)}/>
         </footer>
         {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}
       </div>

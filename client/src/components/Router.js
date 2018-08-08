@@ -1,12 +1,12 @@
 import {Route, Switch} from 'react-router-dom'
 import React, {Component} from 'react'
 import HomePage from './HomePage'
-import Feed from './Feed'
+import Feed from '../views/Feed/Feed'
 import Favorites from './Favorites'
 import Dialogs from './Dialogs'
 import Notifications from './Notifications'
 import Login from './LogIn'
-import Profile from './Profile'
+import Profile from '../views/Profile/Profile'
 
 class Router extends Component {
   render () {
