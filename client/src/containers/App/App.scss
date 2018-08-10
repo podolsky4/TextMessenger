@@ -10,8 +10,8 @@ body {
   background-color: #000;
 
   a {
-    color: #fff;
     padding-right: 20px;
+    color: #fff;
     text-decoration: none;
   }
 }
@@ -24,25 +24,25 @@ body {
 }
 
 textarea {
-  border: 0;
   width: 80%;
   padding: 15px;
+  border: 0;
   border-radius: 15px;
   resize: none;
 }
 
 .btn-create-post {
-  background-color: #1f446a;
+  padding: 15px;
   border-radius: 15px;
+  background-color: #1f446a;
   color: #f9fffd;
   font-size: 18px;
-  padding: 15px;
 }
 
 .posts {
+  width: 80%;
   margin: auto;
   padding: 10px 0;
-  width: 80%;
 }
 
 .post {
@@ -63,11 +63,11 @@ header {
 
 .logo {
   display: inline-block;
-  border-radius: 50%;
-  height: 44px;
-  float: left;
   width: 46px;
+  height: 44px;
   margin-right: 21px;
+  float: left;
+  border-radius: 50%;
 }
 
 .user_info {
@@ -78,50 +78,49 @@ header {
 }
 
 .post_email {
+  margin-bottom: 5px;
   color: #fff;
   font-size: 29px;
   font-weight: 600;
-  margin-bottom: 5px;
   line-height: 21px;
   text-align: left;
 }
 
 .data_info {
   display: block;
-  color: #fff;
+  position: relative;
+  width: auto;
   height: 44px;
   float: right;
-  position: relative;
+  color: #fff;
   text-align: right;
-  width: auto;
 }
 
 .user_fullname {
-  color: #ffffff;
+  color: #fff;
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
 }
 
 .date_created {
-  color: #ffffff;
+  color: #ffff;
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
 }
 
 footer {
-  border-top: 1px solid #8080800d;
   display: flex;
   justify-content: space-around;
   padding: 10px;
+  border-top: 1px solid #8080800d;
+
   a {
     cursor: pointer;
   }
 }
 
-
-
 .like--checked {
-  color: #ff0000;
+  color: #f00;
 }
