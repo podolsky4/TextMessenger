@@ -16,7 +16,7 @@ cache:
 before_script:
 - npm install --prefix client/
 
-# Sonar cloud addon
+# Sonar Cloud Addon
 addons:
   sonarcloud:
     organization: final_project_text_messenger
