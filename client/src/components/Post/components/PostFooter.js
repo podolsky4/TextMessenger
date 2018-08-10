@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PostRetwite from './PostRetwite'
 import PostComment from './PostComment'
+import Like from "./Like";
 
 export default class PostFooter extends Component {
     render () {
@@ -8,7 +9,7 @@ export default class PostFooter extends Component {
         return (<>
                     <Like favorites post handleLike />
                     <PostRetwite whoo handleRetwite />
-                z<PostComment handleComments />
+                <PostComment handleComments />
                 </>
         )
     }

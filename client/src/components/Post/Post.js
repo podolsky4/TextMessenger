@@ -3,12 +3,13 @@ import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../.
 import {connect} from 'react-redux'
 
 import UserHeaderInfo from '../User/UserHeaderInfo'
-import DataInfo from '../User/DataInfo'
+
 import PostContent from './components/PostContent'
 import Like from './components/Like'
 import PostComment from './components/PostComment'
 import PostRetwite from './components/PostRetwite'
 import Comments from './components/CommentList'
+// import './Post.css'
 
 
 import PropTypes from 'prop-types';
@@ -51,6 +52,10 @@ const styles = theme => ({
     },
     avatar: {
         backgroundColor: red[500],
+    },
+    post: {
+        paddingBottom: '0',
+        color: 'red',
     },
 });
 
@@ -99,7 +104,7 @@ class Post extends Component {
   render () {
     const {favorites, post, owner, whoo, user, classes} = this.props
     return (
-        <Card className={classnames(classes.card, 'post')}
+        <Card className={classnames(classes.card, classes.post, 'post')}
               key={`${post.id}  ${post.parentId}`}
         >
               {owner && `Ретвитнул ${owner.login}`}

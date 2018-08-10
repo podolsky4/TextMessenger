@@ -1,48 +1,49 @@
 $color-bg: #e9967a;
 
 body {
-  padding: 10% 15%;
   background: $color-bg;
+  padding: 10% 15%;
 }
 
 .header {
+  background-color: #000000;
   padding: 10px 20px;
-  background-color: black;
+  a{
+    color: #ffffff;
+    text-decoration: none;
+    padding-right: 20px;
+  }
 }
 
-.header > a {
-  padding-right: 20px;
-  color: white;
-  text-decoration: none;
-}
+
 
 .postCreator {
   display: flex;
   justify-content: space-around;
-  width: 80%;
   margin: 30px auto;
+  width: 80%;
 }
 
 textarea {
+  border: 0;
+  border-radius: 15px;
+  padding: 15px;
   resize: none;
   width: 80%;
-  padding: 15px;
-  border: none;
-  border-radius: 15px;
 }
 
 .btn-create-post {
-  padding: 15px;
+  background-color: #1f446a;
   border-radius: 15px;
-  background-color: yellow;
-  color: blue;
+  color: #f9fffd;
   font-size: 18px;
+  padding: 15px;
 }
 
 .posts {
-  width: 80%;
   margin: auto;
   padding: 10px 0;
+  width: 80%;
 }
 
 .post {
@@ -62,65 +63,66 @@ header {
 }
 
 .logo {
+  border-radius: 50%;
   display: inline-block;
-  width: 46px;
+  float: left;
   height: 44px;
   margin-right: 21px;
-  float: left;
-  border-radius: 50%;
+  width: 46px;
 }
 
 .user_info {
-  width: 108px;
-  height: 44px;
+  color: #ffffff;
   float: left;
-  color: white;
+  height: 44px;
+  width: 108px;
 }
 
 .post_email {
-  margin-bottom: 5px;
   color: #fff;
   font-size: 29px;
   font-weight: 600;
   line-height: 21px;
+  margin-bottom: 5px;
   text-align: left;
 }
 
 .data_info {
+  color: #ffffff;
   display: block;
-  position: relative;
-  width: auto;
-  height: 44px;
   float: right;
-  color: white;
+  height: 44px;
+  position: relative;
   text-align: right;
+  width: auto;
 }
 
 .user_fullname {
-  color: #fff;
+  color: #ffffff;
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
 }
 
 .date_created {
-  color: #fff;
+  color: #ffffff;
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
 }
 
 footer {
+  border-top: 1px solid #8080800d;
   display: flex;
   justify-content: space-around;
   padding: 10px;
-  border-top: 1px solid grey;
+  a {
+    cursor: pointer;
+  }
 }
 
-footer > a {
-  cursor: pointer;
-}
+
 
 .like--checked {
-  color: red;
+  color: #ff0000;
 }
