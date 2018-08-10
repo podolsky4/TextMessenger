@@ -1,49 +1,48 @@
 $color-bg: #e9967a;
 
 body {
-  background: $color-bg;
   padding: 10% 15%;
+  background: $color-bg;
 }
 
 .header {
-  background-color: #000000;
   padding: 10px 20px;
-  a{
-    color: #ffffff;
-    text-decoration: none;
+  background-color: #000;
+
+  a {
     padding-right: 20px;
+    color: #fff;
+    text-decoration: none;
   }
 }
-
-
 
 .postCreator {
   display: flex;
   justify-content: space-around;
-  margin: 30px auto;
   width: 80%;
+  margin: 30px auto;
 }
 
 textarea {
+  width: 80%;
+  padding: 15px;
   border: 0;
   border-radius: 15px;
-  padding: 15px;
   resize: none;
-  width: 80%;
 }
 
 .btn-create-post {
-  background-color: #1f446a;
+  padding: 15px;
   border-radius: 15px;
+  background-color: #1f446a;
   color: #f9fffd;
   font-size: 18px;
-  padding: 15px;
 }
 
 .posts {
+  width: 80%;
   margin: auto;
   padding: 10px 0;
-  width: 80%;
 }
 
 .post {
@@ -63,66 +62,65 @@ header {
 }
 
 .logo {
-  border-radius: 50%;
   display: inline-block;
-  float: left;
+  width: 46px;
   height: 44px;
   margin-right: 21px;
-  width: 46px;
+  float: left;
+  border-radius: 50%;
 }
 
 .user_info {
-  color: #ffffff;
-  float: left;
-  height: 44px;
   width: 108px;
+  height: 44px;
+  float: left;
+  color: #fff;
 }
 
 .post_email {
+  margin-bottom: 5px;
   color: #fff;
   font-size: 29px;
   font-weight: 600;
   line-height: 21px;
-  margin-bottom: 5px;
   text-align: left;
 }
 
 .data_info {
-  color: #ffffff;
   display: block;
-  float: right;
-  height: 44px;
   position: relative;
-  text-align: right;
   width: auto;
+  height: 44px;
+  float: right;
+  color: #fff;
+  text-align: right;
 }
 
 .user_fullname {
-  color: #ffffff;
+  color: #fff;
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
 }
 
 .date_created {
-  color: #ffffff;
+  color: #ffff;
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
 }
 
 footer {
-  border-top: 1px solid #8080800d;
   display: flex;
   justify-content: space-around;
   padding: 10px;
+  border-top: 1px solid #8080800d;
+
   a {
     cursor: pointer;
   }
 }
 
-
-
 .like--checked {
-  color: #ff0000;
+  color: #f00;
 }
