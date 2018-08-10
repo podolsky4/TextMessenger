@@ -15,13 +15,14 @@ cache:
 before_script:
 - npm install --prefix client/
 
-# Sonar Cloud Addon
-addons:
-  sonarcloud:
-    organization: final_project_text_messenger
-    token: 45af4c2bf818a89117763793a7905b86c3381f56
-
 script:
 - mvn clean test jacoco:report coveralls:report
 - npm run build --prefix client/
 - sonar-scanner
+
+# Sonar Cloud Addon
+addons:
+  sonarcloud:
+    organization: "final_project_text_messenger"
+    token:
+      secure: "mSTvkHcm3/l3c0ypxydIDRsJDMc5oGRncTMojJV/gQF4fd7bCDxMRg7dv0GyHuMSxZlYy8w2bysneQJUlb+XLDde6fdj5Lcav6VODzUeV7a6y5LMZdCHnxkhJ4LxKd0na880PCTa1t+Rb6EUDxaX80QGxRdnJq2GVnGNFM4OdeoORzuSMXuGfktQb3NAdXNFYx37zW+fR9ELAVc8Oo0pBAvY3fNUK/8rc+In6cjvwf8OucLwZxtCU+zt9Ta1cTgyPuis5TJTDciNWHgTuqU75vp721JCyKqETCjsUvh/LagzqyGgDo1meggEqAvkSaDBM8cY6xS50e+Ci138aLWf60YObUeeYDklMPeBZT73Q77hPXI3hVSRAYdqUn1KNNKiITAF7n1EOAqOjjaoMOcYoG60nqpwO0nQyZNt54O/dwNUQl09uFkUNYhZaYPsCZrV7ac4TLkNxXjsQnD9xme6CbGhLxbRbRWMTqab0tlSDY2y4+f0tPpRgeOvMB31LAcFh7zLiJYXOEK9mPbY2CWdzeVvmpanqrR8MUYH3WQGH+CN7bACOgX/GsyTzbyR471DyEEipgS8mjnJ0o5uOIGZeUBfI90lXrG766j9fzeNJV+QBfu+xatvWItDXxvPDKyHQ15K3Qbh7mG8O/TTpLB6hY8+s2CDlj3jkOYU7jR++qw="
