@@ -7,11 +7,10 @@ jdk:
 
 cache:
   directories:
-  - "$HOME/.m2"
-  - "./client/node_modules/"
-  - "$HOME/.sonar"
-  - "$HOME/.sonarscanner"
-
+  - $HOME/.m2
+  - ./client/node_modules/
+  - $HOME/.sonar
+  - $HOME/.sonarscanner
 
 before_script:
 - npm install --prefix client/
