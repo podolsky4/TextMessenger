@@ -20,7 +20,7 @@ before_script:
 addons:
   sonarcloud:
     organization: final_project_text_messenger
-    token: 061e53bf3c59953e76740f290eab418b35d20486
+    token: 45af4c2bf818a89117763793a7905b86c3381f56
 
 script:
 - mvn clean test jacoco:report coveralls:report
