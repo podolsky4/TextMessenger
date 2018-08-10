@@ -4,24 +4,25 @@ language: java
 
 cache:
   directories:
-    - $HOME/.m2
-    - ./client/node_modules/
-    - $HOME/.sonar
-    - $HOME/.sonarscanner
+  - "$HOME/.m2"
+  - "./client/node_modules/"
+  - "$HOME/.sonar"
+  - "$HOME/.sonarscanner"
 
 jdk:
-  - oraclejdk8
+- oraclejdk8
 
 before_script:
-  - npm install --prefix client/
+- npm install --prefix client/
 
-# Sonar Cloud addon
+# Sonar cloud addon
 addons:
   sonarcloud:
-    organization: "final_project_text_messenger"
-    token: 45af4c2bf818a89117763793a7905b86c3381f56
+    organization: final_project_text_messenger
+    token:
+      secure: dqUf0WABVYznfJUxmLwaMZu1dshf9LwLBwN/UpsH4RZQu0aeiIo2vtVQgWIaO6vrLt4JGJl4tmBsx0gfs5kpdFZCIU7kI0ypyUfavxHlLxwAzBKTVEsOHpXcJN2hKx+HVmGXjMvs5U7YjKGkW6gp4NOIPmePhsM+oPPqiGaooP+5XbwCSf4m3y6C0EsePRWJgxvbpCiqXCfvqfhAD7PssAByv40b/Y4HIu52YOx1wazEPmNWOWS3VWhCf9V6vKRX3SeyL7TxOZr4SOy9lfWEqSYG1mBHLykylg3fVt6VW2fv2UMIfGQbHEH7ra6hPyG2jTk9YqdJVLy20PXnRIMVvBiC+kaAgrRPGVNEHfz0fFFZOUn/EHek1LtGAiPtH93j0c+m83xdicfjbGZx8gTIuQpVBUHcPqv1wehmLNaeYXDAjWCEcRIuL74vRVnZDf7JrEubUQQGwboOh8aRk9MH06PaPA9ogr4RCWlpGtYAJQlGnKVwSOEEIZariYsqZ/eeJ27hX3q1KCYY2VKTRTGNKtCfubhvZQklkLT08eP4pw/kWvT2ox1ywvHfapp+9NggYZffF0LfoUKaFC8BZ1sNQFqsRsGVEosWBviMm65tGQM1IncHFuTIiGAv7vxG3YDLjhR3uuLIsLy41zMQOjJIwMFcDUbSeAnl5Yw8sfIl7UA=
 
 script:
-  - mvn clean test
-  - npm run build --prefix client/
-  - sonar-scanner
+- mvn clean test
+- npm run build --prefix client/
+- sonar-scanner
