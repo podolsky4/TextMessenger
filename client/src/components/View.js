@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import UserLogin from './UserLogin'
-import UserEmail from './UserEmail'
-import UserFullName from './UserFullName'
+import UserLogin from './User/UserLogin'
+import UserEmail from './User/UserEmail'
+import UserFullName from './User/UserFullName'
 
 export default class View extends Component {
   render () {
