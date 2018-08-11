@@ -4,8 +4,8 @@ import {loadDialog, createDialog} from "../../actions/dialogActions"
 import Dialog from '../Dialog'
 
 class Dialogs extends Component {
-  componentDidMount(){
-    const {user, dialogs} = this.props
+  componentWillMount(){
+    const {user, dialogs, loadDialog} = this.props
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
@@ -18,8 +18,8 @@ class Dialogs extends Component {
   }
 
   render () {
-    const {user, dialogs} = this.props
-    if (dialogs){
+    const {user, dialogs, loadDialog} = this.props
+    if (dialogs.length === 0){
       loadDialog(user.id)
     }
     let current = dialog => {
@@ -33,20 +33,18 @@ class Dialogs extends Component {
       } else {
         let currentDialog = dialogs.find(i => i.id === dialog.id)
         console.log(currentDialog)
-        let who = user.id === dialog.user.id
         return (
             <Dialog
                 key={dialog.id}
                 dialog={currentDialog}
                 owner={dialog.user}
-                whoo={who}
                 dialogId={dialog.id}
             />)
       }
     }
       return (
           <div>
-          <div className="posts">
+          <div className="dialogs">
             {dialogs.map(content =>
                 current(content)
             )}

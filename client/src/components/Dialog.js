@@ -12,10 +12,10 @@ class Dialog extends Component {
 
   render () {
 
-    const {user, data} = this.props
+    const {user, dialog} = this.props
 
     return(
-        <a>{data.id}</a>
+        <a>{dialog.id}</a>
         /*<div>
 
           <form>
