@@ -14,8 +14,9 @@ class App extends Component {
   }
 
   render () {
+    const {user} = this.props
     return (<div>
-      <Header/>
+      <Header user={user}/>
       <Router/>
     </div>)
   }
