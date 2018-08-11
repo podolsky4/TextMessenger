@@ -25,19 +25,19 @@ class Dialogs extends Component {
     }
 
     return (
-      <div>
+      <div className="wrap">
         <div className="dialogs">
-          {dialogs.map((dialog, index) =>
+          {dialogs.map(dialog =>
             <Dialog
-              key = {index}
+              key = {dialog.id}
               dialog = {dialog}
               user={user}
             />
           )}
-        </div>
-        <button onClick={e => this.handleCreateDialog(e)}>
+          <button onClick={e => this.handleCreateDialog(e)}>
             Create new Dialog
-        </button>
+          </button>
+        </div>
       </div>
     )
   }

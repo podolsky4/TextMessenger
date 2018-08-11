@@ -78,9 +78,8 @@ export const loadFavoritesByLogin = (login) => dispatch => {
 }
 
 export const loadPosts = () => dispatch => {
-        dispatch(toggleLoader())
-        fetch(`/api/posts`)
-        .then(res => res.json())
-        .then(data => dispatch({type: LOAD_POSTS, payload: data}))
+  dispatch(toggleLoader())
+  fetch(`/api/posts`)
+    .then(res => res.json())
+    .then(data => dispatch({type: LOAD_POSTS, payload: data}))
 }
-

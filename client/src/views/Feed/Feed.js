@@ -4,7 +4,6 @@ import {createLoadPosts, loadPosts, loadFavorites} from '../../actions/postsActi
 import {getUser} from '../../actions/userActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
-import loader from "../../reducers/loader";
 
 class Feed extends Component {
   constructor (props) {
@@ -53,7 +52,7 @@ class Feed extends Component {
   }
   render () {
     const {posts, user, fetching} = this.props
-      console.log(fetching)
+    console.log(fetching)
     return (
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
@@ -67,8 +66,8 @@ class Feed extends Component {
           />
           <button className="btn-create-post">Опубликовать</button>
         </form>
-          {fetching && <Loader classes={loader}/>}
-          {!fetching && <PostList posts={posts} user={user}/>}
+        {fetching && <Loader classes={{progress: 'root'}}/>}
+        {!fetching && <PostList posts={posts} user={user}/>}
       </div>
     )
   }

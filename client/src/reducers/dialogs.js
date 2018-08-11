@@ -1,8 +1,8 @@
-function dialogs(state = [], action) {
-  if(action.type === 'LOAD_DIALOGS') {
-    return action.payload;
+function dialogs (state = [], action) {
+  if (action.type === 'LOAD_DIALOGS') {
+    return action.payload
   }
-  return state;
+  return state
 }
 
-export default dialogs;
+export default dialogs

@@ -6,7 +6,7 @@ class Dialog extends Component {
     const {users} = this.props.dialog
     return (
       <div className="dialog">
-        {users.map(member => member.id !== user.id ? <a>{member.email}</a> : '')}
+        {users.map(member => member.id !== user.id ? <a key={member.id}>{member.email}</a> : '')}
       </div>
 
     )
