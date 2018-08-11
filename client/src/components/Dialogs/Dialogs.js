@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadDialog, createDialog} from "../../actions/dialogActions"
 import Dialog from '../Dialog'
+import Post from "../Post/Post";
 
 class Dialogs extends Component {
   componentDidMount(){
@@ -21,6 +22,28 @@ class Dialogs extends Component {
     const {user, dialogs} = this.props
     if (dialogs){
       loadDialog(user.id)
+    }
+    let current = dialog => {
+      if (dialog.id == null) {
+        return(
+            <Dialog
+              key = {dialog.id}
+              dialog = {dialog}
+            />
+        )
+      } else {
+        let currentDialog = dialogs.find(i => i.id === dialog.id)
+        console.log(currentDialog)
+        let who = user.id === dialog.user.id
+        return (
+            <Post
+                key={dialog.id}
+                dialog={currentDialog}
+                owner={dialog.user}
+                whoo={who}
+                dialogId={dialog.id}
+            />)
+      }
     }
       return (
         <div>
