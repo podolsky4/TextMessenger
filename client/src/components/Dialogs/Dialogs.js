@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadDialog, createDialog} from "../../actions/dialogActions"
 import Dialog from '../Dialog'
-import Post from "../Post/Post";
 
 class Dialogs extends Component {
   componentDidMount(){
