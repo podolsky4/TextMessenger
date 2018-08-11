@@ -4,6 +4,8 @@ INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `cr
 INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `created_at`) VALUES ('samurai', 'typeserf@yahoo.com', '400037jkdfh', 'Tanaka', 'Shirakawa', '2010-12-08 04:05:37');
 INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `created_at`) VALUES ('alex007', 'alexgType@gmail.com', '264734hsjfdjvb', 'Alex', 'Green', '2011-01-07 07:12:24');
 INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `created_at`) VALUES ('amilyUta', 'lang@kito.org', 'MyRunnerMouse550', 'Emmil', 'Sanchez', '2016-09-02 18:54:03');
+INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `created_at`) VALUES ('messagesTest1', 'm1@kito.org', 'message1', 'Mes', 'Sage', '2005-09-02 18:54:03');
+INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `created_at`) VALUES ('messagesTest2', 'm2@kito.org', 'message2', 'Mes', 'Sages', '2004-09-02 18:54:03');
 
 -- Add several posts
 INSERT INTO `post` (`content`, `created_at`,                `user_id`) VALUES ('Thanksgiving is a time to be thankful for all that we have, express gratitude to those we love, and offer help to those in need. The Thanksgiving, we want to give back. For every LIKE on the post today, we will be donating $5 to the Hunger Task, Inc. to help feed hungry families.', '2008-09-17 09:52:47', 1);
@@ -37,3 +39,17 @@ INSERT INTO `comment` (`content`, `user_id`, `post_id`, `created_at`) VALUES ('I
 
 -- Add dialogs between users
 INSERT INTO `dialog` (`created_at`, `last_update`) VALUES ('2008-01-27 14:39:07', '2008-02-10 16:42:00');
+INSERT INTO `dialog` (`created_at`, `last_update`) VALUES ('2009-01-27 14:39:07', '2009-02-10 16:42:00');
+INSERT INTO `dialog` (`created_at`, `last_update`) VALUES ('2009-01-27 14:39:07', '2009-02-10 16:42:00');
+
+-- Add connection between users and messages through dialog
+INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (1, 2);
+INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (2, 2);
+INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (1, 3);
+INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (3, 3);
+
+-- Add messages to dialog
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('hello', 2, 1, '2009-02-28 14:00:00');
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('nice to meet you', 2, 2, '2009-02-28 14:01:00');
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('bla', 3, 1, '2009-01-28 14:01:00');
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('meet you', 3, 3, '2009-03-28 14:01:00');

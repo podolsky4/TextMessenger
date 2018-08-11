@@ -45,8 +45,7 @@ const styles = theme => ({
     backgroundColor: red[500]
   },
   post: {
-    paddingBottom: '0',
-    color: 'red'
+    paddingBottom: '0'
   }
 })
 

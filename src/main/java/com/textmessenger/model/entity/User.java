@@ -67,7 +67,8 @@ public class User extends BaseEntity {
   @JoinTable(name = "user_dialog",
           joinColumns = {@JoinColumn(name = "user_id")},
           inverseJoinColumns = {@JoinColumn(name = "dialog_id")})
-  @JsonIgnoreProperties(value = "users", allowSetters = true)
+  //@JsonIgnoreProperties(value = "users", allowSetters = true)
+  @JsonIgnore
   private List<Dialog> dialogs = new ArrayList<>();
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
