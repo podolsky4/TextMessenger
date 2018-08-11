@@ -12,10 +12,11 @@ class Dialog extends Component {
 
   render () {
 
-    const {user} = this.props
+    const {user, data} = this.props
 
     return(
-        <div>
+        <a>{data.id}</a>
+        /*<div>
 
           <form>
             <label>
@@ -28,7 +29,7 @@ class Dialog extends Component {
           </form>
 
 
-        </div>
+        </div>*/
     )
   }
 

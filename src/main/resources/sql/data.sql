@@ -40,11 +40,16 @@ INSERT INTO `comment` (`content`, `user_id`, `post_id`, `created_at`) VALUES ('I
 -- Add dialogs between users
 INSERT INTO `dialog` (`created_at`, `last_update`) VALUES ('2008-01-27 14:39:07', '2008-02-10 16:42:00');
 INSERT INTO `dialog` (`created_at`, `last_update`) VALUES ('2009-01-27 14:39:07', '2009-02-10 16:42:00');
+INSERT INTO `dialog` (`created_at`, `last_update`) VALUES ('2009-01-27 14:39:07', '2009-02-10 16:42:00');
 
 -- Add connection between users and messages through dialog
-INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (6, 2);
-INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (7, 2);
+INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (1, 2);
+INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (2, 2);
+INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (1, 3);
+INSERT INTO `user_dialog` (`user_id`, `dialog_id`) VALUES (3, 3);
 
 -- Add messages to dialog
-INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('hello', 2, 6, '2009-02-28 14:00:00');
-INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('nice to meet you', 2, 7, '2009-02-28 14:01:00');
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('hello', 2, 1, '2009-02-28 14:00:00');
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('nice to meet you', 2, 2, '2009-02-28 14:01:00');
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('nice to meet you', 3, 1, '2009-02-28 14:01:00');
+INSERT INTO `message` (`content`, `dialog_id`, `user_id`, `created_at`) VALUES ('nice to meet you', 3, 3, '2009-02-28 14:01:00');

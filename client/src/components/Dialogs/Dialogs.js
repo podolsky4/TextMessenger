@@ -1,15 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadDialog, createDialog} from "../actions/dialogActions"
-import {getUser} from "../actions/userActions"
-import Dialog from './Dialog'
+import {loadDialog, createDialog} from "../../actions/dialogActions"
+import Dialog from '../Dialog'
 
 class Dialogs extends Component {
   componentDidMount(){
-    const {user, dialogs, getUser} = this.props
-    if (user.length === 0) {
-      getUser()
-    }
+    const {user, dialogs} = this.props
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
@@ -22,7 +18,10 @@ class Dialogs extends Component {
   }
 
   render () {
-    const {user, dialogs, getUser} = this.props
+    const {user, dialogs} = this.props
+    if (dialogs){
+      loadDialog(user.id)
+    }
       return (
         <div>
           {dialogs.map(dialog => {
@@ -46,7 +45,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadDialog: (id) => dispatch(loadDialog(id)),
-    getUser: () => dispatch(getUser()),
     createDialog: (id, dialog) => dispatch(createDialog(id, dialog))
   }
 }
