@@ -67,6 +67,7 @@ class Feed extends Component {
           <button className="btn-create-post">Опубликовать</button>
         </form>
         {fetching && <Loader classes={{progress: 'root'}}/>}
+
         {!fetching && <PostList posts={posts} user={user}/>}
       </div>
     )

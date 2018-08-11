@@ -9,7 +9,6 @@ import Like from './components/Like'
 import PostComment from './components/PostComment'
 import PostRetwite from './components/PostRetwite'
 import Comments from './components/CommentList'
-
 import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'

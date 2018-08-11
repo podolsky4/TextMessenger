@@ -20,7 +20,7 @@ class App extends Component {
       return <Loader fullscreen={true}/>
     }
     return (<div>
-      <Header/>
+      <Header user={user}/>
       <Router/>
     </div>)
   }
