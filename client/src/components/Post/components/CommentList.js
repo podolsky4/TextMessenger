@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createComment} from '../actions/postsActions'
+import {createComment} from '../../../actions/postsActions'
 import Comment from './Comment'
 
-// Represents comments to our post
-class Comments extends Component {
+class CommentList extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -77,4 +76,4 @@ const mapDispatchToProps = dispatch => {
     createComments: (id, userId, content) => dispatch(createComment(id, userId, content))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Comments)
+export default connect(mapStateToProps, mapDispatchToProps)(CommentList)

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Post from './Post'
 
-class Posts extends Component {
+class PostList extends Component {
   render () {
     const {posts, user} = this.props
     let current = post => {
@@ -34,4 +34,4 @@ class Posts extends Component {
   }
 }
 
-export default Posts
+export default PostList

@@ -59,7 +59,7 @@
           $(nums[i]).text(exp[i])
         })
 
-        if (end_value != value) {
+        if (end_value !== value) {
           start(element)
         }
       },
