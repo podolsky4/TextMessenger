@@ -46,10 +46,12 @@ class Dialogs extends Component {
       }
     }
       return (
-        <div>
-          {dialogs.map(dialog => {
-            <Dialog key = {dialog.id} data = {dialog}/>
-          })}
+          <div>
+          <div className="posts">
+            {dialogs.map(content =>
+                current(content)
+            )}
+          </div>
           <button onClick={e => this.handleCreateDialog(e)}>
             Create new Dialog
           </button>
