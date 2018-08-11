@@ -1,15 +1,35 @@
 .wrap {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
 .dialogs {
-  width: 200px;
+  width: 300px;
   margin: 10px;
+  padding: 10px;
   background: aliceblue;
 }
 
 .dialog {
   padding: 10px;
   border: 1px solid black;
+}
+
+.chat {
+  width: 600px;
+  margin: 10px auto;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: aqua;
+}
+
+.current {
+  width: 80%;
+  margin-right: auto;
+  text-align: left;
+}
+
+.other {
+  text-align: right;
 }

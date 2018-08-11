@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 class Dialog extends Component {
   render () {
-    const {user, handleMessages , dialog} = this.props
+    const {user, handleMessages, dialog} = this.props
     const {users} = this.props.dialog
     return (
       <div className="dialog">

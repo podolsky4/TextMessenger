@@ -31,8 +31,6 @@ class Dialogs extends Component {
       flag: true,
       dialog: e
     })
-    
-  
   }
 
   render () {
@@ -56,7 +54,7 @@ class Dialogs extends Component {
             Create new Dialog
           </button>
         </div>
-      {flag && <Messages data={dialog} user={user.id}/>}
+        {flag && <Messages data={dialog} user={user.id}/>}
       </div>
     )
   }

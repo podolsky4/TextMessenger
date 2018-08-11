@@ -5,26 +5,22 @@ class Messages extends Component {
     const {data, user} = this.props
     return (
       <div className="chat">
-        {data.messages.map((message, index) => message.user.id === user ? 
-       <div className ="current">
-       <h4  key={index}>{message.content}</h4>
-           <a>{message.createdDate}</a>
-        </div>
-        :
-        <div className ="other">
-        <h4  key={index}>{message.content}</h4>
+        {data.messages.map(message => message.user.id === user
+          ? <div key={message.id} className ="current">
+            <h4>{message.content}</h4>
+            <a>{message.createdDate}</a>
+          </div>
+          : <div key={message.id} className ="other">
+            <h4 >{message.content}</h4>
             <a>{message.createdDate}</a>
         
-        </div>
-    )}
-     <form onSubmit={e => this.onSubmit(e)}>
+          </div>
+        )}
+        <form onSubmit={e => this.onSubmit(e)}>
           <textarea defaultValue=""
             placeholder="Write message"
             maxLength={280}
-            id="content"
-            name="text"
             type="text"
-            onKeyUp={event => this.myFunction(event)}
           />
           <button >Отправить</button>
         </form>

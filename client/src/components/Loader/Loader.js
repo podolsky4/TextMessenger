@@ -24,4 +24,3 @@ Loader.propTypes = {
   fullscreen: PropTypes.bool
 }
 export default withStyles(styles)(Loader)
-
