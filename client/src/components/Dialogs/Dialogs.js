@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadDialog, createDialog} from "../../actions/dialogActions"
+import {loadDialog, createDialog} from '../../actions/dialogActions'
 import Dialog from '../Dialog'
+import './Dialogs.css'
 
 class Dialogs extends Component {
-  componentWillMount(){
+  componentWillMount () {
     const {user, dialogs, loadDialog} = this.props
     if (dialogs.length === 0) {
       loadDialog(user.id)
@@ -14,45 +15,30 @@ class Dialogs extends Component {
   handleCreateDialog = e => {
     const {user, createDialog, dialog} = this.props
     e.preventDefault()
-    createDialog(user.id, dialog);
+    createDialog(user.id, dialog)
   }
 
   render () {
     const {user, dialogs, loadDialog} = this.props
-    if (dialogs.length === 0){
+    if (dialogs.length === 0) {
       loadDialog(user.id)
     }
-    let current = dialog => {
-      if (dialog.id == null) {
-        return(
+
+    return (
+      <div>
+        <div className="dialogs">
+          {dialogs.map((dialog, index) =>
             <Dialog
-              key = {dialog.id}
+              key = {index}
               dialog = {dialog}
+              user={user}
             />
-        )
-      } else {
-        let currentDialog = dialogs.find(i => i.id === dialog.id)
-        console.log(currentDialog)
-        return (
-            <Dialog
-                key={dialog.id}
-                dialog={currentDialog}
-                owner={dialog.user}
-                dialogId={dialog.id}
-            />)
-      }
-    }
-      return (
-          <div>
-          <div className="dialogs">
-            {dialogs.map(content =>
-                current(content)
-            )}
-          </div>
-          <button onClick={e => this.handleCreateDialog(e)}>
-            Create new Dialog
-          </button>
+          )}
         </div>
+        <button onClick={e => this.handleCreateDialog(e)}>
+            Create new Dialog
+        </button>
+      </div>
     )
   }
 }

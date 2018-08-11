@@ -4,9 +4,10 @@ import Router from '../Router/Router'
 import Header from '../../views/Header/Header'
 import {getUser} from '../../actions/userActions'
 import {connect} from 'react-redux'
+import Loader from '../../components/Loader/Loader'
 
 class App extends Component {
-  componentDidMount () {
+  componentWillMount () {
     const {user, loadUser} = this.props
     if (user.length === 0) {
       loadUser()
@@ -14,6 +15,10 @@ class App extends Component {
   }
 
   render () {
+    const {user} = this.props
+    if (user.length === 0) {
+      return <Loader fullscreen={true}/>
+    }
     return (<div>
       <Header/>
       <Router/>

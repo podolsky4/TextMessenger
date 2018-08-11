@@ -1,39 +1,16 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
 
 class Dialog extends Component {
-  componentDidMount(){
-
-  }
-
-  handleAddUser = user => {
-
-  }
-
   render () {
+    const {user} = this.props
+    const {users} = this.props.dialog
+    return (
+      <div className="dialog">
+        {users.map(member => member.id !== user.id ? <a>{member.email}</a> : '')}
+      </div>
 
-    const {user, dialog} = this.props
-
-    return(
-        <a>{dialog.id}</a>
-        /*<div>
-
-          <form>
-            <label>
-              Find user
-              <input/>
-            </label>
-            <button onClick={this.handleAddUser(user)}>
-              Add user
-            </button>
-          </form>
-
-
-        </div>*/
     )
   }
-
-
 }
 
 export default Dialog
