@@ -3,8 +3,16 @@ import {connect} from 'react-redux'
 import {loadDialog, createDialog} from '../../actions/dialogActions'
 import Dialog from '../Dialog'
 import './Dialogs.css'
+import Messages from '../Messages'
 
 class Dialogs extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      flag: false,
+      dialog: ''
+    }
+  }
   componentWillMount () {
     const {user, dialogs, loadDialog} = this.props
     if (dialogs.length === 0) {
@@ -18,12 +26,19 @@ class Dialogs extends Component {
     createDialog(user.id, dialog)
   }
 
+  handleMessages = e => {
+    this.setState({
+      flag: true,
+      dialog: e
+    })
+  }
+
   render () {
     const {user, dialogs, loadDialog} = this.props
+    const {flag, dialog} = this.state
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
-
     return (
       <div className="wrap">
         <div className="dialogs">
@@ -31,6 +46,7 @@ class Dialogs extends Component {
             <Dialog
               key = {dialog.id}
               dialog = {dialog}
+              handleMessages = {this.handleMessages.bind(this)}
               user={user}
             />
           )}
@@ -38,6 +54,7 @@ class Dialogs extends Component {
             Create new Dialog
           </button>
         </div>
+        {flag && <Messages data={dialog} user={user.id}/>}
       </div>
     )
   }
