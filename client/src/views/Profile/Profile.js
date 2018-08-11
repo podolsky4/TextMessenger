@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateUser, loadUser} from '../actions/userActions'
+import {updateUser, loadUser} from '../../actions/userActions'
+import View from '../../components/View'
 
 class Profile extends Component {
   constructor (props) {
@@ -15,8 +16,7 @@ class Profile extends Component {
       profileHeader: this.props.user.profileHeader === null ? '' : this.props.user.profileHeader,
       profilePhoto: this.props.user.profilePhoto === null ? '' : this.props.user.profilePhoto,
       dateBirthday: this.props.user.dateBirthday === null ? '' : this.props.user.dateBirthday,
-      readOnly: true,
-      disabled: true
+      viewMode: true
     }
   }
   change = e => {
@@ -26,8 +26,7 @@ class Profile extends Component {
   };
   editableField = () => {
     this.setState({
-      readOnly: !this.state.readOnly,
-      disabled: !this.state.disabled
+      viewMode: !this.state.viewMode
     })
   };
   updateUser = e => {
@@ -45,46 +44,53 @@ class Profile extends Component {
       <div>
         <h1>Hello, {user.firstName} {user.lastName} </h1>
         <p>your are login with {user.login} and email {user.email}</p>
+        {this.state.viewMode &&
+            <div>
+              <View user={user}/>
+              <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
+            </div>
+        }
+        {!this.state.viewMode &&
         <form>
           <label>
-              password:
-            <input id='password-change' name='password' type='password' onChange={e => this.change(e)}
-              readOnly={this.state.readOnly}/>
+            password:
+            <input id='password-change' name='password' type='password' onChange={e => this.change(e)}/>
           </label>
           <label>
-              name:
+            name:
             <input id='firstName-change' name='firstName' type='text' value={this.state.firstName}
-              onChange={e => this.change(e)} readOnly={this.state.readOnly}/>
+              onChange={e => this.change(e)} />
           </label>
           <label>
-              surname:
+            surname:
             <input id='lastName-change' name='lastName' type='text' value={this.state.lastName}
-              onChange={e => this.change(e)} readOnly={this.state.readOnly}/>
+              onChange={e => this.change(e)} />
           </label>
           <label>
-              address:
+            address:
             <input id='address-change' name='address' type='text' value={this.state.address}
-              onChange={e => this.change(e)} readOnly={this.state.readOnly}/>
+              onChange={e => this.change(e)} />
           </label>
           <label>
-              url to avatar:
+            url to avatar:
             <input id='profileHeader-change' name='profileHeader' type='url' value={this.state.profileHeader}
-              onChange={e => this.change(e)} readOnly={this.state.readOnly}/>
+              onChange={e => this.change(e)} />
           </label>
           <label>
-              url to photo:
+            url to photo:
             <input id='profilePhoto-change' name='profilePhoto' type='url' value={this.state.profilePhoto}
-              onChange={e => this.change(e)} readOnly={this.state.readOnly}/>
+              onChange={e => this.change(e)} />
           </label>
           <label>
-              birthday:
+            birthday:
             <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday}
-              onChange={e => this.change(e)} readOnly={this.state.readOnly}/>
+              onChange={e => this.change(e)} />
           </label>
-          <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
-          <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)}
-            disabled={this.state.disabled}/>
+
+          <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)}/>
+          <input type='button' name='Cancel'value='Cancel' onClick={this.editableField}/>
         </form>
+        }
       </div>
     )
   }

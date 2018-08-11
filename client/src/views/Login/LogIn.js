@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createUser, loadUser} from '../actions/userActions'
-import {loadFavorites} from '../actions/postsActions'
+import {createUser, loadUser} from '../../actions/userActions'
+import {loadFavorites} from '../../actions/postsActions'
 
 class LogIn extends Component {
   change = e => {

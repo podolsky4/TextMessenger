@@ -7,13 +7,13 @@ body {
 
 .header {
   padding: 10px 20px;
-  background-color: black;
-}
+  background-color: #000;
 
-.header > a {
-  padding-right: 20px;
-  color: white;
-  text-decoration: none;
+  a {
+    padding-right: 20px;
+    color: #fff;
+    text-decoration: none;
+  }
 }
 
 .postCreator {
@@ -24,18 +24,18 @@ body {
 }
 
 textarea {
-  resize: none;
   width: 80%;
   padding: 15px;
-  border: none;
+  border: 0;
   border-radius: 15px;
+  resize: none;
 }
 
 .btn-create-post {
   padding: 15px;
   border-radius: 15px;
-  background-color: yellow;
-  color: blue;
+  background-color: #1f446a;
+  color: #f9fffd;
   font-size: 18px;
 }
 
@@ -48,17 +48,17 @@ textarea {
 .post {
   margin: 5px;
   padding: 10px;
-  border-radius: 15px;
-  background: #719fc7;
+  //border-radius: 15px;
+  //background: #719fc7;
 }
 
 header {
-  display: block;
-  position: relative;
-  width: auto;
-  height: 44px;
-  padding: 10px;
-  border-bottom: 1px solid grey;
+  //display: block;
+  //position: relative;
+  //width: auto;
+  //height: 44px;
+  //padding: 10px;
+  //border-bottom: 1px solid grey;
 }
 
 .logo {
@@ -74,7 +74,7 @@ header {
   width: 108px;
   height: 44px;
   float: left;
-  color: white;
+  color: #fff;
 }
 
 .post_email {
@@ -92,7 +92,7 @@ header {
   width: auto;
   height: 44px;
   float: right;
-  color: white;
+  color: #fff;
   text-align: right;
 }
 
@@ -104,7 +104,7 @@ header {
 }
 
 .date_created {
-  color: #fff;
+  color: #ffff;
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
@@ -114,13 +114,13 @@ footer {
   display: flex;
   justify-content: space-around;
   padding: 10px;
-  border-top: 1px solid grey;
-}
+  border-top: 1px solid #8080800d;
 
-footer > a {
-  cursor: pointer;
+  a {
+    cursor: pointer;
+  }
 }
 
 .like--checked {
-  color: red;
+  color: #f00;
 }

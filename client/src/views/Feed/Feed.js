@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createLoadPosts, loadPosts, loadFavorites} from '../actions/postsActions'
-import {getUser} from '../actions/userActions'
-import Posts from './Posts'
+import {createLoadPosts, loadPosts, loadFavorites} from '../../actions/postsActions'
+import {getUser} from '../../actions/userActions'
+import PostList from '../../components/Post/PostList'
+import Loader from '../../components/Loader/Loader'
+import loader from "../../reducers/loader";
 
 class Feed extends Component {
   constructor (props) {
@@ -50,7 +52,8 @@ class Feed extends Component {
     }
   }
   render () {
-    const {posts, user} = this.props
+    const {posts, user, fetching} = this.props
+      console.log(fetching)
     return (
       <div>
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
@@ -64,7 +67,8 @@ class Feed extends Component {
           />
           <button className="btn-create-post">Опубликовать</button>
         </form>
-        <Posts posts={posts} user={user}/>
+          {fetching && <Loader classes={loader}/>}
+          {!fetching && <PostList posts={posts} user={user}/>}
       </div>
     )
   }
@@ -74,7 +78,8 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     posts: state.posts,
-    favorites: state.favorites
+    favorites: state.favorites,
+    fetching: state.loader.fetching
   }
 }
 const mapDispatchToProps = dispatch => {
