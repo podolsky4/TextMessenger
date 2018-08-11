@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadDialog} from "../actions/dialogActions"
+import {loadDialog, createDialog} from "../actions/dialogActions"
 import {getUser} from "../actions/userActions"
 import Dialog from './Dialog'
 
@@ -15,8 +15,10 @@ class Dialogs extends Component {
     }
   }
 
-  handleCreateDialog = id => {
-
+  handleCreateDialog = e => {
+    const {user, createDialog, dialog} = this.props
+    e.preventDefault()
+    createDialog(user.id, dialog);
   }
 
   render () {
@@ -26,7 +28,7 @@ class Dialogs extends Component {
           {dialogs.map(dialog => {
             <Dialog key = {dialog.id} data = {dialog}/>
           })}
-          <button onClick={this.handleCreateDialog(user.id)}>
+          <button onClick={e => this.handleCreateDialog(e)}>
             Create new Dialog
           </button>
         </div>
@@ -44,7 +46,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadDialog: (id) => dispatch(loadDialog(id)),
-    getUser: () => dispatch(getUser())
+    getUser: () => dispatch(getUser()),
+    createDialog: (id, dialog) => dispatch(createDialog(id, dialog))
   }
 }
 

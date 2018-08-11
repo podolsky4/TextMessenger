@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `dialog` (
 -- Create table message
 --
 CREATE TABLE IF NOT EXISTS `message` (
-  `id`          BIGINT       NOT NULL,
+  `id`          BIGINT       NOT NULL AUTO_INCREMENT,
   `content`     VARCHAR(255) NOT NULL,
   `dialog_id`   BIGINT       NOT NULL,
   `user_id`     BIGINT       NOT NULL,
