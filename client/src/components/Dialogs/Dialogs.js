@@ -35,7 +35,7 @@ class Dialogs extends Component {
         console.log(currentDialog)
         let who = user.id === dialog.user.id
         return (
-            <Post
+            <Dialog
                 key={dialog.id}
                 dialog={currentDialog}
                 owner={dialog.user}
