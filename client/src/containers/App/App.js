@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import './App.css'
 import Router from '../Router/Router'
 import Header from '../../views/Header/Header'
 import {getUser} from '../../actions/userActions'
 import {connect} from 'react-redux'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 class App extends Component {
   componentDidMount () {
@@ -15,10 +16,13 @@ class App extends Component {
 
   render () {
     return (
-      <div>
-      <Header/>
-      <Router/>
-      </div>)
+      <Fragment>
+        <CssBaseline>
+          <Header />
+          <Router />
+        </CssBaseline>
+      </Fragment>
+    )
   }
 }
 

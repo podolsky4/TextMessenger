@@ -1,8 +1,9 @@
-$color-bg: #e9967a;
+$primary: #e9967a;
+$secondary: #eee;
 
 body {
   padding: 10% 15%;
-  background: $color-bg;
+  background: $secondary;
 }
 
 .header {

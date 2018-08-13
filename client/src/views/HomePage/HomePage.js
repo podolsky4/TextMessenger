@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
-// import "./HomePage.css"
+import Typography from '@material-ui/core/Typography'
 
 class HomePage extends Component {
   render () {
     return (
-      <a>Welcome to the Home Page</a>
+      <Typography variant='display2' gutterBottom align='center'>
+        This page is not implemented yet
+      </Typography>
     )
   }
 }
