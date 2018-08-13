@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateUser, loadUser} from '../actions/userActions'
-import View from './View'
+import {updateUser, loadUser} from '../../actions/userActions'
+import View from '../../components/View'
+import Typography from '@material-ui/core/es/Typography/Typography'
 
 class Profile extends Component {
   constructor (props) {
@@ -42,8 +43,8 @@ class Profile extends Component {
     const {user} = this.props
     return (
       <div>
-        <h1>Hello, {user.firstName} {user.lastName} </h1>
-        <p>your are login with {user.login} and email {user.email}</p>
+        <Typography variant='title'>Hello, {user.firstName} {user.lastName}</Typography>
+        <Typography paragraph variant='subheading'>your are login with {user.login} and email {user.email}</Typography>
         {this.state.viewMode &&
             <div>
               <View user={user}/>

@@ -2,26 +2,26 @@ dist: trusty
 
 language: java
 
+jdk:
+- oraclejdk8
+
 cache:
   directories:
-    - $HOME/.m2
-    - ./client/node_modules/
-    - $HOME/.sonar
-    - $HOME/.sonarscanner
-
-jdk:
-  - oraclejdk8
+  - $HOME/.m2
+  - ./client/node_modules/
+  - $HOME/.sonar
+  - $HOME/.sonarscanner
 
 before_script:
-  - npm install --prefix client/
+- npm install --prefix client/
 
-# Sonar Cloud addon
+# Sonar Cloud Addon
 addons:
   sonarcloud:
-    organization: "final_project_text_messenger"
+    organization: final_project_text_messenger
     token: 45af4c2bf818a89117763793a7905b86c3381f56
 
 script:
-  - mvn clean test
-  - npm run build --prefix client/
-  - sonar-scanner
+- mvn clean test jacoco:report coveralls:report
+- npm run build --prefix client/
+- sonar-scanner

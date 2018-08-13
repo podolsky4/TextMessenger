@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import UserFullName from './UserFullName'
-import PostCreateDate from './PostCreateDate'
+import PostCreateDate from '../Post/components/PostCreateDate'
 
 export default class DataInfo extends Component {
   render () {
