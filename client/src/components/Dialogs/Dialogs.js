@@ -23,9 +23,7 @@ class Dialogs extends Component {
   }
 
   handleCreateDialog = e => {
-    const {user, createDialog, dialog} = this.props
     e.preventDefault()
-    // createDialog(user.id, dialog)
     if (this.state.flag) {
       this.setState({newDialog: true, flag: false})
     } else {
@@ -52,7 +50,7 @@ class Dialogs extends Component {
 
   render () {
     const {user, dialogs, loadDialog} = this.props
-    const {flag, messages, newDialog} = this.state
+    const {flag, newDialog} = this.state
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
