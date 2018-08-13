@@ -33,7 +33,7 @@ export const createMessage = (dialogId, userId, message) => dispatch => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({'content': message, 'user': userId, 'dialog': dialogId})
+    body: message
   })
     .then(() => dispatch(loadMessages(dialogId)))
 }
