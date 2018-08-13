@@ -24,10 +24,6 @@ class Chat extends Component {
   onSubmit = e => {
     const {user, addMessage, currentDialog} = this.props
     e.preventDefault()
-    console.log('e.target', e.target.value)
-    console.log('user', user)
-    console.log('text', this.state.text)
-    console.log('currentDialog', currentDialog)
     addMessage(currentDialog.id, user, this.state.text)
   };
 
