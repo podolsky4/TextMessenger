@@ -2,7 +2,6 @@ package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
-import com.textmessenger.model.entity.User;
 import com.textmessenger.service.MessageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +26,7 @@ public class MessageController {
 
 
   @GetMapping("/dialog/{id}")
-  public ResponseEntity<?> getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
+  public ResponseEntity getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
     return Optional.of(ResponseEntity.ok().body(messageService.getMessagesFromDialog(dialog)))
             .orElse(ResponseEntity.noContent().build());
   }
