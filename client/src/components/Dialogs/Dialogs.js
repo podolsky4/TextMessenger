@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadDialog, createDialog} from '../../actions/dialogActions'
+import {loadDialog, createDialog, loadMessages} from '../../actions/dialogActions'
 import Dialog from '../Dialog'
 import './Dialogs.css'
-import Messages from '../Messages'
+import Chat from '../Chat'
 
 class Dialogs extends Component {
   constructor (props) {
@@ -27,6 +27,8 @@ class Dialogs extends Component {
   }
 
   handleMessages = e => {
+    const {loadMessages} = this.props
+    loadMessages(e.id)
     this.setState({
       flag: true,
       dialog: e
@@ -35,7 +37,7 @@ class Dialogs extends Component {
 
   render () {
     const {user, dialogs, loadDialog} = this.props
-    const {flag, dialog} = this.state
+    const {flag, messages} = this.state
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
@@ -54,7 +56,7 @@ class Dialogs extends Component {
             Create new Dialog
           </button>
         </div>
-        {flag && <Messages data={dialog} user={user.id}/>}
+        {flag && <Chat user={user.id}/>}
       </div>
     )
   }
@@ -63,14 +65,16 @@ class Dialogs extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    dialogs: state.dialogs
+    dialogs: state.dialogs,
+    messages: state.messages
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     loadDialog: (id) => dispatch(loadDialog(id)),
-    createDialog: (id, dialog) => dispatch(createDialog(id, dialog))
+    createDialog: (id, dialog) => dispatch(createDialog(id, dialog)),
+    loadMessages: (id) => dispatch(loadMessages((id)))
   }
 }
 
