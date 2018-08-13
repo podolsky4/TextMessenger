@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-@RestController("/api/messages")
+@RestController
+@RequestMapping("/api/messages")
 public class MessageController {
   private final MessageService messageService;
 
@@ -24,15 +26,15 @@ public class MessageController {
 
 
   @GetMapping("/dialog/{id}")
-  public ResponseEntity<?> getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
+  public ResponseEntity getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
     return Optional.of(ResponseEntity.ok().body(messageService.getMessagesFromDialog(dialog)))
             .orElse(ResponseEntity.noContent().build());
   }
 
-  @PostMapping("dialog/{id}")
-  public ResponseEntity<?> addMessageToDialog(@PathVariable("id") Dialog dialog, @RequestBody Message message) {
-    message.setDialog(dialog);
-    messageService.createMessage(message);
+  @PostMapping("/user/{userId}/dialog/{id}")
+  public ResponseEntity addMessageToDialog(@PathVariable("userId") Long user,
+                                              @PathVariable("id") Long dialog, @RequestBody String msg) {
+    messageService.createMessageWithUserIdDialogId(user,dialog,msg);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
 

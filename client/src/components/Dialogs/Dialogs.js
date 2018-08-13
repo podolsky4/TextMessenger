@@ -1,16 +1,18 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadDialog, createDialog} from '../../actions/dialogActions'
+import {loadDialog, createDialog, loadMessages} from '../../actions/dialogActions'
 import Dialog from '../Dialog'
 import './Dialogs.css'
-import Messages from '../Messages'
+import Chat from '../Chat'
+import SearchUser from '../SearchUser'
 
 class Dialogs extends Component {
   constructor (props) {
     super(props)
     this.state = {
       flag: false,
-      dialog: ''
+      dialog: '',
+      newDialog: false
     }
   }
   componentWillMount () {
@@ -21,21 +23,34 @@ class Dialogs extends Component {
   }
 
   handleCreateDialog = e => {
-    const {user, createDialog, dialog} = this.props
     e.preventDefault()
-    createDialog(user.id, dialog)
+    if (this.state.flag) {
+      this.setState({newDialog: true, flag: false})
+    } else {
+      this.setState({newDialog: true})
+    }
   }
 
   handleMessages = e => {
-    this.setState({
-      flag: true,
-      dialog: e
-    })
+    const {loadMessages} = this.props
+    loadMessages(e.id)
+    if (this.state.newDialog) {
+      this.setState({
+        flag: true,
+        dialog: e,
+        newDialog: false
+      })
+    } else {
+      this.setState({
+        flag: true,
+        dialog: e
+      })
+    }
   }
 
   render () {
     const {user, dialogs, loadDialog} = this.props
-    const {flag, dialog} = this.state
+    const {flag, newDialog} = this.state
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
@@ -54,7 +69,8 @@ class Dialogs extends Component {
             Create new Dialog
           </button>
         </div>
-        {flag && <Messages data={dialog} user={user.id}/>}
+        {flag && <Chat user={user.id} currentDialog = {this.state.dialog}/>}
+        {newDialog && <SearchUser/>}
       </div>
     )
   }
@@ -63,14 +79,16 @@ class Dialogs extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    dialogs: state.dialogs
+    dialogs: state.dialogs,
+    messages: state.messages
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     loadDialog: (id) => dispatch(loadDialog(id)),
-    createDialog: (id, dialog) => dispatch(createDialog(id, dialog))
+    createDialog: (id, dialog) => dispatch(createDialog(id, dialog)),
+    loadMessages: (id) => dispatch(loadMessages((id)))
   }
 }
 
