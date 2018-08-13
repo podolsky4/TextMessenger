@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Loader from './Loader/Loader'
 import MessagesList from './MessagesList'
+import {createMessage} from '../actions/dialogActions'
 
 class Chat extends Component {
   constructor (props) {
@@ -11,11 +12,23 @@ class Chat extends Component {
       flag: false
     }
   }
+  myFunction (e) {
+    if (e.key === 'Enter') {
+      this.onSubmit(e)
+    } else {
+      this.setState({
+        text: e.target.value
+      })
+    }
+  }
   onSubmit = e => {
-    const {user, createPost} = this.props
+    const {user, addMessage, currentDialog} = this.props
     e.preventDefault()
-    createPost(user.id, this.state.text)
-    this.reset()
+    console.log('e.target', e.target.value)
+    console.log('user', user)
+    console.log('text', this.state.text)
+    console.log('currentDialog', currentDialog)
+    addMessage(currentDialog.id, user, this.state.text)
   };
 
   render () {
@@ -29,6 +42,7 @@ class Chat extends Component {
             placeholder="Write message"
             maxLength={280}
             type="text"
+            onKeyUp={event => this.myFunction(event)}
           />
           <button >Отправить</button>
         </form>
@@ -48,7 +62,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-
+    addMessage: (dialogId, userId, text) => dispatch(createMessage(dialogId, userId, text))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Chat)

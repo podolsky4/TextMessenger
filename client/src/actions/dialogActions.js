@@ -26,13 +26,14 @@ export const loadMessages = dialogId => dispatch => {
     .then(data => dispatch({type: LOAD_MESSAGES, payload: data}))
 }
 
-export const createMessage = (dialogId, message) => dispatch => {
-  fetch(`/api/messages/dialog/${dialogId}`, {
+export const createMessage = (dialogId, userId, message) => dispatch => {
+  dispatch(toggleLoader())
+  fetch(`/api/messages/user/${userId}/dialog/${dialogId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({'message': message})
+    body: JSON.stringify({'content': message, 'user': userId, 'dialog': dialogId})
   })
     .then(() => dispatch(loadMessages(dialogId)))
 }

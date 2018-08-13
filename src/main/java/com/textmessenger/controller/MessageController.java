@@ -2,6 +2,7 @@ package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
+import com.textmessenger.model.entity.User;
 import com.textmessenger.service.MessageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,9 +32,15 @@ public class MessageController {
             .orElse(ResponseEntity.noContent().build());
   }
 
-  @PostMapping("dialog/{id}")
-  public ResponseEntity<?> addMessageToDialog(@PathVariable("id") Dialog dialog, @RequestBody Message message) {
+  @PostMapping("/user/dialog")
+  public ResponseEntity<?> addMessageToDialog(@PathVariable("userId") User user,
+                                              @PathVariable("id") Dialog dialog, @RequestBody Message message) {
+    System.out.println("==================================");
     message.setDialog(dialog);
+    message.setUser(user);
+    System.out.println("==================================");
+    System.out.println(message);
+    System.out.println("==================================");
     messageService.createMessage(message);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }

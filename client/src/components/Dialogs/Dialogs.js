@@ -56,7 +56,7 @@ class Dialogs extends Component {
             Create new Dialog
           </button>
         </div>
-        {flag && <Chat user={user.id}/>}
+        {flag && <Chat user={user.id} currentDialog = {this.state.dialog}/>}
       </div>
     )
   }
