@@ -4,13 +4,15 @@ import {loadDialog, createDialog, loadMessages} from '../../actions/dialogAction
 import Dialog from '../Dialog'
 import './Dialogs.css'
 import Chat from '../Chat'
+import SearchUser from '../SearchUser'
 
 class Dialogs extends Component {
   constructor (props) {
     super(props)
     this.state = {
       flag: false,
-      dialog: ''
+      dialog: '',
+      newDialog: false
     }
   }
   componentWillMount () {
@@ -23,21 +25,34 @@ class Dialogs extends Component {
   handleCreateDialog = e => {
     const {user, createDialog, dialog} = this.props
     e.preventDefault()
-    createDialog(user.id, dialog)
+    // createDialog(user.id, dialog)
+    if (this.state.flag) {
+      this.setState({newDialog: true, flag: false})
+    } else {
+      this.setState({newDialog: true})
+    }
   }
 
   handleMessages = e => {
     const {loadMessages} = this.props
     loadMessages(e.id)
-    this.setState({
-      flag: true,
-      dialog: e
-    })
+    if (this.state.newDialog) {
+      this.setState({
+        flag: true,
+        dialog: e,
+        newDialog: false
+      })
+    } else {
+      this.setState({
+        flag: true,
+        dialog: e
+      })
+    }
   }
 
   render () {
     const {user, dialogs, loadDialog} = this.props
-    const {flag, messages} = this.state
+    const {flag, messages, newDialog} = this.state
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
@@ -57,6 +72,7 @@ class Dialogs extends Component {
           </button>
         </div>
         {flag && <Chat user={user.id} currentDialog = {this.state.dialog}/>}
+        {newDialog && <SearchUser/>}
       </div>
     )
   }
