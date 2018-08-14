@@ -70,4 +70,9 @@ public class UserServiceImpl implements UserService {
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return favorites;
   }
+
+  @Override
+  public List<User> findUsersBySearch(String str) {
+    return userRepository.findUsersByEmailOrLogin(str,str);
+  }
 }

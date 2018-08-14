@@ -1,5 +1,6 @@
-import {CREATE_USER} from './types.js'
+import {CREATE_USER, FIND_USERS} from './types.js'
 import {loadFavoritesByLogin} from './postsActions'
+import {toggleLoader} from './loaderActions'
 
 export const createUser = (data) => dispatch => {
   let login = data.login
@@ -37,3 +38,18 @@ export const getUser = () => dispatch => {
     .then(res => res.json())
     .then(data => dispatch({type: CREATE_USER, payload: data}))
 }
+
+export const findUsers = (str) => dispatch => {
+    dispatch(toggleLoader())
+    fetch(`/api/users/find`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: str
+    })
+        .then(res => res.json())
+        .then(data => dispatch({type: FIND_USERS, payload: data}))
+}
+
+
