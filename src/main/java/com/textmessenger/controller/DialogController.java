@@ -27,11 +27,6 @@ public class DialogController {
 
   @PostMapping("/user/{id}")
   public ResponseEntity createDialog(@PathVariable("id") Long user, @RequestBody User mainUser) {
-    System.out.println("===========================================================================");
-    System.out.println(user);
-    System.out.println("===========================================================================");
-    System.out.println(mainUser);
-    System.out.println("===========================================================================");
     dialogService.createdByUserDialogWithUser(mainUser.getLogin(), user);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
