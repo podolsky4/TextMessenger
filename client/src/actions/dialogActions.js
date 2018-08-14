@@ -1,4 +1,4 @@
-import {LOAD_DIALOGS, LOAD_MESSAGES} from './types'
+import {LOAD_DIALOGS, LOAD_MESSAGES, CLEAN_USERSEARCH} from './types'
 import {toggleLoader} from './loaderActions'
 
 export const loadDialog = id => dispatch => {
@@ -36,4 +36,13 @@ export const createMessage = (dialogId, userId, message) => dispatch => {
     body: message
   })
     .then(() => dispatch(loadMessages(dialogId)))
+}
+
+export const addUserToExistDialog = (dialogId, userId, newUser) => dispatch => {
+  fetch(`/api/dialogs/user/${newUser}/dialog/${dialogId}`)
+    .then(() => dispatch(loadDialog(userId)))
+}
+
+export const cleanUserSearch = () => dispatch => {
+  dispatch({type: CLEAN_USERSEARCH, payload: []})
 }

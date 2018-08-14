@@ -49,4 +49,9 @@ public class DialogServiceImpl implements DialogService {
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
   }
+
+  @Override
+  public void addToDialogNewUser(Long dialog, Long user) {
+    userRepository.getOne(user).getDialogs().add(dialogRepository.getOne(dialog));
+  }
 }

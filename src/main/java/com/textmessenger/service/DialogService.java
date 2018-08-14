@@ -16,4 +16,6 @@ public interface DialogService {
   void deleteDialog(long id);
 
   void createdByUserDialogWithUser(String login, Long user);
+
+  void addToDialogNewUser(Long dialog, Long user);
 }
