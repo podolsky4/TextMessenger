@@ -6,7 +6,7 @@ import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/es/Paper/Paper'
+import Paper from '@material-ui/core/Paper/'
 
 
 class Feed extends Component {
