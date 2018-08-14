@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Loader from './Loader/Loader'
 import {findUsers} from '../actions/userActions'
+import {createDialog} from "../actions/dialogActions";
 
 class SearchUser extends Component {
   constructor (props) {
@@ -22,9 +23,10 @@ class SearchUser extends Component {
   }
 
   createChatWithUser (e) {
-    console.log('e', e)
-    console.log('e.target', e.target)
+    const {user, createDialog} = this.props
     console.log('e.target.value', e.target.value)
+    console.log('user', user)
+    createDialog(user, e.target.value)
   }
   onSubmit = e => {
     const {findAllUsers} = this.props
@@ -57,12 +59,14 @@ class SearchUser extends Component {
 const mapStateToProps = state => {
   return {
     fetching: state.loader.fetching,
-    searchUser: state.searchUser
+    searchUser: state.searchUser,
+    user: state.user
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    findAllUsers: (str) => dispatch(findUsers(str))
+    findAllUsers: (str) => dispatch(findUsers(str)),
+    createDialog: (user,secondUser)=> dispatch(createDialog(user, secondUser))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SearchUser)
