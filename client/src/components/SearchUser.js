@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Loader from './Loader/Loader'
 import {findUsers} from '../actions/userActions'
-import {createDialog} from "../actions/dialogActions";
+import {createDialog} from '../actions/dialogActions'
 
 class SearchUser extends Component {
   constructor (props) {
@@ -66,7 +66,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     findAllUsers: (str) => dispatch(findUsers(str)),
-    createDialog: (user,secondUser)=> dispatch(createDialog(user, secondUser))
+    createDialog: (user, secondUser) => dispatch(createDialog(user, secondUser))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SearchUser)
