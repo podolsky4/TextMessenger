@@ -8,6 +8,7 @@ import PostComment from './components/PostComment'
 import PostRetwite from './components/PostRetwite'
 import Comments from './components/CommentList'
 import PropTypes from 'prop-types'
+
 import { withStyles } from '@material-ui/core/styles'
 import classnames from 'classnames'
 import Grid from '@material-ui/core/Grid'
@@ -41,7 +42,7 @@ const styles = theme => ({
   expand: {
     transform: 'rotate(0deg)',
     transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
+    duration: theme.transitions.duration.shortest,
     }),
     marginLeft: 'auto',
     [theme.breakpoints.up('sm')]: {
@@ -91,6 +92,7 @@ class Post extends Component {
   render () {
     const {favorites, post, owner, whoo, user, classes} = this.props
     return (
+
       <Grid item xs={12} sm={9} md={8} lg={6} key={`${post.id} ${post.parentId}`}>
         <Card>
               {owner && `Ретвитнул ${owner.login}`}
@@ -153,7 +155,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 Post.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Post))

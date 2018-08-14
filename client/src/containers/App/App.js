@@ -6,8 +6,9 @@ import {getUser} from '../../actions/userActions'
 import {connect} from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
+
 class App extends Component {
-  componentDidMount () {
+  componentWillMount () {
     const {user, loadUser} = this.props
     if (user.length === 0) {
       loadUser()
@@ -23,6 +24,7 @@ class App extends Component {
         </CssBaseline>
       </Fragment>
     )
+
   }
 }
 

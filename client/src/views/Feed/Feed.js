@@ -4,8 +4,10 @@ import { createLoadPosts, loadFavorites, loadPosts } from '../../actions/postsAc
 import { getUser } from '../../actions/userActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
+
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/es/Paper/Paper'
+
 
 class Feed extends Component {
   constructor (props) {
@@ -60,6 +62,7 @@ class Feed extends Component {
     const {posts, user, fetching} = this.props
     console.log(fetching)
     return (
+
       <div style={{padding: 15}}>
         <Grid
           container
