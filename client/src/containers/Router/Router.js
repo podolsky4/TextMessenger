@@ -9,6 +9,7 @@ import Login from '../../views/Login/LogIn'
 import Profile from '../../views/Profile/Profile'
 
 class Router extends Component {
+
   render () {
     return (
       <Switch>
