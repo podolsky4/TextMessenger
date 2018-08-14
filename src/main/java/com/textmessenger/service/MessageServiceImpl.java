@@ -16,7 +16,7 @@ import java.util.List;
 public class MessageServiceImpl implements MessageService {
 
   private final MessageRepository messageRepository;
-  private  final UserRepository userRepository;
+  private final UserRepository userRepository;
   private final DialogRepository dialogRepository;
 
   public MessageServiceImpl(MessageRepository messageRepository,
