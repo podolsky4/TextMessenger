@@ -73,6 +73,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<User> findUsersBySearch(String str) {
-    return userRepository.findUsersByEmailOrLogin(str,str);
+    return userRepository.findUsersByEmailOrLogin(str, str);
   }
 }

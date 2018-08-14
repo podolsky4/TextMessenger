@@ -40,16 +40,14 @@ export const getUser = () => dispatch => {
 }
 
 export const findUsers = (str) => dispatch => {
-    dispatch(toggleLoader())
-    fetch(`/api/users/find`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: str
-    })
-        .then(res => res.json())
-        .then(data => dispatch({type: FIND_USERS, payload: data}))
+  dispatch(toggleLoader())
+  fetch(`/api/users/find`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: str
+  })
+    .then(res => res.json())
+    .then(data => dispatch({type: FIND_USERS, payload: data}))
 }
-
-
