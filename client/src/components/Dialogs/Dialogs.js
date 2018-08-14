@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadDialog, createDialog, loadMessages} from '../../actions/dialogActions'
+import {loadDialog, createDialog, loadMessages, cleanUserSearch} from '../../actions/dialogActions'
 import Dialog from '../Dialog'
 import './Dialogs.css'
 import Chat from '../Chat'
@@ -12,7 +12,9 @@ class Dialogs extends Component {
     this.state = {
       flag: false,
       dialog: '',
-      newDialog: false
+      newDialog: false,
+      userList: false,
+      exist: false
     }
   }
   componentWillMount () {
@@ -26,13 +28,15 @@ class Dialogs extends Component {
     e.preventDefault()
     if (this.state.flag) {
       this.setState({newDialog: true, flag: false})
+    } else if (this.state.userList) {
+      this.setState({newDialog: true, userList: false})
     } else {
       this.setState({newDialog: true})
     }
   }
 
   handleMessages = e => {
-    const {loadMessages} = this.props
+    const {loadMessages, cleanUserSearch} = this.props
     loadMessages(e.id)
     if (this.state.newDialog) {
       this.setState({
@@ -40,12 +44,31 @@ class Dialogs extends Component {
         dialog: e,
         newDialog: false
       })
+    } else if (this.state.userList) {
+      this.setState({
+        flag: true,
+        dialog: e,
+        userList: false
+      })
     } else {
       this.setState({
         flag: true,
         dialog: e
       })
     }
+    cleanUserSearch()
+  }
+
+  addUserToDialog = e => {
+    const {cleanUserSearch} = this.props
+    cleanUserSearch()
+    console.log('e', e.target.value)
+    this.setState({
+      flag: false,
+      newDialog: true,
+      exist: true,
+      dialog: e.target.value
+    })
   }
 
   render () {
@@ -63,6 +86,7 @@ class Dialogs extends Component {
               dialog = {dialog}
               handleMessages = {this.handleMessages.bind(this)}
               user={user}
+              addUserToDialog = {this.addUserToDialog.bind(this)}
             />
           )}
           <button onClick={e => this.handleCreateDialog(e)}>
@@ -70,7 +94,11 @@ class Dialogs extends Component {
           </button>
         </div>
         {flag && <Chat user={user.id} currentDialog = {this.state.dialog}/>}
-        {newDialog && <SearchUser/>}
+        {newDialog &&
+        <SearchUser
+          exist={this.state.exist}
+          dialog={this.state.dialog}
+        />}
       </div>
     )
   }
@@ -80,7 +108,8 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     dialogs: state.dialogs,
-    messages: state.messages
+    messages: state.messages,
+    searchUser: state.searchUser
   }
 }
 
@@ -88,7 +117,8 @@ const mapDispatchToProps = dispatch => {
   return {
     loadDialog: (id) => dispatch(loadDialog(id)),
     createDialog: (id, dialog) => dispatch(createDialog(id, dialog)),
-    loadMessages: (id) => dispatch(loadMessages((id)))
+    loadMessages: (id) => dispatch(loadMessages((id))),
+    cleanUserSearch: () => dispatch(cleanUserSearch())
   }
 }
 

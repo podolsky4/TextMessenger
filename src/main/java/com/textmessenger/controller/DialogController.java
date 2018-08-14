@@ -36,6 +36,11 @@ public class DialogController {
             .orElse(ResponseEntity.noContent().build());
   }
 
+  @GetMapping("/user/{newUser}/dialog/{dialogId}")
+  public void addDilogToNewUser(@PathVariable("newUser") Long user, @PathVariable("dialogId") Long dialog) {
+    dialogService.addToDialogNewUser(dialog, user);
+  }
+
   @PutMapping
   public ResponseEntity updateDialog(@RequestBody Dialog dialog) {
     dialogService.updateDialog(dialog);

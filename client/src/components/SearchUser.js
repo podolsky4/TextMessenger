@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Loader from './Loader/Loader'
 import {findUsers} from '../actions/userActions'
-import {createDialog} from '../actions/dialogActions'
+import {createDialog, addUserToExistDialog} from '../actions/dialogActions'
 
 class SearchUser extends Component {
   constructor (props) {
@@ -23,18 +23,22 @@ class SearchUser extends Component {
   }
 
   createChatWithUser (e) {
-    const {user, createDialog} = this.props
-    console.log('e.target.value', e.target.value)
-    console.log('user', user)
-    createDialog(user, e.target.value)
+    const {user, createDialog, exist, dialog, existDialod} = this.props
+    if (exist) {
+      existDialod(dialog, user.id, e.target.value)
+    } else {
+      createDialog(user, e.target.value)
+    }
   }
   onSubmit = e => {
     const {findAllUsers} = this.props
     e.preventDefault()
     findAllUsers(this.state.text)
+    this.setState({flag: true})
   }
   render () {
     const {fetching, searchUser} = this.props
+
     return (
       <div className='search_user'>
         <form className='search_form' onSubmit={e => this.onSubmit(e)}>
@@ -66,7 +70,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     findAllUsers: (str) => dispatch(findUsers(str)),
-    createDialog: (user, secondUser) => dispatch(createDialog(user, secondUser))
+    createDialog: (user, secondUser) => dispatch(createDialog(user, secondUser)),
+    existDialod: (dialog, user, newUser) => dispatch(addUserToExistDialog(dialog, user, newUser))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SearchUser)
