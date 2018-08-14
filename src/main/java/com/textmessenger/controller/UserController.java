@@ -39,8 +39,7 @@ public class UserController {
   }
 
   @PostMapping("/find")
-  public ResponseEntity<?> findAllUsers(@RequestBody String str) {
-    System.out.println(str);
+  public ResponseEntity findAllUsers(@RequestBody String str) {
     return Optional.of(ResponseEntity.ok().body(userService.findUsersBySearch(str)))
             .orElse(ResponseEntity.notFound().build());
   }
