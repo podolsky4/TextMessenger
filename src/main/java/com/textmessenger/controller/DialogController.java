@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,11 +25,8 @@ public class DialogController {
   }
 
   @PostMapping("/user/{id}")
-  public ResponseEntity createDialog(@PathVariable("id") User user, @RequestBody Dialog dialog) {
-    List<User> users = dialog.getUsers();
-    users.add(user);
-    dialog.setUsers(users);
-    dialogService.createDialog(dialog);
+  public ResponseEntity createDialog(@PathVariable("id") Long user, @RequestBody User mainUser) {
+    dialogService.createdByUserDialogWithUser(mainUser.getLogin(), user);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
