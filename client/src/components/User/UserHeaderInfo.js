@@ -72,13 +72,18 @@ profileRender = (id) => {
   })
 }
 render () {
-  const { classes, user } = this.props
+  const { classes, user, currentUser } = this.props
   const {toredirect, id} = this.state
-  let redirect = () => {
-    return <Redirect to={`/profileUser/${id}`}/>
+  if (toredirect) {
+    if (currentUser.id === id) {
+      return <Redirect to='/profile'/>
+    } else {
+      return <Redirect to={`/profileUser/${id}`}/>
+    }
   }
+
   return (
-    toredirect ? redirect() : <CardHeader onClick={e => this.profileRender(user.id)} className={classnames(classes.cardHeader)}
+    <CardHeader onClick={e => this.profileRender(user.id)} className={classnames(classes.cardHeader)}
       avatar={
         <Ava/>
       }

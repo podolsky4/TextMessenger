@@ -96,7 +96,7 @@ class Post extends Component {
       >
         {owner && `Ретвитнул ${owner.login}`}
         <header>
-          <UserHeaderInfo user={post.user}/>
+          <UserHeaderInfo user={post.user} currentUser ={user}/>
           {/* TODO: not sure if creation time should be in post.user.creationDate. Maybe better to save it post.createdDate */}
           {/* <DataInfo user={post.user}/> */}
         </header>
