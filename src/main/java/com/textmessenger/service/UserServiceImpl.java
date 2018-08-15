@@ -78,8 +78,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<User> getFollowings(Long id) {
-    List<User> following = userRepository.getOne(id).getFollowing();
-    return following;
+    return userRepository.getOne(id).getFollowing();
   }
 
   @Override
