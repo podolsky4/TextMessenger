@@ -13,7 +13,6 @@ cache:
   - $HOME/.sonarscanner
 
 before_script:
-- npm i -g npm
 - npm install --prefix client/
 
 # Sonar Cloud Addon
