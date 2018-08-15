@@ -82,4 +82,21 @@ public class UserController {
   public ResponseEntity<?> getFavoritesByLogin(@PathVariable("login") String login) {
     return ResponseEntity.status(200).body(userService.getFavoritesByLogin(login));
   }
+
+  @GetMapping("/user/{id}/getFollowing")
+  public ResponseEntity getFollowing(@PathVariable("id") Long id) {
+    return ResponseEntity.status(200).body(userService.getFollowings(id));
+  }
+
+  @GetMapping("/user/{userId}/addToFollowing/{newUser}")
+  public ResponseEntity addToFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
+    userService.addToFollowing(user, newUser);
+    return ResponseEntity.status(200).build();
+  }
+
+  @DeleteMapping("/user/{userId}/addToFollowing/{newUser}")
+  public ResponseEntity deleteFromFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
+    userService.deleteFromFollowing(user, newUser);
+    return ResponseEntity.status(200).build();
+  }
 }
