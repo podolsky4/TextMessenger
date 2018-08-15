@@ -58,13 +58,22 @@ const styles = theme => ({
 })
 
 class UserHeaderInfo extends React.Component {
-    state = { };
+  constructor (props) {
+    super(props)
+    this.state = {
+      render: false,
+      id: ''
+    }
+  }
 profileRender = (id) => {
-  return <Redirect to='/profileUser/'/>
+  this.setState({
+    render: true,
+    id: id
+  })
 }
 render () {
   const { classes, user } = this.props
-
+  { this.state.render && <Redirect to='/profileUser/:`${this.state.id}`'/> }
   return (
 
     <CardHeader onClick = {e => this.profileRender(user.id)} className={classnames(classes.cardHeader)}

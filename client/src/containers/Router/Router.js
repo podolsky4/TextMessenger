@@ -20,7 +20,7 @@ class Router extends Component {
         <Route exact path='/notifications' component={Notifications}/>
         <Route exact path='/login' component={Login}/>
         <Route exact path='/profile' component={Profile}/>
-        <Route path='/profileUser' component = {ProfileUser}/>
+        <Route path='/profileUser/:id' component = {ProfileUser}/>
       </Switch>
     )
   }
