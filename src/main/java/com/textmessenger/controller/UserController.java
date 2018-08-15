@@ -38,6 +38,12 @@ public class UserController {
             .orElse(ResponseEntity.notFound().build());
   }
 
+  @PostMapping("/find")
+  public ResponseEntity findAllUsers(@RequestBody String str) {
+    return Optional.of(ResponseEntity.ok().body(userService.findUsersBySearch(str)))
+            .orElse(ResponseEntity.notFound().build());
+  }
+
   @PutMapping
   public ResponseEntity<?> updateUser(@RequestBody User user) {
     userService.updateUser(user);

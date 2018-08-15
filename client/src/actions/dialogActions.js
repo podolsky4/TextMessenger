@@ -1,4 +1,4 @@
-import {LOAD_DIALOGS, LOAD_MESSAGES} from './types'
+import {LOAD_DIALOGS, LOAD_MESSAGES, CLEAN_USERSEARCH} from './types'
 import {toggleLoader} from './loaderActions'
 
 export const loadDialog = id => dispatch => {
@@ -7,16 +7,16 @@ export const loadDialog = id => dispatch => {
     .then(data => dispatch({type: LOAD_DIALOGS, payload: data}))
 }
 
-export const createDialog = (id, dialog) => dispatch => {
-  fetch(`/api/dialogs/user/${id}`,
+export const createDialog = (user, secondUser) => dispatch => {
+  fetch(`/api/dialogs/user/${secondUser}`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({'dialog': dialog})
+      body: JSON.stringify(user)
     })
-    .then(() => dispatch(loadDialog(id)))
+    .then(() => dispatch(loadDialog(user.id)))
 }
 
 export const loadMessages = dialogId => dispatch => {
@@ -36,4 +36,13 @@ export const createMessage = (dialogId, userId, message) => dispatch => {
     body: message
   })
     .then(() => dispatch(loadMessages(dialogId)))
+}
+
+export const addUserToExistDialog = (dialogId, userId, newUser) => dispatch => {
+  fetch(`/api/dialogs/user/${newUser}/dialog/${dialogId}`)
+    .then(() => dispatch(loadDialog(userId)))
+}
+
+export const cleanUserSearch = () => dispatch => {
+  dispatch({type: CLEAN_USERSEARCH, payload: []})
 }

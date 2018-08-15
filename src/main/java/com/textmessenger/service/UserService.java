@@ -24,4 +24,6 @@ public interface UserService {
   List<Post> getFavoritesById(Long id);
 
   List<Post> getFavoritesByLogin(String login);
+
+  List<User> findUsersBySearch(String str);
 }
