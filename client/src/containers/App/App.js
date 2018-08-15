@@ -1,10 +1,11 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import './App.css'
 import Router from '../Router/Router'
 import Header from '../../views/Header/Header'
 import {getUser} from '../../actions/userActions'
 import {connect} from 'react-redux'
-import Loader from '../../components/Loader/Loader'
+import CssBaseline from '@material-ui/core/CssBaseline'
+
 
 class App extends Component {
   componentWillMount () {
@@ -15,14 +16,15 @@ class App extends Component {
   }
 
   render () {
-    const {user} = this.props
-    if (user.length === 0) {
-      return <Loader fullscreen={true}/>
-    }
-    return (<div>
-      <Header user={user}/>
-      <Router/>
-    </div>)
+    return (
+      <Fragment>
+        <CssBaseline>
+          <Header />
+          <Router />
+        </CssBaseline>
+      </Fragment>
+    )
+
   }
 }
 

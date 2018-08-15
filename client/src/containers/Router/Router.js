@@ -1,5 +1,5 @@
-import {Route, Switch} from 'react-router-dom'
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import HomePage from '../../views/HomePage/HomePage'
 import Feed from '../../views/Feed/Feed'
 import Favorites from '../../views/Favorities/Favorites'
@@ -10,6 +10,7 @@ import Profile from '../../views/Profile/Profile'
 import ProfileUser from '../../components/ProfileUser'
 
 class Router extends Component {
+
   render () {
     return (
       <Switch>

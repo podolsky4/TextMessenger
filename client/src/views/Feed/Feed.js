@@ -1,9 +1,13 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {createLoadPosts, loadPosts, loadFavorites} from '../../actions/postsActions'
-import {getUser} from '../../actions/userActions'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { createLoadPosts, loadFavorites, loadPosts } from '../../actions/postsActions'
+import { getUser } from '../../actions/userActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
+
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper/'
+
 
 class Feed extends Component {
   constructor (props) {
@@ -12,6 +16,7 @@ class Feed extends Component {
       text: ''
     }
   }
+
   componentDidMount () {
     const {posts, favorites, user, loadPosts, loadFavorites, loadUser} = this.props
     if (posts.length === 0) {
@@ -24,11 +29,12 @@ class Feed extends Component {
       loadUser()
     }
   }
+
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
     })
-  };
+  }
 
   reset = () => {
     this.setState({text: ''})
@@ -40,7 +46,8 @@ class Feed extends Component {
     e.preventDefault()
     createPost(user.id, this.state.text)
     this.reset()
-  };
+  }
+
   myFunction (e) {
     if (e.key === 'Enter') {
       this.onSubmit(e)
@@ -50,25 +57,37 @@ class Feed extends Component {
       })
     }
   }
+
   render () {
     const {posts, user, fetching} = this.props
     console.log(fetching)
     return (
-      <div>
-        <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
-          <textarea defaultValue=""
-            placeholder="Что нового?"
-            maxLength={280}
-            id="content"
-            name="text"
-            type="text"
-            onKeyUp={event => this.myFunction(event)}
-          />
-          <button className="btn-create-post">Опубликовать</button>
-        </form>
-        {fetching && <Loader classes={{progress: 'root'}}/>}
 
-        {!fetching && <PostList posts={posts} user={user}/>}
+      <div style={{padding: 15}}>
+        <Grid
+          container
+          direction='column'
+          justify='center'
+          alignItems='center'
+          spacing={16}
+        >
+          <Grid item xs={12} sm={9} md={8} lg={6}>
+            <Paper>
+              <form onSubmit={e => this.onSubmit(e)}>
+                <textarea defaultValue=""
+                    placeholder="Type what to share..."
+                    maxLength={280}
+                    id="content"
+                    name="text" onKeyUp={event => this.myFunction(event)}
+                />
+                <button className="btn-create-post">Publish</button>
+              </form>
+            </Paper>
+          </Grid>
+
+          {fetching && <Loader/>}
+          {!fetching && <PostList posts={posts} user={user}/>}
+        </Grid>
       </div>
     )
   }
