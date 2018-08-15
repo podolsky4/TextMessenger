@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Popper from '@material-ui/core/Popper';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
-import Paper from '@material-ui/core/Paper';
-import SignIn from '../containers/SignIn/SignIn'
+// import Paper from '@material-ui/core/Paper';
+// import SignIn from '../containers/SignIn/SignIn'
 
 
 const styles = theme => ({
@@ -30,7 +30,7 @@ class Poper extends React.Component {
     };
 
     render() {
-        const { classes, content } = this.props;
+        const {content } = this.props;
         console.log(content);
         const { anchorEl, open } = this.state;
         const id = open ? 'simple-popper' : null;
@@ -52,8 +52,8 @@ class Poper extends React.Component {
     }
 }
 
-Poper.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+// Poper.propTypes = {
+//     classes: PropTypes.object.isRequired,
+// };
 
 export default withStyles(styles)(Poper);

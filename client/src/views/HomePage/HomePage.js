@@ -1,13 +1,11 @@
 import React, {Component} from 'react'
-import Typography from '@material-ui/core/Typography'
+
 import SignIn from "../../containers/SignIn/SignIn";
 import TextCard from "../../components/TextCard/TextCard";
 
-import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import {loadFavorites} from "../../actions/postsActions";
-import {createUser, loadUser} from "../../actions/userActions";
+
 import classNames from 'classnames';
 
 const styles = theme => ({

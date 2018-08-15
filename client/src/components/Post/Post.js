@@ -1,25 +1,21 @@
 import React, {Component} from 'react'
 import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../../actions/postsActions'
 import {connect} from 'react-redux'
-import UserHeaderInfo from '../User/UserHeaderInfo'
+
 import PostContent from './components/PostContent'
-import Like from './components/Like'
-import PostComment from './components/PostComment'
-import PostRetwite from './components/PostRetwite'
+
 import Comments from './components/CommentList'
 import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
-import classnames from 'classnames'
+
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import cyan from '@material-ui/core/colors/cyan'
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography'
-import ShareIcon from '@material-ui/icons/Share';
-import CommentIcon from '@material-ui/icons/CommentOutlined'
+
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Avatar from '@material-ui/core/Avatar';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
@@ -90,7 +86,7 @@ class Post extends Component {
   };
 
   render () {
-    const {favorites, post, owner, whoo, user, classes} = this.props
+    const {post, owner, user, classes} = this.props
     return (
 
       <Grid item xs={12} sm={9} md={8} lg={6} key={`${post.id} ${post.parentId}`}>
