@@ -22,8 +22,7 @@
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^17.0.0",
     "stylelint-order": "^0.7.0",
-    "classnames": "latest",
-    "webpack": "^4.16.5"
+    "classnames": "latest"
   },
   "scripts": {
     "watch-compile-sass": "npm run build-sass && node-sass-chokidar src/ -o src/ --watch --recursive",
