@@ -22,7 +22,8 @@
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^17.0.0",
     "stylelint-order": "^0.7.0",
-    "classnames": "latest"
+    "classnames": "latest",
+    "webpack": "^4.16.5"
   },
   "scripts": {
     "watch-compile-sass": "npm run build-sass && node-sass-chokidar src/ -o src/ --watch --recursive",
@@ -48,7 +49,6 @@
       "extensions": "scss"
     }
   },
-  "homepage": "http:///twitter/",
   "proxy": {
     "/api": {
       "target": "http://localhost:9000/"

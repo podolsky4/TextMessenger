@@ -15,7 +15,10 @@ import PersonIcon from '@material-ui/icons/Person'
 import LockIcon from '@material-ui/icons/LockOpen'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import PublicIcon from '@material-ui/icons/Public'
-import Badge from '@material-ui/core/es/Badge/Badge'
+import Badge from '@material-ui/core/Badge/Badge'
+import SignIn from '../../containers/SignIn/SignIn'
+import Poper from '../../components/Poper'
+
 
 const styles = theme => ({
   root: {
@@ -37,6 +40,7 @@ const styles = theme => ({
 
 const Header = props => {
   const {classes} = props
+  const conten = <SignIn />
   return (
     <div className={classes.root}>
       <AppBar position='static'>
@@ -67,8 +71,9 @@ const Header = props => {
           <IconButton color="inherit" component={Link} to='/profile'>
             <PersonIcon className={classes.icon}/>
           </IconButton>
-          <Button color="inherit" variant="outlined" component={Link} to='/login'>
-            <LockIcon/>Login</Button>
+          <Button color="inherit" variant="outlined">
+              <Poper classes={"poper"} content={conten} />
+          </Button>
         </Toolbar>
       </AppBar>
 

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {updateUser, loadUser} from '../../actions/userActions'
 import View from '../../components/View'
-import Typography from '@material-ui/core/es/Typography/Typography'
+import Typography from '@material-ui/core/Typography/Typography'
 
 class Profile extends Component {
   constructor (props) {

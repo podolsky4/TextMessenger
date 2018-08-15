@@ -24,7 +24,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Avatar from '@material-ui/core/Avatar';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
 import PersonIcon from '@material-ui/icons/Person';
-import Divider from '@material-ui/core/es/Divider/Divider'
+import Divider from '@material-ui/core/Divider/Divider'
 import PostFooter from './components/PostFooter'
 
 const styles = theme => ({
