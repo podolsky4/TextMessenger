@@ -61,34 +61,35 @@ class UserHeaderInfo extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      render: false,
+      toredirect: false,
       id: ''
     }
   }
 profileRender = (id) => {
   this.setState({
-    render: true,
+    toredirect: true,
     id: id
   })
 }
 render () {
   const { classes, user } = this.props
-  { this.state.render && <Redirect to='/profileUser/:`${this.state.id}`'/> }
+  const {toredirect, id} = this.state
+  let redirect = () => {
+    return <Redirect to={`/profileUser/${id}`}/>
+  }
   return (
-
-    <CardHeader onClick = {e => this.profileRender(user.id)} className={classnames(classes.cardHeader)}
+    toredirect ? redirect() : <CardHeader onClick={e => this.profileRender(user.id)} className={classnames(classes.cardHeader)}
       avatar={
         <Ava/>
       }
       action={
         <IconButton>
-          <MoreVertIcon />
+          <MoreVertIcon/>
         </IconButton>
       }
       title={user.login}
       subheader={user.createdDate}
     />
-
   )
 }
 }
