@@ -23,6 +23,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import IconButton from '@material-ui/core/IconButton'
 import red from '@material-ui/core/colors/red'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import { Redirect } from 'react-router'
 
 const styles = theme => ({
   card: {
@@ -58,27 +59,29 @@ const styles = theme => ({
 
 class UserHeaderInfo extends React.Component {
     state = { };
+profileRender = (id) => {
+  return <Redirect to='/profileUser/'/>
+}
+render () {
+  const { classes, user } = this.props
 
-    render () {
-      const { classes, user } = this.props
+  return (
 
-      return (
+    <CardHeader onClick = {e => this.profileRender(user.id)} className={classnames(classes.cardHeader)}
+      avatar={
+        <Ava/>
+      }
+      action={
+        <IconButton>
+          <MoreVertIcon />
+        </IconButton>
+      }
+      title={user.login}
+      subheader={user.createdDate}
+    />
 
-        <CardHeader className={classnames(classes.cardHeader)}
-          avatar={
-            <Ava/>
-          }
-          action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          }
-          title={user.login}
-          subheader={user.createdDate}
-        />
-
-      )
-    }
+  )
+}
 }
 
 UserHeaderInfo.propTypes = {

@@ -7,6 +7,7 @@ import Dialogs from '../../components/Dialogs/Dialogs'
 import Notifications from '../../components/Notifications'
 import Login from '../../views/Login/LogIn'
 import Profile from '../../views/Profile/Profile'
+import ProfileUser from '../../components/ProfileUser'
 
 class Router extends Component {
   render () {
@@ -19,6 +20,7 @@ class Router extends Component {
         <Route exact path='/notifications' component={Notifications}/>
         <Route exact path='/login' component={Login}/>
         <Route exact path='/profile' component={Profile}/>
+        <Route path='/profileUser' component = {ProfileUser}/>
       </Switch>
     )
   }
