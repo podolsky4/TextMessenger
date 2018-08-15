@@ -36,7 +36,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadUser: () => dispatch(getUser())
-
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App)

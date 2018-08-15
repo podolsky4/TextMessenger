@@ -6,6 +6,7 @@ import dialogs from './dialogs'
 import loader from './loader'
 import messages from './messages'
 import searchUser from './searchUser'
+import following from './following'
 
 export default combineReducers({
   user,
@@ -14,5 +15,6 @@ export default combineReducers({
   favorites,
   loader,
   messages,
-  searchUser
+  searchUser,
+  following
 })

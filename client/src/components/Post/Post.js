@@ -88,7 +88,6 @@ class Post extends Component {
   render () {
     const {post, owner, user, classes} = this.props
     return (
-
       <Grid item xs={12} sm={9} md={8} lg={6} key={`${post.id} ${post.parentId}`}>
         <Card>
               {owner && `Ретвитнул ${owner.login}`}

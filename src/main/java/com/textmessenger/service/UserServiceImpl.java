@@ -75,4 +75,20 @@ public class UserServiceImpl implements UserService {
   public List<User> findUsersBySearch(String str) {
     return userRepository.findUsersByEmailOrLogin(str, str);
   }
+
+  @Override
+  public List<User> getFollowings(Long id) {
+    return userRepository.getOne(id).getFollowing();
+  }
+
+  @Override
+  public void addToFollowing(Long user, Long newUser) {
+    User one = userRepository.getOne(newUser);
+    userRepository.getOne(user).getFollowing().add(one);
+  }
+
+  @Override
+  public void deleteFromFollowing(Long user, Long newUser) {
+    userRepository.getOne(user).getFollowing().remove(userRepository.getOne(newUser));
+  }
 }
