@@ -19,19 +19,23 @@
 .chat {
   width: 600px;
   margin: 10px auto;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: aqua;
+  //padding: 20px;
+  //border-radius: 20px;
+  //background-color: aqua;
 }
 
 .current {
-  width: 80%;
-  margin-right: auto;
-  text-align: left;
+  width: fit-content;
+  max-width: 80%;
+  margin-left: auto;
+  text-align: right;
 }
 
 .other {
-  text-align: right;
+  width: fit-content;
+  max-width: 80%;
+  margin-right: auto;
+  text-align: left;
 }
 
 .search_user {
