@@ -38,10 +38,6 @@ const styles = theme => ({
         alignSelf: "flex-end",
     },
     other: { },
-    text:{
-        maxWidth:"300px",
-        wordWrap: "break-word",
-    }
 });
 
 function Message(props) {
@@ -64,10 +60,8 @@ function Message(props) {
             <Typography variant="headline" component="p">
                 <a>{message.createdDate} {user.name}</a>
             </Typography>
-
-            <Typography className={classes.text} component="p" children={message.content}>
-
-
+            <Typography component="p">
+                {message.content}
             </Typography>
         </Paper>
 
