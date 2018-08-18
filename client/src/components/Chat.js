@@ -27,6 +27,8 @@ class Chat extends Component {
     addMessage(currentDialog.id, user, this.state.text)
   };
 
+  handleEnter(); // TODO
+
   render () {
     const {user, fetching, messages} = this.props
     return (
@@ -39,6 +41,7 @@ class Chat extends Component {
             maxLength={280}
             type="text"
             onKeyUp={event => this.myFunction(event)}
+            onKeyPress=this.handleEnter();
           />
           <button >Отправить</button>
         </form>
