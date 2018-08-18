@@ -1,42 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
+import classNames from 'classnames';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import KeyboardVoiceICon from '@material-ui/icons/KeyboardVoice';
+import Icon from '@material-ui/core/Icon';
+import SaveIcon from '@material-ui/icons/Save';
 
 const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    margin: {
+    button: {
         margin: theme.spacing.unit,
+    },
+    rightIcon: {
+        marginLeft: theme.spacing.unit,
     },
 });
 
-
-
-function ButtonSubmit(props) {
+function SubmitButton(props) {
     const { classes } = props;
-
     return (
-        <div className={classes.container}>
-                <TextField
-                    className={classes.margin}
-                    label="MuiThemeProvider"
-                    id="mui-theme-provider-input"
-
-                />
-        </div>
+        <Button variant="contained" type="submit" color="primary" className={classes.button}>
+            Send
+            <Icon className={classes.rightIcon}>send</Icon>
+        </Button>
     );
 }
 
-ButtonSubmit.propTypes = {
+SubmitButton.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ButtonSubmit);
+export default withStyles(styles)(SubmitButton);

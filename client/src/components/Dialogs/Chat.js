@@ -5,6 +5,7 @@ import MessagesList from '../MessagesList'
 import {createMessage} from '../../actions/dialogActions'
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
+import SubmitButton from '../../components/buttons/ButtonSubmit/ButtonSubmit'
 
 const styles = theme => ({
     container: {
@@ -64,8 +65,8 @@ class Chat extends Component {
                   autoFocus
                   white
               />
-
-          <button >Отправить</button>
+                <SubmitButton />
+          {/*<button >Отправить</button>*/}
         </form>
         }
       </div>
