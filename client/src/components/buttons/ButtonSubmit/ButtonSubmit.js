@@ -16,8 +16,11 @@ const styles = theme => ({
     },
 });
 
-function SubmitButton(props) {
+
+
+function ButtonSubmit(props) {
     const { classes } = props;
+
     return (
         <Button variant="contained" type="submit" color="primary" className={classes.button}>
             Send
