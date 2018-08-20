@@ -14,7 +14,7 @@
 //   }
 // }
 
-import Ava from './Avatar'
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
@@ -23,8 +23,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import IconButton from '@material-ui/core/IconButton'
 import red from '@material-ui/core/colors/red'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import PersonIcon from '@material-ui/icons/Person'
-import CalendarIcon from '@material-ui/icons/CalendarToday'
+
 import { Redirect } from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
 

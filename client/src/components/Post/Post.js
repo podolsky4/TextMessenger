@@ -13,13 +13,8 @@ import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import cyan from '@material-ui/core/colors/cyan'
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
 
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Avatar from '@material-ui/core/Avatar';
-import CalendarIcon from '@material-ui/icons/CalendarToday';
-import PersonIcon from '@material-ui/icons/Person';
+
 import Divider from '@material-ui/core/Divider/Divider'
 import PostFooter from './components/PostFooter'
 import UserHeaderInfo from "../User/UserHeaderInfo";
