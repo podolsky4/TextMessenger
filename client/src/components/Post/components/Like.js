@@ -56,11 +56,11 @@ class Like extends Component {
     const {classes} = this.props
     return (
       <React.Fragment>
-        <IconButton className={classNames(classes.root, {[classes.selected]: this.state.liked,})}
+          <IconButton className={classNames(classes.root, {[classes.selected]: this.state.liked,})}
                     onClick={this.handleLike}
                     aria-live={this.state.liked}
                     aria-label="Add to favorites"
-        >
+          >
           <ThumbUpIcon/>
         </IconButton><Typography>{1}</Typography>
       </React.Fragment>

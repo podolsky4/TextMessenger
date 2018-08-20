@@ -6,7 +6,7 @@
 //   }
 // }
 
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
@@ -26,19 +26,21 @@ const styles = {
   }
 }
 
-function Ava (props) {
-  const { classes } = props
-  return (
-
-    <Avatar alt="Remy Sharp"
-      src="https://www.ozilis.com/25038-large_default/plate-42-44-46.jpg"
-      className={classnames(classes.avatar, 'logo')} />
-
-  )
+class Ava extends Component {
+  render (){
+      const {classes, src} = this.props
+      return (
+          <Avatar alt="Remy Sharp"
+                  src={src}
+                  className={classnames(classes.avatar, 'logo')}
+          />
+      )
+  }
 }
 
 Ava.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  src: PropTypes.string
 }
 
 export default withStyles(styles)(Ava)

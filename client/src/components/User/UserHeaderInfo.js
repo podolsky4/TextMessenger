@@ -23,6 +23,8 @@ import CardHeader from '@material-ui/core/CardHeader'
 import IconButton from '@material-ui/core/IconButton'
 import red from '@material-ui/core/colors/red'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import PersonIcon from '@material-ui/icons/Person'
+import CalendarIcon from '@material-ui/icons/CalendarToday'
 import { Redirect } from 'react-router'
 
 const styles = theme => ({
@@ -65,15 +67,16 @@ class UserHeaderInfo extends React.Component {
       id: ''
     }
   }
-profileRender = (id) => {
-  this.setState({
-    toredirect: true,
-    id: id
-  })
-}
+  profileRender = (id) => {
+    this.setState({
+      toredirect: true,
+      id: id
+    })
+  }
 render () {
-  const { classes, user, currentUser } = this.props
+  const { classes, currentUser, post } = this.props
   const {toredirect, id} = this.state
+
   if (toredirect) {
     if (currentUser.id === id) {
       return <Redirect to='/profile'/>
@@ -83,17 +86,27 @@ render () {
   }
 
   return (
-    <CardHeader onClick={e => this.profileRender(user.id)} className={classnames(classes.cardHeader)}
+    <CardHeader className={classnames(classes.cardHeader) }
       avatar={
-        <Ava/>
+        <Ava onClick={e => this.profileRender(post.user.id)}
+             aria-label="User avatar"
+             className={classes.avatar}
+             src={post.user.profilePhoto}/>
       }
       action={
-        <IconButton>
-          <MoreVertIcon/>
-        </IconButton>
+          <IconButton>
+            <MoreVertIcon/>
+          </IconButton>
       }
-      title={user.login}
-      subheader={user.createdDate}
+      title={
+        <div className={classes.root} onClick={e => this.profileRender(post.user.id)}>
+          <PersonIcon className={classes.icon} />
+          {`${post.user.firstName} ${post.user.lastName}`}
+        </div>
+      }
+      subheader={
+        new Date(post.createdDate).toDateString()
+      }
     />
   )
 }
@@ -104,3 +117,26 @@ UserHeaderInfo.propTypes = {
 }
 
 export default withStyles(styles)(UserHeaderInfo)
+//
+//
+// <CardHeader
+// avatar={
+// <Avatar aria-label="User avatar" src={post.user.profilePhoto} className={classes.avatar}/>
+// }
+// action={
+// <IconButton>
+//     <MoreVertIcon />
+// </IconButton>
+// }
+// title={
+// <div className={classes.root}>
+//     <PersonIcon className={classes.icon} />
+//     {`${post.user.firstName} ${post.user.lastName}`}
+// </div>
+// }
+// subheader={
+// <div className={classes.root}>
+//     <CalendarIcon className={classes.icon} />{new Date(post.createdDate).toDateString()}
+// </div>
+// }
+// />

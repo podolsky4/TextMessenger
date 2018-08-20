@@ -22,6 +22,7 @@ import CalendarIcon from '@material-ui/icons/CalendarToday';
 import PersonIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider/Divider'
 import PostFooter from './components/PostFooter'
+import UserHeaderInfo from "../User/UserHeaderInfo";
 
 const styles = theme => ({
   root: {
@@ -91,27 +92,8 @@ class Post extends Component {
       <Grid item xs={12} sm={9} md={8} lg={6} key={`${post.id} ${post.parentId}`}>
         <Card>
               {owner && `Ретвитнул ${owner.login}`}
-          <CardHeader
-            avatar={
-              <Avatar aria-label="User avatar" src={post.user.profilePhoto} className={classes.avatar}/>
-            }
-            action={
-              <IconButton>
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={
-              <div className={classes.root}>
-                <PersonIcon className={classes.icon} />
-                {`${post.user.firstName} ${post.user.lastName}`}
-              </div>
-            }
-            subheader={
-              <div className={classes.root}>
-                <CalendarIcon className={classes.icon} />{new Date(post.createdDate).toDateString()}
-              </div>
-            }
-          />
+              <UserHeaderInfo post={post} classes currentUser={user}/>
+
           <PostContent content={post.content}/>
           <Divider />
           <CardActions className={classes.actions} disableActionSpacing>
