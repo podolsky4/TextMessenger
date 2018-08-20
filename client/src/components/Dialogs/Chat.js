@@ -6,6 +6,7 @@ import {createMessage} from '../../actions/dialogActions'
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import SubmitButton from '../../components/buttons/ButtonSubmit/ButtonSubmit'
+import classnames from 'classnames'
 
 const styles = theme => ({
     container: {
@@ -15,6 +16,13 @@ const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,
     },
+    text: {
+      width: "73%",
+      padding: "8px",
+    },
+    textarea: {
+      borderRadius: "2px",
+    }
 });
 
 
@@ -52,19 +60,20 @@ class Chat extends Component {
             <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
               <TextField
                   defaultValue=""
-                  placeholder="Write message"
+                  placeholder=" Write message"
                   maxLength={280}
                   type="text"
                   onKeyUp={event => this.myFunction(event)}
-                  className={classes.margin}
+                  className={classnames(classes.margin, classes.text, "messageInput")}
                   label="Your Message"
                   id="messageInput"
-                  fullWidth
+                  // fullWidth
                   backgroundColor="white"
                   multiline
                   autoFocus
                   white
-              />
+              >
+              </TextField>
                 <SubmitButton />
           {/*<button >Отправить</button>*/}
         </form>

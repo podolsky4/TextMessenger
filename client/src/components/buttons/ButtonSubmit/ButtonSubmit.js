@@ -7,7 +7,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import KeyboardVoiceICon from '@material-ui/icons/KeyboardVoice';
 import Icon from '@material-ui/core/Icon';
-import SaveIcon from '@material-ui/icons/Save';
+import SendIcon from '@material-ui/icons/Send';
+
 
 const styles = theme => ({
     button: {
@@ -23,7 +24,7 @@ function SubmitButton(props) {
     return (
         <Button variant="contained" type="submit" color="primary" className={classes.button}>
             Send
-            <Icon className={classes.rightIcon}></Icon>
+            <SendIcon className={classes.rightIcon}></SendIcon>
         </Button>
     );
 }
