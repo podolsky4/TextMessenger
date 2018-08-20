@@ -1,7 +1,6 @@
-
 const initialState = {
   fetching: false,
-    loadingPost: false
+  loadingPost: false
 }
 
 function loader (state = initialState, action) {
@@ -11,7 +10,8 @@ function loader (state = initialState, action) {
     case 'STOP_LOADER':
       return {...state, fetching: action.payload}
     case 'LOADING_POST':
-        return {...state, loadingPost: action.payload}
+      console.log('Loader action received:', action)
+      return {...state, loadingPost: action.payload}
 
     default:
       return state
