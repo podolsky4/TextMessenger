@@ -18,7 +18,8 @@ const styles = {
     justifyContent: 'center'
   },
   avatar: {
-    margin: 10
+    margin: 10,
+      cursor: "pointer",
   },
   bigAvatar: {
     width: 60,
@@ -28,11 +29,13 @@ const styles = {
 
 class Ava extends Component {
   render (){
-      const {classes, src} = this.props
+      const {classes, src, post, profileRender} = this.props
       return (
           <Avatar alt="Remy Sharp"
                   src={src}
                   className={classnames(classes.avatar, 'logo')}
+                  // onClick={this.profileRender(post.user.id)}
+
           />
       )
   }

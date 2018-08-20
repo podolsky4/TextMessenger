@@ -23,7 +23,7 @@ function SubmitButton(props) {
     return (
         <Button variant="contained" type="submit" color="primary" className={classes.button}>
             Send
-            <Icon className={classes.rightIcon}>send</Icon>
+            <Icon className={classes.rightIcon}></Icon>
         </Button>
     );
 }

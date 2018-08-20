@@ -26,6 +26,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import PersonIcon from '@material-ui/icons/Person'
 import CalendarIcon from '@material-ui/icons/CalendarToday'
 import { Redirect } from 'react-router'
+import Avatar from '@material-ui/core/Avatar'
 
 const styles = theme => ({
   card: {
@@ -52,10 +53,14 @@ const styles = theme => ({
     transform: 'rotate(180deg)'
   },
   avatar: {
-    backgroundColor: red[500]
+    backgroundColor: red[500],
+      cursor:"pointer",
   },
   cardHeader: {
     padding: '8px'
+  },
+  title: {
+      cursor:"pointer",
   }
 })
 
@@ -88,10 +93,11 @@ render () {
   return (
     <CardHeader className={classnames(classes.cardHeader) }
       avatar={
-        <Ava onClick={e => this.profileRender(post.user.id)}
-             aria-label="User avatar"
-             className={classes.avatar}
-             src={post.user.profilePhoto}/>
+          <Avatar alt="Remy Sharp"
+          src={post.user.profilePhoto}
+          className={classnames(classes.avatar, 'logo')}
+          onClick={e => this.profileRender(post.user.id)}
+          />
       }
       action={
           <IconButton>
@@ -99,8 +105,7 @@ render () {
           </IconButton>
       }
       title={
-        <div className={classes.root} onClick={e => this.profileRender(post.user.id)}>
-          <PersonIcon className={classes.icon} />
+        <div className={classnames(classes.root, classes.title)} onClick={e => this.profileRender(post.user.id)}>
           {`${post.user.firstName} ${post.user.lastName}`}
         </div>
       }
@@ -117,7 +122,18 @@ UserHeaderInfo.propTypes = {
 }
 
 export default withStyles(styles)(UserHeaderInfo)
+
+
+
+//  <Ava
+//              onClick={e => this.profileRender(post.user.id)}
+//              aria-label="User avatar"
+//              className={classes.avatar}
+//              src={post.user.profilePhoto}
+//              post={post}
 //
+//              // onClick={this.profileRender(post.user.id)}
+//         />
 //
 // <CardHeader
 // avatar={
