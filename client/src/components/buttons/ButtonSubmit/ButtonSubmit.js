@@ -16,9 +16,7 @@ const styles = theme => ({
     },
 });
 
-
-
-function ButtonSubmit(props) {
+function SubmitButton(props) {
     const { classes } = props;
 
     return (
