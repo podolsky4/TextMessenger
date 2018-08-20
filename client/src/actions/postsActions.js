@@ -1,5 +1,5 @@
-import { LOAD_POSTS, LOAD_FAVORITES } from './types'
-import { startLoader, stopLoader, toggleLoader } from './loaderActions'
+import {LOAD_FAVORITES, LOAD_POSTS} from './types'
+import {startLoader, stopLoader} from './loaderActions'
 
 export const createLoadPosts = (id, content) => dispatch => {
   fetch(`/api/posts/user/${id}`,
@@ -11,7 +11,7 @@ export const createLoadPosts = (id, content) => dispatch => {
       body: JSON.stringify({'content': content})
     })
     .then(() => dispatch(loadPosts()))
-}
+};
 export const createComment = (postId, userId, content) => dispatch => {
   fetch(`/api/comments/post/${postId}/user/${userId}`,
     {
@@ -22,7 +22,7 @@ export const createComment = (postId, userId, content) => dispatch => {
       body: JSON.stringify({'content': content})
     })
     .then(() => dispatch(loadPosts()))
-}
+};
 export const retweet = (id, postId) => dispatch => {
   fetch(`/api/posts/user/${id}/post/${postId}`,
     {
@@ -32,7 +32,7 @@ export const retweet = (id, postId) => dispatch => {
       }
     })
     .then(() => dispatch(loadPosts()))
-}
+};
 export const unRetweet = (postId) => dispatch => {
   fetch(`/api/posts/${postId}`,
     {
@@ -42,7 +42,7 @@ export const unRetweet = (postId) => dispatch => {
       }
     })
     .then(() => dispatch(loadPosts()))
-}
+};
 
 export const addedLikers = (id, user) => dispatch => {
   fetch(`/api/users/post/${id}`,
@@ -54,7 +54,7 @@ export const addedLikers = (id, user) => dispatch => {
       body: JSON.stringify(user)
     })
     .then(() => dispatch(loadFavorites(user.id)))
-}
+};
 export const deleteLikers = (id, user) => dispatch => {
   fetch(`/api/users/post/${id}`,
     {
@@ -65,22 +65,22 @@ export const deleteLikers = (id, user) => dispatch => {
       body: JSON.stringify(user)
     })
     .then(() => dispatch(loadFavorites(user.id)))
-}
+};
 export const loadFavorites = (id) => dispatch => {
   fetch(`/api/users/favorites/${id}`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_FAVORITES, payload: data}))
-}
+};
 export const loadFavoritesByLogin = (login) => dispatch => {
   fetch(`/api/users/favorites/login/${login}`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_FAVORITES, payload: data}))
-}
+};
 
 export const loadPosts = () => dispatch => {
-  dispatch(startLoader('LOADING_POST'))
+  dispatch(startLoader('LOADING_POST'));
   fetch(`/api/posts`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
     .then(() => dispatch(stopLoader('LOADING_POST')))
-}
+};
