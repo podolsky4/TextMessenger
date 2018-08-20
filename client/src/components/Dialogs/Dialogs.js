@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {loadDialog, createDialog, loadMessages, cleanUserSearch} from '../../actions/dialogActions'
 import Dialog from '../Dialog'
 import './Dialogs.css'
-import Chat from '../Chat'
+import Chat from './Chat'
 import SearchUser from '../SearchUser'
 
 class Dialogs extends Component {
