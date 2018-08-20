@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../../actions/postsActions'
+import {addedLikers, deleteLikers, loadFavorites, retweet, unRetweet} from '../../actions/postsActions'
 import {connect} from 'react-redux'
 
 import PostContent from './components/PostContent'
@@ -7,7 +7,7 @@ import PostContent from './components/PostContent'
 import Comments from './components/CommentList'
 import PropTypes from 'prop-types'
 
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
@@ -23,6 +23,11 @@ const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
+  },
+  grid: {
+    flexGrow: "0",
+    width: "75%",
+    flexBasis: "75%",
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -51,7 +56,7 @@ const styles = theme => ({
 
 class Post extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       flag: false,
       expanded: false
@@ -59,33 +64,33 @@ class Post extends Component {
   }
 
   componentWillMount () {
-    const {favorites, user, loadFavorites} = this.props
+    const {favorites, user, loadFavorites} = this.props;
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
   }
 
   handleRetwite = e => {
-    const {post, user, retweets, unRetweets, postId} = this.props
+    const {post, user, retweets, unRetweets, postId} = this.props;
     if (e.target.className === 'tweet') {
       retweets(user.id, post.id)
     } else {
       unRetweets(postId)
     }
-  }
+  };
   handleComments = e => {
     this.setState({flag: true})
-  }
+  };
 
   handleExpandClick = () => {
       this.setState(state => ({ expanded: !state.expanded }));
   };
 
   render () {
-    const {post, owner, user, classes} = this.props
+    const {post, owner, user, classes} = this.props;
     return (
-      <Grid item xs={12} sm={9} md={8} lg={6} key={`${post.id} ${post.parentId}`}>
-        <Card>
+      <Grid className={classes.grid} fullWidth item key={`${post.id} ${post.parentId}`}>
+        <Card fullWidth>
               {owner && `Ретвитнул ${owner.login}`}
               <UserHeaderInfo post={post} classes currentUser={user}/>
 
@@ -115,7 +120,7 @@ const mapStateToProps = state => {
     user: state.user,
     favorites: state.favorites
   }
-}
+};
 const mapDispatchToProps = dispatch => {
   return {
     addedLiker: (id, user) => dispatch(addedLikers(id, user)),
@@ -124,10 +129,10 @@ const mapDispatchToProps = dispatch => {
     retweets: (id, postId) => dispatch(retweet(id, postId)),
     unRetweets: (postId) => dispatch(unRetweet(postId))
   }
-}
+};
 
 Post.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Post))

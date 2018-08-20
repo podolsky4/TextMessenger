@@ -15,6 +15,26 @@ export function toggleLoader () {
         type: STOP_LOADER,
         payload: false
       })
-    }, 3000)
+    }, 300)
   }
+}
+
+export function startLoader (type) {
+    return (dispatch) => {
+        dispatch({
+            type,
+            payload: true
+        })
+
+    }
+}
+
+export function stopLoader (type) {
+    return (dispatch) => {
+        dispatch({
+            type,
+            payload: false
+        })
+
+    }
 }
