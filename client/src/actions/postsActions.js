@@ -1,5 +1,5 @@
 import {LOAD_POSTS, LOAD_FAVORITES} from './types'
-import {toggleLoader} from './loaderActions'
+import {startLoader, stopLoader, toggleLoader} from './loaderActions'
 
 export const createLoadPosts = (id, content) => dispatch => {
   fetch(`/api/posts/user/${id}`,
@@ -78,8 +78,9 @@ export const loadFavoritesByLogin = (login) => dispatch => {
 }
 
 export const loadPosts = () => dispatch => {
-  dispatch(toggleLoader())
+  dispatch(startLoader('LOADING_POST'))
   fetch(`/api/posts`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
+      .then(dispatch(stopLoader('LOADING_POST')))
 }
