@@ -61,21 +61,6 @@ const styles = theme => ({
     width: "80%",
     backgroundColor: "#fafafa",
   },
-  grid: {
-    flexGrow: "0",
-    width: "75%",
-    flexBasis: "75%",
-  },
-  paper: {
-    padding: "3em 1em 1em 1em",
-    width: "75%",
-    backgroundColor: "#fafafa",
-  },
-  textfield: {
-    padding: "3em 1em 1em 1em",
-    width: "80%",
-    backgroundColor: "#fafafa",
-  },
 });
 
 class Post extends Component {
