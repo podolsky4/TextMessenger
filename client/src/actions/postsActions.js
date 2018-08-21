@@ -1,5 +1,5 @@
 import {LOAD_FAVORITES, LOAD_POSTS} from './types'
-import {startLoader, stopLoader} from './loaderActions'
+import {endLoader, startLoader} from './loaderActions'
 
 export const createLoadPosts = (id, content) => dispatch => {
   fetch(`/api/posts/user/${id}`,
@@ -82,5 +82,5 @@ export const loadPosts = () => dispatch => {
   fetch(`/api/posts`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
-    .then(() => dispatch(stopLoader('LOADING_POST')))
+    .then(() => dispatch(endLoader('LOADING_POST')))
 };
