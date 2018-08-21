@@ -24,4 +24,14 @@ public interface UserService {
   List<Post> getFavoritesById(Long id);
 
   List<Post> getFavoritesByLogin(String login);
+
+  List<User> findUsersBySearch(String str);
+
+  List<User> getFollowings(Long id);
+
+  void addToFollowing(Long user, Long newUser);
+
+  void deleteFromFollowing(Long user, Long newUser);
+
+  User logIn(String email, String password);
 }

@@ -1,0 +1,37 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    margin: {
+        margin: theme.spacing.unit,
+    },
+});
+
+
+
+function TextArea(props) {
+    const { classes } = props;
+
+    return (
+        <div className={classes.container}>
+            <TextField
+                className={classes.margin}
+                label="Your Message"
+                id="messageInput"
+            />
+        </div>
+    );
+}
+
+TextArea.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(TextArea);

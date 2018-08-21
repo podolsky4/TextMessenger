@@ -14,4 +14,6 @@ public interface MessageService {
   void deleteMessage(Message message);
 
   List<Message> getMessagesFromDialog(Dialog dialog);
+
+  void createMessageWithUserIdDialogId(Long user, Long dialog, String msg);
 }

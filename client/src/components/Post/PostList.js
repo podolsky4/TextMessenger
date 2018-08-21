@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Post from './Post'
 
 class PostList extends Component {
@@ -10,27 +10,20 @@ class PostList extends Component {
           <Post
             key={post.id}
             post={post}
-          />)
+          />
+        )
       } else {
         let currentPost = posts.find(i => i.id === post.parentId)
         console.log(currentPost)
         let who = user.id === post.user.id
-        return (
-          <Post
-            key={post.id}
-            post={currentPost}
-            owner={post.user}
-            whoo={who}
-            postId={post.id}
-          />)
+        return <Post key={post.id} post={currentPost} owner={post.user} whoo={who} postId={post.id} />
       }
     }
+
     return (
-      <div className="posts">
-        {posts.map(content =>
-          current(content)
-        )}
-      </div>
+      <React.Fragment>
+        {posts.map(content => current(content))}
+      </React.Fragment>
     )
   }
 }

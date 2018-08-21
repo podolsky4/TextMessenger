@@ -1,26 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import CircularProgress  from '@material-ui/core/CircularProgress';
-import green from '@material-ui/core/colors/green';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = theme => ({
-    progress: {
-        margin: theme.spacing.unit * 2,
-    },
-});
+  root: {
+    flexGrow: 1,
+    allowFullScreen: Loader
+  }
+})
 
-function Loader(props) {
-    const { classes } = props;
-    return (
-        <div>
-            <CircularProgress className={classes.progress} style={{ color: green[900] }} thickness={2} />
-        </div>
-    );
+class Loader extends React.Component {
+  render () {
+    const { classes } = this.props
+    return <CircularProgress className={classes.root} thickness={2} />
+  }
+}
+Loader.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
-Loader.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Loader);
+export default withStyles(styles)(Loader)

@@ -21,10 +21,20 @@ import java.util.Optional;
 @CrossOrigin
 public class UserController {
 
+  private static User userEndPoint = null;
   private final UserService userService;
 
   public UserController(UserService userService) {
     this.userService = userService;
+  }
+
+  @GetMapping("/current")
+  public ResponseEntity endpoint() {
+    if (userEndPoint == null) {
+      return ResponseEntity.status(204).body("no user");
+    } else {
+      return ResponseEntity.status(200).body(userEndPoint);
+    }
   }
 
   @PostMapping("/user")
@@ -35,6 +45,12 @@ public class UserController {
   @GetMapping("/{id}")
   public ResponseEntity<?> readUser(@PathVariable("id") long id) {
     return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
+            .orElse(ResponseEntity.notFound().build());
+  }
+
+  @PostMapping("/find")
+  public ResponseEntity findAllUsers(@RequestBody String str) {
+    return Optional.of(ResponseEntity.ok().body(userService.findUsersBySearch(str)))
             .orElse(ResponseEntity.notFound().build());
   }
 
@@ -75,5 +91,35 @@ public class UserController {
   @GetMapping("/favorites/login/{login}")
   public ResponseEntity<?> getFavoritesByLogin(@PathVariable("login") String login) {
     return ResponseEntity.status(200).body(userService.getFavoritesByLogin(login));
+  }
+
+  @GetMapping("/user/{id}/getFollowing")
+  public ResponseEntity getFollowing(@PathVariable("id") Long id) {
+    return ResponseEntity.status(200).body(userService.getFollowings(id));
+  }
+
+  @GetMapping("/user/{userId}/addToFollowing/{newUser}")
+  public ResponseEntity addToFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
+    userService.addToFollowing(user, newUser);
+    return ResponseEntity.status(200).build();
+  }
+
+  @DeleteMapping("/user/{userId}/addToFollowing/{newUser}")
+  public ResponseEntity deleteFromFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
+    userService.deleteFromFollowing(user, newUser);
+    return ResponseEntity.status(200).build();
+  }
+
+  @PostMapping("/user/{email}")
+  public ResponseEntity logInUser(@PathVariable("email") String email, @RequestBody String password) {
+    User user = userService.logIn(email, password);
+    if (user == null) {
+      return ResponseEntity.status(204).body("Wrong email ");
+    } else if (!user.getPassword().equals(password)) {
+      return ResponseEntity.status(205).body("Incorrect passwoord");
+    } else {
+      userEndPoint = user; //NOSONAR
+      return ResponseEntity.status(200).body(user);
+    }
   }
 }
