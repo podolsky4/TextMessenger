@@ -5,7 +5,7 @@ import connect from 'react-redux/es/connect/connect'
 class Notifications extends Component {
   render () {
     const {user} = this.props
-    if (user.length == 0) {
+    if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
     return (

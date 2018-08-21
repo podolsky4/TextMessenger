@@ -91,9 +91,9 @@ export const loginIn = (email, password) => dispatch => {
   })
     .then(function (response) {
       console.log(response)
-      if (response.status == 205) {
+      if (response.status === 205) {
         alert('wrong password')
-      } else if (response.status == 204) {
+      } else if (response.status === 204) {
         alert('this email is not registraite')
       } else {
         console.log('accept')

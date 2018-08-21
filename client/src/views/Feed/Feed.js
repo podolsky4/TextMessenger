@@ -7,7 +7,7 @@ import Loader from '../../components/Loader/Loader'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper/'
-import {Redirect} from "react-router-dom";
+import {Redirect} from 'react-router-dom'
 
 import {withStyles} from '@material-ui/core/styles'
 import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
