@@ -5,29 +5,43 @@ import {
   STOP_RELOADED
 } from './types'
 
+
 export function toggleLoader () {
   return (dispatch) => {
     dispatch({
       type: START_LOADER,
       payload: true
-    })
+    });
 
     setTimeout(() => {
       dispatch({
         type: STOP_LOADER,
         payload: false
       })
-    }, 3000)
+    }, 500)
   }
 }
-export function startLoader () {
-  return (dispatch) => {
-    dispatch({
-      type: START_LOADER,
-      payload: true
+
+
+export function startLoader (type) {
+    return (dispatch) => {
+        dispatch({
+            type,
+            payload: true
+        })
+
     }
-    )
-  }
+}
+
+export function stopLoader (type) {
+    return (dispatch) => {
+        dispatch({
+            type,
+            payload: false
+        })
+
+    }
+
 }
 
 export function endLoader () {
