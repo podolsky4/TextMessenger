@@ -1,6 +1,8 @@
 import {
   START_LOADER,
-  STOP_LOADER
+  STOP_LOADER,
+  START_RELOADED,
+  STOP_RELOADED
 } from './types'
 
 export function toggleLoader () {
@@ -15,7 +17,7 @@ export function toggleLoader () {
         type: STOP_LOADER,
         payload: false
       })
-    }, 300)
+    }, 500)
   }
 }
 
@@ -37,4 +39,33 @@ export function stopLoader (type) {
         })
 
     }
+}
+
+export function endLoader () {
+  return (dispatch) => {
+    dispatch({
+      type: STOP_LOADER,
+      payload: false
+    }
+    )
+  }
+}
+export function startReLoader () {
+  return (dispatch) => {
+    dispatch({
+      type: START_RELOADED,
+      payload: true
+    }
+    )
+  }
+}
+
+export function endReLoader () {
+  return (dispatch) => {
+    dispatch({
+      type: STOP_RELOADED,
+      payload: false
+    }
+    )
+  }
 }

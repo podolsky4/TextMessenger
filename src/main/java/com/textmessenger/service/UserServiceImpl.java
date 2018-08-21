@@ -91,4 +91,9 @@ public class UserServiceImpl implements UserService {
   public void deleteFromFollowing(Long user, Long newUser) {
     userRepository.getOne(user).getFollowing().remove(userRepository.getOne(newUser));
   }
+
+  @Override
+  public User logIn(String email, String password) {
+    return userRepository.findUserByEmail(email);
+  }
 }

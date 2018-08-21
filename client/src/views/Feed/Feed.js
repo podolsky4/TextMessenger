@@ -65,17 +65,17 @@ class Feed extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-  };
+  }
 
   reset = () => {
-    this.setState({text: ''});
+    this.setState({text: ''})
     document.getElementById('content').value = ''
-  };
+  }
 
   onSubmit = e => {
-    const {user, createPost} = this.props;
-    e.preventDefault();
-    createPost(user.id, this.state.text);
+    const {user, createPost} = this.props
+    e.preventDefault()
+    createPost(user.id, this.state.text)
     this.reset()
   };
 
@@ -86,6 +86,12 @@ class Feed extends Component {
     if (e.target.value.length === 280) {
       e.target.style.backgroundColor = "#E64A19"
     }
+    if (e.target.value.length < 280) {
+      e.target.style.backgroundColor = "#f0ee97"
+    }
+    if (e.target.value.length > 275) {
+      e.target.style.backgroundColor = "white"
+    }
     if (e.key === 'Enter') {
       this.onSubmit(e)
     } else {
@@ -94,10 +100,6 @@ class Feed extends Component {
       })
     }
   }
-
-  //TODO static handleHeight() {
-  //   document.getElementsByClassName("form").style.backgroundColor="white";
-  // }
 
   render () {
     const {posts, user, fetching, classes} = this.props;
@@ -142,8 +144,6 @@ class Feed extends Component {
       </div>
     )
   }
-
-
 }
 
 const mapStateToProps = state => {
@@ -151,9 +151,9 @@ const mapStateToProps = state => {
     user: state.user,
     posts: state.posts,
     favorites: state.favorites,
-    fetching: state.loader.loadingPost
+    fetching: state.loader.fetching
   }
-};
+}
 const mapDispatchToProps = dispatch => {
   return {
     loadPosts: () => dispatch(loadPosts()),
@@ -161,5 +161,5 @@ const mapDispatchToProps = dispatch => {
     loadFavorites: (id) => dispatch(loadFavorites(id)),
     loadUser: () => dispatch(getUser())
   }
-};
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Feed))
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Feed)

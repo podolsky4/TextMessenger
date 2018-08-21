@@ -21,10 +21,20 @@ import java.util.Optional;
 @CrossOrigin
 public class UserController {
 
+  private static User userEndPoint = null;
   private final UserService userService;
 
   public UserController(UserService userService) {
     this.userService = userService;
+  }
+
+  @GetMapping("/current")
+  public ResponseEntity endpoint() {
+    if (userEndPoint == null) {
+      return ResponseEntity.status(204).body("no user");
+    } else {
+      return ResponseEntity.status(200).body(userEndPoint);
+    }
   }
 
   @PostMapping("/user")
@@ -98,5 +108,19 @@ public class UserController {
   public ResponseEntity deleteFromFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
     userService.deleteFromFollowing(user, newUser);
     return ResponseEntity.status(200).build();
+  }
+
+  @PostMapping("/user/{email}")
+  public ResponseEntity logInUser(@PathVariable("email") String email, @RequestBody String password) {
+    User user = userService.logIn(email, password);
+    if (user == null) {
+      return ResponseEntity.status(204).body("Wrong email ");
+    } else if (!user.getPassword().equals(password)) {
+      return ResponseEntity.status(205).body("Incorrect passwoord");
+    } else {
+      userEndPoint = user;
+      System.out.println(userEndPoint);
+      return ResponseEntity.status(200).body(user);
+    }
   }
 }

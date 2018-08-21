@@ -24,8 +24,8 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 @Data
-@EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@EntityListeners(AuditingEntityListener.class)
 public class User extends BaseEntity {
 
   @Column(name = "login")
@@ -82,13 +82,28 @@ public class User extends BaseEntity {
   @JoinTable(name = "user_rel",
           joinColumns = {@JoinColumn(name = "following_id")},
           inverseJoinColumns = {@JoinColumn(name = "follower_id")})
-  @JsonIgnoreProperties(value = "following", allowSetters = true)
+  @JsonIgnore
   private List<User> followers = new ArrayList<>();
 
   @ManyToMany
   @JoinTable(name = "user_rel",
           joinColumns = {@JoinColumn(name = "follower_id")},
           inverseJoinColumns = {@JoinColumn(name = "following_id")})
-  @JsonIgnoreProperties(value = "followers", allowSetters = true)
+  @JsonIgnore
   private List<User> following = new ArrayList<>();
+
+  @Override
+  public String toString() {
+    return "User{" +
+            "login='" + login + '\'' +
+            ", email='" + email + '\'' +
+            ", password='" + password + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", address='" + address + '\'' +
+            ", profilePhoto='" + profilePhoto + '\'' +
+            ", profileHeader='" + profileHeader + '\'' +
+            ", dateBirthday=" + dateBirthday +
+            '}';
+  }
 }

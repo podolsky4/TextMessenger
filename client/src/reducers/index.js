@@ -7,6 +7,7 @@ import loader from './loader'
 import messages from './messages'
 import searchUser from './searchUser'
 import following from './following'
+import reloadLoader from './reloadLoader'
 
 export default combineReducers({
   user,
@@ -16,5 +17,6 @@ export default combineReducers({
   loader,
   messages,
   searchUser,
-  following
+  following,
+  reloadLoader
 })
