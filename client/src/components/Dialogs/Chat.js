@@ -3,28 +3,27 @@ import {connect} from 'react-redux'
 import Loader from '../Loader/Loader'
 import MessagesList from '../MessagesList'
 import {createMessage} from '../../actions/dialogActions'
-import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField'
+import { withStyles } from '@material-ui/core/styles'
 import SubmitButton from '../../components/buttons/ButtonSubmit/ButtonSubmit'
 import classnames from 'classnames'
 
 const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    margin: {
-        margin: theme.spacing.unit,
-    },
-    text: {
-      width: "73%",
-      padding: "8px",
-    },
-    textarea: {
-      borderRadius: "2px",
-    }
-});
-
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  margin: {
+    margin: theme.spacing.unit
+  },
+  text: {
+    width: '73%',
+    padding: '8px'
+  },
+  textarea: {
+    borderRadius: '2px'
+  }
+})
 
 class Chat extends Component {
   constructor (props) {
@@ -49,7 +48,6 @@ class Chat extends Component {
     addMessage(currentDialog.id, user, this.state.text)
   };
 
-
   render () {
     const {user, fetching, messages, classes} = this.props
     return (
@@ -59,24 +57,24 @@ class Chat extends Component {
         {!fetching &&
             <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
               <TextField
-                  defaultValue=""
-                  placeholder=" Write message"
-                  maxLength={280}
-                  type="text"
-                  onKeyUp={event => this.myFunction(event)}
-                  className={classnames(classes.margin, classes.text, "messageInput")}
-                  label="Your Message"
-                  id="messageInput"
-                  // fullWidth
-                  backgroundColor="white"
-                  multiline
-                  autoFocus
-                  white
+                defaultValue=""
+                placeholder=" Write message"
+                maxLength={280}
+                type="text"
+                onKeyUp={event => this.myFunction(event)}
+                className={classnames(classes.margin, classes.text, 'messageInput')}
+                label="Your Message"
+                id="messageInput"
+                // fullWidth
+                backgroundColor="white"
+                multiline
+                autoFocus
+                white
               >
               </TextField>
-                <SubmitButton />
-          {/*<button >Отправить</button>*/}
-        </form>
+              <SubmitButton />
+              {/* <button >Отправить</button> */}
+            </form>
         }
       </div>
 

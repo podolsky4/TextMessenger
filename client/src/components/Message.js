@@ -15,65 +15,65 @@ import classNames from 'classnames'
 // }
 // export default Message
 
-
-
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
-    root: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
-    },
-    message: {
-        padding: ".5em",
-        margin: ".15em",
-        width: "fit-content"
-    },
-    current: {
-        textAlign: "right",
-        alignSelf: "flex-end",
-    },
-    other: { },
-    text:{
-        maxWidth:"300px",
-        wordWrap: "break-word",
-    }
-});
+  root: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2
+  },
+  message: {
+    padding: '.5em',
+    margin: '.15em',
+    width: 'fit-content'
+  },
+  current: {
+    textAlign: 'right',
+    alignSelf: 'flex-end'
+  },
+  other: { },
+  text: {
+    maxWidth: '300px',
+    wordWrap: 'break-word'
+  }
+})
 
-function Message(props) {
-    const { message, classes, user } = props;
+function Message (props) {
+  const { message, classes, user } = props
 
-    //to check dynamically if the message is from current user:
-    // --------- 1. create a new obj with 1.classes from props
-    // --------- 2."message" class for all messages
-    // --------- 3."current/other" with check from props
-    const rootClasses = classNames(
-        ...classes,
-        classes.message,
-        (message.user.id === user) ? classes.current : classes.other,
+  // to check dynamically if the message is from current user:
+  // --------- 1. create a new obj with 1.classes from props
+  // --------- 2."message" class for all messages
+  // --------- 3."current/other" with check from props
+  const rootClasses = classNames(
+    ...classes,
+    classes.message,
+    (message.user.id === user) ? classes.current : classes.other
 
-    );
+  )
 
-    return (
+  return (
 
         <Paper className={rootClasses} elevation={0}>
             <Typography variant="headline" component="p">
                 <a>{message.createdDate} {user.name}</a>
             </Typography>
+
             <Typography className={classes.text} component="p" children={message.content}>
+
 
             </Typography>
         </Paper>
 
-    );
+  )
 }
 
 Message.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
-export default withStyles(styles)(Message);
+export default withStyles(styles)(Message)
