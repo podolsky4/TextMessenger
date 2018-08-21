@@ -8,14 +8,16 @@ import {Redirect} from 'react-router-dom'
 class Profile extends React.Component {
   render () {
     const {user, match} = this.props
-    console.log('dsdsd',user)
-    if (user.length == 0) {
+
+    if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
     if (user.id === undefined) {
       return <Loader fullscreen={true}/>
     }
-    let flag = user.id == match.params.id
+    let a = user.id
+    let b = match.params.id
+    let flag = a === b
     return (
       <React.Fragment>
         {flag && <CurrentUserProfile/>}

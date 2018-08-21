@@ -5,7 +5,7 @@ import Dialog from '../Dialog'
 import './Dialogs.css'
 import Chat from './Chat'
 import SearchUser from '../SearchUser'
-import {Redirect} from "react-router-dom";
+import {Redirect} from 'react-router-dom'
 
 class Dialogs extends Component {
   constructor (props) {
@@ -75,7 +75,7 @@ class Dialogs extends Component {
   render () {
     const {user, dialogs, loadDialog} = this.props
     const {flag, newDialog} = this.state
-    if (user.length == 0) {
+    if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
     if (dialogs.length === 0) {

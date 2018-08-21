@@ -17,7 +17,7 @@ import PublicIcon from '@material-ui/icons/Public'
 import Badge from '@material-ui/core/Badge/Badge'
 import SignIn from '../../containers/SignIn/SignIn'
 import Poper from '../../components/Poper'
-import connect from "react-redux/es/connect/connect";
+import connect from 'react-redux/es/connect/connect'
 
 const styles = theme => ({
   root: {
