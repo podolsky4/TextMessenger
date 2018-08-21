@@ -14,7 +14,6 @@ import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import cyan from '@material-ui/core/colors/cyan'
 
-
 import Divider from '@material-ui/core/Divider/Divider'
 import PostFooter from './components/PostFooter'
 import UserHeaderInfo from '../User/UserHeaderInfo'
@@ -22,7 +21,7 @@ import UserHeaderInfo from '../User/UserHeaderInfo'
 const styles = theme => ({
   root: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   grid: {
     flexGrow: "0",
@@ -31,26 +30,41 @@ const styles = theme => ({
   },
   icon: {
     paddingRight: theme.spacing.unit,
-    marginTop: -4,
+    marginTop: -4
   },
   actions: {
-    display: 'flex',
+    display: 'flex'
   },
   expand: {
     transform: 'rotate(0deg)',
     transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
+      duration: theme.transitions.duration.shortest
     }),
     marginLeft: 'auto',
     [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
-    },
+      marginRight: -8
+    }
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(180deg)'
   },
   avatar: {
-    backgroundColor: cyan[500],
+    backgroundColor: cyan[500]
+  },
+  paper: {
+    padding: "3em 1em 1em 1em",
+    width: "75%",
+    backgroundColor: "#fafafa",
+  },
+  textfield: {
+    padding: "3em 1em 1em 1em",
+    width: "80%",
+    backgroundColor: "#fafafa",
+  },
+  grid: {
+    flexGrow: "0",
+    width: "75%",
+    flexBasis: "75%",
   },
   paper: {
     padding: "3em 1em 1em 1em",
@@ -93,7 +107,7 @@ class Post extends Component {
   };
 
   handleExpandClick = () => {
-      this.setState(state => ({ expanded: !state.expanded }));
+    this.setState(state => ({ expanded: !state.expanded }))
   };
 
   render () {
@@ -107,15 +121,15 @@ class Post extends Component {
           <PostContent content={post.content}/>
           <Divider />
           <CardActions className={classes.actions} disableActionSpacing>
-            {/*<Like favorites={favorites} post={post} />*/}
-            {/*<IconButton aria-label="Repost" onClick={this.handleRetwite}>
+            {/* <Like favorites={favorites} post={post} /> */}
+            {/* <IconButton aria-label="Repost" onClick={this.handleRetwite}>
               <ShareIcon />
             </IconButton><Typography>{0}</Typography>
             <IconButton aria-label="Comments" onClick={this.handleComments}>
               <CommentIcon />
-            </IconButton><Typography>{0}</Typography>*/}
-            {/*<PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
-            <PostComment handleComments={this.handleComments.bind(this)} />*/}
+            </IconButton><Typography>{0}</Typography> */}
+            {/* <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
+            <PostComment handleComments={this.handleComments.bind(this)} /> */}
             <PostFooter />
           </CardActions>
           {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}

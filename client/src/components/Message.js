@@ -58,16 +58,15 @@ function Message (props) {
 
   return (
 
-        <Paper className={rootClasses} elevation={0}>
-            <Typography variant="headline" component="p">
-                <a>{message.createdDate} {user.name}</a>
-            </Typography>
+    <Paper className={rootClasses} elevation={0}>
+      <Typography variant="headline" component="p">
+        <a>{message.createdDate} {user.name}</a>
+      </Typography>
 
-            <Typography className={classes.text} component="p" children={message.content}>
+      <Typography className={classes.text} component="p" children={message.content}>
 
-
-            </Typography>
-        </Paper>
+      </Typography>
+    </Paper>
 
   )
 }

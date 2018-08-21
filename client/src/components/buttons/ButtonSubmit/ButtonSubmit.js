@@ -15,10 +15,10 @@ const styles = theme => ({
   }
 })
 
-function SubmitButton(props) {
-    const { classes } = props
-    return (
-        <Button variant="contained" type="submit" color="primary" className={classes.button}>
+function SubmitButton (props) {
+  const { classes } = props
+  return (
+    <Button variant="contained" type="submit" color="primary" className={classes.button}>
             Send
       <SendIcon className={classes.rightIcon}></SendIcon>
     </Button>
