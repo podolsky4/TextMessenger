@@ -10,12 +10,12 @@ const styles = theme => ({
   /* Styles applied to the root element. */
   root: {
     transition: theme.transitions.create(['color'], {
-      duration: theme.transitions.duration.short,
+      duration: theme.transitions.duration.short
     }),
     '&$selected': {
       // color: theme.palette.primary.main,
       color: theme.palette.primary.main
-    },
+    }
   },
 
   /* Styles applied to the root element if selected. */
@@ -43,24 +43,24 @@ class Like extends Component {
     })
   }
 
-  /*handleLike () {
+  /* handleLike () {
     const {post, user, addedLiker, deleteLiker} = this.props
       addedLiker(post.id, user)
     } else {
       console.log('handleLike check like not passed')
       deleteLiker(post.id, user)
     }
-  }*/
+  } */
 
   render () {
     const {classes} = this.props
     return (
       <React.Fragment>
-          <IconButton className={classNames(classes.root, {[classes.selected]: this.state.liked,})}
-                    onClick={this.handleLike}
-                    aria-live={this.state.liked}
-                    aria-label="Add to favorites"
-          >
+        <IconButton className={classNames(classes.root, {[classes.selected]: this.state.liked})}
+          onClick={this.handleLike}
+          aria-live={this.state.liked}
+          aria-label="Add to favorites"
+        >
           <ThumbUpIcon/>
         </IconButton><Typography>{1}</Typography>
       </React.Fragment>
@@ -69,7 +69,7 @@ class Like extends Component {
 }
 
 Like.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Like)

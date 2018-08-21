@@ -1,24 +1,24 @@
 import React, {Component} from 'react'
 import Message from './Message'
 
-import {withStyles} from "@material-ui/core/styles/index";
-import PropTypes from 'prop-types';
+import {withStyles} from '@material-ui/core/styles/index'
+import PropTypes from 'prop-types'
 // import classNames from 'classnames'
 
 const styles = theme => ({
-    massageList: {
-        display: "flex",
-        flexDirection: "column",
-        background: "#F5F5F5",
-        padding: "4px",
-        paddingBottom: ".5em",
-        paddingTop: "8px",
-    }
-});
+  massageList: {
+    display: 'flex',
+    flexDirection: 'column',
+    background: '#F5F5F5',
+    padding: '4px',
+    paddingBottom: '.5em',
+    paddingTop: '8px'
+  }
+})
 
 class MessagesList extends Component {
   render () {
-    const {messages, user, classes} = this.props;
+    const {messages, user, classes} = this.props
     return (
       <div className={classes.massageList}>
         {messages.map(function (message) {
@@ -30,7 +30,7 @@ class MessagesList extends Component {
 }
 
 MessagesList.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
 export default withStyles(styles)(MessagesList)

@@ -18,14 +18,13 @@ import Badge from '@material-ui/core/Badge/Badge'
 import SignIn from '../../containers/SignIn/SignIn'
 import Poper from '../../components/Poper'
 
-
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
+    marginRight: 20
   },
   icon: {
     margin: theme.spacing.unit
@@ -33,7 +32,7 @@ const styles = theme => ({
   badge: {
     top: -5,
     right: -10
-  },
+  }
 
 })
 
@@ -71,7 +70,7 @@ const Header = props => {
             <PersonIcon className={classes.icon}/>
           </IconButton>
           <Button color="inherit" variant="outlined">
-              <Poper classes={"poper"} content={conten} />
+            <Poper classes={'poper'} content={conten} />
           </Button>
         </Toolbar>
       </AppBar>
@@ -81,7 +80,7 @@ const Header = props => {
 }
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Header)
