@@ -119,7 +119,6 @@ public class UserController {
       return ResponseEntity.status(205).body("Incorrect passwoord");
     } else {
       userEndPoint = user;
-      System.out.println(userEndPoint);
       return ResponseEntity.status(200).body(user);
     }
   }
