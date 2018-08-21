@@ -19,7 +19,10 @@ const styles = theme => ({
       color: theme.palette.primary.main
     }
   },
-
+  diva: {
+    display: 'flex',
+    alignItems: 'center'
+  },
   /* Styles applied to the root element if selected. */
   selected: {}
 })
@@ -56,7 +59,7 @@ class Like extends Component {
   render () {
     const {classes, post} = this.props
     return (
-      <React.Fragment>
+      <div className={classes.diva}>
         <IconButton className={classNames(classes.root, {[classes.selected]: this.state.liked})}
           onClick={() => this.handleLike(post.id)}
           aria-live={this.state.liked}
@@ -64,7 +67,7 @@ class Like extends Component {
         >
           <ThumbUpIcon/>
         </IconButton><Typography>{1}</Typography>
-      </React.Fragment>
+      </div>
     )
   }
 }

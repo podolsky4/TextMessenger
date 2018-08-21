@@ -28,6 +28,10 @@ const styles = theme => ({
     marginTop: -4
   },
   actions: {
+    display: 'flex',
+    justifyContent: 'space-around'
+  },
+  footer: {
     display: 'flex'
   },
   expand: {
@@ -100,7 +104,7 @@ class Post extends Component {
             </IconButton><Typography>{0}</Typography> */}
             {/* <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
             <PostComment handleComments={this.handleComments.bind(this)} /> */}
-            <PostFooter post={post}
+            <PostFooter className={classes.footer} post={post}
               user={user}
               favorites={favorites}
               whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}

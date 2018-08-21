@@ -20,7 +20,9 @@ class Feed extends Component {
   componentDidMount () {
     const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props
     getCurrentUserPoint()
-    loadFavorites(user.id)
+    if (user.length !== 0) {
+      loadFavorites(user.id)
+    }
     loadPosts()
   }
 
