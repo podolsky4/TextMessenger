@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper/'
 import {withStyles} from '@material-ui/core/styles'
 import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
 import TextField from "@material-ui/core/TextField/TextField";
-
+import {Redirect} from 'react-router'
 
 const styles = theme => ({
   root: {
@@ -40,37 +40,6 @@ const styles = theme => ({
   },
 });
 
-import {withStyles} from '@material-ui/core/styles'
-import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
-import TextField from "@material-ui/core/TextField/TextField";
-
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  grid: {
-    flexGrow: "0",
-    width: "75%",
-    flexBasis: "75%",
-  },
-  icon: {
-    paddingRight: theme.spacing.unit,
-    marginTop: -4,
-  },
-  actions: {
-    display: 'flex',
-  },
-  form: {
-    background: "#F5F5F5",
-  },
-  textfield: {
-    padding: "3em 1em 1em 1em",
-    width: "75%",
-    backgroundColor: "#fafafa",
-  }
-});
 
 class Feed extends Component {
   constructor (props) {
@@ -134,9 +103,10 @@ class Feed extends Component {
   }
 
   render () {
-    const {posts, user, reloadLoader, fetching, classes} = this.props
+    const {posts, user, fetching, classes} = this.props;
+    // const {reloadLoader} = this.props;
     console.log(fetching);
-    if (user.length == 0) {
+    if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
     return (
