@@ -8,7 +8,6 @@ import Loader from '../../components/Loader/Loader'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper/'
 
-
 class Feed extends Component {
   constructor (props) {
     super(props)
@@ -75,10 +74,10 @@ class Feed extends Component {
             <Paper>
               <form onSubmit={e => this.onSubmit(e)}>
                 <textarea defaultValue=""
-                    placeholder="Type what to share..."
-                    maxLength={280}
-                    id="content"
-                    name="text" onKeyUp={event => this.myFunction(event)}
+                  placeholder="Type what to share..."
+                  maxLength={280}
+                  id="content"
+                  name="text" onKeyUp={event => this.myFunction(event)}
                 />
                 <button className="btn-create-post">Publish</button>
               </form>

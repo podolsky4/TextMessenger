@@ -32,4 +32,6 @@ public interface UserService {
   void addToFollowing(Long user, Long newUser);
 
   void deleteFromFollowing(Long user, Long newUser);
+
+  User logIn(String email, String password);
 }
