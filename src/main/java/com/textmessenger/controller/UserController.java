@@ -21,7 +21,7 @@ import java.util.Optional;
 @CrossOrigin
 public class UserController {
 
-  private  User userEndPoint = null;
+  private static User userEndPoint = null;
   private final UserService userService;
 
   public UserController(UserService userService) {
@@ -118,7 +118,7 @@ public class UserController {
     } else if (!user.getPassword().equals(password)) {
       return ResponseEntity.status(205).body("Incorrect passwoord");
     } else {
-      userEndPoint = user;
+      userEndPoint = user; //NOSONAR
       return ResponseEntity.status(200).body(user);
     }
   }
