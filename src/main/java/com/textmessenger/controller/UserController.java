@@ -21,7 +21,7 @@ import java.util.Optional;
 @CrossOrigin
 public class UserController {
 
-  private static User userEndPoint = null;
+  private  User userEndPoint = null;
   private final UserService userService;
 
   public UserController(UserService userService) {
