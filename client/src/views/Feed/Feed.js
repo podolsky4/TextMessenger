@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {createLoadPosts, loadFavorites, loadPosts} from '../../actions/postsActions'
-import {getUser} from '../../actions/userActions'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { createLoadPosts, loadFavorites, loadPosts } from '../../actions/postsActions'
+import { getCurrentUser } from '../../actions/userActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
@@ -42,23 +42,26 @@ const styles = theme => ({
 
 class Feed extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       text: ''
     }
   }
 
   componentDidMount () {
-    const {posts, favorites, user, loadPosts, loadFavorites, loadUser} = this.props;
+    const {posts, favorites, user, loadPosts, loadFavorites, getCurrentUserPoint} = this.props
+    if (user.length === 0) {
+      getCurrentUserPoint()
+    }
     if (posts.length === 0) {
       loadPosts()
     }
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
-    if (user.length === 0) {
-      loadUser()
-    }
+    // if (user.length === 0) {
+    //   loadUser()
+    // }
   }
 
   change = e => {
@@ -151,7 +154,8 @@ const mapStateToProps = state => {
     user: state.user,
     posts: state.posts,
     favorites: state.favorites,
-    fetching: state.loader.fetching
+    fetching: state.loader.fetching,
+    reloadLoader: state.reloadLoader
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -159,7 +163,7 @@ const mapDispatchToProps = dispatch => {
     loadPosts: () => dispatch(loadPosts()),
     createPost: (id, content) => dispatch(createLoadPosts(id, content)),
     loadFavorites: (id) => dispatch(loadFavorites(id)),
-    loadUser: () => dispatch(getUser())
+    getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Feed)
