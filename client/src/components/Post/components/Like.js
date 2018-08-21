@@ -35,8 +35,6 @@ class Like extends Component {
   componentWillMount () {
     const {favorites, post, user} = this.props
     loadFavorites(user.id)
-    console.log(favorites)
-    console.log(user)
     favorites.some(p => p.id === post.id)
       ? this.setState({liked: true})
       : ''
@@ -47,7 +45,6 @@ class Like extends Component {
     if (!this.state.liked) {
       addedLiker(id, user)
     } else {
-      console.log('handleLike check like not passed', id)
       deleteLiker(id, user)
     }
     this.setState({
