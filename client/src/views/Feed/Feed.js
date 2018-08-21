@@ -155,8 +155,8 @@ class Feed extends Component {
             </Paper>
           </Grid>
 
-          {!fetching && <Loader/>}
-          { fetching && <PostList posts={posts} user={user}/> }
+          {fetching && <Loader/>}
+          {!fetching && <PostList posts={posts} user={user}/> }
         </Grid>
       </div>
     )
