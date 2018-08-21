@@ -64,6 +64,11 @@ const styles = theme => ({
     width: "80%",
     backgroundColor: "#fafafa",
   },
+  userInfo: {
+    padding: "1em 1em 1em 1em",
+    width: "100%",
+    backgroundColor: "#fafafa",
+  },
 });
 
 
@@ -107,7 +112,7 @@ class Post extends Component {
         <Card className={classes.card}>
 
           {owner && `Ретвитнул ${owner.login}`}
-          <UserHeaderInfo post={post} classes currentUser={user}/>
+          <UserHeaderInfo  post={post} classes currentUser={user}/>
 
           <PostContent content={post.content}/>
           <Divider />
