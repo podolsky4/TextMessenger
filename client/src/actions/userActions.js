@@ -1,6 +1,8 @@
 import {CREATE_USER, FIND_USERS, LOAD_FOLLOWING} from './types.js'
 import {loadFavoritesByLogin} from './postsActions'
+
 import {startLoader, stopLoader, toggleLoader} from './loaderActions'
+
 
 export const createUser = (data) => dispatch => {
   let login = data.login;
@@ -64,10 +66,12 @@ export const findUsers = (str) => dispatch => {
   })
     .then(res => res.json())
     .then(data => dispatch({type: FIND_USERS, payload: data}))
+
 };
 
 export const getCurrentUser = () => dispatch => {
   dispatch(startLoader('LOADING_POST'));
+
   fetch('api/users/current')
     .then(response => {
       if (response.ok) {
@@ -78,10 +82,12 @@ export const getCurrentUser = () => dispatch => {
     })
     .then(data => dispatch({type: CREATE_USER, payload: data}))
     .catch(error => console.log(error))
+
     .then(() => dispatch(stopLoader('LOADING_POST')))
 };
 export const loginIn = (email, password) => dispatch => {
   dispatch(startLoader('LOADING_POST'));
+
   fetch(`api/users/user/${email}`, {
     method: 'POST',
     headers: {
@@ -90,12 +96,15 @@ export const loginIn = (email, password) => dispatch => {
     body: password
   })
     .then(function (response) {
+
       console.log(response);
+
       if (response.status === 205) {
         alert('wrong password')
       } else if (response.status === 204) {
         alert('this email is not registraite')
       } else {
+
         console.log('accept');
         return response.json()
       }

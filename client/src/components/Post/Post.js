@@ -22,11 +22,13 @@ const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center'
+
   },
   grid: {
     flexGrow: "0",
     width: "75%",
     flexBasis: "75%",
+
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -50,6 +52,7 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: cyan[500]
+
   },
   paper: {
     padding: "3em 1em 1em 1em",
@@ -62,6 +65,7 @@ const styles = theme => ({
     backgroundColor: "#fafafa",
   },
 });
+
 
 class Post extends Component {
   constructor (props) {
@@ -98,8 +102,10 @@ class Post extends Component {
   render () {
     const {post, owner, user, classes} = this.props;
     return (
+
       <Grid  className={classes.grid} item key={`${post.id} ${post.parentId}`}>
         <Card className={classes.card}>
+
           {owner && `Ретвитнул ${owner.login}`}
           <UserHeaderInfo post={post} classes currentUser={user}/>
 

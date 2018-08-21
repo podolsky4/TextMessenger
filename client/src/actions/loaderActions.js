@@ -1,4 +1,10 @@
-import {START_LOADER, START_RELOADED, STOP_LOADER, STOP_RELOADED} from './types'
+import {
+  START_LOADER,
+  STOP_LOADER,
+  START_RELOADED,
+  STOP_RELOADED
+} from './types'
+
 
 export function toggleLoader () {
   return (dispatch) => {
@@ -15,6 +21,7 @@ export function toggleLoader () {
     }, 500)
   }
 }
+
 
 export function startLoader (type) {
     return (dispatch) => {
@@ -34,6 +41,7 @@ export function stopLoader (type) {
         })
 
     }
+
 }
 
 export function endLoader () {

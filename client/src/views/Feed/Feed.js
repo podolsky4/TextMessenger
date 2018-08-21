@@ -1,12 +1,16 @@
+
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createLoadPosts, loadFavorites, loadPosts} from '../../actions/postsActions'
 import {getCurrentUser} from '../../actions/userActions'
+
+
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper/'
+
 
 import {withStyles} from '@material-ui/core/styles'
 import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
@@ -41,6 +45,9 @@ const styles = theme => ({
 });
 
 
+
+
+
 class Feed extends Component {
   constructor (props) {
     super(props);
@@ -50,7 +57,9 @@ class Feed extends Component {
   }
 
   componentDidMount () {
+
     const {posts, favorites, user, loadPosts, loadFavorites, getCurrentUserPoint} = this.props;
+
     if (user.length === 0) {
       getCurrentUserPoint()
     }
@@ -103,9 +112,11 @@ class Feed extends Component {
   }
 
   render () {
+
     const {posts, user, fetching, classes} = this.props;
     // const {reloadLoader} = this.props;
     console.log(fetching);
+
     if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
@@ -119,6 +130,7 @@ class Feed extends Component {
           alignItems='center'
           spacing={16}
         >
+
           <Grid className={classes.grid} item xs={12} sm={9} md={8} lg={6}>
             <Paper className={classes.paper}>
               <form className={classes.form} onSubmit={e => this.onSubmit(e)}>
@@ -136,6 +148,7 @@ class Feed extends Component {
                   className={classes.textfield}
                   // onClick={event => Feed.handleHeight(event)}
                   onKeyUp={event => this.handleInput(event)}
+
                 />
                 <ButtonPost flowRight/>
                 {/*<button className="btn-create-post">Publish</button>*/}
@@ -143,8 +156,8 @@ class Feed extends Component {
             </Paper>
           </Grid>
 
-          {fetching && <Loader/>}
-          {!fetching && <PostList posts={posts} user={user}/>}
+          {reloadLoader && <Loader/>}
+          <PostList posts={posts} user={user}/>
         </Grid>
       </div>
     )
