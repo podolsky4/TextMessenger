@@ -17,6 +17,7 @@ import cyan from '@material-ui/core/colors/cyan'
 import Divider from '@material-ui/core/Divider/Divider'
 import PostFooter from './components/PostFooter'
 import UserHeaderInfo from '../User/UserHeaderInfo'
+import favorites from '../../reducers/favorites'
 
 const styles = theme => ({
   root: {
@@ -81,7 +82,7 @@ class Post extends Component {
   };
 
   render () {
-    const {post, owner, user, classes} = this.props
+    const {post, owner, user, classes, favorites} = this.props
     return (
       <Grid item xs={12} sm={9} md={8} lg={6} key={`${post.id} ${post.parentId}`}>
         <Card>
@@ -100,7 +101,7 @@ class Post extends Component {
             </IconButton><Typography>{0}</Typography> */}
             {/* <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
             <PostComment handleComments={this.handleComments.bind(this)} /> */}
-            <PostFooter />
+            <PostFooter post={post} user={user} favorites={favorites}/>
           </CardActions>
           {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}
         </Card>

@@ -5,8 +5,9 @@ import Like from './Like'
 
 export default class PostFooter extends Component {
   render () {
+    const {post, user, favorites} = this.props
     return (<React.Fragment>
-      <Like favorites post handleLike />
+      <Like post={post} user={user} favorites={favorites} />
       <PostRetwite whoo handleRetwite />
       <PostComment handleComments />
     </React.Fragment>
