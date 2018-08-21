@@ -7,7 +7,7 @@ import PostContent from './components/PostContent'
 import Comments from './components/CommentList'
 import PropTypes from 'prop-types'
 
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
@@ -52,11 +52,26 @@ const styles = theme => ({
   avatar: {
     backgroundColor: cyan[500],
   },
+  paper: {
+    padding: "3em 1em 1em 1em",
+    width: "75%",
+    backgroundColor: "#fafafa",
+  },
+  textfield: {
+    padding: "3em 1em 1em 1em",
+    width: "80%",
+    backgroundColor: "#fafafa",
+  },
+  grid: {
+    flexGrow: "0",
+    width: "75%",
+    flexBasis: "75%",
+  },
 });
 
 class Post extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       flag: false,
       expanded: false
@@ -64,35 +79,35 @@ class Post extends Component {
   }
 
   componentWillMount () {
-    const {favorites, user, loadFavorites} = this.props
+    const {favorites, user, loadFavorites} = this.props;
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
   }
 
   handleRetwite = e => {
-    const {post, user, retweets, unRetweets, postId} = this.props
+    const {post, user, retweets, unRetweets, postId} = this.props;
     if (e.target.className === 'tweet') {
       retweets(user.id, post.id)
     } else {
       unRetweets(postId)
     }
-  }
+  };
   handleComments = e => {
     this.setState({flag: true})
-  }
+  };
 
   handleExpandClick = () => {
       this.setState(state => ({ expanded: !state.expanded }));
   };
 
   render () {
-    const {post, owner, user, classes} = this.props
+    const {post, owner, user, classes} = this.props;
     return (
-      <Grid className={classes.grid} fullWidth item key={`${post.id} ${post.parentId}`}>
-        <Card fullWidth>
-              {owner && `Ретвитнул ${owner.login}`}
-              <UserHeaderInfo post={post} classes currentUser={user}/>
+      <Grid  className={classes.grid} item key={`${post.id} ${post.parentId}`}>
+        <Card className={classes.card}>
+          {owner && `Ретвитнул ${owner.login}`}
+          <UserHeaderInfo post={post} classes currentUser={user}/>
 
           <PostContent content={post.content}/>
           <Divider />
@@ -120,7 +135,7 @@ const mapStateToProps = state => {
     user: state.user,
     favorites: state.favorites
   }
-}
+};
 const mapDispatchToProps = dispatch => {
   return {
     addedLiker: (id, user) => dispatch(addedLikers(id, user)),
@@ -129,10 +144,10 @@ const mapDispatchToProps = dispatch => {
     retweets: (id, postId) => dispatch(retweet(id, postId)),
     unRetweets: (postId) => dispatch(unRetweet(postId))
   }
-}
+};
 
 Post.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Post))
