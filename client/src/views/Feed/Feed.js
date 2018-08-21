@@ -7,6 +7,7 @@ import Loader from '../../components/Loader/Loader'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper/'
+import {Redirect} from "react-router-dom";
 
 class Feed extends Component {
   constructor (props) {
@@ -58,8 +59,10 @@ class Feed extends Component {
   }
 
   render () {
-    const {posts, user, fetching, reloadLoader} = this.props
-    console.log(fetching)
+    const {posts, user, reloadLoader} = this.props
+    if (user.length == 0) {
+      return <Redirect to={`/`}/>
+    }
     return (
 
       <div style={{padding: 15}}>

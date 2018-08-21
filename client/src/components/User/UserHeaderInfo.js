@@ -77,7 +77,7 @@ class UserHeaderInfo extends React.Component {
     })
   }
   render () {
-    const { classes, currentUser, post } = this.props
+    const { classes, post } = this.props
     const {toredirect, id} = this.state
 
     if (toredirect) {

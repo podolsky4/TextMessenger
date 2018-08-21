@@ -3,14 +3,18 @@ import {connect} from 'react-redux'
 import CurrentUserProfile from './CurrentUserProfile'
 import OtherUserProfile from './OtherUserProfile'
 import Loader from '../../components/Loader/Loader'
+import {Redirect} from 'react-router-dom'
 
 class Profile extends React.Component {
   render () {
     const {user, match} = this.props
+    console.log('dsdsd',user)
+    if (user.length == 0) {
+      return <Redirect to={`/`}/>
+    }
     if (user.id === undefined) {
       return <Loader fullscreen={true}/>
     }
-    console.log('user.id', user.id)
     let flag = user.id == match.params.id
     return (
       <React.Fragment>

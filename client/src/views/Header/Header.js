@@ -17,6 +17,7 @@ import PublicIcon from '@material-ui/icons/Public'
 import Badge from '@material-ui/core/Badge/Badge'
 import SignIn from '../../containers/SignIn/SignIn'
 import Poper from '../../components/Poper'
+import connect from "react-redux/es/connect/connect";
 
 const styles = theme => ({
   root: {
@@ -37,7 +38,7 @@ const styles = theme => ({
 })
 
 const Header = props => {
-  const {classes} = props
+  const {classes, user} = props
   const conten = <SignIn />
   return (
     <div className={classes.root}>
@@ -66,7 +67,7 @@ const Header = props => {
               <NotificationsIcon className={classes.icon}/>
             </Badge>
           </IconButton>
-          <IconButton color="inherit" component={Link} to='/profile'>
+          <IconButton color="inherit" component={Link} to={`/profile/${user.id}`}>
             <PersonIcon className={classes.icon}/>
           </IconButton>
           <Button color="inherit" variant="outlined">
@@ -83,4 +84,10 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Header)
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Header))
