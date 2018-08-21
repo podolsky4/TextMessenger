@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createLoadPosts, loadFavorites, loadPosts} from '../../actions/postsActions'
@@ -156,8 +155,8 @@ class Feed extends Component {
             </Paper>
           </Grid>
 
-          {reloadLoader && <Loader/>}
-          <PostList posts={posts} user={user}/>
+          {!fetching && <Loader/>}
+          { fetching && <PostList posts={posts} user={user}/> }
         </Grid>
       </div>
     )
