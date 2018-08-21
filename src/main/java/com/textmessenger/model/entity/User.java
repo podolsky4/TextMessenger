@@ -95,15 +95,15 @@ public class User extends BaseEntity {
   @Override
   public String toString() {
     return "User{" +
-            "login='" + login + '\'' +
-            ", email='" + email + '\'' +
-            ", password='" + password + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", address='" + address + '\'' +
-            ", profilePhoto='" + profilePhoto + '\'' +
-            ", profileHeader='" + profileHeader + '\'' +
-            ", dateBirthday=" + dateBirthday +
-            '}';
+            "login='" + login + '\''
+            + ", email='" + email + '\''
+            + ", password='" + password + '\''
+            + ", firstName='" + firstName + '\''
+            + ", lastName='" + lastName + '\''
+            + ", address='" + address + '\''
+            + ", profilePhoto='" + profilePhoto + '\''
+            + ", profileHeader='" + profileHeader + '\''
+            + ", dateBirthday=" + dateBirthday
+            + '}';
   }
 }
