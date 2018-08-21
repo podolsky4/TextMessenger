@@ -1,6 +1,6 @@
 import {CREATE_USER, FIND_USERS, LOAD_FOLLOWING} from './types.js'
 import {loadFavoritesByLogin} from './postsActions'
-import {toggleLoader} from './loaderActions'
+import {toggleLoader, startLoader, endLoader} from './loaderActions'
 
 export const createUser = (data) => dispatch => {
   let login = data.login
@@ -64,4 +64,41 @@ export const findUsers = (str) => dispatch => {
   })
     .then(res => res.json())
     .then(data => dispatch({type: FIND_USERS, payload: data}))
+}
+
+export const getCurrentUser = () => dispatch => {
+  dispatch(startLoader())
+  fetch('api/users/current')
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw new Error('user is not available')
+      }
+    })
+    .then(data => dispatch({type: CREATE_USER, payload: data}))
+    .catch(error => console.log(error))
+    .then(() => dispatch(endLoader()))
+}
+export const loginIn = (email, password) => dispatch => {
+  dispatch(startLoader())
+  fetch(`api/users/user/${email}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: password
+  })
+    .then(function (response) {
+      console.log(response)
+      if (response.status === 205) {
+        alert('wrong password')
+      } else if (response.status === 204) {
+        alert('this email is not registraite')
+      } else {
+        console.log('accept')
+        return response.json()
+      }
+    }).then(data => dispatch({type: CREATE_USER, payload: data}))
+    .then(() => dispatch(endLoader()))
 }
