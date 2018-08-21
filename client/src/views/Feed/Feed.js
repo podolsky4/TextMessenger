@@ -151,7 +151,8 @@ const mapStateToProps = state => {
     user: state.user,
     posts: state.posts,
     favorites: state.favorites,
-    fetching: state.loader.loadingPost
+    fetching: state.loader.fetching,
+    reloadLoader: state.reloadLoader
   }
 };
 const mapDispatchToProps = dispatch => {
