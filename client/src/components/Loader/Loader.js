@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    allowFullScreen: Loader,
+    allowFullScreen: Loader
   }
 })
 
@@ -15,7 +15,6 @@ class Loader extends React.Component {
     const { classes } = this.props
     return <CircularProgress className={classes.root} thickness={2} />
   }
-
 }
 Loader.propTypes = {
   classes: PropTypes.object.isRequired

@@ -2,16 +2,15 @@ import React, {Component, Fragment} from 'react'
 import './App.css'
 import Router from '../Router/Router'
 import Header from '../../views/Header/Header'
-import {getUser} from '../../actions/userActions'
+import {getUser, getCurrentUser} from '../../actions/userActions'
 import {connect} from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-
 class App extends Component {
   componentWillMount () {
-    const {user, loadUser} = this.props
+    const {user, getCurrentUserPoint} = this.props
     if (user.length === 0) {
-      loadUser()
+      getCurrentUserPoint()
     }
   }
 
@@ -24,7 +23,6 @@ class App extends Component {
         </CssBaseline>
       </Fragment>
     )
-
   }
 }
 
@@ -35,7 +33,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadUser: () => dispatch(getUser())
+    loadUser: () => dispatch(getUser()),
+    getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App)

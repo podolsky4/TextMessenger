@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createLoadPosts, loadFavorites, loadPosts } from '../../actions/postsActions'
-import { getUser } from '../../actions/userActions'
+import { getCurrentUser } from '../../actions/userActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper/'
-
+import {Redirect} from 'react-router-dom'
 
 class Feed extends Component {
   constructor (props) {
@@ -18,15 +18,15 @@ class Feed extends Component {
   }
 
   componentDidMount () {
-    const {posts, favorites, user, loadPosts, loadFavorites, loadUser} = this.props
+    const {posts, favorites, user, loadPosts, loadFavorites, getCurrentUserPoint} = this.props
+    if (user.length === 0) {
+      getCurrentUserPoint()
+    }
     if (posts.length === 0) {
       loadPosts()
     }
     if (favorites.length === 0) {
       loadFavorites(user.id)
-    }
-    if (user.length === 0) {
-      loadUser()
     }
   }
 
@@ -59,8 +59,10 @@ class Feed extends Component {
   }
 
   render () {
-    const {posts, user, fetching} = this.props
-    console.log(fetching)
+    const {posts, user, reloadLoader} = this.props
+    if (user.length === 0) {
+      return <Redirect to={`/`}/>
+    }
     return (
 
       <div style={{padding: 15}}>
@@ -75,18 +77,18 @@ class Feed extends Component {
             <Paper>
               <form onSubmit={e => this.onSubmit(e)}>
                 <textarea defaultValue=""
-                    placeholder="Type what to share..."
-                    maxLength={280}
-                    id="content"
-                    name="text" onKeyUp={event => this.myFunction(event)}
+                  placeholder="Type what to share..."
+                  maxLength={280}
+                  id="content"
+                  name="text" onKeyUp={event => this.myFunction(event)}
                 />
                 <button className="btn-create-post">Publish</button>
               </form>
             </Paper>
           </Grid>
 
-          {fetching && <Loader/>}
-          {!fetching && <PostList posts={posts} user={user}/>}
+          {reloadLoader && <Loader/>}
+          <PostList posts={posts} user={user}/>
         </Grid>
       </div>
     )
@@ -98,7 +100,8 @@ const mapStateToProps = state => {
     user: state.user,
     posts: state.posts,
     favorites: state.favorites,
-    fetching: state.loader.fetching
+    fetching: state.loader.fetching,
+    reloadLoader: state.reloadLoader
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -106,7 +109,7 @@ const mapDispatchToProps = dispatch => {
     loadPosts: () => dispatch(loadPosts()),
     createPost: (id, content) => dispatch(createLoadPosts(id, content)),
     loadFavorites: (id) => dispatch(loadFavorites(id)),
-    loadUser: () => dispatch(getUser())
+    getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Feed)
