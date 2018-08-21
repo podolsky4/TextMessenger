@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadFavorites} from '../../actions/postsActions'
 import PostList from '../../components/Post/PostList'
+import {Redirect} from "react-router-dom";
 
 class Favorites extends Component {
   componentWillMount () {
@@ -11,7 +12,10 @@ class Favorites extends Component {
     }
   }
   render () {
-    const {favorites} = this.props
+    const {favorites, user} = this.props
+    if (user.length == 0) {
+      return <Redirect to={`/`}/>
+    }
     return (
       <div>
         <h1>Your liked posts</h1>

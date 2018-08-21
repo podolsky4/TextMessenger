@@ -7,6 +7,7 @@ import Loader from '../../components/Loader/Loader'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper/'
+import {Redirect} from "react-router-dom";
 
 import {withStyles} from '@material-ui/core/styles'
 import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
@@ -59,9 +60,6 @@ class Feed extends Component {
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
-    // if (user.length === 0) {
-    //   loadUser()
-    // }
   }
 
   change = e => {
@@ -105,8 +103,11 @@ class Feed extends Component {
   }
 
   render () {
-    const {posts, user, fetching, classes} = this.props;
+    const {posts, user, reloadLoader, fetching, classes} = this.props
     console.log(fetching);
+    if (user.length == 0) {
+      return <Redirect to={`/`}/>
+    }
     return (
 
       <div style={{padding: 15}}>
