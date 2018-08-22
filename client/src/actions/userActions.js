@@ -16,7 +16,7 @@ export const createUser = (data) => dispatch => {
     .then(() => dispatch(loadFavoritesByLogin(login)))
 }
 export const updateUser = (data, login) => dispatch => {
-  fetch('http://localhost:9000/api/users/',
+  fetch('/api/users/',
     {
       method: 'PUT',
       headers: {
