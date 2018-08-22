@@ -1,16 +1,11 @@
-import {
-  START_LOADER,
-  STOP_LOADER,
-  START_RELOADED,
-  STOP_RELOADED
-} from './types'
+import {START_LOADER, START_RELOADED, STOP_LOADER, STOP_RELOADED} from './types'
 
 export function toggleLoader () {
   return (dispatch) => {
     dispatch({
       type: START_LOADER,
       payload: true
-    })
+    });
 
     setTimeout(() => {
       dispatch({
@@ -20,15 +15,15 @@ export function toggleLoader () {
     }, 300)
   }
 }
-export function startLoader () {
-  return (dispatch) => {
-    dispatch({
-      type: START_LOADER,
-      payload: true
-    }
-    )
-  }
-}
+// export function startLoader () {
+//   return (dispatch) => {
+//     dispatch({
+//       type: START_LOADER,
+//       payload: true
+//     }
+//     )
+//   }
+// }
 
 export function endLoader () {
   return (dispatch) => {

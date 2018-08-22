@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { createLoadPosts, loadFavorites, loadPosts } from '../../actions/postsActions'
-import { getCurrentUser } from '../../actions/userActions'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {createLoadPosts, loadFavorites, loadPosts} from '../../actions/postsActions'
+import {getCurrentUser} from '../../actions/userActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
@@ -43,7 +43,7 @@ const styles = theme => ({
 
 class Feed extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       text: ''
     }
@@ -51,8 +51,8 @@ class Feed extends Component {
 
   componentDidMount () {
 
-    const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props
-    getCurrentUserPoint()
+    const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props;
+    getCurrentUserPoint();
     if (user.length !== 0) {
       loadFavorites(user.id)
     }
@@ -64,12 +64,12 @@ class Feed extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-  }
+  };
 
   reset = () => {
-    this.setState({text: ''})
+    this.setState({text: ''});
     document.getElementById('content').value = ''
-  }
+  };
 
   onSubmit = e => {
     const {user, createPost} = this.props;
@@ -95,11 +95,10 @@ class Feed extends Component {
   }
 
   render () {
-    const {posts, user, reloadLoader} = this.props
+    const {posts, user, reloadLoader, fetching, classes} = this.props;
     if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
-    const {posts, user, fetching, classes} = this.props;
     console.log(fetching);
     return (
 
@@ -151,7 +150,7 @@ const mapStateToProps = state => {
     reloadLoader: state.reloadLoader,
     fetching: state.loader.loadingPost
   }
-}
+};
 const mapDispatchToProps = dispatch => {
   return {
     loadPosts: () => dispatch(loadPosts()),
@@ -159,5 +158,5 @@ const mapDispatchToProps = dispatch => {
     loadFavorites: (id) => dispatch(loadFavorites(id)),
     getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Feed)
+};
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Feed))

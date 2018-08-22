@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../../actions/postsActions'
+import {addedLikers, deleteLikers, loadFavorites, retweet, unRetweet} from '../../actions/postsActions'
 import {connect} from 'react-redux'
 
 import PostContent from './components/PostContent'
@@ -7,7 +7,7 @@ import PostContent from './components/PostContent'
 import Comments from './components/CommentList'
 import PropTypes from 'prop-types'
 
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
@@ -56,7 +56,7 @@ const styles = theme => ({
   avatar: {
     backgroundColor: cyan[500]
   }
-})
+});
 
 class Post extends Component {
   constructor (props) {
@@ -68,23 +68,23 @@ class Post extends Component {
   }
 
   componentWillMount () {
-    const {favorites, user, loadFavorites} = this.props
+    const {favorites, user, loadFavorites} = this.props;
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
   }
 
   handleRetwite = e => {
-    const {post, user, retweets, unRetweets, postId} = this.props
+    const {post, user, retweets, unRetweets, postId} = this.props;
     if (e.target.className === 'tweet') {
       retweets(user.id, post.id)
     } else {
       unRetweets(postId)
     }
-  }
+  };
   handleComments = e => {
     this.setState({flag: true})
-  }
+  };
 
   handleExpandClick = () => {
       this.setState(state => ({ expanded: !state.expanded }));
@@ -93,27 +93,42 @@ class Post extends Component {
   render () {
     const {post, owner, user, classes, favorites, whoo} = this.props;
     return (
-      <Grid className={classes.grid} fullWidth item key={`${post.id} ${post.parentId}`}>
+      <Grid className={classes.grid}
+            fullWidth
+            item
+            key={`${post.id} ${post.parentId}`}>
+
         <Card fullWidth>
-              {owner && `Ретвитнул ${owner.login}`}
-              <UserHeaderInfo post={post} classes currentUser={user}/>
+
+          {owner && `Ретвитнул ${owner.login}`}
+
+          <UserHeaderInfo post={post}
+                          classes
+                          currentUser={user}/>
 
           <PostContent content={post.content}/>
+
           <Divider />
-          <CardActions className={classes.actions} disableActionSpacing>
-            {/*<Like favorites={favorites} post={post} />*/}
-            {/*<IconButton aria-label="Repost" onClick={this.handleRetwite}>
-              <ShareIcon />
-            </IconButton><Typography>{0}</Typography>
-            <IconButton aria-label="Comments" onClick={this.handleComments}>
-              <CommentIcon />
-            </IconButton><Typography>{0}</Typography>*/}
-            {/*<PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
-            <PostComment handleComments={this.handleComments.bind(this)} />*/}
-            <PostFooter />
+
+          <CardActions className={classes.actions}
+                       disableActionSpacing>
+            <PostFooter whoo={whoo}
+                        post={post}
+                        user={user}
+                        favorites={favorites}
+                        handleRetwite={this.handleRetwite.bind(this)}
+                        className={classes.footer} />
           </CardActions>
-          {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}
+
+          {this.state.flag &&
+            <Comments comments={post.comments}
+                      post={post}
+                      user={user}
+                      flag={this.state.flag}/>
+          }
+
         </Card>
+
       </Grid>
     )
   }
@@ -124,7 +139,7 @@ const mapStateToProps = state => {
     user: state.user,
     favorites: state.favorites
   }
-}
+};
 const mapDispatchToProps = dispatch => {
   return {
     addedLiker: (id, user) => dispatch(addedLikers(id, user)),
@@ -133,10 +148,22 @@ const mapDispatchToProps = dispatch => {
     retweets: (id, postId) => dispatch(retweet(id, postId)),
     unRetweets: (postId) => dispatch(unRetweet(postId))
   }
-}
+};
 
 Post.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Post))
+
+
+
+        {/*<Like favorites={favorites} post={post} />*/}
+            {/*<IconButton aria-label="Repost" onClick={this.handleRetwite}>*/}
+              {/*<ShareIcon />*/}
+            {/*</IconButton><Typography>{0}</Typography>*/}
+            {/*<IconButton aria-label="Comments" onClick={this.handleComments}>*/}
+              {/*<CommentIcon />*/}
+            {/*</IconButton><Typography>{0}</Typography>*/}
+           {/*<PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>*/}
+            {/*<PostComment handleComments={this.handleComments.bind(this)} />*/}
