@@ -3,7 +3,9 @@ import {connect} from 'react-redux'
 import {loadFavorites} from '../../actions/postsActions'
 import PostList from '../../components/Post/PostList'
 import {Redirect} from 'react-router-dom'
+
 import {getCurrentUser} from '../../actions/userActions'
+
 
 class Favorites extends Component {
   componentWillMount () {

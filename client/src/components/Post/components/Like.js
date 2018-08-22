@@ -18,10 +18,12 @@ const styles = theme => ({
       // color: theme.palette.primary.main,
       color: theme.palette.primary.main
     }
+
   },
   diva: {
     display: 'flex',
     alignItems: 'center'
+
   },
   /* Styles applied to the root element if selected. */
   selected: {}
@@ -56,12 +58,15 @@ class Like extends Component {
     loadFavorites(user.id)
   }
 
+
   render () {
     const {classes, post} = this.props
     return (
+
       <div className={classes.diva}>
         <IconButton className={classNames(classes.root, {[classes.selected]: this.state.liked})}
           onClick={() => this.handleLike(post.id)}
+
           aria-live={this.state.liked}
           aria-label="Add to favorites"
         >

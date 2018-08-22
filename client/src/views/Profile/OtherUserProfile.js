@@ -23,7 +23,9 @@ class OtherUserProfile extends Component {
   }
   handleFollowing = e => {
     const {user, addToFollowing, deleteFromFollowing, following, currentUser} = this.props
+
     if (following.some(u => u.id == currentUser)) {
+
       deleteFromFollowing(user.id, this.state.userFromPost.id)
     } else {
       addToFollowing(user.id, this.state.userFromPost.id)
@@ -42,7 +44,9 @@ class OtherUserProfile extends Component {
         <h1>{userFromPost.lastName}</h1>
         <h1>{userFromPost.firstName}</h1>
         <h1>{userFromPost.email}</h1>
+
         <button onClick={e => this.handleFollowing(e)}>{following.some(u => u.id == currentUser) ? 'Unfolow' : 'Following'}</button>
+
       </div>
     )
   }

@@ -104,11 +104,13 @@ class Post extends Component {
             </IconButton><Typography>{0}</Typography> */}
             {/* <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
             <PostComment handleComments={this.handleComments.bind(this)} /> */}
+
             <PostFooter className={classes.footer} post={post}
               user={user}
               favorites={favorites}
               whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}
             />
+
           </CardActions>
           {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}
         </Card>

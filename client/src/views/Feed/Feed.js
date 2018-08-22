@@ -18,12 +18,14 @@ class Feed extends Component {
   }
 
   componentDidMount () {
+
     const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props
     getCurrentUserPoint()
     if (user.length !== 0) {
       loadFavorites(user.id)
     }
     loadPosts()
+
   }
 
   change = e => {

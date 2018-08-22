@@ -31,9 +31,11 @@ public class UserController {
 
   @GetMapping("/current")
   public ResponseEntity endpoint() {
+
     Array[] arr = new Array[0];
     if (userEndPoint == null) {
       return ResponseEntity.status(204).body(arr);
+
     } else {
       return ResponseEntity.status(200).body(userEndPoint);
     }
