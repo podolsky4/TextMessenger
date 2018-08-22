@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import ThumbUpIcon from '@material-ui/icons/ThumbUp'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import classNames from 'classnames'
 import connect from 'react-redux/es/connect/connect'
 import {addedLikers, deleteLikers, loadFavorites} from '../../../actions/postsActions'
@@ -27,26 +27,24 @@ const styles = theme => ({
   },
   /* Styles applied to the root element if selected. */
   selected: {}
-})
+});
 
 class Like extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       liked: false
     }
   }
 
   componentWillMount () {
-    const {favorites, post, user} = this.props
-    loadFavorites(user.id)
-    favorites.some(p => p.id === post.id)
-      ? this.setState({liked: true})
-      : ''
+    const {favorites, post, user} = this.props;
+    loadFavorites(user.id);
+    favorites.some(p => p.id === post.id) ? this.setState({liked: true}) : this.setState({liked: false});
   }
 
   handleLike = (id) => {
-    const {user, addedLiker, deleteLiker, loadFavorites} = this.props
+    const {user, addedLiker, deleteLiker, loadFavorites} = this.props;
     if (!this.state.liked) {
       addedLiker(id, user)
     } else {
@@ -54,13 +52,13 @@ class Like extends Component {
     }
     this.setState({
       liked: !this.state.liked
-    })
+    });
     loadFavorites(user.id)
-  }
+  };
 
 
   render () {
-    const {classes, post} = this.props
+    const {classes, post} = this.props;
     return (
 
       <div className={classes.diva}>
@@ -79,18 +77,18 @@ class Like extends Component {
 
 Like.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 const mapStateToProps = state => {
   return {
     user: state.user,
     favorites: state.favorites
   }
-}
+};
 const mapDispatchToProps = dispatch => {
   return {
     addedLiker: (id, user) => dispatch(addedLikers(id, user)),
     deleteLiker: (id, user) => dispatch(deleteLikers(id, user)),
     loadFavorites: (id) => dispatch(loadFavorites(id))
   }
-}
+};
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Like))
