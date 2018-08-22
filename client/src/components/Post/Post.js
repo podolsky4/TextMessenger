@@ -155,15 +155,3 @@ Post.propTypes = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Post))
-
-
-
-        {/*<Like favorites={favorites} post={post} />*/}
-            {/*<IconButton aria-label="Repost" onClick={this.handleRetwite}>*/}
-              {/*<ShareIcon />*/}
-            {/*</IconButton><Typography>{0}</Typography>*/}
-            {/*<IconButton aria-label="Comments" onClick={this.handleComments}>*/}
-              {/*<CommentIcon />*/}
-            {/*</IconButton><Typography>{0}</Typography>*/}
-           {/*<PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>*/}
-            {/*<PostComment handleComments={this.handleComments.bind(this)} />*/}
