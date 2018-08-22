@@ -85,6 +85,12 @@ class Feed extends Component {
     if (e.target.value.length === 280) {
       e.target.style.backgroundColor = "#E64A19"
     }
+    if (e.target.value.length < 280) {
+      e.target.style.backgroundColor = "#f0ee97"
+    }
+    if (e.target.value.length < 280) {
+      e.target.style.backgroundColor = "#fafafa"
+    }
     if (e.key === 'Enter') {
       this.onSubmit(e)
     } else {
@@ -114,7 +120,8 @@ class Feed extends Component {
           <Grid className={classes.grid} item xs={12} sm={9} md={8} lg={6}>
             <Paper>
               <form className={classes.form} onSubmit={e => this.onSubmit(e)}>
-                <TextField defaultValue=""
+                <TextField
+                    defaultValue=""
                     placeholder="Share something..."
                     inputProps={{
                       maxLength:280,
@@ -123,8 +130,9 @@ class Feed extends Component {
                        }}
                     id="content"
                     name="text"
-                     multiline
+                    multiline
                     className={classes.textfield}
+                    onKeyUp={event => this.handleInput(event)}
                   // onClick={event => Feed.handleHeight(event)} onKeyUp={event => this.handleInput(event)}
                 />
                 <ButtonPost flowRight/>

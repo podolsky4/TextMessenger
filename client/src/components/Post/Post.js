@@ -40,6 +40,13 @@ const styles = theme => ({
   footer: {
     display: 'flex'
   },
+  reTweet: {
+    padding: '0.5em',
+    display: 'flex',
+    background: '#EF6C00',
+    color: 'white',
+    textShadow: '0px 1px #3d4e56',
+  },
   expand: {
     transform: 'rotate(0deg)',
     transition: theme.transitions.create('transform', {
@@ -100,7 +107,10 @@ class Post extends Component {
 
         <Card fullWidth>
 
-          {owner && `Ретвитнул ${owner.login}`}
+          {owner &&
+            <div className={classes.reTweet}
+                 children={`Ретвитнул ${owner.login}`} />
+          }
 
           <UserHeaderInfo post={post}
                           classes
