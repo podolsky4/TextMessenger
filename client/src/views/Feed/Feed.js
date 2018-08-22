@@ -88,7 +88,7 @@ class Feed extends Component {
     if (e.target.value.length < 280) {
       e.target.style.backgroundColor = "#f0ee97"
     }
-    if (e.target.value.length < 280) {
+    if (e.target.value.length < 275) {
       e.target.style.backgroundColor = "#fafafa"
     }
     if (e.key === 'Enter') {
