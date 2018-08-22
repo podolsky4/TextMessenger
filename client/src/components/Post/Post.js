@@ -127,6 +127,7 @@ class Post extends Component {
                         user={user}
                         favorites={favorites}
                         handleRetwite={this.handleRetwite.bind(this)}
+                        handleComments={this.handleComments.bind(this)}
                         className={classes.footer} />
           </CardActions>
 
