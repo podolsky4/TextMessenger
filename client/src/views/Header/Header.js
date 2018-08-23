@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -15,8 +15,7 @@ import PersonIcon from '@material-ui/icons/Person'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import PublicIcon from '@material-ui/icons/Public'
 import Badge from '@material-ui/core/Badge/Badge'
-import SignIn from '../../containers/SignIn/SignIn'
-import Poper from '../../components/Poper'
+import UserHeaderInfo from '../../components/User/UserHeaderInfo'
 import connect from 'react-redux/es/connect/connect'
 
 const styles = theme => ({
@@ -39,7 +38,7 @@ const styles = theme => ({
 
 const Header = props => {
   const {classes, user} = props
-  const conten = <SignIn />
+  // const conten = <UserHeaderInfo classes={'navHeader'} user={user}/>
   return (
     <div className={classes.root}>
       <AppBar position='static'>
@@ -70,8 +69,9 @@ const Header = props => {
           <IconButton color="inherit" component={Link} to={`/profile/${user.id}`}>
             <PersonIcon className={classes.icon}/>
           </IconButton>
+
           <Button color="inherit" variant="outlined">
-            <Poper classes={'poper'} content={conten} />
+            <UserHeaderInfo classes user={user}/>
           </Button>
         </Toolbar>
       </AppBar>
@@ -79,7 +79,7 @@ const Header = props => {
     </div>
   )
 }
-
+// {/*<Poper classes={'poper'} content={conten} />*/}
 Header.propTypes = {
   classes: PropTypes.object.isRequired
 }

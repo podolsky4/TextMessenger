@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateUser, loadUser} from '../../actions/userActions'
+import {loadUser, updateUser} from '../../actions/userActions'
 import View from '../../components/View'
 import Typography from '@material-ui/core/Typography/Typography'
 
@@ -100,7 +100,7 @@ class CurrentUserProfile extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    id: state.id
+    id: state.user.id
   }
 }
 

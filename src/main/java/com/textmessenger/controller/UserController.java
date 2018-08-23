@@ -41,6 +41,12 @@ public class UserController {
     }
   }
 
+  @DeleteMapping("/current")
+  public void deleteCurrent() {
+    userEndPoint = null; //NOSONAR
+  }
+
+
   @PostMapping("/user")
   public ResponseEntity<?> createUser(@RequestBody User user) {
     return ResponseEntity.status(201).body(userService.createUser(user));
