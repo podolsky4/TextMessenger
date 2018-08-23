@@ -43,7 +43,7 @@ public class UserController {
 
   @DeleteMapping("/current")
   public void deleteCurrent() {
-    userEndPoint = null;
+    userEndPoint = null; //NOSONAR
   }
 
 
