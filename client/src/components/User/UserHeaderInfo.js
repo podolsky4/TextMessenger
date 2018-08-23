@@ -16,14 +16,14 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import CardHeader from '@material-ui/core/CardHeader'
 import IconButton from '@material-ui/core/IconButton'
 import red from '@material-ui/core/colors/red'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 
-import { Redirect } from 'react-router'
+import {Redirect} from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
 
 const styles = theme => ({
@@ -55,16 +55,16 @@ const styles = theme => ({
     cursor: 'pointer'
   },
   cardHeader: {
-    padding: '8px'
+
   },
   title: {
     cursor: 'pointer'
   }
-})
+});
 
 class UserHeaderInfo extends React.Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       toredirect: false,
       id: ''
@@ -75,10 +75,10 @@ class UserHeaderInfo extends React.Component {
       toredirect: true,
       id: id
     })
-  }
+  };
   render () {
-    const { classes, post } = this.props
-    const {toredirect, id} = this.state
+    const { classes, post } = this.props;
+    const {toredirect, id} = this.state;
 
     if (toredirect) {
       return <Redirect to={`/profile/${id}`}/>
@@ -113,7 +113,7 @@ class UserHeaderInfo extends React.Component {
 
 UserHeaderInfo.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
 export default withStyles(styles)(UserHeaderInfo)
 
