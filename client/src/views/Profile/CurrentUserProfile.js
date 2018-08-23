@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {updateUser, loadUser} from '../../actions/userActions'
+import {loadUser, updateUser} from '../../actions/userActions'
 import View from '../../components/View'
 import Typography from '@material-ui/core/Typography/Typography'
 
 class CurrentUserProfile extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       login: this.props.user.login,
       email: this.props.user.email,
@@ -31,16 +31,16 @@ class CurrentUserProfile extends Component {
     })
   };
   updateUser = e => {
-    const {user, updateUser} = this.props
-    e.preventDefault()
-    let data = this.state
-    const up = {...data, id: user.id}
-    updateUser(up, user.login)
+    const {user, updateUser} = this.props;
+    e.preventDefault();
+    let data = this.state;
+    const up = {...data, id: user.id};
+    updateUser(up, user.login);
     this.editableField()
   };
 
   render () {
-    const {user} = this.props
+    const {user} = this.props;
     return (
       <div>
         <Typography variant='title'>Hello, {user.firstName} {user.lastName}</Typography>
@@ -100,15 +100,15 @@ class CurrentUserProfile extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    id: state.id
+    id: state.user.id
   }
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     loadUser: (login) => dispatch(loadUser(login)),
     updateUser: (data, login) => dispatch(updateUser(data, login))
   }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile)

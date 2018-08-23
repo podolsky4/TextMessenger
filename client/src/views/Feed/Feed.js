@@ -102,7 +102,7 @@ class Feed extends Component {
 
   render () {
     const {posts, user, fetching, classes} = this.props;
-    // const {reloadLoader} = this.props;
+     const {reloadLoader} = this.props;
     if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
@@ -139,11 +139,13 @@ class Feed extends Component {
                 {/*<button className="btn-create-post">Publish</button>*/}
               </form>
             </Paper>
+            {reloadLoader &&  <Loader/>}
           </Grid>
           {/*{reloadLoader && <Loader/>}*/}
           {/*<PostList posts={posts} user={user}/>*/}
-          {fetching && <Loader/>}
-          {!fetching && <PostList posts={posts} user={user}/>}
+          {/*{fetching && <Loader/>}*/}
+         {/*{!fetching && <PostList posts={posts} user={user}/>}*/}
+          <PostList posts={posts} user={user}/>
         </Grid>
       </div>
     )

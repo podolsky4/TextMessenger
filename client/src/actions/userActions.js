@@ -102,3 +102,9 @@ export const loginIn = (email, password) => dispatch => {
     }).then(data => dispatch({type: CREATE_USER, payload: data}))
     .then(() => dispatch(endLoader()))
 };
+
+export const logOut = ()=> dispatch => {
+  fetch ('api/users/current', {
+    method: 'DELETE'
+  })
+};

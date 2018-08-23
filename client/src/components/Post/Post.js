@@ -99,6 +99,9 @@ class Post extends Component {
 
   render () {
     const {post, owner, user, classes, favorites, whoo} = this.props;
+
+
+
     return (
       <Grid className={classes.grid}
             fullWidth
@@ -112,8 +115,9 @@ class Post extends Component {
                  children={`Ретвитнул ${owner.login}`} />
           }
 
-          <UserHeaderInfo post={post}
+          <UserHeaderInfo user={post.user}
                           classes
+                          post={post}
                           currentUser={user}/>
 
           <PostContent content={post.content}/>
@@ -148,7 +152,7 @@ class Post extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    favorites: state.favorites
+    favorites: state.favorites,
   }
 };
 const mapDispatchToProps = dispatch => {

@@ -1,7 +1,8 @@
-import {LOAD_FAVORITES, LOAD_POSTS} from './types'
-import {startLoader, stopLoader} from './loaderActions'
+import {LOAD_FAVORITES, LOAD_POSTS, START_LOADER_COMMENT, STOP_LOADER_COMMENT} from './types'
+import {endReLoader, startLoader, startReLoader, stopLoader} from './loaderActions'
 
 export const createLoadPosts = (id, content) => dispatch => {
+  dispatch(startReLoader());
   fetch(`/api/posts/user/${id}`,
     {
       method: 'POST',
@@ -11,8 +12,10 @@ export const createLoadPosts = (id, content) => dispatch => {
       body: JSON.stringify({'content': content})
     })
     .then(() => dispatch(loadPosts()))
+    .then(()=>dispatch(endReLoader()))
 };
 export const createComment = (postId, userId, content) => dispatch => {
+  dispatch(startLoader(START_LOADER_COMMENT));
   fetch(`/api/comments/post/${postId}/user/${userId}`,
     {
       method: 'POST',
@@ -22,6 +25,7 @@ export const createComment = (postId, userId, content) => dispatch => {
       body: JSON.stringify({'content': content})
     })
     .then(() => dispatch(loadPosts()))
+    .then(()=> dispatch(stopLoader(STOP_LOADER_COMMENT)))
 };
 export const retweet = (id, postId) => dispatch => {
   fetch(`/api/posts/user/${id}/post/${postId}`,

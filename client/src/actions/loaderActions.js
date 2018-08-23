@@ -15,15 +15,15 @@ export function toggleLoader () {
     }, 300)
   }
 }
-// export function startLoader () {
-//   return (dispatch) => {
-//     dispatch({
-//       type: START_LOADER,
-//       payload: true
-//     }
-//     )
-//   }
-// }
+export function startingLoader () {
+  return (dispatch) => {
+    dispatch({
+      type: START_LOADER,
+      payload: true
+    }
+    )
+  }
+}
 
 export function endLoader () {
   return (dispatch) => {
