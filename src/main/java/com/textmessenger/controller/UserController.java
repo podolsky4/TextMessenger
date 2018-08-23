@@ -42,8 +42,8 @@ public class UserController {
   }
 
   @DeleteMapping("/current")
-  public void deleteCurrent (){
-    userEndPoint=null;
+  public void deleteCurrent() {
+    userEndPoint = null;
   }
 
 

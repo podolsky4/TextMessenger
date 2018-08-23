@@ -2,11 +2,11 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createComment} from '../../../actions/postsActions'
 import Comment from './Comment'
-import Loader from "../../Loader/Loader";
+import Loader from '../../Loader/Loader'
 
 class CommentList extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       text: ''
     }
@@ -18,14 +18,14 @@ class CommentList extends Component {
   };
 
   reset = () => {
-    this.setState({text: ''});
+    this.setState({text: ''})
     document.getElementById('comment').value = ''
   };
 
   onSubmit = e => {
-    const {user, createComments, post} = this.props;
-    e.preventDefault();
-    createComments(post.id, user.id, this.state.text);
+    const {user, createComments, post} = this.props
+    e.preventDefault()
+    createComments(post.id, user.id, this.state.text)
     this.reset()
   };
   myFunction (e) {
@@ -38,7 +38,7 @@ class CommentList extends Component {
     }
   }
   render () {
-    const {comments, flag, commentReload} = this.props;
+    const {comments, flag, commentReload} = this.props
     let maped = post => {
       return (
         <Comment
@@ -46,7 +46,7 @@ class CommentList extends Component {
           comment={post}
 
         />)
-    };
+    }
     return (
       <div>
         {flag && comments.map(i => maped(i))}
@@ -71,12 +71,12 @@ const mapStateToProps = state => {
     user: state.user,
     posts: state.posts,
     favorites: state.favorites,
-    commentReload : state.loader.commentReload
+    commentReload: state.loader.commentReload
   }
-};
+}
 const mapDispatchToProps = dispatch => {
   return {
     createComments: (id, userId, content) => dispatch(createComment(id, userId, content))
   }
-};
+}
 export default connect(mapStateToProps, mapDispatchToProps)(CommentList)

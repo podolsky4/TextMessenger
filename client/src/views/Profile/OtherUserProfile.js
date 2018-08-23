@@ -6,14 +6,14 @@ import PropTypes from 'prop-types'
 
 class OtherUserProfile extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       userFromPost: '',
       areYouFollow: ''
     }
   }
   componentWillMount () {
-    const {currentUser, loadFollowing, user} = this.props;
+    const {currentUser, loadFollowing, user} = this.props
     if (this.state.userFromPost.length === 0) {
       fetch(`/api/users/${currentUser}`)
         .then(res => res.json())
@@ -22,10 +22,9 @@ class OtherUserProfile extends Component {
     }
   }
   handleFollowing = e => {
-    const {user, addToFollowing, deleteFromFollowing, following, currentUser} = this.props;
+    const {user, addToFollowing, deleteFromFollowing, following, currentUser} = this.props
 
     if (following.some(u => u.id === currentUser)) {
-
       deleteFromFollowing(user.id, this.state.userFromPost.id)
     } else {
       addToFollowing(user.id, this.state.userFromPost.id)
@@ -33,8 +32,8 @@ class OtherUserProfile extends Component {
   };
 
   render () {
-    const {userFromPost} = this.state;
-    const {following, currentUser} = this.props;
+    const {userFromPost} = this.state
+    const {following, currentUser} = this.props
     if (this.state.userFromPost.length === 0) {
       return <Loader fullscreen={true}/>
     }
@@ -56,7 +55,7 @@ const mapStateToProps = state => {
     user: state.user,
     following: state.following
   }
-};
+}
 const mapDispatchToProps = dispatch => {
   return {
     loadUser: () => dispatch(getUser()),
@@ -64,8 +63,8 @@ const mapDispatchToProps = dispatch => {
     addToFollowing: (id, userId) => dispatch(addFollowing(id, userId)),
     deleteFromFollowing: (id, userId) => dispatch(deleteFollowing(id, userId))
   }
-};
+}
 OtherUserProfile.propTypes = {
   currentUser: PropTypes.string.isRequired
-};
+}
 export default connect(mapStateToProps, mapDispatchToProps)(OtherUserProfile)

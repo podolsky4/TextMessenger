@@ -34,10 +34,10 @@ const styles = theme => ({
     right: -10
   }
 
-});
+})
 
 const Header = props => {
-  const {classes, user} = props;
+  const {classes, user} = props
   // const conten = <UserHeaderInfo classes={'navHeader'} user={user}/>
   return (
     <div className={classes.root}>
@@ -78,16 +78,16 @@ const Header = props => {
 
     </div>
   )
-};
+}
 // {/*<Poper classes={'poper'} content={conten} />*/}
 Header.propTypes = {
   classes: PropTypes.object.isRequired
-};
+}
 
 const mapStateToProps = state => {
   return {
     user: state.user
   }
-};
+}
 
 export default connect(mapStateToProps)(withStyles(styles)(Header))

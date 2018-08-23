@@ -5,7 +5,7 @@ export function toggleLoader () {
     dispatch({
       type: START_LOADER,
       payload: true
-    });
+    })
 
     setTimeout(() => {
       dispatch({
@@ -55,21 +55,19 @@ export function endReLoader () {
 }
 
 export function startLoader (type) {
-    return (dispatch) => {
-        dispatch({
-            type,
-            payload: true
-        })
-
-    }
+  return (dispatch) => {
+    dispatch({
+      type,
+      payload: true
+    })
+  }
 }
 
 export function stopLoader (type) {
-    return (dispatch) => {
-        dispatch({
-            type,
-            payload: false
-        })
-
-    }
+  return (dispatch) => {
+    dispatch({
+      type,
+      payload: false
+    })
+  }
 }

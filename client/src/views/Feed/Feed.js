@@ -11,53 +11,50 @@ import {Redirect} from 'react-router-dom'
 
 import {withStyles} from '@material-ui/core/styles'
 import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
-import TextField from "@material-ui/core/TextField/TextField";
-
+import TextField from '@material-ui/core/TextField/TextField'
 
 const styles = theme => ({
   root: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   grid: {
-    flexGrow: "0",
-    width: "75%",
-    flexBasis: "75%",
+    flexGrow: '0',
+    width: '75%',
+    flexBasis: '75%'
   },
   icon: {
     paddingRight: theme.spacing.unit,
-    marginTop: -4,
+    marginTop: -4
   },
   actions: {
-    display: 'flex',
+    display: 'flex'
   },
   form: {
-    background: "#F5F5F5",
+    background: '#F5F5F5'
   },
   textfield: {
-    padding: "3em 1em 1em 1em",
-    width: "75%",
-    backgroundColor: "#fafafa",
+    padding: '3em 1em 1em 1em',
+    width: '75%',
+    backgroundColor: '#fafafa'
   }
-});
+})
 
 class Feed extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       text: ''
     }
   }
 
   componentDidMount () {
-
-    const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props;
-    getCurrentUserPoint();
+    const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props
+    getCurrentUserPoint()
     if (user.length !== 0) {
       loadFavorites(user.id)
     }
     loadPosts()
-
   }
 
   change = e => {
@@ -67,29 +64,29 @@ class Feed extends Component {
   };
 
   reset = () => {
-    this.setState({text: ''});
+    this.setState({text: ''})
     document.getElementById('content').value = ''
   };
 
   onSubmit = e => {
-    const {user, createPost} = this.props;
-    e.preventDefault();
-    createPost(user.id, this.state.text);
+    const {user, createPost} = this.props
+    e.preventDefault()
+    createPost(user.id, this.state.text)
     this.reset()
   };
 
-  handleInput(e) {
+  handleInput (e) {
     if (e.target.value.length > 275) {
-      e.target.style.backgroundColor = "#f0ee97"
+      e.target.style.backgroundColor = '#f0ee97'
     }
     if (e.target.value.length === 280) {
-      e.target.style.backgroundColor = "#E64A19"
+      e.target.style.backgroundColor = '#E64A19'
     }
     if (e.target.value.length < 280) {
-      e.target.style.backgroundColor = "#f0ee97"
+      e.target.style.backgroundColor = '#f0ee97'
     }
     if (e.target.value.length < 275) {
-      e.target.style.backgroundColor = "#fafafa"
+      e.target.style.backgroundColor = '#fafafa'
     }
     if (e.key === 'Enter') {
       this.onSubmit(e)
@@ -101,12 +98,12 @@ class Feed extends Component {
   }
 
   render () {
-    const {posts, user, fetching, classes} = this.props;
-     const {reloadLoader} = this.props;
+    const {posts, user, fetching, classes} = this.props
+    const {reloadLoader} = this.props
     if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
-    console.log(fetching);
+    console.log(fetching)
     return (
 
       <div style={{padding: 15}}>
@@ -121,30 +118,30 @@ class Feed extends Component {
             <Paper>
               <form className={classes.form} onSubmit={e => this.onSubmit(e)}>
                 <TextField
-                    defaultValue=""
-                    placeholder="Share something..."
-                    inputProps={{
-                      maxLength:280,
-                      style:
-                      {borderRadius: "2px"},
-                       }}
-                    id="content"
-                    name="text"
-                    multiline
-                    className={classes.textfield}
-                    onKeyUp={event => this.handleInput(event)}
+                  defaultValue=""
+                  placeholder="Share something..."
+                  inputProps={{
+                    maxLength: 280,
+                    style:
+                      {borderRadius: '2px'}
+                  }}
+                  id="content"
+                  name="text"
+                  multiline
+                  className={classes.textfield}
+                  onKeyUp={event => this.handleInput(event)}
                   // onClick={event => Feed.handleHeight(event)} onKeyUp={event => this.handleInput(event)}
                 />
                 <ButtonPost flowRight/>
-                {/*<button className="btn-create-post">Publish</button>*/}
+                {/* <button className="btn-create-post">Publish</button> */}
               </form>
             </Paper>
-            {reloadLoader &&  <Loader/>}
+            {reloadLoader && <Loader/>}
           </Grid>
-          {/*{reloadLoader && <Loader/>}*/}
-          {/*<PostList posts={posts} user={user}/>*/}
-          {/*{fetching && <Loader/>}*/}
-         {/*{!fetching && <PostList posts={posts} user={user}/>}*/}
+          {/* {reloadLoader && <Loader/>} */}
+          {/* <PostList posts={posts} user={user}/> */}
+          {/* {fetching && <Loader/>} */}
+          {/* {!fetching && <PostList posts={posts} user={user}/>} */}
           <PostList posts={posts} user={user}/>
         </Grid>
       </div>
@@ -161,7 +158,7 @@ const mapStateToProps = state => {
     reloadLoader: state.reloadLoader,
     fetching: state.loader.loadingPost
   }
-};
+}
 const mapDispatchToProps = dispatch => {
   return {
     loadPosts: () => dispatch(loadPosts()),
@@ -169,5 +166,5 @@ const mapDispatchToProps = dispatch => {
     loadFavorites: (id) => dispatch(loadFavorites(id)),
     getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
-};
+}
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Feed))
