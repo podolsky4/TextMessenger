@@ -15,9 +15,7 @@ class Profile extends React.Component {
     if (user.id === undefined) {
       return <Loader fullscreen={true}/>
     }
-    let a = user.id
-    let b = match.params.id
-    let flag = a === b
+    let flag = user.id === +match.params.id
     return (
       <React.Fragment>
         {flag && <CurrentUserProfile/>}
