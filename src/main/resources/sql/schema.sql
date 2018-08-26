@@ -120,7 +120,6 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `is_checked` BOOLEAN DEFAULT FALSE ,
   `type` VARCHAR(255),
-  `content` VARCHAR(255),
   `user_id` BIGINT NOT NULL,
   `content_id` BIGINT NOT NULL,
   `created_at`  TIMESTAMP    NOT NULL,

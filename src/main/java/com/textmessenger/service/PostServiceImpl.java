@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.PostRepository;
@@ -26,7 +27,8 @@ public class PostServiceImpl implements PostService {
   public void createPost(User user, Post post) {
     post.setUser(user);
     Post save = postRepository.save(post);
-    user.getFollowers().forEach(u -> u.getNotifications().add(notificationService.createNotification(save, u)));
+    user.getFollowers().forEach(u -> u.getNotifications()
+            .add(notificationService.createNotification(NotificationType.POST.toString(),u,save.getId())));
   }
 
   @Override

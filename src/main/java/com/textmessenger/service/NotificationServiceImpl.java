@@ -1,7 +1,6 @@
 package com.textmessenger.service;
 
 import com.textmessenger.model.entity.Notification;
-import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.NotificationRepository;
 import org.springframework.stereotype.Service;
@@ -15,12 +14,11 @@ public class NotificationServiceImpl implements NotificationService {
   }
 
   @Override
-  public Notification createNotification(Post post, User user) {
+  public Notification createNotification(String type, User user, Long id) {
     Notification notification = new Notification();
-    notification.setContent(post.getContent());
-    notification.setContent_id(post.getId());
+    notification.setContent_id(id);
     notification.setUser(user);
-    notification.setType("POST");
+    notification.setType(type);
     return notificationRepository.save(notification);
 
   }

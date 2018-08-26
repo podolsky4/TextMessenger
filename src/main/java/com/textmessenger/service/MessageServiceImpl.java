@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
@@ -18,19 +19,28 @@ public class MessageServiceImpl implements MessageService {
   private final MessageRepository messageRepository;
   private final UserRepository userRepository;
   private final DialogRepository dialogRepository;
+  private final NotificationService notificationService;
 
   public MessageServiceImpl(MessageRepository messageRepository,
                             DialogRepository dialogRepository,
-                            UserRepository userRepository) {
+                            UserRepository userRepository,
+                            NotificationService notificationService) {
 
     this.messageRepository = messageRepository;
     this.dialogRepository = dialogRepository;
     this.userRepository = userRepository;
+    this.notificationService = notificationService;
   }
 
   @Override
   public void createMessage(Message message) {
-    messageRepository.save(message);
+    Message save = messageRepository.save(message);
+    User user = save.getUser();
+    save.getDialog().getUsers().forEach(u -> {
+      if (u.getId()!= user.getId()){
+        notificationService.createNotification(NotificationType.MESSAGE.toString(),u,save.getId());
+      }
+    });
   }
 
   @Override

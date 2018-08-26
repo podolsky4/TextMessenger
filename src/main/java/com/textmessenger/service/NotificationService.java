@@ -5,7 +5,7 @@ import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 
 public interface NotificationService {
-  Notification createNotification(Post post, User user);
+  Notification createNotification(String type, User user, Long id);
 
   void updateNotification(Long id);
 }
