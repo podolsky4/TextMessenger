@@ -17,8 +17,14 @@ import PublicIcon from '@material-ui/icons/Public'
 import Badge from '@material-ui/core/Badge/Badge'
 import UserHeaderInfo from '../../components/User/UserHeaderInfo'
 import connect from 'react-redux/es/connect/connect'
+import Popper from "@material-ui/core/Popper/Popper";
+import Fade from "@material-ui/core/Fade/Fade";
+import Paper from "@material-ui/core/Paper/Paper";
+import LogOut from "../../components/User/LogOut";
+import {addRule} from 'jss'
+import classNames from 'classnames'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     flexGrow: 1
   },
@@ -32,15 +38,55 @@ const styles = theme => ({
   badge: {
     top: -5,
     right: -10
-  }
+  },
+  typography: {
+    padding: theme.spacing.unit * 2,
+  },
+  headerUser: {
+    padding: theme.spacing.unit * .3,
+  },
+});
 
-})
 
-const Header = props => {
-  const {classes, user} = props
-  // const conten = <UserHeaderInfo classes={'navHeader'} user={user}/>
-  return (
-    <div className={classes.root}>
+
+
+class Header extends React.Component {
+  state = {
+    anchorEl: null,
+    open: false,
+    noUser: false,
+  };
+
+  handleClick = event => {
+    const {currentTarget} = event;
+    this.setState(state => ({
+      anchorEl: currentTarget,
+      open: !state.open,
+    }));
+  };
+
+  // console.log("location :", location, {user})
+
+
+
+  render() {
+    const {classes, user, currentLocation} = this.props;
+    const {noUser} = this.state;
+
+    console.log("location is :", currentLocation);
+    const {anchorEl, open} = this.state;
+    const id = open ? 'simple-popper' : null;
+
+
+
+    const {location} = currentLocation;
+
+    console.log('USER: ', user);
+
+    if (user.length === 0) {  this.state.noUser = true }
+    console.log('NoUSER: ', this.state.noUser);
+
+    return <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
@@ -70,24 +116,45 @@ const Header = props => {
             <PersonIcon className={classes.icon}/>
           </IconButton>
 
-          <Button color="inherit" variant="outlined">
+          {noUser &&
+          <Button color="inherit" variant="outlined"
+                  aria-describedby={id}
+                  id="headerUser"
+                  className={classNames(classes.headerUser)}
+                  onClick={this.handleClick}>
             <UserHeaderInfo classes user={user}/>
+            <Popper id={id} open={open} anchorEl={anchorEl} transition>
+              {({TransitionProps}) => (
+                <Fade {...TransitionProps} timeout={350}>
+                  <Paper>
+                    <LogOut/>
+                    <Typography className={classes.typography}>The content of the Popper.</Typography>
+                  </Paper>
+                </Fade>
+              )}
+            </Popper>
           </Button>
+          }
+          {!noUser}
+
         </Toolbar>
       </AppBar>
 
     </div>
-  )
+  }
 }
+
+
 // {/*<Poper classes={'poper'} content={conten} />*/}
 Header.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    currentLocation: state.location,
   }
-}
+};
 
 export default connect(mapStateToProps)(withStyles(styles)(Header))
