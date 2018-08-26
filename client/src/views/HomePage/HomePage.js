@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import SignIn from '../../containers/SignIn/SignIn'
 import TextCard from '../../components/TextCard/TextCard'
 
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import connect from 'react-redux/es/connect/connect'
 import classNames from 'classnames'
 
@@ -25,14 +25,23 @@ const styles = theme => ({
     alignItems: 'start',
     justifyContent: 'flex-start'
   }
-})
+});
 
 class HomePage extends Component {
-  render () {
-    const {classes, user} = this.props
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: "home",
+    }
+  }
+
+  render() {
+
+    const {classes, user} = this.props;
     return (
       <div className={classNames(classes.homepage, classes.root, classes.cont)}>
-        <TextCard text="TextMessenger проект предполагает создание приложения с использованием всех знаний, которые вы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS."
+        <TextCard
+          text="TextMessenger проект предполагает создание приложения с использованием всех знаний, которые мы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS."
           classes={'TextCard'}/>
         {user.length === 0 && <SignIn classes={'SignIn'}/>}
       </div>
@@ -42,7 +51,8 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    location: state.location
   }
-}
+};
 export default connect(mapStateToProps)(withStyles(styles)(HomePage))
