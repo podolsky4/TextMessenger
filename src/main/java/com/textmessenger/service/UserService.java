@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 
@@ -34,4 +35,6 @@ public interface UserService {
   void deleteFromFollowing(Long user, Long newUser);
 
   User logIn(String email, String password);
+
+  List<Notification> getAllNotificationByUserId(Long id);
 }
