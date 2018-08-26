@@ -19,7 +19,7 @@ public class CommentServiceImpl implements CommentService {
 
   CommentServiceImpl(CommentRepository commentRepository, NotificationService notificationService) {
     this.commentRepository = commentRepository;
-    this.notificationService= notificationService;
+    this.notificationService = notificationService;
   }
 
   @Override
@@ -27,7 +27,7 @@ public class CommentServiceImpl implements CommentService {
     comment.setPost(post);
     comment.setCommentator(user);
     Comment save = commentRepository.save(comment);
-    notificationService.createNotification(NotificationType.COMMENT.toString(),post.getUser(),post.getId());
+    notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), post.getId());
   }
 
   @Override

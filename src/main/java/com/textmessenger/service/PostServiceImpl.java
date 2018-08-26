@@ -28,7 +28,7 @@ public class PostServiceImpl implements PostService {
     post.setUser(user);
     Post save = postRepository.save(post);
     user.getFollowers().forEach(u -> u.getNotifications()
-            .add(notificationService.createNotification(NotificationType.POST.toString(),u,save.getId())));
+            .add(notificationService.createNotification(NotificationType.POST.toString(), u, save.getId())));
   }
 
   @Override

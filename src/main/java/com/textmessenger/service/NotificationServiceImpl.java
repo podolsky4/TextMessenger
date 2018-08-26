@@ -16,7 +16,7 @@ public class NotificationServiceImpl implements NotificationService {
   @Override
   public Notification createNotification(String type, User user, Long id) {
     Notification notification = new Notification();
-    notification.setContent_id(id);
+    notification.setContentId(id);
     notification.setUser(user);
     notification.setType(type);
     return notificationRepository.save(notification);

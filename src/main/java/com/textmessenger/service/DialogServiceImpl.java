@@ -52,7 +52,7 @@ public class DialogServiceImpl implements DialogService {
     Dialog save = dialogRepository.save(dialog);
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
-    notificationService.createNotification(NotificationType.DIALOG.toString(),firstUser,save.getId());
+    notificationService.createNotification(NotificationType.DIALOG.toString(), firstUser, save.getId());
   }
 
   @Override
@@ -60,6 +60,6 @@ public class DialogServiceImpl implements DialogService {
     User one = userRepository.getOne(user);
     Dialog save = dialogRepository.getOne(dialog);
     one.getDialogs().add(save);
-    notificationService.createNotification(NotificationType.DIALOG.toString(),one,save.getId());
+    notificationService.createNotification(NotificationType.DIALOG.toString(), one, save.getId());
   }
 }
