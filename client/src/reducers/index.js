@@ -9,6 +9,7 @@ import searchUser from './searchUser'
 import following from './following'
 import reloadLoader from './reloadLoader'
 import notification from './notification'
+import location from './location'
 
 export default combineReducers({
   user,
@@ -20,5 +21,6 @@ export default combineReducers({
   searchUser,
   following,
   reloadLoader,
-  notification
+  notification,
+  location
 })
