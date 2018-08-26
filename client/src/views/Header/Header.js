@@ -26,7 +26,8 @@ import classNames from 'classnames'
 
 const styles = (theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    // padding: "1px",
   },
   menuButton: {
     marginLeft: -12,
@@ -43,11 +44,9 @@ const styles = (theme) => ({
     padding: theme.spacing.unit * 2,
   },
   headerUser: {
-    padding: theme.spacing.unit * .3,
+    padding: "1px",
   },
 });
-
-
 
 
 class Header extends React.Component {
@@ -68,22 +67,22 @@ class Header extends React.Component {
   // console.log("location :", location, {user})
 
 
-
   render() {
     const {classes, user, currentLocation} = this.props;
-    const {noUser} = this.state;
+    let {noUser} = this.state.noUser;
 
     console.log("location is :", currentLocation);
     const {anchorEl, open} = this.state;
     const id = open ? 'simple-popper' : null;
 
 
-
     const {location} = currentLocation;
 
     console.log('USER: ', user);
 
-    if (user.length === 0) {  this.state.noUser = true }
+    if (user.length === 0) {
+      noUser = true
+    }
     console.log('NoUSER: ', this.state.noUser);
 
     return <div className={classes.root}>
@@ -116,13 +115,14 @@ class Header extends React.Component {
             <PersonIcon className={classes.icon}/>
           </IconButton>
 
-          {noUser &&
+          {!noUser &&
           <Button color="inherit" variant="outlined"
                   aria-describedby={id}
                   id="headerUser"
                   className={classNames(classes.headerUser)}
-                  onClick={this.handleClick}>
-            <UserHeaderInfo classes user={user}/>
+                  onClick={this.handleClick}
+                  style={{padding: 8}}>
+            <UserHeaderInfo padding={0} user={user} />
             <Popper id={id} open={open} anchorEl={anchorEl} transition>
               {({TransitionProps}) => (
                 <Fade {...TransitionProps} timeout={350}>
@@ -135,8 +135,6 @@ class Header extends React.Component {
             </Popper>
           </Button>
           }
-          {!noUser}
-
         </Toolbar>
       </AppBar>
 
