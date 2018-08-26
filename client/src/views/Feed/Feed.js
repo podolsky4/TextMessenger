@@ -31,13 +31,12 @@ const styles = theme => ({
     display: 'flex'
   },
   form: {
-    background: '#F5F5F5',
+    background: '#fafafa',
     display:'flex'
   },
   textfield: {
     width: '75%',
-    backgroundColor: "#fafafa",
-    padding: "8px 8px 16px 8px",
+    padding: "30px 8px 16px 16px",
     alignSelf: 'flex-end',
   }
 });

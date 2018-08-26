@@ -10,7 +10,7 @@ const styles = theme => ({
   button: {
     alignSelf: 'stretch',
     margin: '8% 4.5% 3% 4.5%',
-    marginBottom: theme.spacing.unit,
+    marginBottom: 2.1*theme.spacing.unit,
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
