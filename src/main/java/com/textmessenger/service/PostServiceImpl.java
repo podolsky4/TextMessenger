@@ -15,15 +15,18 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService {
 
   private final PostRepository postRepository;
+  private final NotificationService notificationService;
 
-  PostServiceImpl(PostRepository postRepository) {
+  PostServiceImpl(PostRepository postRepository, NotificationService notificationService) {
     this.postRepository = postRepository;
+    this.notificationService = notificationService;
   }
 
   @Override
   public void createPost(User user, Post post) {
     post.setUser(user);
-    postRepository.save(post);
+    Post save = postRepository.save(post);
+    user.getFollowers().forEach(u -> u.getNotifications().add(notificationService.createNotification(save, u)));
   }
 
   @Override

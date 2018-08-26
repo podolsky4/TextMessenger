@@ -132,4 +132,9 @@ public class UserController {
       return ResponseEntity.status(200).body(user);
     }
   }
+
+  @GetMapping("user/{id}/notification")
+  public ResponseEntity getNotification(@PathVariable("id") Long id) {
+    return ResponseEntity.ok().body(userService.getAllNotificationByUserId(id));
+  }
 }
