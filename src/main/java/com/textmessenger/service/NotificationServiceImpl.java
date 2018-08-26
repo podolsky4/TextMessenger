@@ -23,8 +23,4 @@ public class NotificationServiceImpl implements NotificationService {
 
   }
 
-  @Override
-  public void updateNotification(Long id) {
-
-  }
 }

@@ -26,7 +26,7 @@ public class CommentServiceImpl implements CommentService {
   public void createComment(Post post, User user, Comment comment) {
     comment.setPost(post);
     comment.setCommentator(user);
-    Comment save = commentRepository.save(comment);
+    commentRepository.save(comment);
     notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), post.getId());
   }
 
