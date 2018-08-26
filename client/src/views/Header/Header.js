@@ -21,7 +21,7 @@ import Popper from "@material-ui/core/Popper/Popper";
 import Fade from "@material-ui/core/Fade/Fade";
 import Paper from "@material-ui/core/Paper/Paper";
 import LogOut from "../../components/User/LogOut";
-import {addRule} from 'jss'
+
 import classNames from 'classnames'
 
 const styles = (theme) => ({
@@ -76,7 +76,7 @@ class Header extends React.Component {
     const id = open ? 'simple-popper' : null;
 
 
-    const {location} = currentLocation;
+    // const {location} = currentLocation;
 
     console.log('USER: ', user);
 
