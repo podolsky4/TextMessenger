@@ -1,4 +1,4 @@
-import {CREATE_USER, FIND_USERS, LOAD_FOLLOWING} from './types.js'
+import {CREATE_USER, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION} from './types.js'
 import {loadFavoritesByLogin} from './postsActions'
 import {endLoader, startLoader, toggleLoader} from './loaderActions'
 
@@ -107,4 +107,10 @@ export const logOut = () => dispatch => {
   fetch('api/users/current', {
     method: 'DELETE'
   })
+}
+
+export const loadUserNotification = (id) => dispatch => {
+  fetch(`/api/users/user/${id}/notification`)
+    .then(res => res.json())
+    .then(data => dispatch({type: LOAD_NOTIFICATION, payload: data}))
 }

@@ -1,6 +1,7 @@
 export const CREATE_USER = 'CREATE_USER'
 export const FIND_USERS = 'FIND_USERS'
 export const LOAD_POSTS = 'LOAD_POSTS'
+export const LOAD_NOTIFICATION = 'LOAD_NOTIFICATION'
 export const LOAD_DIALOGS = 'LOAD_DIALOGS'
 export const LOAD_FAVORITES = 'LOAD_FAVORITES'
 export const START_LOADER = 'START_LOADER'
