@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `is_checked` BOOLEAN DEFAULT FALSE ,
   `type` VARCHAR(255),
   `user_id` BIGINT NOT NULL,
-  `contentId` BIGINT NOT NULL,
+  `content_id` BIGINT NOT NULL,
   `created_at`  TIMESTAMP    NOT NULL,
   `last_update` TIMESTAMP    NULL,
   PRIMARY KEY (`id`),
