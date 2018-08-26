@@ -28,19 +28,20 @@ const styles = theme => ({
 });
 
 class HomePage extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       location: "home",
     }
   }
 
-  render () {
+  render() {
 
     const {classes, user} = this.props;
     return (
       <div className={classNames(classes.homepage, classes.root, classes.cont)}>
-        <TextCard text="TextMessenger проект предполагает создание приложения с использованием всех знаний, которые вы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS."
+        <TextCard
+          text="TextMessenger проект предполагает создание приложения с использованием всех знаний, которые мы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS."
           classes={'TextCard'}/>
         {user.length === 0 && <SignIn classes={'SignIn'}/>}
       </div>

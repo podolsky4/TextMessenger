@@ -63,7 +63,7 @@ const styles = theme => ({
 });
 
 class UserHeaderInfo extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       toredirect: false,
@@ -78,8 +78,8 @@ class UserHeaderInfo extends React.Component {
     })
   };
 
-  render () {
-    const { classes, user, post, padding } = this.props;
+  render() {
+    const {classes, user, post, padding} = this.props;
     // if(this.props.post) { const post = this.props.post } else {const post = 0}
     const {toredirect, id} = this.state;
 
@@ -94,9 +94,9 @@ class UserHeaderInfo extends React.Component {
         className={classnames(classes.cardHeader)}
         avatar={
           <Avatar alt="Remy Sharp"
-            src={user.profilePhoto}
-            className={classnames(classes.avatar, 'logo')}
-            onClick={e => this.profileRender(this.props.user.id)}
+                  src={user.profilePhoto}
+                  className={classnames(classes.avatar, 'logo')}
+                  onClick={e => this.profileRender(this.props.user.id)}
           />
         }
         action={
@@ -110,7 +110,7 @@ class UserHeaderInfo extends React.Component {
           </div>
         }
         subheader={post &&
-          new Date(post.createdDate).toDateString()
+        new Date(post.createdDate).toDateString()
         }
       />
     )

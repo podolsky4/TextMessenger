@@ -39,11 +39,13 @@ const styles = theme => ({
 });
 
 class LogOut extends Component {
+
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
     })
   };
+
   logout = (e) => {
     const {logOutUser} = this.props;
     e.preventDefault();
@@ -51,31 +53,25 @@ class LogOut extends Component {
     logOutUser()
   };
 
-
-
-  render () {
-    const { classes, user } = this.props;
+  render() {
+    const {classes, user} = this.props;
     return (
       <React.Fragment>
-        <CssBaseline />
+        <CssBaseline/>
         <main className={classes.layout}>
           <Paper className={classes.paper}>
-            <LockIcon />
-
-            <Typography variant="headline">Log Out</Typography>
-
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="raised"
-                color="primary"
-                onClick={e=>this.logout(e)}
-                className={classes.submit}
-              >
-                Log Out {user.login}
-              </Button>
-
+            <LockIcon/>
+            <Typography variant="headline">Log Out {user.login}</Typography>
+            <Button
+              type="submit"
+              fullWidth
+              variant="raised"
+              color="primary"
+              onClick={e => this.logout(e)}
+              className={classes.submit}
+            >
+              Log Out {user.login}
+            </Button>
           </Paper>
         </main>
       </React.Fragment>
