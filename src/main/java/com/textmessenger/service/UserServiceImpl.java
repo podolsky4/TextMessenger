@@ -1,5 +1,8 @@
 package com.textmessenger.service;
 
+
+import com.textmessenger.dto.transfer.UserTxDTO;
+import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
@@ -15,13 +18,16 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
 
-  public UserServiceImpl(UserRepository userRepository) {
+  private final UserMapper userMapper;
+
+  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
     this.userRepository = userRepository;
+    this.userMapper = userMapper;
   }
 
   @Override
-  public User createUser(User user) {
-    return userRepository.save(user);
+  public UserTxDTO createUser(User user) {
+    return userMapper.userToTxDto(userRepository.save(user));
   }
 
   @Override

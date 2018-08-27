@@ -7,10 +7,10 @@ import com.textmessenger.model.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
-  UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+  /*UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);*/
 
   UserRxDTO userToRxDto(User user);
 

@@ -74,4 +74,8 @@ public class UserView {
 
   }
 
+  public interface UserPostReturn extends UserId, UserProfileHeader, UserLogin {
+
+  }
+
 }

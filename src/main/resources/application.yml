@@ -2,7 +2,7 @@
 #   Server port
 ###
 server:
-  port: 9000
+  port: 9001
 
 ###
 #   Database Settings

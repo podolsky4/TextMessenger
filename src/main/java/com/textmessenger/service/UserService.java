@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.dto.transfer.UserTxDTO;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
-  User createUser(User user);
+  UserTxDTO createUser(User user);
 
   User readUser(long id);
 

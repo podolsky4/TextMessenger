@@ -1,5 +1,9 @@
 package com.textmessenger.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.textmessenger.dto.receive.UserRxDTO;
+import com.textmessenger.dto.view.UserView;
+import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.service.UserService;
@@ -25,8 +29,11 @@ public class UserController {
   private static User userEndPoint = null;
   private final UserService userService;
 
-  public UserController(UserService userService) {
+  private final UserMapper userMapper;
+
+  public UserController(UserService userService, UserMapper userMapper) {
     this.userService = userService;
+    this.userMapper = userMapper;
   }
 
   @GetMapping("/current")
@@ -47,9 +54,10 @@ public class UserController {
   }
 
 
+  @JsonView(UserView.UserPostReturn.class)
   @PostMapping("/user")
-  public ResponseEntity<?> createUser(@RequestBody User user) {
-    return ResponseEntity.status(201).body(userService.createUser(user));
+  public ResponseEntity<?> createUser(@RequestBody UserRxDTO user) {
+    return ResponseEntity.status(201).body(userService.createUser(userMapper.userRxDtoToUser(user)));
   }
 
   @GetMapping("/{id}")
