@@ -2,36 +2,44 @@ package com.textmessenger.dto.receive;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class UserRxDTO {
 
-  @Column(name = "login")
+  private long id;
+
   private String login;
 
-  @Column(name = "email")
   private String email;
 
-  @Column(name = "password")
   private String password;
 
-  @Column(name = "first_name")
   private String firstName;
 
-  @Column(name = "last_name")
   private String lastName;
 
-  @Column(name = "address")
   private String address;
 
-  @Column(name = "profile_photo")
   private String profilePhoto;
 
-  @Column(name = "profile_header")
   private String profileHeader;
 
-  @Column(name = "birthday")
   private LocalDate dateBirthday;
+
+  private List<PostRxDTO> posts = new ArrayList<>();
+
+  private List<CommentRxDTO> comments = new ArrayList<>();
+
+  private List<DialogRxDTO> dialogs = new ArrayList<>();
+
+  private List<PostRxDTO> favorites = new ArrayList<>();
+
+  private List<UserRxDTO> followers = new ArrayList<>();
+
+  private List<NotificationRxDTO> notifications = new ArrayList<>();
+
+  private List<UserRxDTO> following = new ArrayList<>();
 }
