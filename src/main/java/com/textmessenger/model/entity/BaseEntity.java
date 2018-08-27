@@ -22,7 +22,7 @@ abstract class BaseEntity {
   // Primary key for entity
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private long id;
 
   // Jpa audit time
   @Column(name = "created_at")

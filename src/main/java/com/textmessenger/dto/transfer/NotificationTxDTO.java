@@ -9,7 +9,7 @@ public class NotificationTxDTO {
 
   private boolean isChecked;
 
-  private Long contentId;
+  private long contentId;
 
   private String type;
 

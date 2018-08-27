@@ -25,7 +25,7 @@ public class Notification extends BaseEntity {
   private boolean isChecked;
 
   @Column(name = "content_id")
-  private Long contentId;
+  private long contentId;
 
   @Column(name = "type")
   private String type;

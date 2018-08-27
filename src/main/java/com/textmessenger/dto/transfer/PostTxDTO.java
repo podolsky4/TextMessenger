@@ -7,11 +7,12 @@ import java.util.List;
 
 @Data
 public class PostTxDTO {
+
   private long id;
 
   private String content;
 
-  private Long parentId;
+  private long parentId;
 
   private UserTxDTO user;
 

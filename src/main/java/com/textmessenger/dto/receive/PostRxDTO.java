@@ -12,7 +12,7 @@ public class PostRxDTO {
 
   private String content;
 
-  private Long parentId;
+  private long parentId;
 
   private UserRxDTO user;
 
