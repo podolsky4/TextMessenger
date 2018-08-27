@@ -5,7 +5,7 @@ import com.textmessenger.dto.transfer.PostTxDTO;
 import com.textmessenger.model.entity.Post;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PostMapper {
 
   PostRxDTO postToRxDto(Post post);

@@ -2,16 +2,28 @@ package com.textmessenger.dto.view;
 
 public class PostView {
 
-  public interface PostId {}
+  public interface PostId {
 
-  public interface PostContent {}
+  }
 
-  public interface PostParentId {}
+  public interface PostContent {
 
-  public interface PostUser {}
+  }
 
-  public interface PostComments {}
+  public interface PostParentId {
 
-  public interface PostLikers {}
+  }
+
+  public interface PostUser {
+
+  }
+
+  public interface PostComments {
+
+  }
+
+  public interface PostLikers {
+
+  }
 
 }

@@ -5,7 +5,7 @@ import com.textmessenger.dto.transfer.CommentTxDTO;
 import com.textmessenger.model.entity.Comment;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CommentMapper {
 
   CommentRxDTO commToCommRxDto(Comment comment);

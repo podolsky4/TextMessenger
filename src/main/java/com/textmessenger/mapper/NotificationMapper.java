@@ -5,7 +5,7 @@ import com.textmessenger.dto.transfer.NotificationTxDTO;
 import com.textmessenger.model.entity.Notification;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface NotificationMapper {
 
   NotificationRxDTO notToNotRxDto(Notification notification);

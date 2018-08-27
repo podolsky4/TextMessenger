@@ -5,7 +5,7 @@ import com.textmessenger.dto.transfer.DialogTxDTO;
 import com.textmessenger.model.entity.Dialog;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface DialogMapper {
 
   DialogRxDTO dialToDialRxDto(Dialog dialog);
