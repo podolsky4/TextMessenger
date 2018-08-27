@@ -1,5 +1,7 @@
 package com.textmessenger.dto.receive;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.textmessenger.dto.view.UserView;
 import lombok.Data;
 
 import java.time.LocalDate;
