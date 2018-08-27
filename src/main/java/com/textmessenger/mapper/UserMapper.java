@@ -12,9 +12,9 @@ public interface UserMapper {
 
   UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-  UserRxDTO userToRxDto (User user);
+  UserRxDTO userToRxDto(User user);
 
-  UserTxDTO userToTxDto (User user);
+  UserTxDTO userToTxDto(User user);
 
   User userRxDtoToUser(UserRxDTO userRxDTO);
 

@@ -61,4 +61,5 @@ public class UserTxDTO {
 
   @JsonView(UserView.UserFollowing.class)
   private List<UserTxDTO> following = new ArrayList<>();
+
 }
