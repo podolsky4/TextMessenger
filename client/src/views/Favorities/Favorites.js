@@ -19,12 +19,13 @@ const styles = theme => ({
     padding: theme.spacing.unit*1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: "75%",
+    // width: "75%",
     justifySelf: "center",
     alignSelf: "center",
     margin: "auto",
     marginTop: theme.spacing.unit*3,
   },
+
 });
 
 class Favorites extends Component {
