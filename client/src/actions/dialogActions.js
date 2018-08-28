@@ -2,7 +2,15 @@ import {LOAD_DIALOGS, LOAD_MESSAGES, CLEAN_USERSEARCH} from './types'
 import {toggleLoader} from './loaderActions'
 
 export const loadDialog = id => dispatch => {
-  fetch(`/api/dialogs/user/${id}`)
+  fetch(`/api/dialogs/user/${id}`,
+    {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_DIALOGS, payload: data}))
 }
@@ -12,6 +20,8 @@ export const createDialog = (user, secondUser) => dispatch => {
     {
       method: 'POST',
       headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(user)
@@ -21,7 +31,15 @@ export const createDialog = (user, secondUser) => dispatch => {
 
 export const loadMessages = dialogId => dispatch => {
   dispatch(toggleLoader())
-  fetch(`/api/messages/dialog/${dialogId}`)
+  fetch(`/api/messages/dialog/${dialogId}`,
+    {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_MESSAGES, payload: data}))
 }
@@ -31,6 +49,8 @@ export const createMessage = (dialogId, userId, message) => dispatch => {
   fetch(`/api/messages/user/${userId}/dialog/${dialogId}`, {
     method: 'POST',
     headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: message
@@ -39,7 +59,15 @@ export const createMessage = (dialogId, userId, message) => dispatch => {
 }
 
 export const addUserToExistDialog = (dialogId, userId, newUser) => dispatch => {
-  fetch(`/api/dialogs/user/${newUser}/dialog/${dialogId}`)
+  fetch(`/api/dialogs/user/${newUser}/dialog/${dialogId}`,
+    {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
     .then(() => dispatch(loadDialog(userId)))
 }
 

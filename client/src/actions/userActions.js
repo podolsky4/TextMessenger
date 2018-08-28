@@ -28,7 +28,13 @@ export const updateUser = (data, login) => dispatch => {
 }
 
 export const loadUser = (login) => dispatch => {
-  fetch(`/api/users/bylogin/${login}`)
+  fetch(`/api/users/bylogin/${login}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json'
+    }
+  })
     .then(res => res.json())
     .then(data => dispatch({type: CREATE_USER, payload: data}))
 }
@@ -39,17 +45,33 @@ export const getUser = () => dispatch => {
     .then(data => dispatch({type: CREATE_USER, payload: data}))
 }
 export const getFollowing = (id) => dispatch => {
-  fetch(`/api/users/user/${id}/getFollowing`)
+  fetch(`/api/users/user/${id}/getFollowing`, {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json'
+    }
+  })
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_FOLLOWING, payload: data}))
 }
 export const addFollowing = (userId, newUser) => dispatch => {
-  fetch(`/api/users/user/${userId}/addToFollowing/${newUser}`)
+  fetch(`/api/users/user/${userId}/addToFollowing/${newUser}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json'
+    }
+  })
     .then(() => dispatch(getFollowing(userId)))
 }
 export const deleteFollowing = (userId, newUser) => dispatch => {
   fetch(`/api/users/user/${userId}/addToFollowing/${newUser}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json'
+    }
   })
     .then(() => dispatch(getFollowing(userId)))
 }
@@ -58,6 +80,8 @@ export const findUsers = (str) => dispatch => {
   fetch(`/api/users/find`, {
     method: 'POST',
     headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: str
@@ -110,6 +134,7 @@ export const loginIn = (email, password) => dispatch => {
     // }).then(data => dispatch({type: CREATE_USER, payload: data}))
     .then(res => res.json())
     .then(res => res.status === 500 ? null : localStorage.setItem('accessToken', res.accessToken))
+    .then(() => dispatch(getCurrentUser()))
     .then(() => dispatch(endLoader()))
 }
 
