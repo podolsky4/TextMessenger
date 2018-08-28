@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../../actions/postsActions'
+import {addedLikers, deleteLikers, loadFavorites, retweet, unRetweet} from '../../actions/postsActions'
 import {connect} from 'react-redux'
 
 import PostContent from './components/PostContent'
@@ -7,7 +7,7 @@ import PostContent from './components/PostContent'
 import Comments from './components/CommentList'
 import PropTypes from 'prop-types'
 
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
@@ -23,12 +23,28 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center'
   },
+  grid: {
+    flexGrow: '0',
+    width: '75%',
+    flexBasis: '75%'
+  },
   icon: {
     paddingRight: theme.spacing.unit,
     marginTop: -4
   },
   actions: {
+    display: 'flex',
+    justifyContent: 'space-around'
+  },
+  footer: {
     display: 'flex'
+  },
+  reTweet: {
+    padding: '0.5em',
+    display: 'flex',
+    background: '#EF6C00',
+    color: 'white',
+    textShadow: '0px 1px #3d4e56'
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -71,39 +87,60 @@ class Post extends Component {
     } else {
       unRetweets(postId)
     }
-  }
+  };
   handleComments = e => {
     this.setState({flag: true})
-  }
+  };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }))
   };
 
   render () {
-    const {post, owner, user, classes} = this.props
+    const {post, owner, user, classes, favorites, whoo} = this.props
+
     return (
-      <Grid item xs={12} sm={9} md={8} lg={6} key={`${post.id} ${post.parentId}`}>
-        <Card>
-          {owner && `Ретвитнул ${owner.login}`}
-          <UserHeaderInfo post={post} classes currentUser={user}/>
+      <Grid className={classes.grid}
+        fullWidth
+        item
+        key={`${post.id} ${post.parentId}`}>
+
+        <Card fullWidth>
+
+          {owner &&
+            <div className={classes.reTweet}
+              children={`Ретвитнул ${owner.login}`} />
+          }
+
+          <UserHeaderInfo user={post.user}
+            classes
+            post={post}
+            currentUser={user}/>
 
           <PostContent content={post.content}/>
+
           <Divider />
-          <CardActions className={classes.actions} disableActionSpacing>
-            {/* <Like favorites={favorites} post={post} /> */}
-            {/* <IconButton aria-label="Repost" onClick={this.handleRetwite}>
-              <ShareIcon />
-            </IconButton><Typography>{0}</Typography>
-            <IconButton aria-label="Comments" onClick={this.handleComments}>
-              <CommentIcon />
-            </IconButton><Typography>{0}</Typography> */}
-            {/* <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
-            <PostComment handleComments={this.handleComments.bind(this)} /> */}
-            <PostFooter />
+
+          <CardActions className={classes.actions}
+            disableActionSpacing>
+            <PostFooter whoo={whoo}
+              post={post}
+              user={user}
+              favorites={favorites}
+              handleRetwite={this.handleRetwite.bind(this)}
+              handleComments={this.handleComments.bind(this)}
+              className={classes.footer} />
           </CardActions>
-          {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}
+
+          {this.state.flag &&
+            <Comments comments={post.comments}
+              post={post}
+              user={user}
+              flag={this.state.flag}/>
+          }
+
         </Card>
+
       </Grid>
     )
   }

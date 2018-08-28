@@ -14,7 +14,6 @@ class PostList extends Component {
         )
       } else {
         let currentPost = posts.find(i => i.id === post.parentId)
-        console.log(currentPost)
         let who = user.id === post.user.id
         return <Post key={post.id} post={currentPost} owner={post.user} whoo={who} postId={post.id} />
       }

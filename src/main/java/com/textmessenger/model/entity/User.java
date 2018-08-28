@@ -85,6 +85,10 @@ public class User extends BaseEntity {
   @JsonIgnore
   private List<User> followers = new ArrayList<>();
 
+  @OneToMany(mappedBy = "user")
+  @JsonIgnore
+  private List<Notification> notifications = new ArrayList<>();
+
   @ManyToMany
   @JoinTable(name = "user_rel",
           joinColumns = {@JoinColumn(name = "follower_id")},

@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.UserRepository;
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<User> findUsersBySearch(String str) {
-    return userRepository.findUsersByEmailOrLogin(str, str);
+    return userRepository.findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(str, str);
   }
 
   @Override
@@ -95,5 +96,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public User logIn(String email, String password) {
     return userRepository.findUserByEmail(email);
+  }
+
+  @Override
+  public List<Notification> getAllNotificationByUserId(Long id) {
+    return userRepository.getOne(id).getNotifications();
   }
 }

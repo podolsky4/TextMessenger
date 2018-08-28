@@ -1,6 +1,6 @@
-import {CREATE_USER, FIND_USERS, LOAD_FOLLOWING} from './types.js'
+import {CREATE_USER, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION} from './types.js'
 import {loadFavoritesByLogin} from './postsActions'
-import {toggleLoader, startLoader, endLoader} from './loaderActions'
+import {endLoader, startLoader, toggleLoader} from './loaderActions'
 
 export const createUser = (data) => dispatch => {
   let login = data.login
@@ -16,7 +16,7 @@ export const createUser = (data) => dispatch => {
     .then(() => dispatch(loadFavoritesByLogin(login)))
 }
 export const updateUser = (data, login) => dispatch => {
-  fetch('http://localhost:9000/api/users/',
+  fetch('/api/users/',
     {
       method: 'PUT',
       headers: {
@@ -67,7 +67,7 @@ export const findUsers = (str) => dispatch => {
 }
 
 export const getCurrentUser = () => dispatch => {
-  dispatch(startLoader())
+  dispatch(startLoader('LOADING_POST'))
   fetch('api/users/current')
     .then(response => {
       if (response.ok) {
@@ -81,7 +81,7 @@ export const getCurrentUser = () => dispatch => {
     .then(() => dispatch(endLoader()))
 }
 export const loginIn = (email, password) => dispatch => {
-  dispatch(startLoader())
+  dispatch(startLoader('LOADING_POST'))
   fetch(`api/users/user/${email}`, {
     method: 'POST',
     headers: {
@@ -101,4 +101,16 @@ export const loginIn = (email, password) => dispatch => {
       }
     }).then(data => dispatch({type: CREATE_USER, payload: data}))
     .then(() => dispatch(endLoader()))
+}
+
+export const logOut = () => dispatch => {
+  fetch('api/users/current', {
+    method: 'DELETE'
+  })
+}
+
+export const loadUserNotification = (id) => dispatch => {
+  fetch(`/api/users/user/${id}/notification`)
+    .then(res => res.json())
+    .then(data => dispatch({type: LOAD_NOTIFICATION, payload: data}))
 }

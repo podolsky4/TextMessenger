@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Array;
 import java.util.Optional;
 
 @RestController
@@ -30,12 +31,21 @@ public class UserController {
 
   @GetMapping("/current")
   public ResponseEntity endpoint() {
+
+    Array[] arr = new Array[0];
     if (userEndPoint == null) {
-      return ResponseEntity.status(204).body("no user");
+      return ResponseEntity.status(204).body(arr);
+
     } else {
       return ResponseEntity.status(200).body(userEndPoint);
     }
   }
+
+  @DeleteMapping("/current")
+  public void deleteCurrent() {
+    userEndPoint = null; //NOSONAR
+  }
+
 
   @PostMapping("/user")
   public ResponseEntity<?> createUser(@RequestBody User user) {
@@ -121,5 +131,10 @@ public class UserController {
       userEndPoint = user; //NOSONAR
       return ResponseEntity.status(200).body(user);
     }
+  }
+
+  @GetMapping("user/{id}/notification")
+  public ResponseEntity getNotification(@PathVariable("id") Long id) {
+    return ResponseEntity.ok().body(userService.getAllNotificationByUserId(id));
   }
 }

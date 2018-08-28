@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.DialogRepository;
@@ -15,10 +16,13 @@ public class DialogServiceImpl implements DialogService {
 
   private final DialogRepository dialogRepository;
   private final UserRepository userRepository;
+  private final NotificationService notificationService;
 
-  public DialogServiceImpl(DialogRepository dialogRepository, UserRepository userRepository) {
+  public DialogServiceImpl(DialogRepository dialogRepository, UserRepository userRepository,
+                           NotificationService notificationService) {
     this.dialogRepository = dialogRepository;
     this.userRepository = userRepository;
+    this.notificationService = notificationService;
   }
 
   @Override
@@ -48,10 +52,14 @@ public class DialogServiceImpl implements DialogService {
     Dialog save = dialogRepository.save(dialog);
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
+    notificationService.createNotification(NotificationType.DIALOG.toString(), firstUser, save.getId());
   }
 
   @Override
   public void addToDialogNewUser(Long dialog, Long user) {
-    userRepository.getOne(user).getDialogs().add(dialogRepository.getOne(dialog));
+    User one = userRepository.getOne(user);
+    Dialog save = dialogRepository.getOne(dialog);
+    one.getDialogs().add(save);
+    notificationService.createNotification(NotificationType.DIALOG.toString(), one, save.getId());
   }
 }

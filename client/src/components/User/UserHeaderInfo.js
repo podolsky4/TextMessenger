@@ -16,14 +16,14 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import CardHeader from '@material-ui/core/CardHeader'
 import IconButton from '@material-ui/core/IconButton'
 import red from '@material-ui/core/colors/red'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 
-import { Redirect } from 'react-router'
+import {Redirect} from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
 
 const styles = theme => ({
@@ -54,43 +54,49 @@ const styles = theme => ({
     backgroundColor: red[500],
     cursor: 'pointer'
   },
-  cardHeader: {
-    padding: '8px'
+  nopadding: {
+    padding: 0,
   },
   title: {
     cursor: 'pointer'
   }
-})
+});
 
 class UserHeaderInfo extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       toredirect: false,
-      id: ''
+      id: this.props.user.id
     }
   }
+
   profileRender = (id) => {
     this.setState({
       toredirect: true,
       id: id
     })
-  }
-  render () {
-    const { classes, post } = this.props
-    const {toredirect, id} = this.state
+  };
+
+  render() {
+    const {classes, user, post, padding} = this.props;
+    // if(this.props.post) { const post = this.props.post } else {const post = 0}
+    const {toredirect, id} = this.state;
 
     if (toredirect) {
+      this.setState({toredirect: false});
       return <Redirect to={`/profile/${id}`}/>
     }
 
     return (
-      <CardHeader className={classnames(classes.cardHeader) }
+      <CardHeader
+        style={{padding}}
+        className={classnames(classes.cardHeader)}
         avatar={
           <Avatar alt="Remy Sharp"
-            src={post.user.profilePhoto}
-            className={classnames(classes.avatar, 'logo')}
-            onClick={e => this.profileRender(post.user.id)}
+                  src={user.profilePhoto}
+                  className={classnames(classes.avatar, 'logo')}
+                  onClick={e => this.profileRender(this.props.user.id)}
           />
         }
         action={
@@ -99,12 +105,12 @@ class UserHeaderInfo extends React.Component {
           </IconButton>
         }
         title={
-          <div className={classnames(classes.root, classes.title)} onClick={e => this.profileRender(post.user.id)}>
-            {`${post.user.firstName} ${post.user.lastName}`}
+          <div className={classnames(classes.root, classes.title)} onClick={e => this.profileRender(user.id)}>
+            {`${user.firstName} ${user.lastName}`}
           </div>
         }
-        subheader={
-          new Date(post.createdDate).toDateString()
+        subheader={post &&
+        new Date(post.createdDate).toDateString()
         }
       />
     )
@@ -112,39 +118,9 @@ class UserHeaderInfo extends React.Component {
 }
 
 UserHeaderInfo.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(UserHeaderInfo)
-
-//  <Ava
-//              onClick={e => this.profileRender(post.user.id)}
-//              aria-label="User avatar"
-//              className={classes.avatar}
-//              src={post.user.profilePhoto}
-//              post={post}
-//
-//              // onClick={this.profileRender(post.user.id)}
-//         />
-//
-// <CardHeader
-// avatar={
-// <Avatar aria-label="User avatar" src={post.user.profilePhoto} className={classes.avatar}/>
-// }
-// action={
-// <IconButton>
-//     <MoreVertIcon />
-// </IconButton>
-// }
-// title={
-// <div className={classes.root}>
-//     <PersonIcon className={classes.icon} />
-//     {`${post.user.firstName} ${post.user.lastName}`}
-// </div>
-// }
-// subheader={
-// <div className={classes.root}>
-//     <CalendarIcon className={classes.icon} />{new Date(post.createdDate).toDateString()}
-// </div>
-// }
-// />
