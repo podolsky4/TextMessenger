@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -54,6 +55,10 @@ public class User extends BaseEntity {
 
   @Column(name = "birthday")
   private LocalDate dateBirthday;
+
+  public List<String> getRoles(){
+    return Arrays.asList("ROLE_USER");
+  }
 
   @OneToMany(mappedBy = "user")
   @JsonIgnore
