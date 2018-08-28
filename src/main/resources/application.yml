@@ -36,3 +36,5 @@ spring:
       settings:
         trace: true
         web-allow-others: true
+
+

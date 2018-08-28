@@ -2,10 +2,7 @@ package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.service.LoginService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +19,7 @@ public class LoginController {
     this.loginService = loginService;
   }
 
-  @PostMapping("/loginiii")
+  @PostMapping("/login")
   public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user){
     return loginService.authenticateUser(user);
   }

@@ -11,24 +11,47 @@ import java.util.stream.Collectors;
 
 @Data
 public class UserPrincipal implements UserDetails {
+
   private Long id;
-  private String login;
+
+  private String username;
+
   private String email;
+
   private String password;
+
   private List<? extends GrantedAuthority> authorities;
 
-  public UserPrincipal(Long id, String login, String email, String password,
+  public UserPrincipal(Long id,
+                       String username,
+                       String email,
+                       String password,
                        List<? extends GrantedAuthority> authorities) {
     this.id = id;
-    this.login = login;
+    this.username = username;
     this.email = email;
     this.password = password;
     this.authorities = authorities;
   }
 
-  @Override
-  public String getUsername() {
-    return login;
+  public static UserPrincipal create(User user) {
+
+    UserPrincipal userPrincipal = new UserPrincipal(
+            user.getId(),
+            user.getLogin(),
+            user.getEmail(),
+            user.getPassword(),
+            user.getRoles().stream().map(s -> (GrantedAuthority) () -> s).collect(Collectors.toList())
+    );
+
+    return new UserPrincipal(
+            user.getId(),
+            user.getLogin(),
+            user.getEmail(),
+            user.getPassword(),
+            user.getRoles().stream().map(s -> (GrantedAuthority) () -> s).collect(Collectors.toList())
+    );
+
   }
 
   @Override
@@ -54,16 +77,5 @@ public class UserPrincipal implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
-  }
-
-  public static UserPrincipal create(User user) {
-    System.out.println(user.getPassword());
-    return new UserPrincipal(
-            user.getId(),
-            user.getLogin(),
-            user.getPassword(),
-            user.getEmail(),
-            user.getRoles().stream().map(s -> (GrantedAuthority) () -> s).collect(Collectors.toList())
-    );
   }
 }

@@ -18,15 +18,16 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-  private JwtTokenProvider tokenProvider;
-  private CustomUserDetailsService userDetailsService;
+  private final JwtTokenProvider tokenProvider;
+  private final CustomUserDetailsService userDetailsService;
 
-  public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider, CustomUserDetailsService customUserDetailsService) {
-    tokenProvider = jwtTokenProvider;
-    userDetailsService = customUserDetailsService;
-  }
 
   private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+
+  public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, CustomUserDetailsService userDetailsService) {
+    this.tokenProvider = tokenProvider;
+    this.userDetailsService = userDetailsService;
+  }
 
 
   @Override
@@ -36,7 +37,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
           throws ServletException, IOException {
     try {
       String jwt = getJwtFromRequest(request);
-
       if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
         Long userId = tokenProvider.getUserIdFromJwt(jwt);
 
@@ -52,9 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     } catch (Exception ex) {
       logger.error("Could not set user authentication in security context", ex);
     }
-
     filterChain.doFilter(request, response);
-
   }
 
   private String getJwtFromRequest(HttpServletRequest request) {

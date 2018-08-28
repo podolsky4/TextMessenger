@@ -18,25 +18,25 @@ import java.util.Optional;
 @Service
 
 public class LoginServiceImpl implements LoginService {
-  private UserRepository userRepository;
-  private AuthenticationManager authenticationManager;
-  private JwtTokenProvider jwtTokenProvider;
-  private PasswordEncoder passwordEncoder;
-  LoginServiceImpl(PasswordEncoder passwordEncoder,UserRepository userRepository, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider){
-    this.userRepository=userRepository;
+  private final UserRepository userRepository;
+  private final AuthenticationManager authenticationManager;
+  private final JwtTokenProvider jwtTokenProvider;
+  private final PasswordEncoder passwordEncoder;
+
+  public LoginServiceImpl(PasswordEncoder passwordEncoder,
+                          UserRepository userRepository,
+                          AuthenticationManager authenticationManager,
+                          JwtTokenProvider jwtTokenProvider) {
+    this.userRepository = userRepository;
     this.authenticationManager = authenticationManager;
     this.jwtTokenProvider = jwtTokenProvider;
     this.passwordEncoder = passwordEncoder;
   }
+
   @Override
   public ResponseEntity authenticateUser(LoginRq user) {
     Optional<User> byLoginOrEmail = userRepository.findByLoginOrEmail(user.getLoginOrEmail(), user.getLoginOrEmail());
     String str = passwordEncoder.encode(user.getPassword());
-    System.out.println("==========================================================");
-    System.out.println(str);
-    System.out.println(byLoginOrEmail.get().getPassword());
-
-    System.out.println("==========================================================");
     Authentication authenticate = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                     user.getLoginOrEmail(),
