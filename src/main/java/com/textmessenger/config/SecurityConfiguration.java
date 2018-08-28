@@ -19,20 +19,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-  private  CustomUserDetailsService customUserDetailsService;
+  private CustomUserDetailsService customUserDetailsService;
   private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
   private JwtAuthenticationFilter jwtAuthenticationFilter;
 
   public SecurityConfiguration(CustomUserDetailsService customUserDetailsService,
                                JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-                               JwtAuthenticationFilter jwtAuthenticationFilter){
-    this.customUserDetailsService= customUserDetailsService;
+                               JwtAuthenticationFilter jwtAuthenticationFilter) {
+    this.customUserDetailsService = customUserDetailsService;
     this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-    this.jwtAuthenticationFilter=jwtAuthenticationFilter;
+    this.jwtAuthenticationFilter = jwtAuthenticationFilter;
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder(){
+  public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
@@ -40,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
   }
+
   @Bean(BeanIds.AUTHENTICATION_MANAGER)
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -48,33 +49,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-   http
-           .headers()
-           .frameOptions()
-           .disable()
-           .and()
-           .csrf()
-           .disable()
-           .exceptionHandling()
-           .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-           .and()
-           .sessionManagement()
-           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-           .and()
-           .authorizeRequests()
-           .antMatchers("/api/login")
-           .permitAll()
-           .antMatchers("/h2")
-           .permitAll()
-           .antMatchers("/h2/*")
-           .permitAll()
-           .antMatchers("/console")
-           .permitAll()
-           .antMatchers("/console/*")
-           .permitAll()
-           .anyRequest()
-           .authenticated();
+    http
+            .headers()
+            .frameOptions()
+            .disable()
+            .and()
+            .csrf()
+            .disable()
+            .exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/api/users/login")
+            .permitAll()
+            .antMatchers("/console")
+            .permitAll()
+            .antMatchers("/console/*")
+            .permitAll()
+            .anyRequest()
+            .authenticated();
 
-   http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
   }
 }

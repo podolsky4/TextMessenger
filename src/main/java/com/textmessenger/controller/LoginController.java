@@ -15,12 +15,12 @@ import javax.validation.Valid;
 public class LoginController {
   private LoginService loginService;
 
-  public LoginController(LoginService loginService){
+  public LoginController(LoginService loginService) {
     this.loginService = loginService;
   }
 
   @PostMapping("/login")
-  public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user){
+  public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user) {
     return loginService.authenticateUser(user);
   }
 }

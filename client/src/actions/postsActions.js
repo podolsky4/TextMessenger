@@ -7,6 +7,8 @@ export const createLoadPosts = (id, content) => dispatch => {
     {
       method: 'POST',
       headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({'content': content})
@@ -20,6 +22,8 @@ export const createComment = (postId, userId, content) => dispatch => {
     {
       method: 'POST',
       headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({'content': content})
@@ -32,6 +36,8 @@ export const retweet = (id, postId) => dispatch => {
     {
       method: 'POST',
       headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     })
@@ -42,6 +48,8 @@ export const unRetweet = (postId) => dispatch => {
     {
       method: 'DELETE',
       headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     })
@@ -53,6 +61,8 @@ export const addedLikers = (id, user) => dispatch => {
     {
       method: 'PUT',
       headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(user)
@@ -64,6 +74,8 @@ export const deleteLikers = (id, user) => dispatch => {
     {
       method: 'DELETE',
       headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(user)
@@ -71,19 +83,37 @@ export const deleteLikers = (id, user) => dispatch => {
     .then(() => dispatch(loadFavorites(user.id)))
 }
 export const loadFavorites = (id) => dispatch => {
-  fetch(`/api/users/favorites/${id}`)
+  fetch(`/api/users/favorites/${id}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }})
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_FAVORITES, payload: data}))
 }
 export const loadFavoritesByLogin = (login) => dispatch => {
-  fetch(`/api/users/favorites/login/${login}`)
+  fetch(`/api/users/favorites/login/${login}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }})
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_FAVORITES, payload: data}))
 }
 
 export const loadPosts = () => dispatch => {
   dispatch(startLoader('LOADING_POST'))
-  fetch(`/api/posts`)
+  fetch(`/api/posts`, {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }})
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
     .then(() => dispatch(stopLoader('LOADING_POST')))

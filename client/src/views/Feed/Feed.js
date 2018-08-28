@@ -32,26 +32,26 @@ const styles = theme => ({
   },
   form: {
     background: '#fafafa',
-    display:'flex'
+    display: 'flex'
   },
   textfield: {
     width: '75%',
-    padding: "30px 8px 16px 16px",
-    alignSelf: 'flex-end',
+    padding: '30px 8px 16px 16px',
+    alignSelf: 'flex-end'
   }
-});
+})
 
 class Feed extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       text: ''
     }
   }
 
   componentDidMount () {
-    const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props;
-    getCurrentUserPoint();
+    const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props
+    getCurrentUserPoint()
     if (user.length !== 0) {
       loadFavorites(user.id)
     }
@@ -65,14 +65,14 @@ class Feed extends Component {
   };
 
   reset = () => {
-    this.setState({text: ''});
+    this.setState({text: ''})
     document.getElementById('content').value = ''
   };
 
   onSubmit = e => {
-    const {user, createPost} = this.props;
-    e.preventDefault();
-    createPost(user.id, this.state.text);
+    const {user, createPost} = this.props
+    e.preventDefault()
+    createPost(user.id, this.state.text)
     this.reset()
   };
 
@@ -99,12 +99,12 @@ class Feed extends Component {
   }
 
   render () {
-    const {posts, user, fetching, classes} = this.props;
-    const {reloadLoader} = this.props;
+    const {posts, user, fetching, classes} = this.props
+    const {reloadLoader} = this.props
     if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
-    console.log(fetching);
+    console.log(fetching)
     return (
 
       <div style={{padding: 15}}>
@@ -160,7 +160,7 @@ const mapStateToProps = state => {
     reloadLoader: state.reloadLoader,
     fetching: state.loader.loadingPost
   }
-};
+}
 const mapDispatchToProps = dispatch => {
   return {
     loadPosts: () => dispatch(loadPosts()),
@@ -168,5 +168,5 @@ const mapDispatchToProps = dispatch => {
     loadFavorites: (id) => dispatch(loadFavorites(id)),
     getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
-};
+}
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Feed))

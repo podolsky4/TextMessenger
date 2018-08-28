@@ -14,9 +14,10 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
   private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+
   @Override
   public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-    logger.error("Respond error"+e.getMessage());
-    httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,"not authorized ");
+    logger.error("Respond error" + e.getMessage());
+    httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "not authorized ");
   }
 }

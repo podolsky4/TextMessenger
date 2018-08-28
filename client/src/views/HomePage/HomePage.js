@@ -25,19 +25,18 @@ const styles = theme => ({
     alignItems: 'start',
     justifyContent: 'flex-start'
   }
-});
+})
 
 class HomePage extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-      location: "home",
+      location: 'home'
     }
   }
 
-  render() {
-
-    const {classes, user} = this.props;
+  render () {
+    const {classes, user} = this.props
     return (
       <div className={classNames(classes.homepage, classes.root, classes.cont)}>
         <TextCard
@@ -54,5 +53,5 @@ const mapStateToProps = state => {
     user: state.user,
     location: state.location
   }
-};
+}
 export default connect(mapStateToProps)(withStyles(styles)(HomePage))

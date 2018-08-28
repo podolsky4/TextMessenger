@@ -10,15 +10,15 @@ const styles = theme => ({
   button: {
     alignSelf: 'stretch',
     margin: '8% 4.5% 3% 4.5%',
-    marginBottom: 2.1*theme.spacing.unit,
+    marginBottom: 2.1 * theme.spacing.unit
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
   }
-});
+})
 
 function ButtonPost (props) {
-  const {classes} = props;
+  const {classes} = props
   return (
     <Button variant="contained" type="submit" color="primary" className={classes.button}>
       Send
@@ -29,6 +29,6 @@ function ButtonPost (props) {
 
 ButtonPost.propTypes = {
   classes: PropTypes.object.isRequired
-};
+}
 
 export default withStyles(styles)(ButtonPost)

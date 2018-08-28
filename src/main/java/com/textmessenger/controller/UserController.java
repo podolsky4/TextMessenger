@@ -2,6 +2,8 @@ package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.LoginRq;
+import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.Array;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -24,21 +26,21 @@ public class UserController {
 
   private static User userEndPoint = null;
   private final UserService userService;
+  private LoginService loginService;
 
-  public UserController(UserService userService) {
+  public UserController(UserService userService, LoginService loginService) {
     this.userService = userService;
+    this.loginService = loginService;
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user) {
+    return loginService.authenticateUser(user);
   }
 
   @GetMapping("/current")
   public ResponseEntity endpoint() {
-
-    Array[] arr = new Array[0];
-    if (userEndPoint == null) {
-      return ResponseEntity.status(204).body(arr);
-
-    } else {
-      return ResponseEntity.status(200).body(userEndPoint);
-    }
+    return ResponseEntity.ok().body(userService.getCurrentUser());
   }
 
   @DeleteMapping("/current")

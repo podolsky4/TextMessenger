@@ -17,16 +17,16 @@ import PublicIcon from '@material-ui/icons/Public'
 import Badge from '@material-ui/core/Badge/Badge'
 import UserHeaderInfo from '../../components/User/UserHeaderInfo'
 import connect from 'react-redux/es/connect/connect'
-import Popper from "@material-ui/core/Popper/Popper";
-import Fade from "@material-ui/core/Fade/Fade";
-import Paper from "@material-ui/core/Paper/Paper";
-import LogOut from "../../components/User/LogOut";
+import Popper from '@material-ui/core/Popper/Popper'
+import Fade from '@material-ui/core/Fade/Fade'
+import Paper from '@material-ui/core/Paper/Paper'
+import LogOut from '../../components/User/LogOut'
 
 import classNames from 'classnames'
 
 const styles = (theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
     // padding: "1px",
   },
   menuButton: {
@@ -41,49 +41,46 @@ const styles = (theme) => ({
     right: -10
   },
   typography: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 2
   },
   headerUser: {
-    padding: "1px",
-  },
-});
-
+    padding: '1px'
+  }
+})
 
 class Header extends React.Component {
   state = {
     anchorEl: null,
     open: false,
-    noUser: false,
+    noUser: false
   };
 
   handleClick = event => {
-    const {currentTarget} = event;
+    const {currentTarget} = event
     this.setState(state => ({
       anchorEl: currentTarget,
-      open: !state.open,
-    }));
+      open: !state.open
+    }))
   };
 
   // console.log("location :", location, {user})
 
+  render () {
+    const {classes, user, currentLocation} = this.props
+    let {noUser} = this.state.noUser
 
-  render() {
-    const {classes, user, currentLocation} = this.props;
-    let {noUser} = this.state.noUser;
-
-    console.log("location is :", currentLocation);
-    const {anchorEl, open} = this.state;
-    const id = open ? 'simple-popper' : null;
-
+    console.log('location is :', currentLocation)
+    const {anchorEl, open} = this.state
+    const id = open ? 'simple-popper' : null
 
     // const {location} = currentLocation;
 
-    console.log('USER: ', user);
+    console.log('USER: ', user)
 
     if (user.length === 0) {
       noUser = true
     }
-    console.log('NoUSER: ', this.state.noUser);
+    console.log('NoUSER: ', this.state.noUser)
 
     return <div className={classes.root}>
       <AppBar position='static'>
@@ -117,11 +114,11 @@ class Header extends React.Component {
 
           {!noUser &&
           <Button color="inherit" variant="outlined"
-                  aria-describedby={id}
-                  id="headerUser"
-                  className={classNames(classes.headerUser)}
-                  onClick={this.handleClick}
-                  style={{padding: 8}}>
+            aria-describedby={id}
+            id="headerUser"
+            className={classNames(classes.headerUser)}
+            onClick={this.handleClick}
+            style={{padding: 8}}>
             <UserHeaderInfo padding={0} user={user} />
             <Popper id={id} open={open} anchorEl={anchorEl} transition>
               {({TransitionProps}) => (
@@ -142,17 +139,16 @@ class Header extends React.Component {
   }
 }
 
-
 // {/*<Poper classes={'poper'} content={conten} />*/}
 Header.propTypes = {
   classes: PropTypes.object.isRequired
-};
+}
 
 const mapStateToProps = state => {
   return {
     user: state.user,
-    currentLocation: state.location,
+    currentLocation: state.location
   }
-};
+}
 
 export default connect(mapStateToProps)(withStyles(styles)(Header))

@@ -68,7 +68,13 @@ export const findUsers = (str) => dispatch => {
 
 export const getCurrentUser = () => dispatch => {
   dispatch(startLoader('LOADING_POST'))
-  fetch('api/users/current')
+  fetch('api/users/current', {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }})
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -82,24 +88,28 @@ export const getCurrentUser = () => dispatch => {
 }
 export const loginIn = (email, password) => dispatch => {
   dispatch(startLoader('LOADING_POST'))
-  fetch(`api/users/user/${email}`, {
+  fetch(`/api/users/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: password
-  })
-    .then(function (response) {
-      console.log(response)
-      if (response.status === 205) {
-        alert('wrong password')
-      } else if (response.status === 204) {
-        alert('this email is not registraite')
-      } else {
-        console.log('accept')
-        return response.json()
-      }
-    }).then(data => dispatch({type: CREATE_USER, payload: data}))
+    body: JSON.stringify({
+      loginOrEmail: email,
+      password: password
+    })})
+    // .then(function (response) {
+    //   console.log(response)
+    //   if (response.status === 205) {
+    //     alert('wrong password')
+    //   } else if (response.status === 204) {
+    //     alert('this email is not registraite')
+    //   } else {
+    //     console.log('accept')
+    //     return response.json()
+    //   }
+    // }).then(data => dispatch({type: CREATE_USER, payload: data}))
+    .then(res => res.json())
+    .then(res => res.status === 500 ? null : localStorage.setItem('accessToken', res.accessToken))
     .then(() => dispatch(endLoader()))
 }
 

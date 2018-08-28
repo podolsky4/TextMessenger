@@ -56,7 +56,7 @@ public class User extends BaseEntity {
   @Column(name = "birthday")
   private LocalDate dateBirthday;
 
-  public List<String> getRoles(){
+  public List<String> getRoles() {
     return Arrays.asList("ROLE_USER");
   }
 
