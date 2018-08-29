@@ -16,7 +16,7 @@ public class UserPrincipal implements UserDetails {
 
   private String username;
 
-  private String email;
+  private String email; //NOSONAR
 
   private String password;
 
