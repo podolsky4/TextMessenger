@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {addFollowing, deleteFollowing, getFollowing, getUser} from '../../actions/userActions'
+import {addFollowing, deleteFollowing, getFollowing} from '../../actions/userActions'
 import Loader from '../../components/Loader/Loader'
 import PropTypes from 'prop-types'
 
@@ -70,7 +70,6 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadUser: () => dispatch(getUser()),
     loadFollowing: (id) => dispatch(getFollowing(id)),
     addToFollowing: (id, userId) => dispatch(addFollowing(id, userId)),
     deleteFromFollowing: (id, userId) => dispatch(deleteFollowing(id, userId))
