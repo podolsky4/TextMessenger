@@ -1,9 +1,10 @@
 package com.textmessenger.dto.receive;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.textmessenger.dto.view.UserView;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,22 +14,31 @@ public class UserRxDTO {
 
   private long id;
 
+  @Length(min = 3, max = 60)
   private String login;
 
+  @Email
   private String email;
 
+  @Length(min = 6, max = 60)
   private String password;
 
+  @Length(max = 60)
   private String firstName;
 
+  @Length(max = 60)
   private String lastName;
 
+  @Length(max = 255)
   private String address;
 
+  @Length(max = 200)
   private String profilePhoto;
 
+  @Length(max = 200)
   private String profileHeader;
 
+  @Past
   private LocalDate dateBirthday;
 
   private List<PostRxDTO> posts = new ArrayList<>();

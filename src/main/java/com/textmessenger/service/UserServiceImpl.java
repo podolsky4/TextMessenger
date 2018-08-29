@@ -1,6 +1,8 @@
 package com.textmessenger.service;
 
 
+import com.textmessenger.dto.receive.PostRxDTO;
+import com.textmessenger.dto.receive.UserRxDTO;
 import com.textmessenger.dto.transfer.NotificationTxDTO;
 import com.textmessenger.dto.transfer.PostTxDTO;
 import com.textmessenger.dto.transfer.UserTxDTO;
@@ -33,8 +35,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserTxDTO createUser(User user) {
-    return userMapper.userToTxDto(userRepository.save(user));
+  public UserTxDTO createUser(UserRxDTO user) {
+    return userMapper.userToTxDto(userRepository.save(userMapper.userRxDtoToUser(user)));
   }
 
   @Override
@@ -43,8 +45,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void updateUser(User user) {
-    userRepository.save(user);
+  public void updateUser(UserRxDTO user) {
+    userRepository.save(userMapper.userRxDtoToUser(user));
   }
 
   @Override
@@ -58,16 +60,16 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void deleteFromFavorites(Post post, User user) {
-    User userByLogin = userRepository.findUserByLogin(user.getLogin());
-    userByLogin.getFavorites().remove(post);
+  public void deleteFromFavorites(PostRxDTO post, UserRxDTO user) {
+    User userByLogin = userRepository.findUserByLogin(userMapper.userRxDtoToUser(user).getLogin());
+    userByLogin.getFavorites().remove(postMapper.postRxDtoToPost(post));
     userRepository.save(userByLogin);
   }
 
   @Override
-  public void addLikers(Post post, User user) {
-    User userByLogin = userRepository.findUserByLogin(user.getLogin());
-    userByLogin.getFavorites().add(post);
+  public void addLikers(PostRxDTO post, UserRxDTO user) {
+    User userByLogin = userRepository.findUserByLogin(userMapper.userRxDtoToUser(user).getLogin());
+    userByLogin.getFavorites().add(postMapper.postRxDtoToPost(post));
     userRepository.save(userByLogin);
   }
 

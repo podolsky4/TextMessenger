@@ -2,6 +2,9 @@ package com.textmessenger.dto.receive;
 
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 @Data
 public class NotificationRxDTO {
 
@@ -13,5 +16,7 @@ public class NotificationRxDTO {
 
   private String type;
 
+  @NotNull
+  @Valid
   private UserRxDTO user;
 }

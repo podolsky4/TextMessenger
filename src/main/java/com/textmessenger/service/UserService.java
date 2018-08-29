@@ -1,28 +1,28 @@
 package com.textmessenger.service;
 
+import com.textmessenger.dto.receive.PostRxDTO;
+import com.textmessenger.dto.receive.UserRxDTO;
 import com.textmessenger.dto.transfer.NotificationTxDTO;
 import com.textmessenger.dto.transfer.PostTxDTO;
 import com.textmessenger.dto.transfer.UserTxDTO;
-import com.textmessenger.model.entity.Post;
-import com.textmessenger.model.entity.User;
 
 import java.util.List;
 
 public interface UserService {
 
-  UserTxDTO createUser(User user);
+  UserTxDTO createUser(UserRxDTO user);
 
   UserTxDTO readUser(long id);
 
-  void updateUser(User user);
+  void updateUser(UserRxDTO user);
 
   void deleteUser(long id);
 
   UserTxDTO getUserByLogin(String login);
 
-  void addLikers(Post post, User user);
+  void addLikers(PostRxDTO post, UserRxDTO user);
 
-  void deleteFromFavorites(Post post, User user);
+  void deleteFromFavorites(PostRxDTO post, UserRxDTO user);
 
   List<PostTxDTO> getFavoritesById(Long id);
 
