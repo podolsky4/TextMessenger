@@ -35,8 +35,6 @@ public class LoginServiceImpl implements LoginService {
 
   @Override
   public ResponseEntity authenticateUser(LoginRq user) {
-    Optional<User> byLoginOrEmail = userRepository.findByLoginOrEmail(user.getLoginOrEmail(), user.getLoginOrEmail());
-    String str = passwordEncoder.encode(user.getPassword());
     Authentication authenticate = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                     user.getLoginOrEmail(),
