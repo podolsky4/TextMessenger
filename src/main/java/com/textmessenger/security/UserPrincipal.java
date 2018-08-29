@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 @Data
 public class UserPrincipal implements UserDetails {
 
-  private Long id;
+  private Long id;//NOSONAR
 
-  private String username;
+  private String username;//NOSONAR
 
   private String email; //NOSONAR
 
-  private String password;
+  private String password;//NOSONAR
 
   private List<? extends GrantedAuthority> authorities;
 

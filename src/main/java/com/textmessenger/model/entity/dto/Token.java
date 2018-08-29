@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Token {
   private String accessToken;
-  private static final String TOKEN_TYPE = "Bearer";
+  private static final String TOKEN_TYPE = "Bearer"; //NOSONAR
 
   public Token(String accessToken) {
     this.accessToken = accessToken;
