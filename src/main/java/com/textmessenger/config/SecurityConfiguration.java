@@ -41,12 +41,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
   }
 
-  @Bean(BeanIds.AUTHENTICATION_MANAGER)
-  @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
-  }
-
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
@@ -74,4 +68,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
   }
+
+  @Bean(BeanIds.AUTHENTICATION_MANAGER)
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
+
 }
