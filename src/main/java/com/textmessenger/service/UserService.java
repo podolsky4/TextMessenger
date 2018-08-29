@@ -37,4 +37,6 @@ public interface UserService {
   User logIn(String email, String password);
 
   List<Notification> getAllNotificationByUserId(Long id);
+
+  User getCurrentUser();
 }

@@ -36,10 +36,9 @@ const styles = theme => ({
   submit: {
     marginTop: theme.spacing.unit * 3
   }
-});
+})
 
 class LogOut extends Component {
-
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -47,14 +46,14 @@ class LogOut extends Component {
   };
 
   logout = (e) => {
-    const {logOutUser} = this.props;
-    e.preventDefault();
-    document.location.reload();
+    const {logOutUser} = this.props
+    e.preventDefault()
+    document.location.reload()
     logOutUser()
   };
 
-  render() {
-    const {classes, user} = this.props;
+  render () {
+    const {classes, user} = this.props
     return (
       <React.Fragment>
         <CssBaseline/>
@@ -70,7 +69,7 @@ class LogOut extends Component {
               onClick={e => this.logout(e)}
               className={classes.submit}
             >
-              Log Out {user.login}
+                Log Out {user.login}
             </Button>
           </Paper>
         </main>
@@ -81,14 +80,14 @@ class LogOut extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    logOutUser: () => dispatch(logOut()),
+    logOutUser: () => dispatch(logOut())
   }
-};
+}
 const mapStateToProps = state => {
   return {
     user: state.user,
     fetching: state.loader.fetching
   }
-};
+}
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(LogOut))

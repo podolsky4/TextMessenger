@@ -74,14 +74,14 @@ class LogIn extends Component {
   }
 
   render () {
-    const { classes, fetching } = this.props
+    const {classes, fetching} = this.props
     return (
       <React.Fragment>
-        <CssBaseline />
+        <CssBaseline/>
         <main className={classes.layout}>
           <Paper className={classes.paper}>
             <Avatar className={classes.avatar}>
-              <LockIcon />
+              <LockIcon/>
             </Avatar>
             <Typography variant="headline">Sign in</Typography>
             <form onSubmit={e => this.onSubmit(e)} className={classes.form}>

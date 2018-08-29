@@ -1,6 +1,6 @@
 const initialState = {
-  location: 'home',
-};
+  location: 'home'
+}
 
 function location (state = initialState, action) {
   if (action.type === 'LOCATION') {

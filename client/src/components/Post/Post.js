@@ -93,7 +93,7 @@ class Post extends Component {
   };
 
   handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }))
+    this.setState(state => ({expanded: !state.expanded}))
   };
 
   render () {
@@ -109,7 +109,7 @@ class Post extends Component {
 
           {owner &&
             <div className={classes.reTweet}
-              children={`Ретвитнул ${owner.login}`} />
+              children={`Ретвитнул ${owner.login}`}/>
           }
 
           <UserHeaderInfo user={post.user}
@@ -119,7 +119,7 @@ class Post extends Component {
 
           <PostContent content={post.content}/>
 
-          <Divider />
+          <Divider/>
 
           <CardActions className={classes.actions}
             disableActionSpacing>
@@ -129,7 +129,7 @@ class Post extends Component {
               favorites={favorites}
               handleRetwite={this.handleRetwite.bind(this)}
               handleComments={this.handleComments.bind(this)}
-              className={classes.footer} />
+              className={classes.footer}/>
           </CardActions>
 
           {this.state.flag &&

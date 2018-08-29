@@ -22,7 +22,7 @@ class MessagesList extends Component {
     return (
       <div className={classes.massageList}>
         {messages.map(function (message) {
-          return <Message key={message.id} message = {message} user={user}/>
+          return <Message key={message.id} message={message} user={user}/>
         })}
       </div>
     )

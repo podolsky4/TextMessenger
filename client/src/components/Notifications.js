@@ -8,6 +8,7 @@ class Notifications extends Component {
     const {user, loadNotification} = this.props
     loadNotification(user.id)
   }
+
   render () {
     const {user, notification} = this.props
     if (user.length === 0) {

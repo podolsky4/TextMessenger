@@ -11,6 +11,7 @@ class CommentList extends Component {
       text: ''
     }
   }
+
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -28,6 +29,7 @@ class CommentList extends Component {
     createComments(post.id, user.id, this.state.text)
     this.reset()
   };
+
   myFunction (e) {
     if (e.key === 'Enter') {
       this.onSubmit(e)
@@ -37,6 +39,7 @@ class CommentList extends Component {
       })
     }
   }
+
   render () {
     const {comments, flag, commentReload} = this.props
     let maped = post => {
@@ -66,6 +69,7 @@ class CommentList extends Component {
     )
   }
 }
+
 const mapStateToProps = state => {
   return {
     user: state.user,
