@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
     tempUser.getFollowers().forEach(u -> u.getNotifications()
             .add(notificationMapper
                     .notTxDtoToNot(notificationService
-                            .createNotification(NotificationType.POST.toString(), u, tempSave))));
+                            .createNotification(NotificationType.POST.toString(), user, tempSave))));
   }
 
   @Override
