@@ -7,7 +7,7 @@ public class Token {
   private String accessToken;
   private final String tokenType = "Bearer";
 
-  public Token(String s) {
-    this.accessToken = s;
+  public Token(String accessToken) {
+    this.accessToken = accessToken;
   }
 }

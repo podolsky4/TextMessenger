@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class dffd {
+public class RuntimeAddToDataBase {
   @Autowired
   PasswordEncoder passwordEncoder;
 
