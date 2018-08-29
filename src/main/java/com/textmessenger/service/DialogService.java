@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.dto.transfer.DialogTxDTO;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
 
@@ -9,7 +10,7 @@ public interface DialogService {
 
   void createDialog(Dialog dialog);
 
-  List<Dialog> getDialogsByUser(User user);
+  List<DialogTxDTO> getDialogsByUser(User user);
 
   void updateDialog(Dialog dialog);
 

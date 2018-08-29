@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.dto.transfer.DialogTxDTO;
 import com.textmessenger.mapper.DialogMapper;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
@@ -33,8 +34,8 @@ public class DialogServiceImpl implements DialogService {
     dialogRepository.save(dialog);
   }
 
-  public List<Dialog> getDialogsByUser(User user) {
-    return dialogRepository.findDialogsByUsers(user);
+  public List<DialogTxDTO> getDialogsByUser(User user) {
+    return dialogMapper.dialsToDialTxDtos(dialogRepository.findDialogsByUsers(user));
   }
 
   @Override

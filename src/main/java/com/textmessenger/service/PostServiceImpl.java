@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.dto.transfer.PostTxDTO;
 import com.textmessenger.mapper.PostMapper;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
@@ -45,14 +46,14 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public Optional<List<Post>> getAll() {
+  public Optional<List<PostTxDTO>> getAll() {
 
-    return Optional.of(postRepository.findAll(orderBy()));
+    return Optional.of(postMapper.postsToTxDtos(postRepository.findAll(orderBy())));
   }
 
   @Override
-  public List<Post> getUserPost(User user) {
-    return postRepository.findPostsByUser(user);
+  public List<PostTxDTO> getUserPost(User user) {
+    return postMapper.postsToTxDtos(postRepository.findPostsByUser(user));
   }
 
   private Sort orderBy() {

@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.dto.transfer.CommentTxDTO;
 import com.textmessenger.mapper.CommentMapper;
 import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
@@ -35,8 +36,8 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public List<Comment> findAllPostFromPost(Post post) {
-    return commentRepository.findCommentsByPost(post);
+  public List<CommentTxDTO> findAllPostFromPost(Post post) {
+    return commentMapper.commsToCommTxDtos(commentRepository.findCommentsByPost(post));
   }
 
   @Override

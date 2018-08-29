@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.dto.transfer.PostTxDTO;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 
@@ -14,9 +15,9 @@ public interface PostService {
 
   void deletePost(Post post);
 
-  Optional<List<Post>> getAll();
+  Optional<List<PostTxDTO>> getAll();
 
-  List<Post> getUserPost(User user);
+  List<PostTxDTO> getUserPost(User user);
 
   void retwitPost(User user, Long postId);
 }

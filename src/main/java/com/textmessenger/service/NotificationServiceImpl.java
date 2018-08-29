@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.dto.transfer.NotificationTxDTO;
 import com.textmessenger.mapper.NotificationMapper;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.User;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class NotificationServiceImpl implements NotificationService {
   private final NotificationRepository notificationRepository;
-
   private final NotificationMapper notificationMapper;
 
   NotificationServiceImpl(NotificationRepository notificationRepository, NotificationMapper notificationMapper) {
@@ -18,12 +18,12 @@ public class NotificationServiceImpl implements NotificationService {
   }
 
   @Override
-  public Notification createNotification(String type, User user, Long id) {
+  public NotificationTxDTO createNotification(String type, User user, Long id) {
     Notification notification = new Notification();
     notification.setContentId(id);
     notification.setUser(user);
     notification.setType(type);
-    return notificationRepository.save(notification);
+    return notificationMapper.notToNotTxDto(notificationRepository.save(notification));
 
   }
 

@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.dto.transfer.MessageTxDTO;
 import com.textmessenger.mapper.MessageMapper;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
@@ -58,8 +59,8 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public List<Message> getMessagesFromDialog(Dialog dialog) {
-    return messageRepository.findByDialog(dialog);
+  public List<MessageTxDTO> getMessagesFromDialog(Dialog dialog) {
+    return messageMapper.messsToMessTxDtos(messageRepository.findByDialog(dialog));
   }
 
   @Override
