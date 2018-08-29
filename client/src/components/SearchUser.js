@@ -35,7 +35,7 @@ class SearchUser extends Component {
   onSubmit = e => {
     const {findAllUsers} = this.props
     e.preventDefault()
-    console.log(this.state.text)
+    console.log('this.state.text', this.state.text)
     findAllUsers(this.state.text)
     this.setState({flag: true})
   }

@@ -3,6 +3,7 @@ package com.textmessenger.controller;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.LoginRq;
+import com.textmessenger.model.entity.dto.SearchValue;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -51,8 +52,8 @@ public class UserController {
   }
 
   @PostMapping("/find")
-  public ResponseEntity findAllUsers(@RequestBody String str) {
-    return Optional.of(ResponseEntity.ok().body(userService.findUsersBySearch(str)))
+  public ResponseEntity findAllUsers(@Valid @RequestBody SearchValue str) {
+    return Optional.of(ResponseEntity.ok().body(userService.findUsersBySearch(str.getSearch())))
             .orElse(ResponseEntity.notFound().build());
   }
 
