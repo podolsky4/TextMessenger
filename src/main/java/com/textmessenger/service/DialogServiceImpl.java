@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.mapper.DialogMapper;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.DialogRepository;
@@ -17,12 +18,14 @@ public class DialogServiceImpl implements DialogService {
   private final DialogRepository dialogRepository;
   private final UserRepository userRepository;
   private final NotificationService notificationService;
+  private final DialogMapper dialogMapper;
 
   public DialogServiceImpl(DialogRepository dialogRepository, UserRepository userRepository,
-                           NotificationService notificationService) {
+                           NotificationService notificationService, DialogMapper dialogMapper) {
     this.dialogRepository = dialogRepository;
     this.userRepository = userRepository;
     this.notificationService = notificationService;
+    this.dialogMapper = dialogMapper;
   }
 
   @Override

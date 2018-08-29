@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.mapper.MessageMapper;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
@@ -20,16 +21,19 @@ public class MessageServiceImpl implements MessageService {
   private final UserRepository userRepository;
   private final DialogRepository dialogRepository;
   private final NotificationService notificationService;
+  private final MessageMapper messageMapper;
 
   public MessageServiceImpl(MessageRepository messageRepository,
                             DialogRepository dialogRepository,
                             UserRepository userRepository,
-                            NotificationService notificationService) {
+                            NotificationService notificationService,
+                            MessageMapper messageMapper) {
 
     this.messageRepository = messageRepository;
     this.dialogRepository = dialogRepository;
     this.userRepository = userRepository;
     this.notificationService = notificationService;
+    this.messageMapper = messageMapper;
   }
 
   @Override

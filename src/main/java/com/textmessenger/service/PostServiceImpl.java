@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.mapper.PostMapper;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.PostRepository;
@@ -17,10 +18,12 @@ public class PostServiceImpl implements PostService {
 
   private final PostRepository postRepository;
   private final NotificationService notificationService;
+  private final PostMapper postMapper;
 
-  PostServiceImpl(PostRepository postRepository, NotificationService notificationService) {
+  PostServiceImpl(PostRepository postRepository, NotificationService notificationService, PostMapper postMapper) {
     this.postRepository = postRepository;
     this.notificationService = notificationService;
+    this.postMapper = postMapper;
   }
 
   @Override

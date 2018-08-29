@@ -1,7 +1,8 @@
 package com.textmessenger.service;
 
+import com.textmessenger.dto.transfer.NotificationTxDTO;
+import com.textmessenger.dto.transfer.PostTxDTO;
 import com.textmessenger.dto.transfer.UserTxDTO;
-import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 
@@ -11,31 +12,31 @@ public interface UserService {
 
   UserTxDTO createUser(User user);
 
-  User readUser(long id);
+  UserTxDTO readUser(long id);
 
   void updateUser(User user);
 
   void deleteUser(long id);
 
-  User getUserByLogin(String login);
+  UserTxDTO getUserByLogin(String login);
 
   void addLikers(Post post, User user);
 
   void deleteFromFavorites(Post post, User user);
 
-  List<Post> getFavoritesById(Long id);
+  List<PostTxDTO> getFavoritesById(Long id);
 
-  List<Post> getFavoritesByLogin(String login);
+  List<PostTxDTO> getFavoritesByLogin(String login);
 
-  List<User> findUsersBySearch(String str);
+  List<UserTxDTO> findUsersBySearch(String str);
 
-  List<User> getFollowings(Long id);
+  List<UserTxDTO> getFollowings(Long id);
 
   void addToFollowing(Long user, Long newUser);
 
   void deleteFromFollowing(Long user, Long newUser);
 
-  User logIn(String email, String password);
+  UserTxDTO logIn(String email, String password);
 
-  List<Notification> getAllNotificationByUserId(Long id);
+  List<NotificationTxDTO> getAllNotificationByUserId(Long id);
 }

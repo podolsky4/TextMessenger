@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.mapper.CommentMapper;
 import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
@@ -16,10 +17,13 @@ public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
   private final NotificationService notificationService;
+  private final CommentMapper commentMapper;
 
-  CommentServiceImpl(CommentRepository commentRepository, NotificationService notificationService) {
+  CommentServiceImpl(CommentRepository commentRepository, NotificationService notificationService,
+                     CommentMapper commentMapper) {
     this.commentRepository = commentRepository;
     this.notificationService = notificationService;
+    this.commentMapper = commentMapper;
   }
 
   @Override

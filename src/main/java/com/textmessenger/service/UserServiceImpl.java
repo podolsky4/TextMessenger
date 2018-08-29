@@ -1,9 +1,12 @@
 package com.textmessenger.service;
 
 
+import com.textmessenger.dto.transfer.NotificationTxDTO;
+import com.textmessenger.dto.transfer.PostTxDTO;
 import com.textmessenger.dto.transfer.UserTxDTO;
+import com.textmessenger.mapper.NotificationMapper;
+import com.textmessenger.mapper.PostMapper;
 import com.textmessenger.mapper.UserMapper;
-import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.UserRepository;
@@ -17,12 +20,16 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-
+  private final PostMapper postMapper;
+  private final NotificationMapper notificationMapper;
   private final UserMapper userMapper;
 
-  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PostMapper postMapper,
+                         NotificationMapper notificationMapper) {
     this.userRepository = userRepository;
     this.userMapper = userMapper;
+    this.notificationMapper = notificationMapper;
+    this.postMapper = postMapper;
   }
 
   @Override
@@ -31,8 +38,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User readUser(long id) {
-    return userRepository.getOne(id);
+  public UserTxDTO readUser(long id) {
+    return userMapper.userToTxDto(userRepository.getOne(id));
   }
 
   @Override
@@ -46,8 +53,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User getUserByLogin(String login) {
-    return userRepository.findUserByLogin(login);
+  public UserTxDTO getUserByLogin(String login) {
+    return userMapper.userToTxDto(userRepository.findUserByLogin(login));
   }
 
   @Override
@@ -65,27 +72,27 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<Post> getFavoritesById(Long id) {
+  public List<PostTxDTO> getFavoritesById(Long id) {
     List<Post> favorites = userRepository.getOne(id).getFavorites();
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
-    return favorites;
+    return postMapper.postsToTxDtos(favorites);
   }
 
   @Override
-  public List<Post> getFavoritesByLogin(String login) {
+  public List<PostTxDTO> getFavoritesByLogin(String login) {
     List<Post> favorites = userRepository.findUserByLogin(login).getFavorites();
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
-    return favorites;
+    return postMapper.postsToTxDtos(favorites);
   }
 
   @Override
-  public List<User> findUsersBySearch(String str) {
-    return userRepository.findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(str, str);
+  public List<UserTxDTO> findUsersBySearch(String str) {
+    return userMapper.usersToTxDtos(userRepository.findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(str, str));
   }
 
   @Override
-  public List<User> getFollowings(Long id) {
-    return userRepository.getOne(id).getFollowing();
+  public List<UserTxDTO> getFollowings(Long id) {
+    return userMapper.usersToTxDtos(userRepository.getOne(id).getFollowing());
   }
 
   @Override
@@ -100,12 +107,12 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User logIn(String email, String password) {
-    return userRepository.findUserByEmail(email);
+  public UserTxDTO logIn(String email, String password) {
+    return userMapper.userToTxDto(userRepository.findUserByEmail(email));
   }
 
   @Override
-  public List<Notification> getAllNotificationByUserId(Long id) {
-    return userRepository.getOne(id).getNotifications();
+  public List<NotificationTxDTO> getAllNotificationByUserId(Long id) {
+    return notificationMapper.notsToNotTxDtos(userRepository.getOne(id).getNotifications());
   }
 }
