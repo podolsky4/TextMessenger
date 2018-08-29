@@ -6,6 +6,7 @@
     "@material-ui/core": "^1.4.3",
     "@material-ui/icons": "^2.0.1",
     "ajv": "^6.5.2",
+    "classnames": "latest",
     "eslint-config-stylelint": "^8.1.0",
     "node-sass-chokidar": "^1.3.3",
     "npm-run-all": "^4.1.1",
@@ -15,15 +16,15 @@
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4",
+    "react-scripts": "1.1.2",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^17.0.0",
     "stylelint-order": "^0.7.0",
-    "classnames": "latest"
-
+    "typeface-roboto": "^0.0.54",
+    "jss": "latest"
   },
   "scripts": {
     "watch-compile-sass": "npm run build-sass && node-sass-chokidar src/ -o src/ --watch --recursive",
@@ -49,7 +50,6 @@
       "extensions": "scss"
     }
   },
-  "homepage": "http:///twitter/",
   "proxy": {
     "/api": {
       "target": "http://localhost:9000/"

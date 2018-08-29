@@ -2,9 +2,10 @@ package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.LoginRq;
+import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,17 +15,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin
 public class UserController {
-
   private final UserService userService;
+  private LoginService loginService;
 
-  public UserController(UserService userService) {
+  public UserController(UserService userService, LoginService loginService) {
     this.userService = userService;
+    this.loginService = loginService;
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user) {
+    return loginService.authenticateUser(user);
+  }
+
+  @GetMapping("/current")
+  public ResponseEntity endpoint() {
+    return ResponseEntity.ok().body(userService.getCurrentUser());
   }
 
   @PostMapping("/user")
@@ -35,6 +47,12 @@ public class UserController {
   @GetMapping("/{id}")
   public ResponseEntity<?> readUser(@PathVariable("id") long id) {
     return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
+            .orElse(ResponseEntity.notFound().build());
+  }
+
+  @PostMapping("/find")
+  public ResponseEntity findAllUsers(@RequestBody String str) {
+    return Optional.of(ResponseEntity.ok().body(userService.findUsersBySearch(str)))
             .orElse(ResponseEntity.notFound().build());
   }
 
@@ -55,13 +73,13 @@ public class UserController {
     return ResponseEntity.ok().body(userService.getUserByLogin(login));
   }
 
-  @PutMapping("/post/{id}")
+  @PutMapping("/like/{id}")
   public ResponseEntity<?> addToFavorites(@PathVariable("id") Post post, @RequestBody User user) {
     userService.addLikers(post, user);
     return ResponseEntity.status(201).build();
   }
 
-  @DeleteMapping("/post/{id}")
+  @DeleteMapping("/like/{id}")
   public ResponseEntity<?> deleteFromFavorites(@PathVariable("id") Post post, @RequestBody User user) {
     userService.deleteFromFavorites(post, user);
     return ResponseEntity.status(204).build();
@@ -75,5 +93,27 @@ public class UserController {
   @GetMapping("/favorites/login/{login}")
   public ResponseEntity<?> getFavoritesByLogin(@PathVariable("login") String login) {
     return ResponseEntity.status(200).body(userService.getFavoritesByLogin(login));
+  }
+
+  @GetMapping("/user/{id}/getFollowing")
+  public ResponseEntity getFollowing(@PathVariable("id") Long id) {
+    return ResponseEntity.status(200).body(userService.getFollowings(id));
+  }
+
+  @GetMapping("/user/{userId}/addToFollowing/{newUser}")
+  public ResponseEntity addToFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
+    userService.addToFollowing(user, newUser);
+    return ResponseEntity.status(200).build();
+  }
+
+  @DeleteMapping("/user/{userId}/addToFollowing/{newUser}")
+  public ResponseEntity deleteFromFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
+    userService.deleteFromFollowing(user, newUser);
+    return ResponseEntity.status(200).build();
+  }
+
+  @GetMapping("user/{id}/notification")
+  public ResponseEntity getNotification(@PathVariable("id") Long id) {
+    return ResponseEntity.ok().body(userService.getAllNotificationByUserId(id));
   }
 }

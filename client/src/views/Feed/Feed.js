@@ -1,10 +1,45 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createLoadPosts, loadPosts, loadFavorites} from '../../actions/postsActions'
-import {getUser} from '../../actions/userActions'
+import {createLoadPosts, loadFavorites, loadPosts} from '../../actions/postsActions'
+import {getCurrentUser} from '../../actions/userActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
-import loader from "../../reducers/loader";
+
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper/'
+import {Redirect} from 'react-router-dom'
+
+import {withStyles} from '@material-ui/core/styles'
+import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
+import TextField from '@material-ui/core/TextField/TextField'
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  grid: {
+    flexGrow: '0',
+    width: '75%',
+    flexBasis: '75%'
+  },
+  icon: {
+    paddingRight: theme.spacing.unit,
+    marginTop: -4
+  },
+  actions: {
+    display: 'flex'
+  },
+  form: {
+    background: '#fafafa',
+    display: 'flex'
+  },
+  textfield: {
+    width: '75%',
+    padding: '30px 8px 16px 16px',
+    alignSelf: 'flex-end'
+  }
+})
 
 class Feed extends Component {
   constructor (props) {
@@ -13,18 +48,16 @@ class Feed extends Component {
       text: ''
     }
   }
+
   componentDidMount () {
-    const {posts, favorites, user, loadPosts, loadFavorites, loadUser} = this.props
-    if (posts.length === 0) {
-      loadPosts()
-    }
-    if (favorites.length === 0) {
+    const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props
+    getCurrentUserPoint()
+    if (user.length !== 0) {
       loadFavorites(user.id)
     }
-    if (user.length === 0) {
-      loadUser()
-    }
+    loadPosts()
   }
+
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -34,7 +67,7 @@ class Feed extends Component {
   reset = () => {
     this.setState({text: ''})
     document.getElementById('content').value = ''
-  }
+  };
 
   onSubmit = e => {
     const {user, createPost} = this.props
@@ -42,7 +75,20 @@ class Feed extends Component {
     createPost(user.id, this.state.text)
     this.reset()
   };
-  myFunction (e) {
+
+  handleInput (e) {
+    if (e.target.value.length > 275) {
+      e.target.style.backgroundColor = '#f0ee97'
+    }
+    if (e.target.value.length === 280) {
+      e.target.style.backgroundColor = '#E64A19'
+    }
+    if (e.target.value.length < 280) {
+      e.target.style.backgroundColor = '#f0ee97'
+    }
+    if (e.target.value.length < 275) {
+      e.target.style.backgroundColor = '#fafafa'
+    }
     if (e.key === 'Enter') {
       this.onSubmit(e)
     } else {
@@ -51,24 +97,55 @@ class Feed extends Component {
       })
     }
   }
+
   render () {
-    const {posts, user, fetching} = this.props
-      console.log(fetching)
+    const {posts, user, fetching, classes} = this.props
+    const {reloadLoader} = this.props
+    if (user.length === 0) {
+      return <Redirect to={`/`}/>
+    }
+    console.log(fetching)
     return (
-      <div>
-        <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
-          <textarea defaultValue=""
-            placeholder="Что нового?"
-            maxLength={280}
-            id="content"
-            name="text"
-            type="text"
-            onKeyUp={event => this.myFunction(event)}
-          />
-          <button className="btn-create-post">Опубликовать</button>
-        </form>
-          {fetching && <Loader classes={loader}/>}
-          {!fetching && <PostList posts={posts} user={user}/>}
+
+      <div style={{padding: 15}}>
+        <Grid
+          container
+          direction='column'
+          justify='center'
+          alignItems='center'
+          spacing={16}
+        >
+          <Grid className={classes.grid} item xs={12} sm={9} md={8} lg={6}>
+            <Paper>
+              <form className={classes.form} onSubmit={e => this.onSubmit(e)}>
+                <TextField
+                  defaultValue=""
+                  placeholder="Share something..."
+                  inputProps={{
+                    maxLength: 280,
+                    padding: '3.7% 0 7px',
+                    style:
+                            {borderRadius: '2px'}
+                  }}
+                  id="content"
+                  name="text"
+                  multiline
+                  className={classes.textfield}
+                  onKeyUp={event => this.handleInput(event)}
+                  // onClick={event => Feed.handleHeight(event)} onKeyUp={event => this.handleInput(event)}
+                />
+                <ButtonPost flowRight/>
+                {/* <button className="btn-create-post">Publish</button> */}
+              </form>
+            </Paper>
+            {reloadLoader && <Loader/>}
+          </Grid>
+          {/* {reloadLoader && <Loader/>} */}
+          {/* <PostList posts={posts} user={user}/> */}
+          {/* {fetching && <Loader/>} */}
+          {/* {!fetching && <PostList posts={posts} user={user}/>} */}
+          <PostList posts={posts} user={user}/>
+        </Grid>
       </div>
     )
   }
@@ -79,7 +156,9 @@ const mapStateToProps = state => {
     user: state.user,
     posts: state.posts,
     favorites: state.favorites,
-    fetching: state.loader.fetching
+    // fetching: state.loader.fetching,
+    reloadLoader: state.reloadLoader,
+    fetching: state.loader.loadingPost
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -87,7 +166,7 @@ const mapDispatchToProps = dispatch => {
     loadPosts: () => dispatch(loadPosts()),
     createPost: (id, content) => dispatch(createLoadPosts(id, content)),
     loadFavorites: (id) => dispatch(loadFavorites(id)),
-    loadUser: () => dispatch(getUser())
+    getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Feed)
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Feed))

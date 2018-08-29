@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createComment} from '../../../actions/postsActions'
 import Comment from './Comment'
+import Loader from '../../Loader/Loader'
 
 class CommentList extends Component {
   constructor (props) {
@@ -10,6 +11,7 @@ class CommentList extends Component {
       text: ''
     }
   }
+
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -19,7 +21,7 @@ class CommentList extends Component {
   reset = () => {
     this.setState({text: ''})
     document.getElementById('comment').value = ''
-  }
+  };
 
   onSubmit = e => {
     const {user, createComments, post} = this.props
@@ -27,6 +29,7 @@ class CommentList extends Component {
     createComments(post.id, user.id, this.state.text)
     this.reset()
   };
+
   myFunction (e) {
     if (e.key === 'Enter') {
       this.onSubmit(e)
@@ -36,8 +39,9 @@ class CommentList extends Component {
       })
     }
   }
+
   render () {
-    const {comments, flag} = this.props
+    const {comments, flag, commentReload} = this.props
     let maped = post => {
       return (
         <Comment
@@ -49,6 +53,7 @@ class CommentList extends Component {
     return (
       <div>
         {flag && comments.map(i => maped(i))}
+        {commentReload && <Loader/>}
         <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
           <textarea defaultValue=""
             placeholder="Текст комментария"
@@ -64,11 +69,13 @@ class CommentList extends Component {
     )
   }
 }
+
 const mapStateToProps = state => {
   return {
     user: state.user,
     posts: state.posts,
-    favorites: state.favorites
+    favorites: state.favorites,
+    commentReload: state.loader.commentReload
   }
 }
 const mapDispatchToProps = dispatch => {

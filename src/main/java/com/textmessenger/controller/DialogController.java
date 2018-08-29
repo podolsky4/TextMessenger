@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/dialogs")
+@RequestMapping("/api/dialogs")
 public class DialogController {
 
   private final DialogService dialogService;
@@ -26,18 +25,20 @@ public class DialogController {
   }
 
   @PostMapping("/user/{id}")
-  public ResponseEntity createDialog(@PathVariable("id") User user, @RequestBody Dialog dialog) {
-    List<User> users = dialog.getUsers();
-    users.add(user);
-    dialog.setUsers(users);
-    dialogService.createDialog(dialog);
+  public ResponseEntity createDialog(@PathVariable("id") Long user, @RequestBody User mainUser) {
+    dialogService.createdByUserDialogWithUser(mainUser.getLogin(), user);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
-  @GetMapping("user/{id}")
+  @GetMapping("/user/{id}")
   public ResponseEntity<?> readDialog(@PathVariable("id") User user) {
     return Optional.of(ResponseEntity.ok().body(dialogService.getDialogsByUser(user)))
             .orElse(ResponseEntity.noContent().build());
+  }
+
+  @GetMapping("/user/{newUser}/dialog/{dialogId}")
+  public void addDilogToNewUser(@PathVariable("newUser") Long user, @PathVariable("dialogId") Long dialog) {
+    dialogService.addToDialogNewUser(dialog, user);
   }
 
   @PutMapping

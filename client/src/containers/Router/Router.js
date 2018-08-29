@@ -1,5 +1,5 @@
-import {Route, Switch} from 'react-router-dom'
 import React, {Component} from 'react'
+import {Route, Switch} from 'react-router-dom'
 import HomePage from '../../views/HomePage/HomePage'
 import Feed from '../../views/Feed/Feed'
 import Favorites from '../../views/Favorities/Favorites'
@@ -18,7 +18,7 @@ class Router extends Component {
         <Route exact path='/dialogs' component={Dialogs}/>
         <Route exact path='/notifications' component={Notifications}/>
         <Route exact path='/login' component={Login}/>
-        <Route exact path='/profile' component={Profile}/>
+        <Route path='/profile/:id' component={Profile}/>
       </Switch>
     )
   }

@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
@@ -14,9 +15,11 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
+  private final NotificationService notificationService;
 
-  CommentServiceImpl(CommentRepository commentRepository) {
+  CommentServiceImpl(CommentRepository commentRepository, NotificationService notificationService) {
     this.commentRepository = commentRepository;
+    this.notificationService = notificationService;
   }
 
   @Override
@@ -24,6 +27,7 @@ public class CommentServiceImpl implements CommentService {
     comment.setPost(post);
     comment.setCommentator(user);
     commentRepository.save(comment);
+    notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), post.getId());
   }
 
   @Override

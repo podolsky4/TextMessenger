@@ -1,65 +1,69 @@
 import React, {Component} from 'react'
-import {addedLikers, deleteLikers, loadFavorites, unRetweet, retweet} from '../../actions/postsActions'
+import {addedLikers, deleteLikers, loadFavorites, retweet, unRetweet} from '../../actions/postsActions'
 import {connect} from 'react-redux'
 
-import UserHeaderInfo from '../User/UserHeaderInfo'
-
 import PostContent from './components/PostContent'
-import Like from './components/Like'
-import PostComment from './components/PostComment'
-import PostRetwite from './components/PostRetwite'
+
 import Comments from './components/CommentList'
-// import './Post.css'
+import PropTypes from 'prop-types'
 
+import {withStyles} from '@material-ui/core/styles'
 
-import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import cyan from '@material-ui/core/colors/cyan'
 
-
-
-
-
-import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
-import Card from '@material-ui/core/Card';
-import red from '@material-ui/core/colors/red';
-
-
+import Divider from '@material-ui/core/Divider/Divider'
+import PostFooter from './components/PostFooter'
+import UserHeaderInfo from '../User/UserHeaderInfo'
 
 const styles = theme => ({
 
-    card: {
-        maxWidth: 400,
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    actions: {
-        display: 'flex',
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-        marginLeft: 'auto',
-        [theme.breakpoints.up('sm')]: {
-            marginRight: -8,
-        },
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: red[500],
-    },
-    post: {
-        paddingBottom: '0',
-
-    },
-});
-
-
+  root: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  grid: {
+    flexGrow: '0',
+    width: '75%',
+    flexBasis: '75%'
+  },
+  icon: {
+    paddingRight: theme.spacing.unit,
+    marginTop: -4
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'space-around'
+  },
+  footer: {
+    display: 'flex'
+  },
+  reTweet: {
+    padding: '0.5em',
+    display: 'flex',
+    background: '#EF6C00',
+    color: 'white',
+    textShadow: '0px 1px #3d4e56'
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest
+    }),
+    marginLeft: 'auto',
+    [theme.breakpoints.up('sm')]: {
+      marginRight: -8
+    }
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)'
+  },
+  avatar: {
+    backgroundColor: cyan[500]
+  }
+})
 
 class Post extends Component {
   constructor (props) {
@@ -70,21 +74,13 @@ class Post extends Component {
     }
   }
 
-
   componentWillMount () {
     const {favorites, user, loadFavorites} = this.props
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
   }
-  handleLike = e => {
-    const {post, user, addedLiker, deleteLiker} = this.props
-    if (e.target.className === 'like') {
-      addedLiker(post.id, user)
-    } else {
-      deleteLiker(post.id, user)
-    }
-  }
+
   handleRetwite = e => {
     const {post, user, retweets, unRetweets, postId} = this.props
     if (e.target.className === 'tweet') {
@@ -92,35 +88,61 @@ class Post extends Component {
     } else {
       unRetweets(postId)
     }
-  }
+  };
   handleComments = e => {
     this.setState({flag: true})
-  }
+  };
 
-  // handleExpandClick = () => {
-  //     this.setState(state => ({ expanded: !state.expanded }));
-  // };
+  handleExpandClick = () => {
+    this.setState(state => ({expanded: !state.expanded}))
+  };
 
   render () {
-    const {favorites, post, owner, whoo, user, classes} = this.props
+    const {post, owner, user, classes, favorites, whoo} = this.props
+
     return (
-        <Card className={classnames(classes.card, classes.post, 'post')}
-              key={`${post.id}  ${post.parentId}`}
-        >
-              {owner && `Ретвитнул ${owner.login}`}
-          <header>
-            <UserHeaderInfo user={post.user}/>
-            {/*TODO: not sure if creation time should be in post.user.creationDate. Maybe better to save it post.createdDate*/}
-            {/*<DataInfo user={post.user}/>*/}
-          </header>
+      <Grid className={classes.grid}
+        fullWidth
+        item
+        key={`${post.id} ${post.parentId}`}>
+
+        <Card fullWidth>
+
+          {owner &&
+            <div className={classes.reTweet}
+              children={`Ретвитнул ${owner.login}`}/>
+          }
+
+          <UserHeaderInfo user={post.user}
+            classes
+            post={post}
+            currentUser={user}/>
+
           <PostContent content={post.content}/>
-          <footer>
-            <Like favorites={favorites} post={post} handleLike={this.handleLike.bind(this)}/>
-            <PostRetwite whoo={whoo} handleRetwite={this.handleRetwite.bind(this)}/>
-            <PostComment handleComments={this.handleComments.bind(this)} />
-          </footer>
-          {this.state.flag && <Comments comments={post.comments} post={post} user={user} flag={this.state.flag}/>}
+
+          <Divider/>
+
+          <CardActions className={classes.actions}
+            disableActionSpacing>
+            <PostFooter whoo={whoo}
+              post={post}
+              user={user}
+              favorites={favorites}
+              handleRetwite={this.handleRetwite.bind(this)}
+              handleComments={this.handleComments.bind(this)}
+              className={classes.footer}/>
+          </CardActions>
+
+          {this.state.flag &&
+            <Comments comments={post.comments}
+              post={post}
+              user={user}
+              flag={this.state.flag}/>
+          }
+
         </Card>
+
+      </Grid>
     )
   }
 }
@@ -142,18 +164,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 Post.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Post))
-
-
-
-
-
-
-
-
-
-
-
