@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Loader from './Loader/Loader'
 import {findUsers} from '../actions/userActions'
-import {createDialog, addUserToExistDialog} from '../actions/dialogActions'
+import {addUserToExistDialog, createDialog} from '../actions/dialogActions'
 
 class SearchUser extends Component {
   constructor (props) {
@@ -12,6 +12,7 @@ class SearchUser extends Component {
       flag: false
     }
   }
+
   myFunction (e) {
     if (e.key === 'Enter') {
       this.onSubmit(e)
@@ -30,6 +31,7 @@ class SearchUser extends Component {
       createDialog(user, e.target.value)
     }
   }
+
   onSubmit = e => {
     const {findAllUsers} = this.props
     e.preventDefault()
@@ -37,6 +39,7 @@ class SearchUser extends Component {
     findAllUsers(this.state.text)
     this.setState({flag: true})
   }
+
   render () {
     const {fetching, searchUser} = this.props
 
@@ -61,6 +64,7 @@ class SearchUser extends Component {
     )
   }
 }
+
 const mapStateToProps = state => {
   return {
     fetching: state.loader.fetching,

@@ -6,7 +6,6 @@ import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin
 public class UserController {
-
-  private static User userEndPoint = null;
   private final UserService userService;
   private LoginService loginService;
 
@@ -42,12 +38,6 @@ public class UserController {
   public ResponseEntity endpoint() {
     return ResponseEntity.ok().body(userService.getCurrentUser());
   }
-
-  @DeleteMapping("/current")
-  public void deleteCurrent() {
-    userEndPoint = null; //NOSONAR
-  }
-
 
   @PostMapping("/user")
   public ResponseEntity<?> createUser(@RequestBody User user) {
@@ -83,13 +73,13 @@ public class UserController {
     return ResponseEntity.ok().body(userService.getUserByLogin(login));
   }
 
-  @PutMapping("/post/{id}")
+  @PutMapping("/like/{id}")
   public ResponseEntity<?> addToFavorites(@PathVariable("id") Post post, @RequestBody User user) {
     userService.addLikers(post, user);
     return ResponseEntity.status(201).build();
   }
 
-  @DeleteMapping("/post/{id}")
+  @DeleteMapping("/like/{id}")
   public ResponseEntity<?> deleteFromFavorites(@PathVariable("id") Post post, @RequestBody User user) {
     userService.deleteFromFavorites(post, user);
     return ResponseEntity.status(204).build();
@@ -120,19 +110,6 @@ public class UserController {
   public ResponseEntity deleteFromFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
     userService.deleteFromFollowing(user, newUser);
     return ResponseEntity.status(200).build();
-  }
-
-  @PostMapping("/user/{email}")
-  public ResponseEntity logInUser(@PathVariable("email") String email, @RequestBody String password) {
-    User user = userService.logIn(email, password);
-    if (user == null) {
-      return ResponseEntity.status(204).body("Wrong email ");
-    } else if (!user.getPassword().equals(password)) {
-      return ResponseEntity.status(205).body("Incorrect passwoord");
-    } else {
-      userEndPoint = user; //NOSONAR
-      return ResponseEntity.status(200).body(user);
-    }
   }
 
   @GetMapping("user/{id}/notification")

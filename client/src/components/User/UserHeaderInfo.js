@@ -110,7 +110,7 @@ class UserHeaderInfo extends React.Component {
           </div>
         }
         subheader={post &&
-        new Date(post.createdDate).toDateString()
+            new Date(post.createdDate).toDateString()
         }
       />
     )

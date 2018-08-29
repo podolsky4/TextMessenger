@@ -98,7 +98,8 @@ export const getCurrentUser = () => dispatch => {
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
       'Accept': 'application/json',
       'Content-Type': 'application/json'
-    }})
+    }
+  })
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -120,18 +121,19 @@ export const loginIn = (email, password) => dispatch => {
     body: JSON.stringify({
       loginOrEmail: email,
       password: password
-    })})
-    // .then(function (response) {
-    //   console.log(response)
-    //   if (response.status === 205) {
-    //     alert('wrong password')
-    //   } else if (response.status === 204) {
-    //     alert('this email is not registraite')
-    //   } else {
-    //     console.log('accept')
-    //     return response.json()
-    //   }
-    // }).then(data => dispatch({type: CREATE_USER, payload: data}))
+    })
+  })
+  // .then(function (response) {
+  //   console.log(response)
+  //   if (response.status === 205) {
+  //     alert('wrong password')
+  //   } else if (response.status === 204) {
+  //     alert('this email is not registraite')
+  //   } else {
+  //     console.log('accept')
+  //     return response.json()
+  //   }
+  // }).then(data => dispatch({type: CREATE_USER, payload: data}))
     .then(res => res.json())
     .then(res => res.status === 500 ? null : localStorage.setItem('accessToken', res.accessToken))
     .then(() => dispatch(getCurrentUser()))

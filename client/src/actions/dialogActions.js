@@ -1,4 +1,4 @@
-import {LOAD_DIALOGS, LOAD_MESSAGES, CLEAN_USERSEARCH} from './types'
+import {CLEAN_USERSEARCH, LOAD_DIALOGS, LOAD_MESSAGES} from './types'
 import {toggleLoader} from './loaderActions'
 
 export const loadDialog = id => dispatch => {

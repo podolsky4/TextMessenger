@@ -125,7 +125,7 @@ class Feed extends Component {
                     maxLength: 280,
                     padding: '3.7% 0 7px',
                     style:
-                      {borderRadius: '2px'}
+                            {borderRadius: '2px'}
                   }}
                   id="content"
                   name="text"

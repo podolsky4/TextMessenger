@@ -36,14 +36,6 @@ public class UserPrincipal implements UserDetails {
 
   public static UserPrincipal create(User user) {
 
-    UserPrincipal userPrincipal = new UserPrincipal(
-            user.getId(),
-            user.getLogin(),
-            user.getEmail(),
-            user.getPassword(),
-            user.getRoles().stream().map(s -> (GrantedAuthority) () -> s).collect(Collectors.toList())
-    );
-
     return new UserPrincipal(
             user.getId(),
             user.getLogin(),

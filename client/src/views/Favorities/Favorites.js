@@ -14,6 +14,7 @@ class Favorites extends Component {
       loadFavorites(user.id)
     }
   }
+
   render () {
     const {favorites, user} = this.props
     if (user.length === 0) {
@@ -27,6 +28,7 @@ class Favorites extends Component {
     )
   }
 }
+
 const mapStateToProps = state => {
   return {
     favorites: state.favorites,

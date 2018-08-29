@@ -119,7 +119,7 @@ class Header extends React.Component {
             className={classNames(classes.headerUser)}
             onClick={this.handleClick}
             style={{padding: 8}}>
-            <UserHeaderInfo padding={0} user={user} />
+            <UserHeaderInfo padding={0} user={user}/>
             <Popper id={id} open={open} anchorEl={anchorEl} transition>
               {({TransitionProps}) => (
                 <Fade {...TransitionProps} timeout={350}>

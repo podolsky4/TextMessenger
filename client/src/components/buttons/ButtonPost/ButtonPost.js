@@ -21,7 +21,7 @@ function ButtonPost (props) {
   const {classes} = props
   return (
     <Button variant="contained" type="submit" color="primary" className={classes.button}>
-      Send
+        Send
       <PublishIcon className={classes.rightIcon}></PublishIcon>
     </Button>
   )

@@ -69,7 +69,7 @@ class LogOut extends Component {
               onClick={e => this.logout(e)}
               className={classes.submit}
             >
-              Log Out {user.login}
+                Log Out {user.login}
             </Button>
           </Paper>
         </main>

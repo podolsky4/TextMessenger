@@ -40,7 +40,7 @@ const styles = theme => ({
 })
 
 const TextCard = (props) => {
-  const { classes, text } = props
+  const {classes, text} = props
   return (
     <Paper className={classes.root} elevation={1}>
       <Typography className={classes.heading} variant="headline" component="h3">
