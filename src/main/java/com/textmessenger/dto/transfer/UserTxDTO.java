@@ -1,5 +1,6 @@
 package com.textmessenger.dto.transfer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.textmessenger.dto.view.UserView;
 import lombok.Data;
@@ -11,55 +12,55 @@ import java.util.List;
 @Data
 public class UserTxDTO {
 
-  @JsonView(UserView.UserId.class)
+  @JsonView(UserView.UserBaseId.class)
   private long id;
 
-  @JsonView(UserView.UserLogin.class)
+  @JsonView(UserView.UserShort.class)
   private String login;
 
-  @JsonView(UserView.UserEmail.class)
+  @JsonView(UserView.UserShort.class)
   private String email;
 
-  @JsonView(UserView.UserPassword.class)
+  @JsonIgnore
   private String password;
 
-  @JsonView(UserView.UserFirstName.class)
+  @JsonView(UserView.UserProfile.class)
   private String firstName;
 
-  @JsonView(UserView.UserLastName.class)
+  @JsonView(UserView.UserProfile.class)
   private String lastName;
 
-  @JsonView(UserView.UserAddress.class)
+  @JsonView(UserView.UserProfile.class)
   private String address;
 
-  @JsonView(UserView.UserProfilePhoto.class)
+  @JsonView(UserView.UserProfile.class)
   private String profilePhoto;
 
-  @JsonView(UserView.UserProfileHeader.class)
+  @JsonView(UserView.UserProfile.class)
   private String profileHeader;
 
-  @JsonView(UserView.UserDateBirthday.class)
+  @JsonView(UserView.UserProfile.class)
   private LocalDate dateBirthday;
 
-  @JsonView(UserView.UserPosts.class)
+  @JsonIgnore
   private List<PostTxDTO> posts = new ArrayList<>();
 
-  @JsonView(UserView.UserComments.class)
+  @JsonIgnore
   private List<CommentTxDTO> comments = new ArrayList<>();
 
-  @JsonView(UserView.UserDialogs.class)
+  @JsonIgnore
   private List<DialogTxDTO> dialogs = new ArrayList<>();
 
-  @JsonView(UserView.UserFavorites.class)
+  @JsonIgnore
   private List<PostTxDTO> favorites = new ArrayList<>();
 
-  @JsonView(UserView.UserFollowers.class)
+  @JsonView(UserView.UserFull.class)
   private List<UserTxDTO> followers = new ArrayList<>();
 
-  @JsonView(UserView.UserNotifications.class)
+  @JsonIgnore
   private List<NotificationTxDTO> notifications = new ArrayList<>();
 
-  @JsonView(UserView.UserFollowing.class)
+  @JsonView(UserView.UserFull.class)
   private List<UserTxDTO> following = new ArrayList<>();
 
 }

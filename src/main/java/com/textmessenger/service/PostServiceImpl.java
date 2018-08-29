@@ -1,8 +1,12 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.dto.receive.PostRxDTO;
+import com.textmessenger.dto.receive.UserRxDTO;
 import com.textmessenger.dto.transfer.PostTxDTO;
+import com.textmessenger.mapper.NotificationMapper;
 import com.textmessenger.mapper.PostMapper;
+import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.PostRepository;
@@ -20,29 +24,39 @@ public class PostServiceImpl implements PostService {
   private final PostRepository postRepository;
   private final NotificationService notificationService;
   private final PostMapper postMapper;
+  private final UserMapper userMapper;
+  private final NotificationMapper notificationMapper;
 
-  PostServiceImpl(PostRepository postRepository, NotificationService notificationService, PostMapper postMapper) {
+  PostServiceImpl(PostRepository postRepository, NotificationService notificationService, PostMapper postMapper,
+                  UserMapper userMapper, NotificationMapper notificationMapper) {
     this.postRepository = postRepository;
     this.notificationService = notificationService;
     this.postMapper = postMapper;
+    this.userMapper = userMapper;
+    this.notificationMapper = notificationMapper;
   }
 
   @Override
-  public void createPost(User user, Post post) {
-    post.setUser(user);
-    Post save = postRepository.save(post);
-    user.getFollowers().forEach(u -> u.getNotifications()
-            .add(notificationService.createNotification(NotificationType.POST.toString(), u, save.getId())));
+  public void createPost(UserRxDTO user, PostRxDTO post) {
+    Post tempPost = postMapper.postRxDtoToPost(post);
+    tempPost.setUser(userMapper.userRxDtoToUser(user));
+    Post save = postRepository.save(tempPost);
+    long tempSave = save.getId();
+    User tempUser = userMapper.userRxDtoToUser(user);
+    tempUser.getFollowers().forEach(u -> u.getNotifications()
+            .add(notificationMapper
+                    .notTxDtoToNot(notificationService
+                            .createNotification(NotificationType.POST.toString(), u, tempSave))));
   }
 
   @Override
-  public void updatePost(Post post) {
-    postRepository.save(post);
+  public void updatePost(PostRxDTO post) {
+    postRepository.save(postMapper.postRxDtoToPost(post));
   }
 
   @Override
-  public void deletePost(Post post) {
-    postRepository.delete(post);
+  public void deletePost(PostRxDTO post) {
+    postRepository.delete(postMapper.postRxDtoToPost(post));
   }
 
   @Override
@@ -52,8 +66,8 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public List<PostTxDTO> getUserPost(User user) {
-    return postMapper.postsToTxDtos(postRepository.findPostsByUser(user));
+  public List<PostTxDTO> getUserPost(UserRxDTO user) {
+    return postMapper.postsToTxDtos(postRepository.findPostsByUser(userMapper.userRxDtoToUser(user)));
   }
 
   private Sort orderBy() {
@@ -61,9 +75,9 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public void retwitPost(User user, Long postId) {
+  public void retwitPost(UserRxDTO user, Long postId) {
     Post retwite = new Post();
-    retwite.setUser(user);
+    retwite.setUser(userMapper.userRxDtoToUser(user));
     retwite.setParentId(postId);
     postRepository.save(retwite);
   }
