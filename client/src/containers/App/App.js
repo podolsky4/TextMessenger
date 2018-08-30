@@ -6,6 +6,7 @@ import {getCurrentUser} from '../../actions/userActions'
 import {connect} from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
+import HomePage from '../../views/HomePage/HomePage'
 
 class App extends Component {
   componentWillMount () {
@@ -16,8 +17,14 @@ class App extends Component {
   }
 
   render () {
-    if (!this.props.user) {
-      return <Loader fullscreen={true} />
+    const {user} = this.props
+
+    if (!user) {
+      return <Loader />
+    }
+
+    if (!user.id) {
+      return <HomePage/>
     }
 
     return (
@@ -33,7 +40,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    reloadLoader: state.reloadLoader
   }
 }
 const mapDispatchToProps = dispatch => {
