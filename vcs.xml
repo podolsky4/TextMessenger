@@ -1,4 +1,7 @@
 <application>
+  <component name="Vcs.Log.App.Settings">
+    <option name="SHOW_CHANGES_FROM_PARENTS" value="true" />
+  </component>
   <component name="VcsApplicationSettings">
     <option name="SHOW_LST_WORD_DIFFERENCES" value="false" />
   </component>
