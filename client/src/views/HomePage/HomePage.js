@@ -6,7 +6,7 @@ import TextCard from '../../components/TextCard/TextCard'
 import {withStyles} from '@material-ui/core/styles'
 import connect from 'react-redux/es/connect/connect'
 import classNames from 'classnames'
-import {Redirect} from "react-router-dom";
+import {Redirect} from 'react-router-dom'
 
 const styles = theme => ({
   root: {

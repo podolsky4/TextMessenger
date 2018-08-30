@@ -134,7 +134,7 @@ class Dialogs extends Component {
     return (
       <div className="wrap">
         <div className="dialogs">
-          {dialogs.map((dialog, index)=>
+          {dialogs.map((dialog, index) =>
             <Paper key = {index} className={classes.paper} elevation={0}>
               <Dialog
                 key = {dialog.id}
