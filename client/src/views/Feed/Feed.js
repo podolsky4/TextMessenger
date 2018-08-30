@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createLoadPosts, loadFavorites, loadPosts} from '../../actions/postsActions'
-import {getCurrentUser} from '../../actions/userActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
@@ -49,12 +48,9 @@ class Feed extends Component {
     }
   }
 
-  componentDidMount () {
-    const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props
-    getCurrentUserPoint()
-    if (user.length !== 0) {
-      loadFavorites(user.id)
-    }
+  componentWillMount () {
+    const {loadPosts, user, loadFavorites} = this.props
+    loadFavorites(user.id)
     loadPosts()
   }
 
@@ -101,7 +97,7 @@ class Feed extends Component {
   render () {
     const {posts, user, fetching, classes} = this.props
     const {reloadLoader} = this.props
-    if (user.length === 0) {
+    if (!user) {
       return <Redirect to={`/`}/>
     }
     console.log(fetching)
@@ -156,7 +152,6 @@ const mapStateToProps = state => {
     user: state.user,
     posts: state.posts,
     favorites: state.favorites,
-    // fetching: state.loader.fetching,
     reloadLoader: state.reloadLoader,
     fetching: state.loader.loadingPost
   }
@@ -165,8 +160,7 @@ const mapDispatchToProps = dispatch => {
   return {
     loadPosts: () => dispatch(loadPosts()),
     createPost: (id, content) => dispatch(createLoadPosts(id, content)),
-    loadFavorites: (id) => dispatch(loadFavorites(id)),
-    getCurrentUserPoint: () => dispatch(getCurrentUser())
+    loadFavorites: (id) => dispatch(loadFavorites(id))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Feed))
