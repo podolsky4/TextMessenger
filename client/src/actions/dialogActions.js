@@ -22,7 +22,7 @@ export const loadMessages = dialogId => dispatch => {
 
 export const createMessage = (dialogId, userId, message) => dispatch => {
   dispatch(toggleLoader())
-  FetchData.post(`/api/messages/user/${userId}/dialog/${dialogId}`, message)
+  FetchData.post(`/api/messages/user/${userId}/dialog/${dialogId}`, {message: message})
     .then(() => dispatch(loadMessages(dialogId)))
 }
 
