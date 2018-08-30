@@ -25,8 +25,8 @@ const styles = theme => ({
   },
   grid: {
     flexGrow: '0',
-    width: '75%',
-    flexBasis: '75%'
+    width: '100%',
+    padding: theme.spacing.unit*1,
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -62,11 +62,11 @@ const styles = theme => ({
   avatar: {
     backgroundColor: cyan[500]
   }
-})
+});
 
 class Post extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       flag: false,
       expanded: false
@@ -74,14 +74,14 @@ class Post extends Component {
   }
 
   componentWillMount () {
-    const {favorites, user, loadFavorites} = this.props
+    const {favorites, user, loadFavorites} = this.props;
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
   }
 
   handleRetwite = e => {
-    const {post, user, retweets, unRetweets, postId} = this.props
+    const {post, user, retweets, unRetweets, postId} = this.props;
     if (e.target.className === 'tweet') {
       retweets(user.id, post.id)
     } else {
@@ -97,13 +97,15 @@ class Post extends Component {
   };
 
   render () {
-    const {post, owner, user, classes, favorites, whoo} = this.props
+    const {post, owner, user, classes, favorites, whoo} = this.props;
 
     return (
       <Grid className={classes.grid}
         fullWidth
         item
-        key={`${post.id} ${post.parentId}`}>
+        key={`${post.id} ${post.parentId}`}
+        spacing={24}
+      >
 
         <Card fullWidth>
 
@@ -151,7 +153,7 @@ const mapStateToProps = state => {
     user: state.user,
     favorites: state.favorites
   }
-}
+};
 const mapDispatchToProps = dispatch => {
   return {
     addedLiker: (id, user) => dispatch(addedLikers(id, user)),
@@ -160,10 +162,10 @@ const mapDispatchToProps = dispatch => {
     retweets: (id, postId) => dispatch(retweet(id, postId)),
     unRetweets: (postId) => dispatch(unRetweet(postId))
   }
-}
+};
 
 Post.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Post))
