@@ -6,10 +6,10 @@ import './Dialogs.css'
 import Chat from './Chat'
 import SearchUser from '../SearchUser'
 import {Redirect} from 'react-router-dom'
-import cyan from "@material-ui/core/colors/cyan";
+import cyan from '@material-ui/core/colors/cyan'
 
 import {withStyles} from '@material-ui/core/styles'
-import Paper from "@material-ui/core/Paper/Paper";
+import Paper from '@material-ui/core/Paper/Paper'
 
 const styles = theme => ({
   root: {
@@ -19,7 +19,7 @@ const styles = theme => ({
   grid: {
     flexGrow: '0',
     width: '100%',
-    padding: theme.spacing.unit*1,
+    padding: theme.spacing.unit * 1
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -55,11 +55,11 @@ const styles = theme => ({
   avatar: {
     backgroundColor: cyan[500]
   }
-});
+})
 
 class Dialogs extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       flag: false,
       dialog: '',
@@ -70,14 +70,14 @@ class Dialogs extends Component {
   }
 
   componentWillMount () {
-    const {user, dialogs, loadDialog} = this.props;
+    const {user, dialogs, loadDialog} = this.props
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
   }
 
   handleCreateDialog = e => {
-    e.preventDefault();
+    e.preventDefault()
     if (this.state.flag) {
       this.setState({newDialog: true, flag: false})
     } else if (this.state.userList) {
@@ -88,8 +88,8 @@ class Dialogs extends Component {
   };
 
   handleMessages = e => {
-    const {loadMessages, cleanUserSearch} = this.props;
-    loadMessages(e.id);
+    const {loadMessages, cleanUserSearch} = this.props
+    loadMessages(e.id)
     if (this.state.newDialog) {
       this.setState({
         flag: true,
@@ -112,9 +112,8 @@ class Dialogs extends Component {
   };
 
   addUserToDialog = e => {
-    const {cleanUserSearch} = this.props;
-    cleanUserSearch();
-    console.log('e', e.target.value);
+    const {cleanUserSearch} = this.props
+    cleanUserSearch()
     this.setState({
       flag: false,
       newDialog: true,
@@ -124,8 +123,8 @@ class Dialogs extends Component {
   };
 
   render () {
-    const {user, dialogs, loadDialog, classes} = this.props;
-    const {flag, newDialog} = this.state;
+    const {user, dialogs, loadDialog, classes} = this.props
+    const {flag, newDialog} = this.state
     if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
@@ -135,15 +134,15 @@ class Dialogs extends Component {
     return (
       <div className="wrap">
         <div className="dialogs">
-          {dialogs.map(dialog =>
-            <Paper className={classes.paper} elevation={0}>
-            <Dialog
-              key = {dialog.id}
-              dialog = {dialog}
-              handleMessages = {this.handleMessages.bind(this)}
-              user={user}
-              addUserToDialog = {this.addUserToDialog.bind(this)}
-            />
+          {dialogs.map((dialog, index)=>
+            <Paper key = {index} className={classes.paper} elevation={0}>
+              <Dialog
+                key = {dialog.id}
+                dialog = {dialog}
+                handleMessages = {this.handleMessages.bind(this)}
+                user={user}
+                addUserToDialog = {this.addUserToDialog.bind(this)}
+              />
             </Paper>
           )}
           <button onClick={e => this.handleCreateDialog(e)}>
@@ -168,7 +167,7 @@ const mapStateToProps = state => {
     messages: state.messages,
     searchUser: state.searchUser
   }
-};
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -177,6 +176,6 @@ const mapDispatchToProps = dispatch => {
     loadMessages: (id) => dispatch(loadMessages((id))),
     cleanUserSearch: () => dispatch(cleanUserSearch())
   }
-};
+}
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Dialogs))

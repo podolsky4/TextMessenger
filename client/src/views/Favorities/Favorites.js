@@ -5,62 +5,62 @@ import PostList from '../../components/Post/PostList'
 import {Redirect} from 'react-router-dom'
 
 import {getCurrentUser} from '../../actions/userActions'
-import {withStyles} from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import {withStyles} from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    alignItems: "center",
+    alignItems: 'center'
 
   },
   paper: {
-    padding: theme.spacing.unit*1,
+    padding: theme.spacing.unit * 1,
     textAlign: 'center',
     color: theme.palette.text.secondary,
     // width: "75%",
-    justifySelf: "center",
-    alignSelf: "center",
-    margin: "auto",
-    marginTop: theme.spacing.unit*3,
-  },
+    justifySelf: 'center',
+    alignSelf: 'center',
+    margin: 'auto',
+    marginTop: theme.spacing.unit * 3
+  }
 
-});
+})
 
 class Favorites extends Component {
   componentWillMount () {
-    const {favorites, user, loadFavorites, getCurrentUserPoint} = this.props;
-    getCurrentUserPoint();
+    const {favorites, user, loadFavorites, getCurrentUserPoint} = this.props
+    getCurrentUserPoint()
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
   }
 
   render () {
-    const { classes } = this.props;
-    const {favorites, user} = this.props;
+    const { classes } = this.props
+    const {favorites, user} = this.props
     if (user.length === 0) {
       return <Redirect to={`/`}/>
     }
     return (
 
-        <Grid container className={classes.root}>
-          <Grid item xs={12} md={10} lg={10}>
-            <Grid
-              container
-              spacing={16}
-              direction="column"
-              justify="center"
-              alignItems="stretch"
-            >
+      <Grid container className={classes.root}>
+        <Grid item xs={12} md={10} lg={10}>
+          <Grid
+            container
+            spacing={16}
+            direction="column"
+            justify="center"
+            alignItems="stretch"
+          >
             <Paper className={classes.paper} elevation={0}>
               <h2>Your liked posts</h2>
             </Paper>
             <PostList posts={favorites}/>
           </Grid>
         </Grid>
-        </Grid>
+      </Grid>
 
     )
   }
@@ -71,11 +71,11 @@ const mapStateToProps = state => {
     favorites: state.favorites,
     user: state.user
   }
-};
+}
 const mapDispatchToProps = dispatch => {
   return {
     loadFavorites: (id) => dispatch(loadFavorites(id)),
     getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
-};
+}
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Favorites))

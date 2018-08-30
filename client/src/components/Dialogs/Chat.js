@@ -67,7 +67,6 @@ class Chat extends Component {
               className={classnames(classes.margin, classes.text, 'messageInput')}
               label="Your Message"
               id="messageInput"
-              // fullWidth
               backgroundColor="white"
               multiline
               autoFocus
@@ -75,7 +74,6 @@ class Chat extends Component {
             >
             </TextField>
             <SubmitButton/>
-            {/* <button >Отправить</button> */}
           </form>
         }
       </div>
