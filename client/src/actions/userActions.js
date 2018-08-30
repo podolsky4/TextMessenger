@@ -1,6 +1,6 @@
 import {LOAD_USER, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION} from './types.js'
 import {loadFavoritesByLogin} from './postsActions'
-import {endLoader, startLoader, stopLoader, toggleLoader} from './loaderActions'
+import {startLoader, stopLoader, toggleLoader} from './loaderActions'
 import FetchData from './serviceAction'
 
 export const createUser = (data) => dispatch => {
