@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadDialog, createDialog, loadMessages, cleanUserSearch} from '../../actions/dialogActions'
+import {cleanUserSearch, createDialog, loadDialog, loadMessages} from '../../actions/dialogActions'
 import Dialog from '../Dialog'
 import './Dialogs.css'
 import Chat from './Chat'
@@ -18,6 +18,7 @@ class Dialogs extends Component {
       exist: false
     }
   }
+
   componentWillMount () {
     const {user, dialogs, loadDialog} = this.props
     if (dialogs.length === 0) {
@@ -86,23 +87,23 @@ class Dialogs extends Component {
         <div className="dialogs">
           {dialogs.map(dialog =>
             <Dialog
-              key = {dialog.id}
-              dialog = {dialog}
-              handleMessages = {this.handleMessages.bind(this)}
+              key={dialog.id}
+              dialog={dialog}
+              handleMessages={this.handleMessages.bind(this)}
               user={user}
-              addUserToDialog = {this.addUserToDialog.bind(this)}
+              addUserToDialog={this.addUserToDialog.bind(this)}
             />
           )}
           <button onClick={e => this.handleCreateDialog(e)}>
-            Create new Dialog
+              Create new Dialog
           </button>
         </div>
-        {flag && <Chat user={user.id} currentDialog = {this.state.dialog}/>}
+        {flag && <Chat user={user.id} currentDialog={this.state.dialog}/>}
         {newDialog &&
-        <SearchUser
-          exist={this.state.exist}
-          dialog={this.state.dialog}
-        />}
+          <SearchUser
+            exist={this.state.exist}
+            dialog={this.state.dialog}
+          />}
       </div>
     )
   }

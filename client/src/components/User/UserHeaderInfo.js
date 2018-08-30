@@ -55,16 +55,16 @@ const styles = theme => ({
     cursor: 'pointer'
   },
   nopadding: {
-    padding: 0,
+    padding: 0
   },
   title: {
     cursor: 'pointer'
   }
-});
+})
 
 class UserHeaderInfo extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       toredirect: false,
       id: this.props.user.id
@@ -78,13 +78,13 @@ class UserHeaderInfo extends React.Component {
     })
   };
 
-  render() {
-    const {classes, user, post, padding} = this.props;
+  render () {
+    const {classes, user, post, padding} = this.props
     // if(this.props.post) { const post = this.props.post } else {const post = 0}
-    const {toredirect, id} = this.state;
+    const {toredirect, id} = this.state
 
     if (toredirect) {
-      this.setState({toredirect: false});
+      this.setState({toredirect: false})
       return <Redirect to={`/profile/${id}`}/>
     }
 
@@ -94,9 +94,9 @@ class UserHeaderInfo extends React.Component {
         className={classnames(classes.cardHeader)}
         avatar={
           <Avatar alt="Remy Sharp"
-                  src={user.profilePhoto}
-                  className={classnames(classes.avatar, 'logo')}
-                  onClick={e => this.profileRender(this.props.user.id)}
+            src={user.profilePhoto}
+            className={classnames(classes.avatar, 'logo')}
+            onClick={e => this.profileRender(this.props.user.id)}
           />
         }
         action={
@@ -110,7 +110,7 @@ class UserHeaderInfo extends React.Component {
           </div>
         }
         subheader={post &&
-        new Date(post.createdDate).toDateString()
+            new Date(post.createdDate).toDateString()
         }
       />
     )
@@ -121,6 +121,6 @@ UserHeaderInfo.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired
-};
+}
 
 export default withStyles(styles)(UserHeaderInfo)

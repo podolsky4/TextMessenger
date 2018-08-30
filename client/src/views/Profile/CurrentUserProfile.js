@@ -20,6 +20,7 @@ class CurrentUserProfile extends Component {
       viewMode: true
     }
   }
+
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -44,7 +45,8 @@ class CurrentUserProfile extends Component {
     return (
       <div>
         <Typography variant='title'>Hello, {user.firstName} {user.lastName}</Typography>
-        <Typography paragraph variant='subheading'>your are login with {user.login} and email {user.email}</Typography>
+        <Typography paragraph variant='subheading'>your are login with {user.login} and
+            email {user.email}</Typography>
         {this.state.viewMode &&
           <div>
             <View user={user}/>
@@ -60,36 +62,36 @@ class CurrentUserProfile extends Component {
             <label>
               name:
               <input id='firstName-change' name='firstName' type='text' value={this.state.firstName}
-                onChange={e => this.change(e)} />
+                onChange={e => this.change(e)}/>
             </label>
             <label>
               surname:
               <input id='lastName-change' name='lastName' type='text' value={this.state.lastName}
-                onChange={e => this.change(e)} />
+                onChange={e => this.change(e)}/>
             </label>
             <label>
               address:
               <input id='address-change' name='address' type='text' value={this.state.address}
-                onChange={e => this.change(e)} />
+                onChange={e => this.change(e)}/>
             </label>
             <label>
               url to avatar:
               <input id='profileHeader-change' name='profileHeader' type='url' value={this.state.profileHeader}
-                onChange={e => this.change(e)} />
+                onChange={e => this.change(e)}/>
             </label>
             <label>
               url to photo:
               <input id='profilePhoto-change' name='profilePhoto' type='url' value={this.state.profilePhoto}
-                onChange={e => this.change(e)} />
+                onChange={e => this.change(e)}/>
             </label>
             <label>
               birthday:
               <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday}
-                onChange={e => this.change(e)} />
+                onChange={e => this.change(e)}/>
             </label>
 
             <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)}/>
-            <input type='button' name='Cancel'value='Cancel' onClick={this.editableField}/>
+            <input type='button' name='Cancel' value='Cancel' onClick={this.editableField}/>
           </form>
         }
       </div>
