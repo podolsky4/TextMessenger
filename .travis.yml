@@ -24,4 +24,4 @@ addons:
 script:
 - mvn clean test jacoco:report coveralls:report
 - npm run build --prefix client/
-- if [ $TRAVIS_BRANCH == "master" || $TRAVIS_PULL_REQUEST == "true" ]; then sonar-scanner;
+- 'if [ $TRAVIS_BRANCH == "master" || $TRAVIS_PULL_REQUEST == "true" ]; then sonar-scanner;fi'
