@@ -102,7 +102,7 @@ class Feed extends Component {
   }
 
   render () {
-    const {posts, user, fetching, classes} = this.props
+    const {posts, user, classes} = this.props
     const {reloadLoader} = this.props
     if (!user) {
       return <Redirect to={`/`}/>
