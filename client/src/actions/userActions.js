@@ -47,7 +47,14 @@ export const findUsers = (str) => dispatch => {
 
 export const getCurrentUser = () => dispatch => {
   dispatch(startLoader('LOADING_POST'))
-  FetchData.get('api/users/current')
+  fetch('api/users/current', {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
     .then(response => {
       if (response.ok) {
         return response.json()
