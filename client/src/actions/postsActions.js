@@ -40,9 +40,11 @@ export const deleteLikers = (id, user) => dispatch => {
     .then(() => dispatch(loadFavorites(user.id)))
 }
 export const loadFavorites = (id) => dispatch => {
+  dispatch(startLoader('LOADING_FAVORITES'))
   FetchData.get(`/api/users/favorites/${id}`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_FAVORITES, payload: data}))
+    .then(() => dispatch(stopLoader('LOADING_FAVORITES')))
 }
 export const loadFavoritesByLogin = (login) => dispatch => {
   FetchData.get(`/api/users/favorites/login/${login}`)

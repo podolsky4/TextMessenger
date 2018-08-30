@@ -1,113 +1,108 @@
 import React, {Component} from 'react'
-import cyan from "@material-ui/core/colors/cyan";
-
+import cyan from '@material-ui/core/colors/cyan'
 
 import {withStyles} from '@material-ui/core/styles'
-import classnames from "classnames";
+import classnames from 'classnames'
 import Avatar from '@material-ui/core/Avatar'
-
 
 const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    width:"100%",
+    width: '100%'
   },
   paper: {
-    flexDirection: "row",
+    flexDirection: 'row',
     width: '100%',
-    display: "flex",
+    display: 'flex',
     padding: theme.spacing.unit * 1,
-    cursor: "pointer",
+    cursor: 'pointer',
     alignItems: 'center',
     justifyContent: 'space-between',
     '&:hover': {
-      background: 'blue',
-    },
+      background: 'blue'
+    }
   },
   avatar: {
     backgroundColor: cyan[500],
-    margin: "0 -6px",
-    transition: "margin .3s",
-    border: "2px solid #ffffff",
+    margin: '0 -6px',
+    transition: 'margin .3s',
+    border: '2px solid #ffffff',
     '&:hover': {
       margin: '0 -6px',
-      zIndex: "10",
-    },
+      zIndex: '10'
+    }
   },
   userAvatarContainer: {
     flexDirection: 'row',
     display: 'flex',
     width: 'fit-content',
     '&:hover': {
-      zIndex: "10",
+      zIndex: '10',
       marginLeft: +3,
-      marginRight: +3,
-    },
+      marginRight: +3
+    }
   },
   userAvatar: {
-    display: "flex",
-    flexDirection: "row",
-    width: "fit-content",
-    '&:hover': {},
+    display: 'flex',
+    flexDirection: 'row',
+    width: 'fit-content',
+    '&:hover': {}
   },
   userName: {
-    margin: "0 0px",
-    transition: "margin .2s",
-    '&:hover': {},
+    margin: '0 0px',
+    transition: 'margin .2s',
+    '&:hover': {}
   },
   userNameContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    transition: "margin .2s",
-    '&:hover': {},
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    transition: 'margin .2s',
+    '&:hover': {}
   }
-});
+})
 
 class Dialog extends Component {
-  render() {
-    const {user, handleMessages, dialog, addUserToDialog, classes} = this.props;
-    const {users} = this.props.dialog;
-
+  render () {
+    const {user, handleMessages, dialog, addUserToDialog, classes} = this.props
+    const {users} = this.props.dialog
 
     return (
       <div className={classes.paper}>
         <div className={classes.userAvatarContainer}>
           {users.map(
-            member => member.id !== user.id ?
-              <div className={classnames(classes.userAvatar)}>
+            member => member.id !== user.id
+              ? <div className={classnames(classes.userAvatar)}>
                 <Avatar alt="avatar"
-                        src={user.profilePhoto}
-                        className={classnames(classes.avatar, 'logo')}
-                        onClick={e => this.profileRender(this.props.user.id)}/>
+                  src={user.profilePhoto}
+                  className={classnames(classes.avatar, 'logo')}
+                  onClick={e => this.profileRender(this.props.user.id)}/>
               </div> : ''
-            )
+          )
           }
         </div>
 
-   <div>
-     {users.map(
-       member => member.id !== user.id
-          ?
-         <div className={classes.userNameContainer}>
-           <a key={member.id}
-              onClick={e => handleMessages(dialog)}
-              className={classnames(classes.userName)}
-           >
-             {member.email}
-           </a>
-         </div>
-         : ''
-     )
-     }
-    </div>
+        <div>
+          {users.map(
+            member => member.id !== user.id
+              ? <div className={classes.userNameContainer}>
+                <a key={member.id}
+                  onClick={e => handleMessages(dialog)}
+                  className={classnames(classes.userName)}
+                >
+                  {member.email}
+                </a>
+              </div>
+              : ''
+          )
+          }
+        </div>
 
+        <button value={dialog.id} onClick={e => addUserToDialog(e)}>Add user</button>
+      </div>
 
-    <button value={dialog.id} onClick={e => addUserToDialog(e)}>Add user</button>
-  </div>
-
-  )
+    )
   }
 }
 

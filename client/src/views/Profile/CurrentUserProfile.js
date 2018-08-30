@@ -3,28 +3,28 @@ import {connect} from 'react-redux'
 import {loadUser, updateUser} from '../../actions/userActions'
 import CurrentUserInfo from './CurrentUserInfo'
 import Typography from '@material-ui/core/Typography/Typography'
-import classnames from "classnames";
-import {withStyles} from '@material-ui/core/styles';
+import classnames from 'classnames'
+import {withStyles} from '@material-ui/core/styles'
 
 const styles = (theme) => ({
-    ChangeUserProfileInfoCard: {
-        Width: "25%",
-        maxWidth: '300px',
-        display: 'flex',
-        flexDirection: "column",
-        justifyItems: "space-between",
-        alignContent: "center",
-        '*': {
-          borderRadius: "2px",
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-        },
-    },
-});
+  ChangeUserProfileInfoCard: {
+    Width: '25%',
+    maxWidth: '300px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyItems: 'space-between',
+    alignContent: 'center',
+    '*': {
+      borderRadius: '2px',
+      justifyContent: 'space-between',
+      alignItems: 'baseline'
+    }
+  }
+})
 
 class CurrentUserProfile extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       login: this.props.user.login,
       email: this.props.user.email,
@@ -50,17 +50,16 @@ class CurrentUserProfile extends Component {
     })
   };
   updateUser = e => {
-    const {user, updateUser} = this.props;
-    e.preventDefault();
-    let data = this.state;
-    const up = {...data, id: user.id};
-    updateUser(up, user.login);
-
+    const {user, updateUser} = this.props
+    e.preventDefault()
+    let data = this.state
+    const up = {...data, id: user.id}
+    updateUser(up, user.login)
     this.editableField()
   };
 
   render () {
-    const {user, classes} = this.props;
+    const {user, classes} = this.props
     return (
       <div>
         <Typography variant='title'>Hell, {user.firstName} {user.lastName}</Typography>
@@ -123,13 +122,13 @@ const mapStateToProps = state => {
     user: state.user,
     id: state.user.id
   }
-};
+}
 
 const mapDispatchToProps = dispatch => {
   return {
     loadUser: (login) => dispatch(loadUser(login)),
     updateUser: (data, login) => dispatch(updateUser(data, login))
   }
-};
+}
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile))

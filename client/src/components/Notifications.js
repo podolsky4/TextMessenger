@@ -11,7 +11,7 @@ class Notifications extends Component {
 
   render () {
     const {user, notification} = this.props
-    if (user.length === 0) {
+    if (!user) {
       return <Redirect to={`/`}/>
     }
     return (
