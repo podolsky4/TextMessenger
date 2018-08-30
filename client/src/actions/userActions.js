@@ -85,9 +85,8 @@ export const loginIn = (email, password) => dispatch => {
 }
 
 export const logOut = () => dispatch => {
-  fetch('api/users/current', {
-    method: 'DELETE'
-  })
+  localStorage.setItem('accessToken', [])
+    .then(() => dispatch(getCurrentUser()))
 }
 
 export const loadUserNotification = (id) => dispatch => {
