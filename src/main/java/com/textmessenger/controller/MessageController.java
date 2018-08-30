@@ -35,7 +35,7 @@ public class MessageController {
 
   @PostMapping("/user/{userId}/dialog/{id}")
   public ResponseEntity addMessageToDialog(@PathVariable("userId") Long user,
-                                           @PathVariable("id") Long dialog,@Valid @RequestBody MessageFromFront msg) {
+                                           @PathVariable("id") Long dialog, @Valid @RequestBody MessageFromFront msg) {
     messageService.createMessageWithUserIdDialogId(user, dialog, msg.getMessage());
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }

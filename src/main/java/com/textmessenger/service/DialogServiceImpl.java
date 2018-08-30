@@ -53,7 +53,7 @@ public class DialogServiceImpl implements DialogService {
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
     save.getUsers().forEach(u -> {
-      if (u.getId()!= firstUser.getId()){
+      if (u.getId() != firstUser.getId()) {
         notificationService.createNotification(NotificationType.DIALOG.toString(), u, save.getId());
       }
     });
