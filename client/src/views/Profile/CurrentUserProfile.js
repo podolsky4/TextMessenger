@@ -50,7 +50,7 @@ class CurrentUserProfile extends Component {
     })
   };
   updateUser = e => {
-    const {user, updateUser, classes} = this.props;
+    const {user, updateUser} = this.props;
     e.preventDefault();
     let data = this.state;
     const up = {...data, id: user.id};
