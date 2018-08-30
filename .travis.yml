@@ -14,7 +14,7 @@ cache:
 
 before_script:
   - npm install --prefix client/
-  - chmod +X ./dev/sonar.sh
+  - chmod +x dev/sonar.sh
 
 # Sonar Cloud Addon
 addons:
@@ -25,4 +25,4 @@ addons:
 script:
   - mvn clean test jacoco:report coveralls:report
   - npm run build --prefix client/
-  - ./dev/sonar.sh
+  - "./dev/sonar.sh"
