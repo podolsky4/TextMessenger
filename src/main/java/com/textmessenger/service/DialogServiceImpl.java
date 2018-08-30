@@ -52,7 +52,12 @@ public class DialogServiceImpl implements DialogService {
     Dialog save = dialogRepository.save(dialog);
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
-    notificationService.createNotification(NotificationType.DIALOG.toString(), firstUser, save.getId());
+    save.getUsers().forEach(u -> {
+      if (u.getId()!= firstUser.getId()){
+        notificationService.createNotification(NotificationType.DIALOG.toString(), u, save.getId());
+      }
+    });
+
   }
 
   @Override
