@@ -2,7 +2,6 @@ class FetchData {
   constructor () {
     this.defaultParams = {
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
@@ -32,6 +31,8 @@ class FetchData {
   }
 
   makeRequest (url, method = 'GET', body) {
+    this.defaultParams.headers['Authorization'] = 'Bearer ' + localStorage.getItem('accessToken')
+
     const requestParams = {
       ...this.defaultParams,
       method: method,
@@ -55,7 +56,7 @@ class FetchData {
 
   handleErrors (result, reject) {
     if (result.status === 401) {
-      window.location.reload()
+      // window.location.reload()
     } else if (!result.ok) {
       result.json()
         .then(result => {

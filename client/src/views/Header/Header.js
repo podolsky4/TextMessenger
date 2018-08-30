@@ -63,24 +63,14 @@ class Header extends React.Component {
     }))
   };
 
-  // console.log("location :", location, {user})
-
   render () {
-    const {classes, user, currentLocation} = this.props
+    const {classes, user} = this.props
     let {noUser} = this.state.noUser
-
-    console.log('location is :', currentLocation)
     const {anchorEl, open} = this.state
     const id = open ? 'simple-popper' : null
-
-    // const {location} = currentLocation;
-
-    console.log('USER: ', user)
-
-    if (user.length === 0) {
+    if (!user) {
       noUser = true
     }
-    console.log('NoUSER: ', this.state.noUser)
 
     return <div className={classes.root}>
       <AppBar position='static'>

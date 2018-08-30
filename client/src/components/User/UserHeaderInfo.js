@@ -1,19 +1,3 @@
-// import React, {Component} from 'react'
-// import UserLogin from './UserLogin'
-// import UserEmail from './UserEmail'
-//
-// export default class UserHeaderInfo extends Component {
-//   render () {
-//     const {user} = this.props
-//     return (
-//       <div className="user_info">
-//         <UserLogin login={user.login}/>
-//         <UserEmail email={user.email}/>
-//       </div>
-//     )
-//   }
-// }
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
@@ -32,7 +16,7 @@ const styles = theme => ({
   },
   media: {
     height: 0,
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '56.25%'
   },
   actions: {
     display: 'flex'
@@ -80,7 +64,6 @@ class UserHeaderInfo extends React.Component {
 
   render () {
     const {classes, user, post, padding} = this.props
-    // if(this.props.post) { const post = this.props.post } else {const post = 0}
     const {toredirect, id} = this.state
 
     if (toredirect) {
@@ -105,7 +88,7 @@ class UserHeaderInfo extends React.Component {
           </IconButton>
         }
         title={
-          <div className={classnames(classes.root, classes.title)} onClick={e => this.profileRender(user.id)}>
+          <div className={classnames(classes.root, classes.title)}>
             {`${user.firstName} ${user.lastName}`}
           </div>
         }

@@ -30,7 +30,6 @@ class Poper extends React.Component {
 
   render () {
     const {content} = this.props
-    console.log(content)
     const {anchorEl, open} = this.state
     const id = open ? 'simple-popper' : null
 
