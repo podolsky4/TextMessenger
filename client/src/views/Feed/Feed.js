@@ -18,11 +18,11 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center'
   },
-  grid: {
-    flexGrow: '0',
-    width: '75%',
-    flexBasis: '75%'
-  },
+  // grid: {
+  //   flexGrow: '0',
+  //   width: '75%',
+  //   flexBasis: '75%'
+  // },
   icon: {
     paddingRight: theme.spacing.unit,
     marginTop: -4
@@ -32,24 +32,30 @@ const styles = theme => ({
   },
   form: {
     background: '#fafafa',
-    display: 'flex'
+    display:"flex",
+    justifyContent: "space-around",
   },
   textfield: {
-    width: '75%',
-    padding: '30px 8px 16px 16px',
-    alignSelf: 'flex-end'
+    padding: "30px 8px 16px 16px",
+    alignSelf: 'flex-end',
+    width: "73%",
+  },
+  paper: {
+    width: "100%",
+    maxWidth: "700px",
+    justifyItems: 'stretch',
   }
 })
 
 class Feed extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       text: ''
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props
     getCurrentUserPoint()
     if (user.length !== 0) {
@@ -76,7 +82,7 @@ class Feed extends Component {
     this.reset()
   };
 
-  handleInput (e) {
+  handleInput(e) {
     if (e.target.value.length > 275) {
       e.target.style.backgroundColor = '#f0ee97'
     }
@@ -98,7 +104,7 @@ class Feed extends Component {
     }
   }
 
-  render () {
+  render() {
     const {posts, user, fetching, classes} = this.props
     const {reloadLoader} = this.props
     if (user.length === 0) {
@@ -110,14 +116,18 @@ class Feed extends Component {
       <div style={{padding: 15}}>
         <Grid
           container
-          direction='column'
-          justify='center'
-          alignItems='center'
-          spacing={16}
+          direction="column"
+          justify="center"
+          alignItems="center"
         >
-          <Grid className={classes.grid} item xs={12} sm={9} md={8} lg={6}>
-            <Paper>
-              <form className={classes.form} onSubmit={e => this.onSubmit(e)}>
+          <Grid container
+                justify="center"
+                alignItems="stretch"
+                lg={10} sm={12} md={10}>
+            <Paper className={classes.paper}>
+              <form className={classes.form}
+                    alignItems="flex-end"
+                    onSubmit={e => this.onSubmit(e)}>
                 <TextField
                   defaultValue=""
                   placeholder="Share something..."
@@ -132,19 +142,15 @@ class Feed extends Component {
                   multiline
                   className={classes.textfield}
                   onKeyUp={event => this.handleInput(event)}
-                  // onClick={event => Feed.handleHeight(event)} onKeyUp={event => this.handleInput(event)}
+
                 />
                 <ButtonPost flowRight/>
-                {/* <button className="btn-create-post">Publish</button> */}
               </form>
+              {reloadLoader && <Loader/>}
             </Paper>
-            {reloadLoader && <Loader/>}
+
+            <PostList posts={posts} user={user}/>
           </Grid>
-          {/* {reloadLoader && <Loader/>} */}
-          {/* <PostList posts={posts} user={user}/> */}
-          {/* {fetching && <Loader/>} */}
-          {/* {!fetching && <PostList posts={posts} user={user}/>} */}
-          <PostList posts={posts} user={user}/>
         </Grid>
       </div>
     )
