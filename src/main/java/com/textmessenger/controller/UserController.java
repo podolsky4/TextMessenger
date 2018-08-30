@@ -51,18 +51,20 @@ public class UserController {
   }
 
 
-  @JsonView(UserView.UserPostReturn.class)
+  @JsonView(UserView.UserShort.class)
   @PostMapping("/user")
   public ResponseEntity<?> createUser(@Valid @RequestBody UserRxDTO user) {
     return ResponseEntity.status(201).body(userService.createUser(user));
   }
 
+  @JsonView(UserView.UserProfile.class)
   @GetMapping("/{id}")
   public ResponseEntity<?> readUser(@PathVariable("id") long id) {
     return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
             .orElse(ResponseEntity.notFound().build());
   }
 
+  @JsonView(UserView.UserBaseId.class)
   @PostMapping("/find")
   public ResponseEntity findAllUsers(@RequestBody String str) {
     return Optional.of(ResponseEntity.ok().body(userService.findUsersBySearch(str)))
@@ -81,6 +83,7 @@ public class UserController {
     return ResponseEntity.ok().build();
   }
 
+  @JsonView(UserView.UserProfile.class)
   @GetMapping("/bylogin/{login}")
   public ResponseEntity<?> getUserByLogin(@PathVariable("login") String login) {
     return ResponseEntity.ok().body(userService.getUserByLogin(login));
@@ -109,6 +112,7 @@ public class UserController {
     return ResponseEntity.status(200).body(userService.getFavoritesByLogin(login));
   }
 
+  @JsonView(UserView.UserFull.class)
   @GetMapping("/user/{id}/getFollowing")
   public ResponseEntity getFollowing(@PathVariable("id") long id) {
     return ResponseEntity.status(200).body(userService.getFollowings(id));
@@ -126,6 +130,7 @@ public class UserController {
     return ResponseEntity.status(200).build();
   }
 
+  @JsonView(UserView.UserShort.class)
   @PostMapping("/user/{email}")
   public ResponseEntity logInUser(@PathVariable("email") String email, @RequestBody String password) {
     UserTxDTO user = userService.logIn(email, password);
