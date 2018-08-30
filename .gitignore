@@ -299,3 +299,5 @@ yarn.lock
 /client/.stylelintcache
 /_mac/
 /.settings/
+/colors/
+/codestyles/
