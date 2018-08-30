@@ -296,3 +296,5 @@ node_modules/
 /client/package-lock.json
 yarn.lock
 /client/.stylelintcache
+/_mac/
+/.settings/
