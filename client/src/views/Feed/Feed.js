@@ -31,29 +31,28 @@ const styles = theme => ({
   },
   form: {
     background: '#fafafa',
-    display:"flex",
-    justifyContent: "space-around",
+    display: 'flex',
+    justifyContent: 'space-around'
   },
   textfield: {
-    padding: "30px 8px 16px 16px",
+    padding: '30px 8px 16px 16px',
     alignSelf: 'flex-end',
-    width: "73%",
+    width: '73%'
   },
   paper: {
-    width: "100%",
-    maxWidth: "700px",
-    justifyItems: 'stretch',
+    width: '100%',
+    maxWidth: '700px',
+    justifyItems: 'stretch'
   }
 })
 
 class Feed extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       text: ''
     }
   }
-
 
   componentWillMount () {
     const {loadPosts, user, loadFavorites} = this.props
@@ -80,7 +79,7 @@ class Feed extends Component {
     this.reset()
   };
 
-  handleInput(e) {
+  handleInput (e) {
     if (e.target.value.length > 275) {
       e.target.style.backgroundColor = '#f0ee97'
     }
@@ -102,13 +101,12 @@ class Feed extends Component {
     }
   }
 
-  render() {
+  render () {
     const {posts, user, fetching, classes} = this.props
     const {reloadLoader} = this.props
     if (!user) {
       return <Redirect to={`/`}/>
     }
-    console.log(fetching)
     return (
 
       <div style={{padding: 15}}>
@@ -119,13 +117,13 @@ class Feed extends Component {
           alignItems="center"
         >
           <Grid container
-                justify="center"
-                alignItems="stretch"
-                lg={10} sm={12} md={10}>
+            justify="center"
+            alignItems="stretch"
+            lg={10} sm={12} md={10}>
             <Paper className={classes.paper}>
               <form className={classes.form}
-                    alignItems="flex-end"
-                    onSubmit={e => this.onSubmit(e)}>
+                alignItems="flex-end"
+                onSubmit={e => this.onSubmit(e)}>
                 <TextField
                   defaultValue=""
                   placeholder="Share something..."
