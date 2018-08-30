@@ -85,7 +85,7 @@ class LogIn extends Component {
             </Avatar>
             <Typography variant="headline">Sign in</Typography>
             <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
-              <FormControl margin="normal" >
+              <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>
                 <Input
                   id="email"
@@ -96,7 +96,7 @@ class LogIn extends Component {
                   value={this.state.email}
                 />
               </FormControl>
-              <FormControl margin="normal" >
+              <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
                   name="password"
