@@ -34,7 +34,13 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   public void createMessage(Message message) {
-
+    Message save = messageRepository.save(message);
+    User user = save.getUser();
+    save.getDialog().getUsers().forEach(u -> {
+      if (u.getId() != user.getId()) {
+        notificationService.createNotification(NotificationType.MESSAGE.toString(), u, save.getId());
+      }
+    });
   }
 
   @Override
@@ -60,12 +66,7 @@ public class MessageServiceImpl implements MessageService {
     message.setContent(msg);
     message.setDialog(userD);
     message.setUser(userM);
-    Message save = messageRepository.save(message);
-    userD.getUsers().forEach(u -> {
-      if (u.getId() != userM.getId()) {
-        notificationService.createNotification(NotificationType.MESSAGE.toString(), u, save.getId());
-      }
-    });
+    messageRepository.save(message);
   }
 }
 
