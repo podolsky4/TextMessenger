@@ -59,13 +59,14 @@ export const getCurrentUser = () => dispatch => {
       if (response.ok) {
         return response.json()
       } else {
-        throw new Error('user is not available')
+        dispatch({type: LOAD_USER, payload: {}})
       }
     })
     .then(data => dispatch({type: LOAD_USER, payload: data}))
     .catch(error => console.log(error))
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
+
 export const loginIn = (email, password) => dispatch => {
   dispatch(startLoader('LOADING_USER'))
   fetch(`/api/users/login`, {
