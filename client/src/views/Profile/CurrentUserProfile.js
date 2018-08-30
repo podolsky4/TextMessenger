@@ -55,6 +55,7 @@ class CurrentUserProfile extends Component {
     let data = this.state;
     const up = {...data, id: user.id};
     updateUser(up, user.login);
+
     this.editableField()
   };
 

@@ -5,16 +5,21 @@ import Header from '../../views/Header/Header'
 import {getCurrentUser} from '../../actions/userActions'
 import {connect} from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import Loader from '../../components/Loader/Loader'
 
 class App extends Component {
   componentWillMount () {
     const {user, getCurrentUserPoint} = this.props
-    if (user.length === 0) {
+    if (!user) {
       getCurrentUserPoint()
     }
   }
 
   render () {
+    if (!this.props.user) {
+      return <Loader fullscreen={true} />
+    }
+
     return (
       <Fragment>
         <CssBaseline>

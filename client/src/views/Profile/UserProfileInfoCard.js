@@ -42,7 +42,7 @@ const styles = (theme) => ({
 
 class UserProfileInfoCard extends React.Component {
     render() {
-        const {user, match, classes} = this.props;
+        const {user, classes} = this.props;
         return (
             <React.Fragment>
                 <div className={classes.userInfo}>
