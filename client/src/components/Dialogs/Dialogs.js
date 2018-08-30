@@ -125,7 +125,7 @@ class Dialogs extends Component {
   render () {
     const {user, dialogs, loadDialog, classes} = this.props
     const {flag, newDialog} = this.state
-    if (user.length === 0) {
+    if (!user.id) {
       return <Redirect to={`/`}/>
     }
     if (dialogs.length === 0) {

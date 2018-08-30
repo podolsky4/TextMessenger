@@ -19,7 +19,7 @@ class Profile extends React.Component {
   render () {
     const {user, match, classes} = this.props
 
-    if (user.length === 0) {
+    if (!user.id) {
       return <Redirect to={`/`}/>
     }
     if (user.id === undefined) {

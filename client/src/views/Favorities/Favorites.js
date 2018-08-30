@@ -40,7 +40,7 @@ class Favorites extends Component {
   render () {
     const { classes } = this.props
     const {favorites, user} = this.props
-    if (user.length === 0) {
+    if (!user.id) {
       return <Redirect to={`/`}/>
     }
     return (
