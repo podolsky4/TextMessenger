@@ -45,7 +45,7 @@ public class SearchValueTest {
     searchValue = new SearchValue(message);
     Set<ConstraintViolation<SearchValue>> constraintViolations = localValidatorFactory.validate(searchValue);
     assertEquals(
-            "не може бути пустим",
+            "must not be blank",
             constraintViolations.iterator().next().getMessage()
     );
   }
