@@ -21,6 +21,7 @@ import Popper from '@material-ui/core/Popper/Popper'
 import Fade from '@material-ui/core/Fade/Fade'
 import Paper from '@material-ui/core/Paper/Paper'
 import LogOut from '../../components/User/LogOut'
+import MenuHeader from '../../components/Menu/MenuHeader'
 
 import classNames from 'classnames'
 
@@ -103,24 +104,7 @@ class Header extends React.Component {
           </IconButton>
 
           {!noUser &&
-          <Button color="inherit" variant="outlined"
-            aria-describedby={id}
-            id="headerUser"
-            className={classNames(classes.headerUser)}
-            onClick={this.handleClick}
-            style={{padding: 8}}>
-            <UserHeaderInfo padding={0} user={user}/>
-            <Popper id={id} open={open} anchorEl={anchorEl} transition>
-              {({TransitionProps}) => (
-                <Fade {...TransitionProps} timeout={350}>
-                  <Paper>
-                    <LogOut/>
-                    <Typography className={classes.typography}>The content of the Popper.</Typography>
-                  </Paper>
-                </Fade>
-              )}
-            </Popper>
-          </Button>
+          <MenuHeader classes user={user}/>
           }
         </Toolbar>
       </AppBar>

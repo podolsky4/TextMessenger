@@ -10,6 +10,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import {Redirect} from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
 
+
+
 const styles = theme => ({
   card: {
     maxWidth: 400
@@ -81,11 +83,6 @@ class UserHeaderInfo extends React.Component {
             className={classnames(classes.avatar, 'logo')}
             onClick={e => this.profileRender(this.props.user.id)}
           />
-        }
-        action={
-          <IconButton>
-            <MoreVertIcon/>
-          </IconButton>
         }
         title={
           <div className={classnames(classes.root, classes.title)}>
