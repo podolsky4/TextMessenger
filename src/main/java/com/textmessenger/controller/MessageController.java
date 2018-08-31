@@ -1,7 +1,7 @@
 package com.textmessenger.controller;
 
-import com.textmessenger.model.entity.Dialog;
-import com.textmessenger.model.entity.Message;
+import com.textmessenger.dto.receive.DialogRxDto;
+import com.textmessenger.dto.receive.MessageRxDto;
 import com.textmessenger.model.entity.dto.MessageFromFront;
 import com.textmessenger.service.MessageService;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class MessageController {
 
 
   @GetMapping("/dialog/{id}")
-  public ResponseEntity getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
+  public ResponseEntity getAllMessagesByDialog(@Valid @PathVariable("id") DialogRxDto dialog) {
     return Optional.of(ResponseEntity.ok().body(messageService.getMessagesFromDialog(dialog)))
             .orElse(ResponseEntity.noContent().build());
   }
@@ -41,14 +41,14 @@ public class MessageController {
   }
 
   @PutMapping
-  public ResponseEntity<?> updateMessageById(@RequestBody Message message) {
+  public ResponseEntity<?> updateMessageById(@Valid @RequestBody MessageRxDto message) {
     messageService.updateMessage(message);
     return Optional.of(ResponseEntity.ok())
             .orElse(ResponseEntity.badRequest()).build();
   }
 
   @DeleteMapping
-  public ResponseEntity<?> deleteMessageById(@RequestBody Message message) {
+  public ResponseEntity<?> deleteMessageById(@Valid @RequestBody MessageRxDto message) {
     messageService.deleteMessage(message);
     return ResponseEntity.ok().build();
   }
