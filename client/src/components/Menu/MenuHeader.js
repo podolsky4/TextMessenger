@@ -1,34 +1,33 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import UserHeaderInfo from "../User/UserHeaderInfo";
-import LogOut from "../User/LogOut";
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import MenuItem from '@material-ui/core/MenuItem'
+import UserHeaderInfo from '../User/UserHeaderInfo'
+import LogOut from '../User/LogOut'
 import {withStyles} from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
-import PropTypes from 'prop-types';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuList from '@material-ui/core/MenuList';
-import Typography from "@material-ui/core/Typography/Typography";
-
+import PropTypes from 'prop-types'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import Grow from '@material-ui/core/Grow'
+import Paper from '@material-ui/core/Paper'
+import Popper from '@material-ui/core/Popper'
+import MenuList from '@material-ui/core/MenuList'
+import Typography from '@material-ui/core/Typography/Typography'
 
 const styles = (theme) => ({
   paper: {
     marginRight: theme.spacing.unit * 2,
-    top: "10%",
-    left: "-1.7%",
+    top: '10%',
+    left: '-1.7%'
   },
-  poper:{
-    left: 10,
+  poper: {
+    left: 10
   },
   root: {
-    display: 'flex',
+    display: 'flex'
     // padding: "1px",
   },
   anchorEl: {
-    marginTop: 40,
+    marginTop: 40
   },
   menuButton: {
     marginLeft: -12,
@@ -39,59 +38,58 @@ const styles = (theme) => ({
   },
   menuItem: {
     justifyContent: 'space-between',
-    alignItems: "center",
+    alignItems: 'center'
   },
   pos: {
-    color: "#fafafa", //todo
+    color: '#fafafa' // todo
   },
   // menu: {
   //   marginTop: 40,
   // },
   HeaderMenu: {
-    "&:hover": {
-      color: "black",
-      fontWeight: "700",
-    },
+    '&:hover': {
+      color: 'black',
+      fontWeight: '700'
+    }
 
   },
-  HeaderMenuButton:{
+  HeaderMenuButton: {
     justifyContent: 'space-between',
-    alignItems: "center",
-    display: "flex",
+    alignItems: 'center',
+    display: 'flex',
     width: 130,
-    border: "1px solid #fff3e00d",
-    background: "#fafafa21",
+    border: '1px solid #fff3e00d',
+    background: '#fafafa21',
 
-    "&:hover": {
-      background: "#fafafa",
-      color: "black",
-      "& $pos": {
-        color: "black",
-        fontWeight: "700",
+    '&:hover': {
+      background: '#fafafa',
+      color: 'black',
+      '& $pos': {
+        color: 'black',
+        fontWeight: '700'
       }
-    },
+    }
   }})
 
 class MenuHeader extends React.Component {
   state = {
-    open: false,
+    open: false
   };
 
   handleToggle = () => {
-    this.setState(state => ({ open: !state.open }));
+    this.setState(state => ({ open: !state.open }))
   };
 
   handleClose = event => {
     if (this.anchorEl.contains(event.target)) {
-      return;
+      return
     }
 
-    this.setState({ open: false });
+    this.setState({ open: false })
   };
 
-
-  render() {
-    const { open } = this.state;
+  render () {
+    const { open } = this.state
     const {classes, user} = this.props
 
     return (
@@ -99,7 +97,7 @@ class MenuHeader extends React.Component {
         <div>
           <Button
             buttonRef={node => {
-              this.anchorEl = node;
+              this.anchorEl = node
             }}
             aria-owns={open ? 'menu-list-grow' : null}
             aria-haspopup="true"
@@ -107,8 +105,8 @@ class MenuHeader extends React.Component {
             className={classes.HeaderMenuButton}
           >
             <Avatar alt={user.login}
-                    src={user.profilePhoto}
-                    className={classes.avatar}
+              src={user.profilePhoto}
+              className={classes.avatar}
             />
             <Typography className={classes.pos} color="textPrimary">
               {user.login}
@@ -125,11 +123,11 @@ class MenuHeader extends React.Component {
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
                       <MenuItem onClick={this.handleClose}
-                                className={classes.menuItem}><UserHeaderInfo padding={0} user={user}/></MenuItem>
+                        className={classes.menuItem}><UserHeaderInfo padding={0} user={user}/></MenuItem>
                       <MenuItem onClick={this.handleClose}
-                                className={classes.menuItem}>My account</MenuItem>
+                        className={classes.menuItem}>My account</MenuItem>
                       <MenuItem onClick={this.handleClose}
-                                className={classes.menuItem}><LogOut/></MenuItem>
+                        className={classes.menuItem}><LogOut/></MenuItem>
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
@@ -138,13 +136,12 @@ class MenuHeader extends React.Component {
           </Popper>
         </div>
       </div>
-    );
+    )
   }
 }
 
 MenuHeader.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
-export default withStyles(styles)(MenuHeader);
-
+export default withStyles(styles)(MenuHeader)

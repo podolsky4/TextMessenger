@@ -57,71 +57,71 @@ class LogIn extends Component {
     loginInUser(this.state.email, this.state.password)
   };
 cd
-  constructor (props) {
-    super(props)
-    this.state = {
-      login: '',
-      email: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      address: '',
-      profileHeader: '',
-      profilePhoto: '',
-      dateBirthday: ''
-    }
+constructor (props) {
+  super(props)
+  this.state = {
+    login: '',
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    profileHeader: '',
+    profilePhoto: '',
+    dateBirthday: ''
   }
+}
 
-  render () {
-    const {classes, fetching} = this.props
+render () {
+  const {classes, fetching} = this.props
 
-    return (
-      <React.Fragment>
-        <CssBaseline/>
-        <main className={classes.layout}>
-          <Paper className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockIcon/>
-            </Avatar>
-            <Typography variant="headline">Sign in</Typography>
-            <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
-              <FormControl margin="normal" fullWidth >
-                <InputLabel htmlFor="email">Email Address</InputLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={e => this.change(e)}
-                  value={this.state.email}
-                />
-              </FormControl>
-              <FormControl margin="normal" fullWidth>
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
-                  name="password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={e => this.change(e)}
-                  value={this.state.password}
-                />
-              </FormControl>
-              {fetching && <Loader/>}
-              <Button
-                type="submit"
-                variant="raised"
-                color="primary"
-                className={classes.submit}
-              >
+  return (
+    <React.Fragment>
+      <CssBaseline/>
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockIcon/>
+          </Avatar>
+          <Typography variant="headline">Sign in</Typography>
+          <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
+            <FormControl margin="normal" fullWidth >
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input
+                id="email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={e => this.change(e)}
+                value={this.state.email}
+              />
+            </FormControl>
+            <FormControl margin="normal" fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input
+                name="password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={e => this.change(e)}
+                value={this.state.password}
+              />
+            </FormControl>
+            {fetching && <Loader/>}
+            <Button
+              type="submit"
+              variant="raised"
+              color="primary"
+              className={classes.submit}
+            >
                   Sign in
-              </Button>
-            </form>
-          </Paper>
-        </main>
-      </React.Fragment>
-    )
-  }
+            </Button>
+          </form>
+        </Paper>
+      </main>
+    </React.Fragment>
+  )
+}
 }
 
 const mapDispatchToProps = dispatch => {

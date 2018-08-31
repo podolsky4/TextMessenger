@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
     Optional<User> user = userRepository.findById(userPrincipal.getId());
     if (user.isPresent()) {
 
-     return userToFront.convertUserForFront(user.get());
+      return userToFront.convertUserForFront(user.get());
     }
     throw new UsernameNotFoundException("User not found!");
   }

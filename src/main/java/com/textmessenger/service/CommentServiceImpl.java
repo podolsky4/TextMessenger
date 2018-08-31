@@ -4,6 +4,7 @@ import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.CommentToFront;
 import com.textmessenger.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +32,8 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public List<Comment> findAllPostFromPost(Post post) {
-    return commentRepository.findCommentsByPost(post);
+  public List<CommentToFront> findAllPostFromPost(Post post) {
+    return CommentToFront.convertListCommentsToResponse(commentRepository.findCommentsByPost(post));
   }
 
   @Override
