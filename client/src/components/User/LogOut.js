@@ -7,7 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 
 const styles = theme => ({
   layout: {
-    width: 'auto',
+    width: 'auto'
     // marginLeft: theme.spacing.unit * 3,
     // marginRight: theme.spacing.unit * 3,
     // [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
@@ -23,18 +23,18 @@ const styles = theme => ({
     alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
   },
-  logout:{
-    display: "flex",
-    flexDirection: "row",
-    justifyItems: "space-between",
-    alignItems: "center",
+  logout: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyItems: 'space-between',
+    alignItems: 'center'
   },
   avatar: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main
   },
-  lockIcon:{
-    marginRight: "1em",
+  lockIcon: {
+    marginRight: '1em'
   },
 
   submit: {
@@ -61,16 +61,16 @@ class LogOut extends Component {
     const {classes, user} = this.props
     return (
       <React.Fragment className={classes.logout}>
-            <LockIcon className={classes.lockIcon}/>
-            <Button
-              type="submit"
-              variant="outlined"
-              color="primary"
-              onClick={e => this.logout(e)}
-              className={classes.submit}
-            >
+        <LockIcon className={classes.lockIcon}/>
+        <Button
+          type="submit"
+          variant="outlined"
+          color="primary"
+          onClick={e => this.logout(e)}
+          className={classes.submit}
+        >
                 Log Out {user.login}
-            </Button>
+        </Button>
 
       </React.Fragment>
     )

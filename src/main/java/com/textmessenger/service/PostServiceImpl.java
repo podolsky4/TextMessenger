@@ -43,7 +43,7 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public List<PostToFront> getAll() {
-   return PostToFront.convertListPostsToResponse(postRepository.findAll(orderBy()));
+    return PostToFront.convertListPostsToResponse(postRepository.findAll(orderBy()));
   }
 
   @Override

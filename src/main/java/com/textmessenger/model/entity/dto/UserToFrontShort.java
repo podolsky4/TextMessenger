@@ -13,20 +13,20 @@ public class UserToFrontShort {
   private String email;
   private String profilePhoto;
 
-  public static UserToFrontShort convertUserForFront (User user){
+  public static UserToFrontShort convertUserForFront(User user) {
     UserToFrontShort userToFrontShort = new UserToFrontShort();
     userToFrontShort.setEmail(user.getEmail());
     userToFrontShort.setId(user.getId());
     userToFrontShort.setLogin(user.getLogin());
-    if (user.getProfilePhoto()!= null) {
+    if (user.getProfilePhoto() != null) {
       userToFrontShort.setProfilePhoto(user.getProfilePhoto());
     }
     return userToFrontShort;
   }
 
-  public static List<UserToFrontShort> convertListUsersForFront (List<User> users){
+  public static List<UserToFrontShort> convertListUsersForFront(List<User> users) {
     List<UserToFrontShort> res = new ArrayList<>();
-   users.stream().forEach(user ->res.add(convertUserForFront(user)));
-   return res;
+    users.stream().forEach(user -> res.add(convertUserForFront(user)));
+    return res;
   }
 }
