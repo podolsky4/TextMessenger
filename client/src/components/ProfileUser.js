@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getFollowing, getUser, addFollowing, deleteFollowing} from '../actions/userActions'
+import {addFollowing, deleteFollowing, getFollowing, getUser} from '../actions/userActions'
 import Loader from '../components/Loader/Loader'
 
 class ProfileUser extends Component {
@@ -26,6 +26,7 @@ class ProfileUser extends Component {
         : this.setState({areYouFollow: false})
     }
   }
+
   handleFollowing = e => {
     const {user, addToFollowing, deleteFromFollowing} = this.props
     if (this.state.areYouFollow) {
@@ -54,6 +55,7 @@ class ProfileUser extends Component {
     )
   }
 }
+
 const mapStateToProps = state => {
   return {
     user: state.user,

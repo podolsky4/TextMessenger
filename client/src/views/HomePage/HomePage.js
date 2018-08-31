@@ -6,6 +6,7 @@ import TextCard from '../../components/TextCard/TextCard'
 import {withStyles} from '@material-ui/core/styles'
 import connect from 'react-redux/es/connect/connect'
 import classNames from 'classnames'
+import {Redirect} from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -25,25 +26,29 @@ const styles = theme => ({
     alignItems: 'start',
     justifyContent: 'flex-start'
   }
-});
+})
 
 class HomePage extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-      location: "home",
+      location: 'home'
     }
   }
 
-  render() {
+  render () {
+    const {classes, user} = this.props
 
-    const {classes, user} = this.props;
+    if (user.id) {
+      return <Redirect to='/feed' />
+    }
+
     return (
       <div className={classNames(classes.homepage, classes.root, classes.cont)}>
         <TextCard
           text="TextMessenger проект предполагает создание приложения с использованием всех знаний, которые мы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS."
           classes={'TextCard'}/>
-        {user.length === 0 && <SignIn classes={'SignIn'}/>}
+        {!user.id && <SignIn classes={'SignIn'}/>}
       </div>
     )
   }
@@ -54,5 +59,5 @@ const mapStateToProps = state => {
     user: state.user,
     location: state.location
   }
-};
+}
 export default connect(mapStateToProps)(withStyles(styles)(HomePage))

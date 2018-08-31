@@ -1,8 +1,26 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadUser, updateUser} from '../../actions/userActions'
-import View from '../../components/View'
+import CurrentUserInfo from './CurrentUserInfo'
 import Typography from '@material-ui/core/Typography/Typography'
+import classnames from 'classnames'
+import {withStyles} from '@material-ui/core/styles'
+
+const styles = (theme) => ({
+  ChangeUserProfileInfoCard: {
+    Width: '25%',
+    maxWidth: '300px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyItems: 'space-between',
+    alignContent: 'center',
+    '*': {
+      borderRadius: '2px',
+      justifyContent: 'space-between',
+      alignItems: 'baseline'
+    }
+  }
+})
 
 class CurrentUserProfile extends Component {
   constructor (props) {
@@ -20,6 +38,7 @@ class CurrentUserProfile extends Component {
       viewMode: true
     }
   }
+
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -40,19 +59,20 @@ class CurrentUserProfile extends Component {
   };
 
   render () {
-    const {user} = this.props
+    const {user, classes} = this.props
     return (
       <div>
-        <Typography variant='title'>Hello, {user.firstName} {user.lastName}</Typography>
+        <Typography variant='title'>Hell, {user.firstName} {user.lastName}</Typography>
         <Typography paragraph variant='subheading'>your are login with {user.login} and email {user.email}</Typography>
         {this.state.viewMode &&
           <div>
-            <View user={user}/>
+            <CurrentUserInfo user={user}/>
             <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
           </div>
         }
         {!this.state.viewMode &&
-          <form>
+          <form className={classnames(classes.ChangeUserProfileInfoCard)}>     display: flex;
+
             <label>
               password:
               <input id='password-change' name='password' type='password' onChange={e => this.change(e)}/>
@@ -111,4 +131,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile))

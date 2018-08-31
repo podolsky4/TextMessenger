@@ -25,8 +25,8 @@ const styles = theme => ({
   },
   grid: {
     flexGrow: '0',
-    width: '75%',
-    flexBasis: '75%'
+    width: '100%',
+    padding: theme.spacing.unit * 1
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -93,7 +93,7 @@ class Post extends Component {
   };
 
   handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }))
+    this.setState(state => ({expanded: !state.expanded}))
   };
 
   render () {
@@ -101,15 +101,16 @@ class Post extends Component {
 
     return (
       <Grid className={classes.grid}
-        fullWidth
         item
-        key={`${post.id} ${post.parentId}`}>
+        key={`${post.id} ${post.parentId}`}
+        spacing={24}
+      >
 
-        <Card fullWidth>
+        <Card>
 
           {owner &&
             <div className={classes.reTweet}
-              children={`Ретвитнул ${owner.login}`} />
+              children={`Ретвитнул ${owner.login}`}/>
           }
 
           <UserHeaderInfo user={post.user}
@@ -119,7 +120,7 @@ class Post extends Component {
 
           <PostContent content={post.content}/>
 
-          <Divider />
+          <Divider/>
 
           <CardActions className={classes.actions}
             disableActionSpacing>
@@ -129,7 +130,7 @@ class Post extends Component {
               favorites={favorites}
               handleRetwite={this.handleRetwite.bind(this)}
               handleComments={this.handleComments.bind(this)}
-              className={classes.footer} />
+              className={classes.footer}/>
           </CardActions>
 
           {this.state.flag &&

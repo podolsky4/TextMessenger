@@ -15,6 +15,7 @@ export function toggleLoader () {
     }, 300)
   }
 }
+
 export function startingLoader () {
   return (dispatch) => {
     dispatch({
@@ -34,6 +35,7 @@ export function endLoader () {
     )
   }
 }
+
 export function startReLoader () {
   return (dispatch) => {
     dispatch({

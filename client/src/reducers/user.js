@@ -1,5 +1,5 @@
-function user (state = [], action) {
-  if (action.type === 'CREATE_USER') {
+function user (state = null, action) {
+  if (action.type === 'LOAD_USER') {
     return action.payload
   }
   return state

@@ -4,7 +4,7 @@ import Loader from '../Loader/Loader'
 import MessagesList from '../MessagesList'
 import {createMessage} from '../../actions/dialogActions'
 import TextField from '@material-ui/core/TextField'
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import SubmitButton from '../../components/buttons/ButtonSubmit/ButtonSubmit'
 import classnames from 'classnames'
 
@@ -33,6 +33,7 @@ class Chat extends Component {
       flag: false
     }
   }
+
   myFunction (e) {
     if (e.key === 'Enter') {
       this.onSubmit(e)
@@ -42,6 +43,7 @@ class Chat extends Component {
       })
     }
   }
+
   onSubmit = e => {
     const {user, addMessage, currentDialog} = this.props
     e.preventDefault()
@@ -55,26 +57,24 @@ class Chat extends Component {
         {fetching && <Loader classes={{progress: 'root'}}/>}
         {!fetching && <MessagesList messages={messages} user={user}/>}
         {!fetching &&
-            <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
-              <TextField
-                defaultValue=""
-                placeholder=" Write message"
-                maxLength={280}
-                type="text"
-                onKeyUp={event => this.myFunction(event)}
-                className={classnames(classes.margin, classes.text, 'messageInput')}
-                label="Your Message"
-                id="messageInput"
-                // fullWidth
-                backgroundColor="white"
-                multiline
-                autoFocus
-                white
-              >
-              </TextField>
-              <SubmitButton />
-              {/* <button >Отправить</button> */}
-            </form>
+          <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
+            <TextField
+              defaultValue=""
+              placeholder=" Write message"
+              maxLength={280}
+              type="text"
+              onKeyUp={event => this.myFunction(event)}
+              className={classnames(classes.margin, classes.text, 'messageInput')}
+              label="Your Message"
+              id="messageInput"
+              backgroundColor="white"
+              multiline
+              autoFocus
+              white
+            >
+            </TextField>
+            <SubmitButton/>
+          </form>
         }
       </div>
 

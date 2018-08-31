@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {addFollowing, deleteFollowing, getFollowing, getUser} from '../../actions/userActions'
+import {addFollowing, deleteFollowing, getFollowing} from '../../actions/userActions'
 import Loader from '../../components/Loader/Loader'
 import PropTypes from 'prop-types'
 
@@ -12,15 +12,25 @@ class OtherUserProfile extends Component {
       areYouFollow: ''
     }
   }
+
   componentWillMount () {
     const {currentUser, loadFollowing, user} = this.props
     if (this.state.userFromPost.length === 0) {
-      fetch(`/api/users/${currentUser}`)
+      fetch(`/api/users/${currentUser}`,
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        })
         .then(res => res.json())
         .then(data => this.setState({userFromPost: data}))
         .then(loadFollowing(user.id))
     }
   }
+
   handleFollowing = e => {
     const {user, addToFollowing, deleteFromFollowing, following, currentUser} = this.props
 
@@ -44,12 +54,14 @@ class OtherUserProfile extends Component {
         <h1>{userFromPost.firstName}</h1>
         <h1>{userFromPost.email}</h1>
 
-        <button onClick={e => this.handleFollowing(e)}>{following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}</button>
+        <button
+          onClick={e => this.handleFollowing(e)}>{following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}</button>
 
       </div>
     )
   }
 }
+
 const mapStateToProps = state => {
   return {
     user: state.user,
@@ -58,7 +70,6 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadUser: () => dispatch(getUser()),
     loadFollowing: (id) => dispatch(getFollowing(id)),
     addToFollowing: (id, userId) => dispatch(addFollowing(id, userId)),
     deleteFromFollowing: (id, userId) => dispatch(deleteFollowing(id, userId))

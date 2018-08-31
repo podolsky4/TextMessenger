@@ -4,6 +4,7 @@ import com.textmessenger.dto.receive.DialogRxDTO;
 import com.textmessenger.dto.receive.MessageRxDTO;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
+import com.textmessenger.model.entity.dto.MessageFromFront;
 import com.textmessenger.service.MessageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,8 +37,8 @@ public class MessageController {
 
   @PostMapping("/user/{userId}/dialog/{id}")
   public ResponseEntity addMessageToDialog(@PathVariable("userId") Long user,
-                                           @PathVariable("id") Long dialog, @RequestBody String msg) {
-    messageService.createMessageWithUserIdDialogId(user, dialog, msg);
+                                           @PathVariable("id") Long dialog, @Valid @RequestBody MessageFromFront msg) {
+    messageService.createMessageWithUserIdDialogId(user, dialog, msg.getMessage());
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
 

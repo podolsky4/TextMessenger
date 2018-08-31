@@ -39,4 +39,6 @@ public interface UserService {
   UserTxDTO logIn(String email, String password);
 
   List<NotificationTxDTO> getAllNotificationByUserId(Long id);
+  
+  User getCurrentUser();
 }

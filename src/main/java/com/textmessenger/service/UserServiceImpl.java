@@ -12,10 +12,14 @@ import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.UserPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -116,5 +120,18 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<NotificationTxDTO> getAllNotificationByUserId(Long id) {
     return notificationMapper.notsToNotTxDtos(userRepository.getOne(id).getNotifications());
+  }
+
+  @Override
+  public User getCurrentUser() {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    Optional<User> user = userRepository.findById(userPrincipal.getId());
+    if (user.isPresent()) {
+      return user.get();
+    }
+    throw new UsernameNotFoundException("User not found!");
   }
 }

@@ -1,5 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import {withStyles} from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 // class Message extends Component {
 //   render () {
@@ -14,11 +18,6 @@ import classNames from 'classnames'
 //   }
 // }
 // export default Message
-
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
   root: {
@@ -35,7 +34,7 @@ const styles = theme => ({
     textAlign: 'right',
     alignSelf: 'flex-end'
   },
-  other: { },
+  other: {},
   text: {
     maxWidth: '300px',
     wordWrap: 'break-word'
@@ -43,7 +42,7 @@ const styles = theme => ({
 })
 
 function Message (props) {
-  const { message, classes, user } = props
+  const {message, classes, user} = props
 
   // to check dynamically if the message is from current user:
   // --------- 1. create a new obj with 1.classes from props
@@ -53,7 +52,6 @@ function Message (props) {
     ...classes,
     classes.message,
     (message.user.id === user) ? classes.current : classes.other
-
   )
 
   return (

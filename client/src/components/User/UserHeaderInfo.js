@@ -1,19 +1,3 @@
-// import React, {Component} from 'react'
-// import UserLogin from './UserLogin'
-// import UserEmail from './UserEmail'
-//
-// export default class UserHeaderInfo extends Component {
-//   render () {
-//     const {user} = this.props
-//     return (
-//       <div className="user_info">
-//         <UserLogin login={user.login}/>
-//         <UserEmail email={user.email}/>
-//       </div>
-//     )
-//   }
-// }
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
@@ -32,7 +16,7 @@ const styles = theme => ({
   },
   media: {
     height: 0,
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '56.25%'
   },
   actions: {
     display: 'flex'
@@ -55,16 +39,16 @@ const styles = theme => ({
     cursor: 'pointer'
   },
   nopadding: {
-    padding: 0,
+    padding: 0
   },
   title: {
     cursor: 'pointer'
   }
-});
+})
 
 class UserHeaderInfo extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       toredirect: false,
       id: this.props.user.id
@@ -78,13 +62,12 @@ class UserHeaderInfo extends React.Component {
     })
   };
 
-  render() {
-    const {classes, user, post, padding} = this.props;
-    // if(this.props.post) { const post = this.props.post } else {const post = 0}
-    const {toredirect, id} = this.state;
+  render () {
+    const {classes, user, post, padding} = this.props
+    const {toredirect, id} = this.state
 
     if (toredirect) {
-      this.setState({toredirect: false});
+      this.setState({toredirect: false})
       return <Redirect to={`/profile/${id}`}/>
     }
 
@@ -94,9 +77,9 @@ class UserHeaderInfo extends React.Component {
         className={classnames(classes.cardHeader)}
         avatar={
           <Avatar alt="Remy Sharp"
-                  src={user.profilePhoto}
-                  className={classnames(classes.avatar, 'logo')}
-                  onClick={e => this.profileRender(this.props.user.id)}
+            src={user.profilePhoto}
+            className={classnames(classes.avatar, 'logo')}
+            onClick={e => this.profileRender(this.props.user.id)}
           />
         }
         action={
@@ -105,12 +88,12 @@ class UserHeaderInfo extends React.Component {
           </IconButton>
         }
         title={
-          <div className={classnames(classes.root, classes.title)} onClick={e => this.profileRender(user.id)}>
+          <div className={classnames(classes.root, classes.title)}>
             {`${user.firstName} ${user.lastName}`}
           </div>
         }
         subheader={post &&
-        new Date(post.createdDate).toDateString()
+            new Date(post.createdDate).toDateString()
         }
       />
     )
@@ -121,6 +104,6 @@ UserHeaderInfo.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired
-};
+}
 
 export default withStyles(styles)(UserHeaderInfo)
