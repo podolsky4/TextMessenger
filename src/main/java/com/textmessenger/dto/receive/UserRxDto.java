@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,12 +16,15 @@ public class UserRxDto {
   private long id;
 
   @Length(min = 3, max = 60)
+  @NotNull
   private String login;
 
   @Email
+  @NotNull
   private String email;
 
   @Length(min = 6, max = 60)
+  @NotNull
   private String password;
 
   @Length(max = 60)
