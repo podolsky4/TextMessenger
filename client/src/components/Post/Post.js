@@ -19,6 +19,7 @@ import PostFooter from './components/PostFooter'
 import UserHeaderInfo from '../User/UserHeaderInfo'
 
 const styles = theme => ({
+
   root: {
     display: 'flex',
     alignItems: 'center'
