@@ -56,7 +56,8 @@ class Feed extends Component {
 
   componentWillMount () {
     const {loadPosts, user, loadFavorites} = this.props
-    loadFavorites(user.id)
+
+      loadFavorites(user.id)
 
     loadPosts()
   }
