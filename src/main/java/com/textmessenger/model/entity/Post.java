@@ -23,7 +23,6 @@ import java.util.List;
 @Entity
 @Table(name = "post")
 @Data
-@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Post extends BaseEntity {
 
