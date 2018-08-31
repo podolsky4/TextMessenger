@@ -1,7 +1,8 @@
 package com.textmessenger.controller;
 
-import com.textmessenger.model.entity.Dialog;
-import com.textmessenger.model.entity.Message;
+import com.textmessenger.dto.receive.DialogRxDto;
+import com.textmessenger.dto.receive.MessageRxDto;
+import com.textmessenger.model.entity.dto.MessageFromFront;
 import com.textmessenger.service.MessageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -26,27 +28,27 @@ public class MessageController {
 
 
   @GetMapping("/dialog/{id}")
-  public ResponseEntity getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
+  public ResponseEntity getAllMessagesByDialog(@Valid @PathVariable("id") DialogRxDto dialog) {
     return Optional.of(ResponseEntity.ok().body(messageService.getMessagesFromDialog(dialog)))
             .orElse(ResponseEntity.noContent().build());
   }
 
   @PostMapping("/user/{userId}/dialog/{id}")
   public ResponseEntity addMessageToDialog(@PathVariable("userId") Long user,
-                                           @PathVariable("id") Long dialog, @RequestBody String msg) {
-    messageService.createMessageWithUserIdDialogId(user, dialog, msg);
+                                           @PathVariable("id") Long dialog, @Valid @RequestBody MessageFromFront msg) {
+    messageService.createMessageWithUserIdDialogId(user, dialog, msg.getMessage());
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
 
   @PutMapping
-  public ResponseEntity<?> updateMessageById(@RequestBody Message message) {
+  public ResponseEntity<?> updateMessageById(@Valid @RequestBody MessageRxDto message) {
     messageService.updateMessage(message);
     return Optional.of(ResponseEntity.ok())
             .orElse(ResponseEntity.badRequest()).build();
   }
 
   @DeleteMapping
-  public ResponseEntity<?> deleteMessageById(@RequestBody Message message) {
+  public ResponseEntity<?> deleteMessageById(@Valid @RequestBody MessageRxDto message) {
     messageService.deleteMessage(message);
     return ResponseEntity.ok().build();
   }

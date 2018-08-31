@@ -1,22 +1,23 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.entity.Post;
-import com.textmessenger.model.entity.User;
+import com.textmessenger.dto.receive.PostRxDto;
+import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.dto.transfer.PostTxDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
 
-  void createPost(User user, Post post);
+  void createPost(UserRxDto user, PostRxDto post);
 
-  void updatePost(Post post);
+  void updatePost(PostRxDto post);
 
-  void deletePost(Post post);
+  void deletePost(PostRxDto post);
 
-  Optional<List<Post>> getAll();
+  Optional<List<PostTxDto>> getAll();
 
-  List<Post> getUserPost(User user);
+  List<PostTxDto> getUserPost(UserRxDto user);
 
-  void retwitPost(User user, Long postId);
+  void retwitPost(UserRxDto user, Long postId);
 }

@@ -13,12 +13,14 @@ cache:
   - $HOME/.sonarscanner
 
 before_script:
-- npm install --prefix client/
+  - npm install --prefix client/
+  - chmod +x dev/sonar.sh
 
 script:
 - mvn clean test jacoco:report coveralls:report
 - npm run build --prefix client/
 - sonar-scanner
+- "./dev/sonar.sh"
 
 # Sonar Cloud Addon
 addons:

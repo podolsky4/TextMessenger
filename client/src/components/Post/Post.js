@@ -26,8 +26,8 @@ const styles = theme => ({
   },
   grid: {
     flexGrow: '0',
-    width: '75%',
-    flexBasis: '75%'
+    width: '100%',
+    padding: theme.spacing.unit * 1
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -102,11 +102,12 @@ class Post extends Component {
 
     return (
       <Grid className={classes.grid}
-        fullWidth
         item
-        key={`${post.id} ${post.parentId}`}>
+        key={`${post.id} ${post.parentId}`}
+        spacing={24}
+      >
 
-        <Card fullWidth>
+        <Card>
 
           {owner &&
             <div className={classes.reTweet}

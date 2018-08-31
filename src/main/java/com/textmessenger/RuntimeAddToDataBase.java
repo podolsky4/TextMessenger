@@ -19,7 +19,8 @@ public class RuntimeAddToDataBase {
       @Override
       public void run(String... args) {
         User user = new User();
-        user.setEmail("admin");
+        user.setEmail("admin@gmail.com");
+        user.setLogin("admin");
         user.setPassword(passwordEncoder.encode("admin"));
 
         userRepository.save(user);

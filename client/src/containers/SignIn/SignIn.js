@@ -56,7 +56,7 @@ class LogIn extends Component {
     e.preventDefault()
     loginInUser(this.state.email, this.state.password)
   };
-
+cd
   constructor (props) {
     super(props)
     this.state = {
@@ -69,12 +69,12 @@ class LogIn extends Component {
       profileHeader: '',
       profilePhoto: '',
       dateBirthday: ''
-      // classes: 'signIn'
     }
   }
 
   render () {
     const {classes, fetching} = this.props
+
     return (
       <React.Fragment>
         <CssBaseline/>
@@ -85,7 +85,7 @@ class LogIn extends Component {
             </Avatar>
             <Typography variant="headline">Sign in</Typography>
             <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
-              <FormControl margin="normal" required fullWidth>
+              <FormControl margin="normal" fullWidth >
                 <InputLabel htmlFor="email">Email Address</InputLabel>
                 <Input
                   id="email"
@@ -96,7 +96,7 @@ class LogIn extends Component {
                   value={this.state.email}
                 />
               </FormControl>
-              <FormControl margin="normal" required fullWidth>
+              <FormControl margin="normal" fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
                   name="password"
@@ -110,7 +110,6 @@ class LogIn extends Component {
               {fetching && <Loader/>}
               <Button
                 type="submit"
-                fullWidth
                 variant="raised"
                 color="primary"
                 className={classes.submit}

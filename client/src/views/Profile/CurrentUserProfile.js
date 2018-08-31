@@ -1,8 +1,26 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadUser, updateUser} from '../../actions/userActions'
-import View from '../../components/View'
+import CurrentUserInfo from './CurrentUserInfo'
 import Typography from '@material-ui/core/Typography/Typography'
+import classnames from 'classnames'
+import {withStyles} from '@material-ui/core/styles'
+
+const styles = (theme) => ({
+  ChangeUserProfileInfoCard: {
+    Width: '25%',
+    maxWidth: '300px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyItems: 'space-between',
+    alignContent: 'center',
+    '*': {
+      borderRadius: '2px',
+      justifyContent: 'space-between',
+      alignItems: 'baseline'
+    }
+  }
+})
 
 class CurrentUserProfile extends Component {
   constructor (props) {
@@ -41,20 +59,20 @@ class CurrentUserProfile extends Component {
   };
 
   render () {
-    const {user} = this.props
+    const {user, classes} = this.props
     return (
       <div>
-        <Typography variant='title'>Hello, {user.firstName} {user.lastName}</Typography>
-        <Typography paragraph variant='subheading'>your are login with {user.login} and
-            email {user.email}</Typography>
+        <Typography variant='title'>Hell, {user.firstName} {user.lastName}</Typography>
+        <Typography paragraph variant='subheading'>your are login with {user.login} and email {user.email}</Typography>
         {this.state.viewMode &&
           <div>
-            <View user={user}/>
+            <CurrentUserInfo user={user}/>
             <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
           </div>
         }
         {!this.state.viewMode &&
-          <form>
+          <form className={classnames(classes.ChangeUserProfileInfoCard)}>     display: flex;
+
             <label>
               password:
               <input id='password-change' name='password' type='password' onChange={e => this.change(e)}/>
@@ -62,36 +80,36 @@ class CurrentUserProfile extends Component {
             <label>
               name:
               <input id='firstName-change' name='firstName' type='text' value={this.state.firstName}
-                onChange={e => this.change(e)}/>
+                onChange={e => this.change(e)} />
             </label>
             <label>
               surname:
               <input id='lastName-change' name='lastName' type='text' value={this.state.lastName}
-                onChange={e => this.change(e)}/>
+                onChange={e => this.change(e)} />
             </label>
             <label>
               address:
               <input id='address-change' name='address' type='text' value={this.state.address}
-                onChange={e => this.change(e)}/>
+                onChange={e => this.change(e)} />
             </label>
             <label>
               url to avatar:
               <input id='profileHeader-change' name='profileHeader' type='url' value={this.state.profileHeader}
-                onChange={e => this.change(e)}/>
+                onChange={e => this.change(e)} />
             </label>
             <label>
               url to photo:
               <input id='profilePhoto-change' name='profilePhoto' type='url' value={this.state.profilePhoto}
-                onChange={e => this.change(e)}/>
+                onChange={e => this.change(e)} />
             </label>
             <label>
               birthday:
               <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday}
-                onChange={e => this.change(e)}/>
+                onChange={e => this.change(e)} />
             </label>
 
             <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)}/>
-            <input type='button' name='Cancel' value='Cancel' onClick={this.editableField}/>
+            <input type='button' name='Cancel'value='Cancel' onClick={this.editableField}/>
           </form>
         }
       </div>
@@ -113,4 +131,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile))

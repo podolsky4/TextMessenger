@@ -29,7 +29,7 @@
 //
 //  @Before
 //  public void setUp() throws Exception {
-//    this.base = new URL("http://localhost:" + port + "/healthcheck");
+//    this.base = new URL("http://localhost:" + 9000 + "/healthcheck");
 //  }
 //
 //  @Test

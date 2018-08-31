@@ -1,30 +1,13 @@
-// import React, {Component} from 'react'
-// import UserLogin from './UserLogin'
-// import UserEmail from './UserEmail'
-//
-// export default class UserHeaderInfo extends Component {
-//   render () {
-//     const {user} = this.props
-//     return (
-//       <div className="user_info">
-//         <UserLogin login={user.login}/>
-//         <UserEmail email={user.email}/>
-//       </div>
-//     )
-//   }
-// }
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import CardHeader from '@material-ui/core/CardHeader'
-import IconButton from '@material-ui/core/IconButton'
 import red from '@material-ui/core/colors/red'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 import {Redirect} from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
+
 
 const styles = theme => ({
   card: {
@@ -32,7 +15,7 @@ const styles = theme => ({
   },
   media: {
     height: 0,
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '56.25%'
   },
   actions: {
     display: 'flex'
@@ -80,7 +63,6 @@ class UserHeaderInfo extends React.Component {
 
   render () {
     const {classes, user, post, padding} = this.props
-    // if(this.props.post) { const post = this.props.post } else {const post = 0}
     const {toredirect, id} = this.state
 
     if (toredirect) {
@@ -99,13 +81,8 @@ class UserHeaderInfo extends React.Component {
             onClick={e => this.profileRender(this.props.user.id)}
           />
         }
-        action={
-          <IconButton>
-            <MoreVertIcon/>
-          </IconButton>
-        }
         title={
-          <div className={classnames(classes.root, classes.title)} onClick={e => this.profileRender(user.id)}>
+          <div className={classnames(classes.root, classes.title)}>
             {`${user.firstName} ${user.lastName}`}
           </div>
         }
