@@ -30,34 +30,44 @@ public class LoginRqTest {
   public void shouldBeTest(){
     String loginOrEmail = "testLoginOrEmail";
     String password = "testttttttt";
-    loginRq = new LoginRq(loginOrEmail,password);
+    loginRq = new LoginRq();
+    loginRq.setPassword(password);
+    loginRq.setLoginOrEmail(loginOrEmail);
     assertThat(loginOrEmail.equals(loginRq.getLoginOrEmail()));
     assertThat(password.equals(loginRq.getPassword()));
   }
 
   @Test
   public void loginRqIsValid() {
-    loginRq = new LoginRq( "Morris", "DD-AB-123");
+    loginRq = new LoginRq();
+    loginRq.setPassword("DD-AB-123");
+    loginRq.setLoginOrEmail("Morris");
     Set<ConstraintViolation<LoginRq>> constraintViolations = localValidatorFactory.validate(loginRq);
     assertEquals( 0, constraintViolations.size() );
   }
 
   @Test
   public void loginRqNotValid() {
-    loginRq = new LoginRq( " ", " ");
+    loginRq = new LoginRq();
+    loginRq.setPassword(" ");
+    loginRq.setLoginOrEmail(" ");
     Set<ConstraintViolation<LoginRq>> constraintViolations = localValidatorFactory.validate(loginRq);
     assertEquals( 2, constraintViolations.size() );
   }
   @Test
   public void loginRqNotValidLogin() {
-    loginRq = new LoginRq( " ", "fdfd");
+    loginRq = new LoginRq();
+    loginRq.setPassword(" ");
+    loginRq.setLoginOrEmail("fdfd");
     Set<ConstraintViolation<LoginRq>> constraintViolations = localValidatorFactory.validate(loginRq);
     assertEquals( 1, constraintViolations.size() );
   }
 
   @Test
   public void loginRqNotValidPassword() {
-    loginRq = new LoginRq( "fdfdf", " ");
+    loginRq = new LoginRq();
+    loginRq.setPassword("fdfd");
+    loginRq.setLoginOrEmail(" ");
     Set<ConstraintViolation<LoginRq>> constraintViolations = localValidatorFactory.validate(loginRq);
     assertEquals( 1, constraintViolations.size() );
   }

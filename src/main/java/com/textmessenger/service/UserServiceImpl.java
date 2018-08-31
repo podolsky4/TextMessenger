@@ -1,16 +1,9 @@
 package com.textmessenger.service;
 
-
-import com.textmessenger.dto.receive.PostRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.transfer.NotificationTxDto;
-import com.textmessenger.dto.transfer.PostTxDto;
-import com.textmessenger.dto.transfer.UserTxDto;
-import com.textmessenger.mapper.NotificationMapper;
-import com.textmessenger.mapper.PostMapper;
-import com.textmessenger.mapper.UserMapper;
+import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,31 +19,25 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-  private final PostMapper postMapper;
-  private final NotificationMapper notificationMapper;
-  private final UserMapper userMapper;
+  private UserToFrontShort userToFront;
 
-  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PostMapper postMapper,
-                         NotificationMapper notificationMapper) {
+  public UserServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
-    this.userMapper = userMapper;
-    this.notificationMapper = notificationMapper;
-    this.postMapper = postMapper;
   }
 
   @Override
-  public UserTxDto createUser(UserRxDto user) {
-    return userMapper.userToTxDto(userRepository.save(userMapper.userRxDtoToUser(user)));
+  public User createUser(User user) {
+    return userRepository.save(user);
   }
 
   @Override
-  public UserTxDto readUser(long id) {
-    return userMapper.userToTxDto(userRepository.getOne(id));
+  public User readUser(long id) {
+    return userRepository.getOne(id);
   }
 
   @Override
-  public void updateUser(UserRxDto user) {
-    userRepository.save(userMapper.userRxDtoToUser(user));
+  public void updateUser(User user) {
+    userRepository.save(user);
   }
 
   @Override
@@ -59,46 +46,46 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserTxDto getUserByLogin(String login) {
-    return userMapper.userToTxDto(userRepository.findUserByLogin(login));
+  public User getUserByLogin(String login) {
+    return userRepository.findUserByLogin(login);
   }
 
   @Override
-  public void deleteFromFavorites(PostRxDto post, UserRxDto user) {
-    User userByLogin = userRepository.findUserByLogin(userMapper.userRxDtoToUser(user).getLogin());
-    userByLogin.getFavorites().remove(postMapper.postRxDtoToPost(post));
+  public void deleteFromFavorites(Post post, User user) {
+    User userByLogin = userRepository.findUserByLogin(user.getLogin());
+    userByLogin.getFavorites().remove(post);
     userRepository.save(userByLogin);
   }
 
   @Override
-  public void addLikers(PostRxDto post, UserRxDto user) {
-    User userByLogin = userRepository.findUserByLogin(userMapper.userRxDtoToUser(user).getLogin());
-    userByLogin.getFavorites().add(postMapper.postRxDtoToPost(post));
+  public void addLikers(Post post, User user) {
+    User userByLogin = userRepository.findUserByLogin(user.getLogin());
+    userByLogin.getFavorites().add(post);
     userRepository.save(userByLogin);
   }
 
   @Override
-  public List<PostTxDto> getFavoritesById(Long id) {
+  public List<Post> getFavoritesById(Long id) {
     List<Post> favorites = userRepository.getOne(id).getFavorites();
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
-    return postMapper.postsToTxDtos(favorites);
+    return favorites;
   }
 
   @Override
-  public List<PostTxDto> getFavoritesByLogin(String login) {
+  public List<Post> getFavoritesByLogin(String login) {
     List<Post> favorites = userRepository.findUserByLogin(login).getFavorites();
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
-    return postMapper.postsToTxDtos(favorites);
+    return favorites;
   }
 
   @Override
-  public List<UserTxDto> findUsersBySearch(String str) {
-    return userMapper.usersToTxDtos(userRepository.findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(str, str));
+  public List<User> findUsersBySearch(String str) {
+    return userRepository.findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(str, str);
   }
 
   @Override
-  public List<UserTxDto> getFollowings(Long id) {
-    return userMapper.usersToTxDtos(userRepository.getOne(id).getFollowing());
+  public List<User> getFollowings(Long id) {
+    return userRepository.getOne(id).getFollowing();
   }
 
   @Override
@@ -113,24 +100,25 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserTxDto logIn(String email, String password) {
-    return userMapper.userToTxDto(userRepository.findUserByEmail(email));
+  public User logIn(String email, String password) {
+    return userRepository.findUserByEmail(email);
   }
 
   @Override
-  public List<NotificationTxDto> getAllNotificationByUserId(Long id) {
-    return notificationMapper.notsToNotTxDtos(userRepository.getOne(id).getNotifications());
+  public List<Notification> getAllNotificationByUserId(Long id) {
+    return userRepository.getOne(id).getNotifications();
   }
 
   @Override
-  public UserTxDto getCurrentUser() {
+  public UserToFrontShort getCurrentUser() {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
     Optional<User> user = userRepository.findById(userPrincipal.getId());
     if (user.isPresent()) {
-      return userMapper.userToTxDto(user.get());
+
+     return userToFront.convertUserForFront(user.get());
     }
     throw new UsernameNotFoundException("User not found!");
   }

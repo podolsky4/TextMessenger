@@ -83,7 +83,7 @@ class UserHeaderInfo extends React.Component {
         }
         title={
           <div className={classnames(classes.root, classes.title)}>
-            {`${user.firstName} ${user.lastName}`}
+            {`${user.login}`}
           </div>
         }
         subheader={post &&
