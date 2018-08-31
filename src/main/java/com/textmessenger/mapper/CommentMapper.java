@@ -22,7 +22,7 @@ public interface CommentMapper {
 
   List<Comment> commRxDtosToComms(List<CommentRxDto> commentRxDtos);
 
-  Comment commTxDtoToComm(CommentTxDto commentTxDTO);
+  Comment commTxDtoToComm(CommentTxDto commentTxDto);
 
   List<Comment> commTxDtosToComms(List<CommentTxDto> commentTxDtos);
 
