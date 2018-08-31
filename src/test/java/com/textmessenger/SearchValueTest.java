@@ -44,9 +44,10 @@ public class SearchValueTest {
     String message = " ";//передал пробел
     searchValue = new SearchValue(message);
     Set<ConstraintViolation<SearchValue>> constraintViolations = localValidatorFactory.validate(searchValue);
+    System.out.println(constraintViolations.iterator().next().getMessage());
     assertEquals(
-            "must not be blank",
-            constraintViolations.iterator().next().getMessage()
+            1,
+            constraintViolations.size()
     );
   }
 }
