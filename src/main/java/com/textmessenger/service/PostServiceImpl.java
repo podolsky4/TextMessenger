@@ -3,13 +3,13 @@ package com.textmessenger.service;
 import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.repository.PostRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -42,9 +42,8 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public Optional<List<Post>> getAll() {
-
-    return Optional.of(postRepository.findAll(orderBy()));
+  public List<PostToFront> getAll() {
+   return PostToFront.convertListPostsToResponse(postRepository.findAll(orderBy()));
   }
 
   @Override

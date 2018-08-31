@@ -3,6 +3,7 @@ package com.textmessenger.service;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
 
 import java.util.List;
 
@@ -38,5 +39,5 @@ public interface UserService {
 
   List<Notification> getAllNotificationByUserId(Long id);
 
-  User getCurrentUser();
+  UserToFrontShort getCurrentUser();
 }

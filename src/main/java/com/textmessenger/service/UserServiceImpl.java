@@ -3,6 +3,7 @@ package com.textmessenger.service;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-
+  private UserToFrontShort userToFront;
 
   public UserServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
@@ -109,14 +110,15 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User getCurrentUser() {
+  public UserToFrontShort getCurrentUser() {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
     Optional<User> user = userRepository.findById(userPrincipal.getId());
     if (user.isPresent()) {
-      return user.get();
+
+     return userToFront.convertUserForFront(user.get());
     }
     throw new UsernameNotFoundException("User not found!");
   }
