@@ -63,7 +63,6 @@ class LogOut extends Component {
             <Typography variant="headline">Log Out {user.login}</Typography>
             <Button
               type="submit"
-              fullWidth
               variant="raised"
               color="primary"
               onClick={e => this.logout(e)}
