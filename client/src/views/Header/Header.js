@@ -59,7 +59,7 @@ class Header extends React.Component {
   render () {
     const {classes, user} = this.props
     let {noUser} = this.state.noUser
-    const { open} = this.state
+    // const { open} = this.state
 
     if (!user) {
       noUser = true
