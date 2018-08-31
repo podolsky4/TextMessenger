@@ -123,14 +123,14 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User getCurrentUser() {
+  public UserTxDTO getCurrentUser() {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
     Optional<User> user = userRepository.findById(userPrincipal.getId());
     if (user.isPresent()) {
-      return user.get();
+      return userMapper.userToTxDto(user.get());
     }
     throw new UsernameNotFoundException("User not found!");
   }

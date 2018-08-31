@@ -40,5 +40,5 @@ public interface UserService {
 
   List<NotificationTxDTO> getAllNotificationByUserId(Long id);
   
-  User getCurrentUser();
+  UserTxDTO getCurrentUser();
 }

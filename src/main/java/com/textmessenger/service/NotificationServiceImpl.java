@@ -5,7 +5,6 @@ import com.textmessenger.dto.transfer.NotificationTxDTO;
 import com.textmessenger.mapper.NotificationMapper;
 import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Notification;
-import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.NotificationRepository;
 import org.springframework.stereotype.Service;
 
