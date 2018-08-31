@@ -1,6 +1,12 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.dto.receive.DialogRxDTO;
+import com.textmessenger.dto.receive.MessageRxDTO;
+import com.textmessenger.dto.transfer.MessageTxDTO;
+import com.textmessenger.mapper.DialogMapper;
+import com.textmessenger.mapper.MessageMapper;
+import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
@@ -20,42 +26,51 @@ public class MessageServiceImpl implements MessageService {
   private final UserRepository userRepository;
   private final DialogRepository dialogRepository;
   private final NotificationService notificationService;
+  private final MessageMapper messageMapper;
+  private final UserMapper userMapper;
+  private final DialogMapper dialogMapper;
 
   public MessageServiceImpl(MessageRepository messageRepository,
                             DialogRepository dialogRepository,
                             UserRepository userRepository,
-                            NotificationService notificationService) {
+                            NotificationService notificationService,
+                            MessageMapper messageMapper,
+                            UserMapper userMapper,
+                            DialogMapper dialogMapper) {
 
     this.messageRepository = messageRepository;
     this.dialogRepository = dialogRepository;
     this.userRepository = userRepository;
     this.notificationService = notificationService;
+    this.messageMapper = messageMapper;
+    this.userMapper = userMapper;
+    this.dialogMapper = dialogMapper;
   }
 
   @Override
-  public void createMessage(Message message) {
-    Message save = messageRepository.save(message);
+  public void createMessage(MessageRxDTO message) {
+    Message save = messageRepository.save(messageMapper.messRxDtoToMess(message));
     User user = save.getUser();
     save.getDialog().getUsers().forEach(u -> {
       if (u.getId() != user.getId()) {
-        notificationService.createNotification(NotificationType.MESSAGE.toString(), u, save.getId());
+        notificationService.createNotification(NotificationType.MESSAGE.toString(), userMapper.userToRxDto(u), save.getId());
       }
     });
   }
 
   @Override
-  public void updateMessage(Message message) {
-    messageRepository.save(message);
+  public void updateMessage(MessageRxDTO message) {
+    messageRepository.save(messageMapper.messRxDtoToMess(message));
   }
 
   @Override
-  public void deleteMessage(Message message) {
-    messageRepository.deleteById(message);
+  public void deleteMessage(MessageRxDTO message) {
+    messageRepository.deleteById(messageMapper.messRxDtoToMess(message));
   }
 
   @Override
-  public List<Message> getMessagesFromDialog(Dialog dialog) {
-    return messageRepository.findByDialog(dialog);
+  public List<MessageTxDTO> getMessagesFromDialog(DialogRxDTO dialog) {
+    return messageMapper.messsToMessTxDtos(messageRepository.findByDialog(dialogMapper.dialRxDtoToDial(dialog)));
   }
 
   @Override

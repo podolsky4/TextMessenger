@@ -1,19 +1,19 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.entity.Dialog;
-import com.textmessenger.model.entity.Message;
-
+import com.textmessenger.dto.receive.DialogRxDTO;
+import com.textmessenger.dto.receive.MessageRxDTO;
+import com.textmessenger.dto.transfer.MessageTxDTO;
 import java.util.List;
 
 public interface MessageService {
 
-  void createMessage(Message message);
+  void createMessage(MessageRxDTO message);
 
-  void updateMessage(Message message);
+  void updateMessage(MessageRxDTO message);
 
-  void deleteMessage(Message message);
+  void deleteMessage(MessageRxDTO message);
 
-  List<Message> getMessagesFromDialog(Dialog dialog);
+  List<MessageTxDTO> getMessagesFromDialog(DialogRxDTO dialog);
 
   void createMessageWithUserIdDialogId(Long user, Long dialog, String msg);
 }

@@ -1,5 +1,7 @@
 package com.textmessenger.controller;
 
+import com.textmessenger.dto.receive.DialogRxDTO;
+import com.textmessenger.dto.receive.MessageRxDTO;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.dto.MessageFromFront;
@@ -28,7 +30,7 @@ public class MessageController {
 
 
   @GetMapping("/dialog/{id}")
-  public ResponseEntity getAllMessagesByDialog(@PathVariable("id") Dialog dialog) {
+  public ResponseEntity getAllMessagesByDialog(@Valid @PathVariable("id") DialogRxDTO dialog) {
     return Optional.of(ResponseEntity.ok().body(messageService.getMessagesFromDialog(dialog)))
             .orElse(ResponseEntity.noContent().build());
   }
@@ -41,14 +43,14 @@ public class MessageController {
   }
 
   @PutMapping
-  public ResponseEntity<?> updateMessageById(@RequestBody Message message) {
+  public ResponseEntity<?> updateMessageById(@Valid @RequestBody MessageRxDTO message) {
     messageService.updateMessage(message);
     return Optional.of(ResponseEntity.ok())
             .orElse(ResponseEntity.badRequest()).build();
   }
 
   @DeleteMapping
-  public ResponseEntity<?> deleteMessageById(@RequestBody Message message) {
+  public ResponseEntity<?> deleteMessageById(@Valid @RequestBody MessageRxDTO message) {
     messageService.deleteMessage(message);
     return ResponseEntity.ok().build();
   }
