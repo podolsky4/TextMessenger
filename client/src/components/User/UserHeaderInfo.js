@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import CardHeader from '@material-ui/core/CardHeader'
-import IconButton from '@material-ui/core/IconButton'
 import red from '@material-ui/core/colors/red'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 import {Redirect} from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
+
 
 const styles = theme => ({
   card: {
@@ -81,11 +80,6 @@ class UserHeaderInfo extends React.Component {
             className={classnames(classes.avatar, 'logo')}
             onClick={e => this.profileRender(this.props.user.id)}
           />
-        }
-        action={
-          <IconButton>
-            <MoreVertIcon/>
-          </IconButton>
         }
         title={
           <div className={classnames(classes.root, classes.title)}>
