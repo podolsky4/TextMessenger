@@ -1,44 +1,44 @@
 package com.textmessenger.service;
 
-import com.textmessenger.dto.receive.PostRxDTO;
-import com.textmessenger.dto.receive.UserRxDTO;
-import com.textmessenger.dto.transfer.NotificationTxDTO;
-import com.textmessenger.dto.transfer.PostTxDTO;
-import com.textmessenger.dto.transfer.UserTxDTO;
+import com.textmessenger.dto.receive.PostRxDto;
+import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.dto.transfer.NotificationTxDto;
+import com.textmessenger.dto.transfer.PostTxDto;
+import com.textmessenger.dto.transfer.UserTxDto;
 
 import java.util.List;
 
 public interface UserService {
 
-  UserTxDTO createUser(UserRxDTO user);
+  UserTxDto createUser(UserRxDto user);
 
-  UserTxDTO readUser(long id);
+  UserTxDto readUser(long id);
 
-  void updateUser(UserRxDTO user);
+  void updateUser(UserRxDto user);
 
   void deleteUser(long id);
 
-  UserTxDTO getUserByLogin(String login);
+  UserTxDto getUserByLogin(String login);
 
-  void addLikers(PostRxDTO post, UserRxDTO user);
+  void addLikers(PostRxDto post, UserRxDto user);
 
-  void deleteFromFavorites(PostRxDTO post, UserRxDTO user);
+  void deleteFromFavorites(PostRxDto post, UserRxDto user);
 
-  List<PostTxDTO> getFavoritesById(Long id);
+  List<PostTxDto> getFavoritesById(Long id);
 
-  List<PostTxDTO> getFavoritesByLogin(String login);
+  List<PostTxDto> getFavoritesByLogin(String login);
 
-  List<UserTxDTO> findUsersBySearch(String str);
+  List<UserTxDto> findUsersBySearch(String str);
 
-  List<UserTxDTO> getFollowings(Long id);
+  List<UserTxDto> getFollowings(Long id);
 
   void addToFollowing(Long user, Long newUser);
 
   void deleteFromFollowing(Long user, Long newUser);
 
-  UserTxDTO logIn(String email, String password);
+  UserTxDto logIn(String email, String password);
 
-  List<NotificationTxDTO> getAllNotificationByUserId(Long id);
+  List<NotificationTxDto> getAllNotificationByUserId(Long id);
   
-  UserTxDTO getCurrentUser();
+  UserTxDto getCurrentUser();
 }

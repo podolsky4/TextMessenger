@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class PostTxDTO {
+public class PostTxDto {
 
   private long id;
 
@@ -14,10 +14,10 @@ public class PostTxDTO {
 
   private long parentId;
 
-  private UserTxDTO user;
+  private UserTxDto user;
 
-  private List<CommentTxDTO> comments = new ArrayList<>();
+  private List<CommentTxDto> comments = new ArrayList<>();
 
-  private List<UserTxDTO> likers = new ArrayList<>();
+  private List<UserTxDto> likers = new ArrayList<>();
 
 }

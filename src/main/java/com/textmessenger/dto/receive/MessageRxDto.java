@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CommentRxDTO {
+public class MessageRxDto {
 
   private long id;
 
@@ -16,9 +16,9 @@ public class CommentRxDTO {
 
   @NotNull
   @Valid
-  private UserRxDTO commentator;
+  private DialogRxDto dialog;
 
   @NotNull
   @Valid
-  private PostRxDTO post;
+  private UserRxDto user;
 }

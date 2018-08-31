@@ -1,7 +1,7 @@
 package com.textmessenger.service;
 
-import com.textmessenger.dto.receive.UserRxDTO;
-import com.textmessenger.dto.transfer.NotificationTxDTO;
+import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.dto.transfer.NotificationTxDto;
 import com.textmessenger.mapper.NotificationMapper;
 import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Notification;
@@ -22,7 +22,7 @@ public class NotificationServiceImpl implements NotificationService {
   }
 
   @Override
-  public NotificationTxDTO createNotification(String type, UserRxDTO user, Long id) {
+  public NotificationTxDto createNotification(String type, UserRxDto user, Long id) {
     Notification notification = new Notification();
     notification.setContentId(id);
     notification.setUser(userMapper.userRxDtoToUser(user));

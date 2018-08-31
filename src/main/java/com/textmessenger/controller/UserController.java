@@ -1,9 +1,8 @@
 package com.textmessenger.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.textmessenger.dto.receive.PostRxDTO;
-import com.textmessenger.dto.receive.UserRxDTO;
-import com.textmessenger.dto.transfer.UserTxDTO;
+import com.textmessenger.dto.receive.PostRxDto;
+import com.textmessenger.dto.receive.UserRxDto;
 import com.textmessenger.dto.view.UserView;
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.model.entity.dto.SearchValue;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.lang.reflect.Array;
 
 import java.util.Optional;
 
@@ -47,7 +45,7 @@ public class UserController {
 
   @JsonView(UserView.UserShort.class)
   @PostMapping("/user")
-  public ResponseEntity<?> createUser(@Valid @RequestBody UserRxDTO user) {
+  public ResponseEntity<?> createUser(@Valid @RequestBody UserRxDto user) {
     return ResponseEntity.status(201).body(userService.createUser(user));
   }
 
@@ -66,7 +64,7 @@ public class UserController {
   }
 
   @PutMapping
-  public ResponseEntity<?> updateUser(@Valid @RequestBody UserRxDTO user) {
+  public ResponseEntity<?> updateUser(@Valid @RequestBody UserRxDto user) {
     userService.updateUser(user);
     return ResponseEntity.ok().build();
   }
@@ -84,14 +82,14 @@ public class UserController {
   }
 
   @PutMapping("/post/{id}")
-  public ResponseEntity<?> addToFavorites(@Valid @PathVariable("id") PostRxDTO post,@Valid @RequestBody UserRxDTO user) {
+  public ResponseEntity<?> addToFavorites(@Valid @PathVariable("id") PostRxDto post, @Valid @RequestBody UserRxDto user) {
     userService.addLikers(post, user);
     return ResponseEntity.status(201).build();
   }
 
   @DeleteMapping("/post/{id}")
-  public ResponseEntity<?> deleteFromFavorites(@Valid @PathVariable("id") PostRxDTO post,
-                                               @Valid @RequestBody UserRxDTO user) {
+  public ResponseEntity<?> deleteFromFavorites(@Valid @PathVariable("id") PostRxDto post,
+                                               @Valid @RequestBody UserRxDto user) {
     userService.deleteFromFavorites(post, user);
     return ResponseEntity.status(204).build();
   }

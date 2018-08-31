@@ -1,11 +1,8 @@
 package com.textmessenger.controller;
 
-import com.textmessenger.dto.receive.CommentRxDTO;
-import com.textmessenger.dto.receive.PostRxDTO;
-import com.textmessenger.dto.receive.UserRxDTO;
-import com.textmessenger.model.entity.Comment;
-import com.textmessenger.model.entity.Post;
-import com.textmessenger.model.entity.User;
+import com.textmessenger.dto.receive.CommentRxDto;
+import com.textmessenger.dto.receive.PostRxDto;
+import com.textmessenger.dto.receive.UserRxDto;
 import com.textmessenger.service.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,27 +29,27 @@ public class CommentController {
   }
 
   @PostMapping("/post/{id}/user/{userId}")
-  ResponseEntity<?> createComment(@Valid @PathVariable("id") PostRxDTO post,
-                                  @Valid @PathVariable("userId") UserRxDTO user,
-                                  @Valid @RequestBody CommentRxDTO comment) {
+  ResponseEntity<?> createComment(@Valid @PathVariable("id") PostRxDto post,
+                                  @Valid @PathVariable("userId") UserRxDto user,
+                                  @Valid @RequestBody CommentRxDto comment) {
     commentService.createComment(post, user, comment);
     return ResponseEntity.ok().build();
   }
 
   @GetMapping("/post/{id}")
-  ResponseEntity<?> getAllCommentsFromPost(@Valid @PathVariable("id") PostRxDTO post) {
+  ResponseEntity<?> getAllCommentsFromPost(@Valid @PathVariable("id") PostRxDto post) {
     return Optional.of(ResponseEntity.ok().body(commentService.findAllPostFromPost(post)))
             .orElse(ResponseEntity.noContent().build());
   }
 
   @PutMapping
-  ResponseEntity<?> updateComment(@Valid @RequestBody CommentRxDTO comment) {
+  ResponseEntity<?> updateComment(@Valid @RequestBody CommentRxDto comment) {
     commentService.updateComment(comment);
     return ResponseEntity.ok().build();
   }
 
   @DeleteMapping
-  ResponseEntity<?> deleteComment(@Valid @RequestBody CommentRxDTO comment) {
+  ResponseEntity<?> deleteComment(@Valid @RequestBody CommentRxDto comment) {
     commentService.deleteComment(comment);
     return ResponseEntity.ok().build();
   }

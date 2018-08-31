@@ -1,22 +1,24 @@
 package com.textmessenger.dto.receive;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
-public class DialogRxDTO {
+public class CommentRxDto {
 
   private long id;
 
-  @NotNull
-  @Valid
-  private List<MessageRxDTO> messages = new ArrayList<>();
+  @Length(min = 1, max = 255)
+  private String content;
 
   @NotNull
   @Valid
-  private List<UserRxDTO> users = new ArrayList<>();
+  private UserRxDto commentator;
+
+  @NotNull
+  @Valid
+  private PostRxDto post;
 }

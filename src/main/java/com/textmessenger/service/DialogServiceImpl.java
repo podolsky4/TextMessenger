@@ -1,9 +1,9 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
-import com.textmessenger.dto.receive.DialogRxDTO;
-import com.textmessenger.dto.receive.UserRxDTO;
-import com.textmessenger.dto.transfer.DialogTxDTO;
+import com.textmessenger.dto.receive.DialogRxDto;
+import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.dto.transfer.DialogTxDto;
 import com.textmessenger.mapper.DialogMapper;
 import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Dialog;
@@ -36,17 +36,17 @@ public class DialogServiceImpl implements DialogService {
   }
 
   @Override
-  public void createDialog(DialogRxDTO dialog) {
+  public void createDialog(DialogRxDto dialog) {
     dialogRepository.save(dialogMapper.dialRxDtoToDial(dialog));
   }
 
-  public List<DialogTxDTO> getDialogsByUser(UserRxDTO user) {
+  public List<DialogTxDto> getDialogsByUser(UserRxDto user) {
     return dialogMapper.dialsToDialTxDtos(
             dialogRepository.findDialogsByUsers(userMapper.userRxDtoToUser(user)));
   }
 
   @Override
-  public void updateDialog(DialogRxDTO dialog) {
+  public void updateDialog(DialogRxDto dialog) {
     dialogRepository.save(dialogMapper.dialRxDtoToDial(dialog));
   }
 

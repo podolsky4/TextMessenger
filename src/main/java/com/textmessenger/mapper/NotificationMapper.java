@@ -1,7 +1,7 @@
 package com.textmessenger.mapper;
 
-import com.textmessenger.dto.receive.NotificationRxDTO;
-import com.textmessenger.dto.transfer.NotificationTxDTO;
+import com.textmessenger.dto.receive.NotificationRxDto;
+import com.textmessenger.dto.transfer.NotificationTxDto;
 import com.textmessenger.model.entity.Notification;
 import org.mapstruct.Mapper;
 
@@ -10,20 +10,20 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface NotificationMapper {
 
-  NotificationRxDTO notToNotRxDto(Notification notification);
+  NotificationRxDto notToNotRxDto(Notification notification);
 
-  List<NotificationRxDTO> notsToNotRxDtos(List<Notification> notifications);
+  List<NotificationRxDto> notsToNotRxDtos(List<Notification> notifications);
 
-  NotificationTxDTO notToNotTxDto(Notification notification);
+  NotificationTxDto notToNotTxDto(Notification notification);
 
-  List<NotificationTxDTO> notsToNotTxDtos(List<Notification> notifications);
+  List<NotificationTxDto> notsToNotTxDtos(List<Notification> notifications);
 
-  Notification notRxDtoToNot(NotificationRxDTO notificationRxDto);
+  Notification notRxDtoToNot(NotificationRxDto notificationRxDto);
 
-  List<Notification> notRxDtosToNots(List<NotificationRxDTO> notificationRxDtos);
+  List<Notification> notRxDtosToNots(List<NotificationRxDto> notificationRxDtos);
 
-  Notification notTxDtoToNot(NotificationTxDTO notificationTxDto);
+  Notification notTxDtoToNot(NotificationTxDto notificationTxDto);
 
-  List<Notification> notTxDtosToNots(List<NotificationTxDTO> notificationTxDtos);
+  List<Notification> notTxDtosToNots(List<NotificationTxDto> notificationTxDtos);
 
 }

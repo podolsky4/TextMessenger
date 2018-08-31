@@ -1,10 +1,10 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
-import com.textmessenger.dto.receive.CommentRxDTO;
-import com.textmessenger.dto.receive.PostRxDTO;
-import com.textmessenger.dto.receive.UserRxDTO;
-import com.textmessenger.dto.transfer.CommentTxDTO;
+import com.textmessenger.dto.receive.CommentRxDto;
+import com.textmessenger.dto.receive.PostRxDto;
+import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.dto.transfer.CommentTxDto;
 import com.textmessenger.mapper.CommentMapper;
 import com.textmessenger.mapper.PostMapper;
 import com.textmessenger.repository.CommentRepository;
@@ -31,7 +31,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public void createComment(PostRxDTO post, UserRxDTO user, CommentRxDTO comment) {
+  public void createComment(PostRxDto post, UserRxDto user, CommentRxDto comment) {
     comment.setPost(post);
     comment.setCommentator(user);
     commentRepository.save(commentMapper.commRxDtoToComm(comment));
@@ -39,17 +39,17 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public List<CommentTxDTO> findAllPostFromPost(PostRxDTO post) {
+  public List<CommentTxDto> findAllPostFromPost(PostRxDto post) {
     return commentMapper.commsToCommTxDtos(commentRepository.findCommentsByPost(postMapper.postRxDtoToPost(post)));
   }
 
   @Override
-  public void updateComment(CommentRxDTO comment) {
+  public void updateComment(CommentRxDto comment) {
     commentRepository.save(commentMapper.commRxDtoToComm(comment));
   }
 
   @Override
-  public void deleteComment(CommentRxDTO comment) {
+  public void deleteComment(CommentRxDto comment) {
     commentRepository.delete(commentMapper.commRxDtoToComm(comment));
   }
 }

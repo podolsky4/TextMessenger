@@ -1,7 +1,7 @@
 package com.textmessenger.mapper;
 
-import com.textmessenger.dto.receive.UserRxDTO;
-import com.textmessenger.dto.transfer.UserTxDTO;
+import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.dto.transfer.UserTxDto;
 import com.textmessenger.model.entity.User;
 
 import org.mapstruct.Mapper;
@@ -11,20 +11,20 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-  UserRxDTO userToRxDto(User user);
+  UserRxDto userToRxDto(User user);
 
-  UserTxDTO userToTxDto(User user);
+  UserTxDto userToTxDto(User user);
 
-  User userRxDtoToUser(UserRxDTO userRxDto);
+  User userRxDtoToUser(UserRxDto userRxDto);
 
-  User userTxDtoToUser(UserTxDTO userTxDto);
+  User userTxDtoToUser(UserTxDto userTxDto);
 
-  List<User> userRxDtosToUsers(List<UserRxDTO> userRxDtos);
+  List<User> userRxDtosToUsers(List<UserRxDto> userRxDtos);
 
-  List<User> userTxDtosToUsers(List<UserTxDTO> userTxDtos);
+  List<User> userTxDtosToUsers(List<UserTxDto> userTxDtos);
 
-  List<UserRxDTO> usersToRxDtos(List<User> users);
+  List<UserRxDto> usersToRxDtos(List<User> users);
 
-  List<UserTxDTO> usersToTxDtos(List<User> users);
+  List<UserTxDto> usersToTxDtos(List<User> users);
 
 }

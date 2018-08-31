@@ -1,9 +1,9 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
-import com.textmessenger.dto.receive.PostRxDTO;
-import com.textmessenger.dto.receive.UserRxDTO;
-import com.textmessenger.dto.transfer.PostTxDTO;
+import com.textmessenger.dto.receive.PostRxDto;
+import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.dto.transfer.PostTxDto;
 import com.textmessenger.mapper.NotificationMapper;
 import com.textmessenger.mapper.PostMapper;
 import com.textmessenger.mapper.UserMapper;
@@ -37,7 +37,7 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public void createPost(UserRxDTO user, PostRxDTO post) {
+  public void createPost(UserRxDto user, PostRxDto post) {
     Post tempPost = postMapper.postRxDtoToPost(post);
     tempPost.setUser(userMapper.userRxDtoToUser(user));
     Post save = postRepository.save(tempPost);
@@ -50,23 +50,23 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public void updatePost(PostRxDTO post) {
+  public void updatePost(PostRxDto post) {
     postRepository.save(postMapper.postRxDtoToPost(post));
   }
 
   @Override
-  public void deletePost(PostRxDTO post) {
+  public void deletePost(PostRxDto post) {
     postRepository.delete(postMapper.postRxDtoToPost(post));
   }
 
   @Override
-  public Optional<List<PostTxDTO>> getAll() {
+  public Optional<List<PostTxDto>> getAll() {
 
     return Optional.of(postMapper.postsToTxDtos(postRepository.findAll(orderBy())));
   }
 
   @Override
-  public List<PostTxDTO> getUserPost(UserRxDTO user) {
+  public List<PostTxDto> getUserPost(UserRxDto user) {
     return postMapper.postsToTxDtos(postRepository.findPostsByUser(userMapper.userRxDtoToUser(user)));
   }
 
@@ -75,7 +75,7 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public void retwitPost(UserRxDTO user, Long postId) {
+  public void retwitPost(UserRxDto user, Long postId) {
     Post retwite = new Post();
     retwite.setUser(userMapper.userRxDtoToUser(user));
     retwite.setParentId(postId);

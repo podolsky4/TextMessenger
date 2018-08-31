@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class PostRxDTO {
+public class PostRxDto {
 
   private long id;
 
@@ -20,9 +20,9 @@ public class PostRxDTO {
 
   @NotNull
   @Valid
-  private UserRxDTO user;
+  private UserRxDto user;
 
-  private List<CommentRxDTO> comments = new ArrayList<>();
+  private List<CommentRxDto> comments = new ArrayList<>();
 
-  private List<UserRxDTO> likers = new ArrayList<>();
+  private List<UserRxDto> likers = new ArrayList<>();
 }

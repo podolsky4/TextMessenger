@@ -1,11 +1,11 @@
 package com.textmessenger.service;
 
 
-import com.textmessenger.dto.receive.PostRxDTO;
-import com.textmessenger.dto.receive.UserRxDTO;
-import com.textmessenger.dto.transfer.NotificationTxDTO;
-import com.textmessenger.dto.transfer.PostTxDTO;
-import com.textmessenger.dto.transfer.UserTxDTO;
+import com.textmessenger.dto.receive.PostRxDto;
+import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.dto.transfer.NotificationTxDto;
+import com.textmessenger.dto.transfer.PostTxDto;
+import com.textmessenger.dto.transfer.UserTxDto;
 import com.textmessenger.mapper.NotificationMapper;
 import com.textmessenger.mapper.PostMapper;
 import com.textmessenger.mapper.UserMapper;
@@ -39,17 +39,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserTxDTO createUser(UserRxDTO user) {
+  public UserTxDto createUser(UserRxDto user) {
     return userMapper.userToTxDto(userRepository.save(userMapper.userRxDtoToUser(user)));
   }
 
   @Override
-  public UserTxDTO readUser(long id) {
+  public UserTxDto readUser(long id) {
     return userMapper.userToTxDto(userRepository.getOne(id));
   }
 
   @Override
-  public void updateUser(UserRxDTO user) {
+  public void updateUser(UserRxDto user) {
     userRepository.save(userMapper.userRxDtoToUser(user));
   }
 
@@ -59,45 +59,45 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserTxDTO getUserByLogin(String login) {
+  public UserTxDto getUserByLogin(String login) {
     return userMapper.userToTxDto(userRepository.findUserByLogin(login));
   }
 
   @Override
-  public void deleteFromFavorites(PostRxDTO post, UserRxDTO user) {
+  public void deleteFromFavorites(PostRxDto post, UserRxDto user) {
     User userByLogin = userRepository.findUserByLogin(userMapper.userRxDtoToUser(user).getLogin());
     userByLogin.getFavorites().remove(postMapper.postRxDtoToPost(post));
     userRepository.save(userByLogin);
   }
 
   @Override
-  public void addLikers(PostRxDTO post, UserRxDTO user) {
+  public void addLikers(PostRxDto post, UserRxDto user) {
     User userByLogin = userRepository.findUserByLogin(userMapper.userRxDtoToUser(user).getLogin());
     userByLogin.getFavorites().add(postMapper.postRxDtoToPost(post));
     userRepository.save(userByLogin);
   }
 
   @Override
-  public List<PostTxDTO> getFavoritesById(Long id) {
+  public List<PostTxDto> getFavoritesById(Long id) {
     List<Post> favorites = userRepository.getOne(id).getFavorites();
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return postMapper.postsToTxDtos(favorites);
   }
 
   @Override
-  public List<PostTxDTO> getFavoritesByLogin(String login) {
+  public List<PostTxDto> getFavoritesByLogin(String login) {
     List<Post> favorites = userRepository.findUserByLogin(login).getFavorites();
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return postMapper.postsToTxDtos(favorites);
   }
 
   @Override
-  public List<UserTxDTO> findUsersBySearch(String str) {
+  public List<UserTxDto> findUsersBySearch(String str) {
     return userMapper.usersToTxDtos(userRepository.findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(str, str));
   }
 
   @Override
-  public List<UserTxDTO> getFollowings(Long id) {
+  public List<UserTxDto> getFollowings(Long id) {
     return userMapper.usersToTxDtos(userRepository.getOne(id).getFollowing());
   }
 
@@ -113,17 +113,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserTxDTO logIn(String email, String password) {
+  public UserTxDto logIn(String email, String password) {
     return userMapper.userToTxDto(userRepository.findUserByEmail(email));
   }
 
   @Override
-  public List<NotificationTxDTO> getAllNotificationByUserId(Long id) {
+  public List<NotificationTxDto> getAllNotificationByUserId(Long id) {
     return notificationMapper.notsToNotTxDtos(userRepository.getOne(id).getNotifications());
   }
 
   @Override
-  public UserTxDTO getCurrentUser() {
+  public UserTxDto getCurrentUser() {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()

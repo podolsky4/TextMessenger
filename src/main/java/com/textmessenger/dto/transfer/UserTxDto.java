@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class UserTxDTO {
+public class UserTxDto {
 
   @JsonView(UserView.UserBaseId.class)
   private long id;
@@ -43,24 +43,24 @@ public class UserTxDTO {
   private LocalDate dateBirthday;
 
   @JsonIgnore
-  private List<PostTxDTO> posts = new ArrayList<>();
+  private List<PostTxDto> posts = new ArrayList<>();
 
   @JsonIgnore
-  private List<CommentTxDTO> comments = new ArrayList<>();
+  private List<CommentTxDto> comments = new ArrayList<>();
 
   @JsonIgnore
-  private List<DialogTxDTO> dialogs = new ArrayList<>();
+  private List<DialogTxDto> dialogs = new ArrayList<>();
 
   @JsonIgnore
-  private List<PostTxDTO> favorites = new ArrayList<>();
+  private List<PostTxDto> favorites = new ArrayList<>();
 
   @JsonView(UserView.UserFull.class)
-  private List<UserTxDTO> followers = new ArrayList<>();
+  private List<UserTxDto> followers = new ArrayList<>();
 
   @JsonIgnore
-  private List<NotificationTxDTO> notifications = new ArrayList<>();
+  private List<NotificationTxDto> notifications = new ArrayList<>();
 
   @JsonView(UserView.UserFull.class)
-  private List<UserTxDTO> following = new ArrayList<>();
+  private List<UserTxDto> following = new ArrayList<>();
 
 }

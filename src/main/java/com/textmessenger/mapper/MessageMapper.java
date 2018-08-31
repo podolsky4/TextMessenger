@@ -1,7 +1,7 @@
 package com.textmessenger.mapper;
 
-import com.textmessenger.dto.receive.MessageRxDTO;
-import com.textmessenger.dto.transfer.MessageTxDTO;
+import com.textmessenger.dto.receive.MessageRxDto;
+import com.textmessenger.dto.transfer.MessageTxDto;
 import com.textmessenger.model.entity.Message;
 import org.mapstruct.Mapper;
 
@@ -10,20 +10,20 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MessageMapper {
 
-  MessageRxDTO messToMessRxDto(Message message);
+  MessageRxDto messToMessRxDto(Message message);
 
-  List<MessageRxDTO> messsToMessRxDtos(List<Message> messages);
+  List<MessageRxDto> messsToMessRxDtos(List<Message> messages);
 
-  MessageTxDTO messToMessTxDto(Message message);
+  MessageTxDto messToMessTxDto(Message message);
 
-  List<MessageTxDTO> messsToMessTxDtos(List<Message> messages);
+  List<MessageTxDto> messsToMessTxDtos(List<Message> messages);
 
-  Message messRxDtoToMess(MessageRxDTO messageRxDto);
+  Message messRxDtoToMess(MessageRxDto messageRxDto);
 
-  List<Message> messRxDtosToMesss(List<MessageRxDTO> messageRxDtos);
+  List<Message> messRxDtosToMesss(List<MessageRxDto> messageRxDtos);
 
-  Message messTxDtoToMess(MessageTxDTO messageTxDto);
+  Message messTxDtoToMess(MessageTxDto messageTxDto);
 
-  List<Message> messTxDtosToMesss(List<MessageTxDTO> messageTxDtos);
+  List<Message> messTxDtosToMesss(List<MessageTxDto> messageTxDtos);
 
 }

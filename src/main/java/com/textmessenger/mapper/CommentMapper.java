@@ -1,7 +1,7 @@
 package com.textmessenger.mapper;
 
-import com.textmessenger.dto.receive.CommentRxDTO;
-import com.textmessenger.dto.transfer.CommentTxDTO;
+import com.textmessenger.dto.receive.CommentRxDto;
+import com.textmessenger.dto.transfer.CommentTxDto;
 import com.textmessenger.model.entity.Comment;
 import org.mapstruct.Mapper;
 
@@ -10,20 +10,20 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
 
-  CommentRxDTO commToCommRxDto(Comment comment);
+  CommentRxDto commToCommRxDto(Comment comment);
 
-  List<CommentRxDTO> commsToCommRxDtos(List<Comment> comments);
+  List<CommentRxDto> commsToCommRxDtos(List<Comment> comments);
 
-  CommentTxDTO commToCommTxDto(Comment comment);
+  CommentTxDto commToCommTxDto(Comment comment);
 
-  List<CommentTxDTO> commsToCommTxDtos(List<Comment> comments);
+  List<CommentTxDto> commsToCommTxDtos(List<Comment> comments);
 
-  Comment commRxDtoToComm(CommentRxDTO commentRxDto);
+  Comment commRxDtoToComm(CommentRxDto commentRxDto);
 
-  List<Comment> commRxDtosToComms(List<CommentRxDTO> commentRxDtos);
+  List<Comment> commRxDtosToComms(List<CommentRxDto> commentRxDtos);
 
-  Comment commTxDtoToComm(CommentTxDTO commentTxDTO);
+  Comment commTxDtoToComm(CommentTxDto commentTxDTO);
 
-  List<Comment> commTxDtosToComms(List<CommentTxDTO> commentTxDtos);
+  List<Comment> commTxDtosToComms(List<CommentTxDto> commentTxDtos);
 
 }

@@ -3,7 +3,7 @@ package com.textmessenger.dto.transfer;
 import lombok.Data;
 
 @Data
-public class NotificationTxDTO {
+public class NotificationTxDto {
 
   private long id;
 
@@ -13,6 +13,6 @@ public class NotificationTxDTO {
 
   private String type;
 
-  private UserTxDTO user;
+  private UserTxDto user;
 
 }

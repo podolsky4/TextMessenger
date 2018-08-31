@@ -3,14 +3,14 @@ package com.textmessenger.dto.transfer;
 import lombok.Data;
 
 @Data
-public class MessageTxDTO {
+public class CommentTxDto {
 
   private long id;
 
   private String content;
 
-  private DialogTxDTO dialog;
+  private UserTxDto commentator;
 
-  private UserTxDTO user;
+  private PostTxDto post;
 
 }

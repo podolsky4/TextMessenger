@@ -1,9 +1,9 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
-import com.textmessenger.dto.receive.DialogRxDTO;
-import com.textmessenger.dto.receive.MessageRxDTO;
-import com.textmessenger.dto.transfer.MessageTxDTO;
+import com.textmessenger.dto.receive.DialogRxDto;
+import com.textmessenger.dto.receive.MessageRxDto;
+import com.textmessenger.dto.transfer.MessageTxDto;
 import com.textmessenger.mapper.DialogMapper;
 import com.textmessenger.mapper.MessageMapper;
 import com.textmessenger.mapper.UserMapper;
@@ -48,7 +48,7 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public void createMessage(MessageRxDTO message) {
+  public void createMessage(MessageRxDto message) {
     Message save = messageRepository.save(messageMapper.messRxDtoToMess(message));
     User user = save.getUser();
     save.getDialog().getUsers().forEach(u -> {
@@ -59,17 +59,17 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public void updateMessage(MessageRxDTO message) {
+  public void updateMessage(MessageRxDto message) {
     messageRepository.save(messageMapper.messRxDtoToMess(message));
   }
 
   @Override
-  public void deleteMessage(MessageRxDTO message) {
+  public void deleteMessage(MessageRxDto message) {
     messageRepository.deleteById(messageMapper.messRxDtoToMess(message));
   }
 
   @Override
-  public List<MessageTxDTO> getMessagesFromDialog(DialogRxDTO dialog) {
+  public List<MessageTxDto> getMessagesFromDialog(DialogRxDto dialog) {
     return messageMapper.messsToMessTxDtos(messageRepository.findByDialog(dialogMapper.dialRxDtoToDial(dialog)));
   }
 

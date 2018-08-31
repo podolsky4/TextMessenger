@@ -6,7 +6,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class NotificationRxDTO {
+public class NotificationRxDto {
 
   private long id;
 
@@ -18,5 +18,5 @@ public class NotificationRxDTO {
 
   @NotNull
   @Valid
-  private UserRxDTO user;
+  private UserRxDto user;
 }

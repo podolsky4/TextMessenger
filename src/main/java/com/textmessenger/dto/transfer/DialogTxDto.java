@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class DialogTxDTO {
+public class DialogTxDto {
 
   private long id;
 
-  private List<MessageTxDTO> messages = new ArrayList<>();
+  private List<MessageTxDto> messages = new ArrayList<>();
 
-  private List<UserTxDTO> users = new ArrayList<>();
+  private List<UserTxDto> users = new ArrayList<>();
 
 }
