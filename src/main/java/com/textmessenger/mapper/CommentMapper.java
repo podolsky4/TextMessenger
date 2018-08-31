@@ -18,12 +18,12 @@ public interface CommentMapper {
 
   List<CommentTxDTO> commsToCommTxDtos(List<Comment> comments);
 
-  Comment commRxDtoToComm(CommentRxDTO commentRxDTO);
+  Comment commRxDtoToComm(CommentRxDTO commentRxDto);
 
-  List<Comment> commRxDtosToComms(List<CommentRxDTO> commentRxDTOS);
+  List<Comment> commRxDtosToComms(List<CommentRxDTO> commentRxDtos);
 
   Comment commTxDtoToComm(CommentTxDTO commentTxDTO);
 
-  List<Comment> commTxDtosToComms(List<CommentTxDTO> commentTxDTOS);
+  List<Comment> commTxDtosToComms(List<CommentTxDTO> commentTxDtos);
 
 }

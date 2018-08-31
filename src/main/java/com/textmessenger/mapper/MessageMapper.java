@@ -18,12 +18,12 @@ public interface MessageMapper {
 
   List<MessageTxDTO> messsToMessTxDtos(List<Message> messages);
 
-  Message messRxDtoToMess(MessageRxDTO messageRxDTO);
+  Message messRxDtoToMess(MessageRxDTO messageRxDto);
 
-  List<Message> messRxDtosToMesss(List<MessageRxDTO> messageRxDTOS);
+  List<Message> messRxDtosToMesss(List<MessageRxDTO> messageRxDtos);
 
-  Message messTxDtoToMess(MessageTxDTO messageTxDTO);
+  Message messTxDtoToMess(MessageTxDTO messageTxDto);
 
-  List<Message> messTxDtosToMesss(List<MessageTxDTO> messageTxDTOS);
+  List<Message> messTxDtosToMesss(List<MessageTxDTO> messageTxDtos);
 
 }

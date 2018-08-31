@@ -15,13 +15,13 @@ public interface UserMapper {
 
   UserTxDTO userToTxDto(User user);
 
-  User userRxDtoToUser(UserRxDTO userRxDTO);
+  User userRxDtoToUser(UserRxDTO userRxDto);
 
-  User userTxDtoToUser(UserTxDTO userTxDTO);
+  User userTxDtoToUser(UserTxDTO userTxDto);
 
-  List<User> userRxDtosToUsers(List<UserRxDTO> userRxDTOS);
+  List<User> userRxDtosToUsers(List<UserRxDTO> userRxDtos);
 
-  List<User> userTxDtosToUsers(List<UserTxDTO> userTxDTOS);
+  List<User> userTxDtosToUsers(List<UserTxDTO> userTxDtos);
 
   List<UserRxDTO> usersToRxDtos(List<User> users);
 

@@ -18,12 +18,12 @@ public interface PostMapper {
 
   List<PostTxDTO> postsToTxDtos(List<Post> posts);
 
-  Post postRxDtoToPost(PostRxDTO userRxDTO);
+  Post postRxDtoToPost(PostRxDTO userRxDto);
 
-  List<Post> postRxDtosToPosts(List<PostRxDTO> userRxDTOS);
+  List<Post> postRxDtosToPosts(List<PostRxDTO> userRxDtos);
 
-  Post postTxDtoToPost(PostTxDTO userTxDTO);
+  Post postTxDtoToPost(PostTxDTO userTxDto);
 
-  List<Post> postTxDtosToPosts(List<PostTxDTO> userTxDTOS);
+  List<Post> postTxDtosToPosts(List<PostTxDTO> userTxDtos);
 
 }

@@ -41,7 +41,8 @@ public class DialogServiceImpl implements DialogService {
   }
 
   public List<DialogTxDTO> getDialogsByUser(UserRxDTO user) {
-    return dialogMapper.dialsToDialTxDtos(dialogRepository.findDialogsByUsers(userMapper.userRxDtoToUser(user)));
+    return dialogMapper.dialsToDialTxDtos(
+            dialogRepository.findDialogsByUsers(userMapper.userRxDtoToUser(user)));
   }
 
   @Override
@@ -62,7 +63,8 @@ public class DialogServiceImpl implements DialogService {
     Dialog save = dialogRepository.save(dialog);
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
-    notificationService.createNotification(NotificationType.DIALOG.toString(), userMapper.userToRxDto(firstUser), save.getId());
+    notificationService.createNotification(
+            NotificationType.DIALOG.toString(), userMapper.userToRxDto(firstUser), save.getId());
   }
 
   @Override
@@ -70,6 +72,7 @@ public class DialogServiceImpl implements DialogService {
     User one = userRepository.getOne(user);
     Dialog save = dialogRepository.getOne(dialog);
     one.getDialogs().add(save);
-    notificationService.createNotification(NotificationType.DIALOG.toString(), userMapper.userToRxDto(one), save.getId());
+    notificationService.createNotification(
+            NotificationType.DIALOG.toString(), userMapper.userToRxDto(one), save.getId());
   }
 }

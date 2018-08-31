@@ -18,12 +18,12 @@ public interface DialogMapper {
 
   List<DialogTxDTO> dialsToDialTxDtos(List<Dialog> dialogs);
 
-  Dialog dialRxDtoToDial(DialogRxDTO dialogRxDTO);
+  Dialog dialRxDtoToDial(DialogRxDTO dialogRxDto);
 
-  List<Dialog> dialRxDtosToDials(List<DialogRxDTO> dialogRxDTOS);
+  List<Dialog> dialRxDtosToDials(List<DialogRxDTO> dialogRxDtos);
 
-  Dialog dialTxDtoToDial(DialogTxDTO dialogTxDTO);
+  Dialog dialTxDtoToDial(DialogTxDTO dialogTxDto);
 
-  List<Dialog> dialTxDtosToDials(List<DialogTxDTO> dialogTxDTOS);
+  List<Dialog> dialTxDtosToDials(List<DialogTxDTO> dialogTxDtos);
 
 }

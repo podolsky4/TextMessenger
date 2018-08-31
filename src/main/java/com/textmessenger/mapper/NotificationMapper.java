@@ -18,12 +18,12 @@ public interface NotificationMapper {
 
   List<NotificationTxDTO> notsToNotTxDtos(List<Notification> notifications);
 
-  Notification notRxDtoToNot(NotificationRxDTO notificationRxDTO);
+  Notification notRxDtoToNot(NotificationRxDTO notificationRxDto);
 
-  List<Notification> notRxDtosToNots(List<NotificationRxDTO> notificationRxDTOS);
+  List<Notification> notRxDtosToNots(List<NotificationRxDTO> notificationRxDtos);
 
-  Notification notTxDtoToNot(NotificationTxDTO notificationTxDTO);
+  Notification notTxDtoToNot(NotificationTxDTO notificationTxDto);
 
-  List<Notification> notTxDtosToNots(List<NotificationTxDTO> notificationTxDTOS);
+  List<Notification> notTxDtosToNots(List<NotificationTxDTO> notificationTxDtos);
 
 }
