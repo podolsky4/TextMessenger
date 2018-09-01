@@ -9,9 +9,9 @@ import java.util.List;
 
 @Data
 public class CommentToFront {
-  private long id;
+  private long id;//NOSONAR
   private String content;
-  private long user;
+  private long user;//NOSONAR
   private long post;
   private LocalDateTime createdDate;
 

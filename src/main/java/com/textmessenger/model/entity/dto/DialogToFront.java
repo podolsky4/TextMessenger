@@ -13,7 +13,7 @@ public class DialogToFront {
   private List<MessageToFront> messages;
   private List<UserToFrontShort> users;
   private LocalDateTime createdDate;
-  private LocalDateTime updatedDate;
+  private LocalDateTime updatedDate;//NOSONAR
 
 
   public static DialogToFront convertDialogToFront(Dialog dialog) {

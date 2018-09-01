@@ -37,19 +37,19 @@ public class CommentController {
   }
 
   @GetMapping("/post/{id}")
-  ResponseEntity<?> getAllCommentsFromPost(@Valid @PathVariable("id") Post post) {
+  ResponseEntity getAllCommentsFromPost(@Valid @PathVariable("id") Post post) {
     return Optional.of(ResponseEntity.ok().body(commentService.findAllPostFromPost(post)))
             .orElse(ResponseEntity.noContent().build());
   }
 
   @PutMapping
-  ResponseEntity<?> updateComment(@Valid @RequestBody Comment comment) {
+  ResponseEntity updateComment(@RequestBody Comment comment) {
     commentService.updateComment(comment);
     return ResponseEntity.ok().build();
   }
 
   @DeleteMapping
-  ResponseEntity<?> deleteComment(@Valid @RequestBody Comment comment) {
+  ResponseEntity deleteComment(@RequestBody Comment comment) {
     commentService.deleteComment(comment);
     return ResponseEntity.ok().build();
   }
