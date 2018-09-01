@@ -75,7 +75,7 @@ class Dialog extends Component {
             member => member.id !== user.id
               ? <div className={classnames(classes.userAvatar)}>
                 <Avatar alt="avatar"
-                  src={user.profilePhoto}
+                  src={member.profilePhoto}
                   className={classnames(classes.avatar, 'logo')}
                   onClick={e => this.profileRender(this.props.user.id)}/>
               </div> : ''
