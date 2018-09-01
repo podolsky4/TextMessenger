@@ -40,7 +40,7 @@ public class PostToFront {
     }
     return responsePost;
   }
-
+//check
   public static List<PostToFront> convertListPostsToResponse(List<Post> posts) {
     List<PostToFront> res = new ArrayList<>();
     posts.stream().forEach(post -> res.add(convertPostToFront(post)));
