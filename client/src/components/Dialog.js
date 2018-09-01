@@ -59,7 +59,11 @@ const styles = theme => ({
     flexDirection: 'row',
     flexWrap: 'wrap',
     transition: 'margin .2s',
+    marginRight: '10px',
     '&:hover': {}
+  },
+  userNames: {
+    display: 'flex'
   }
 })
 
@@ -83,19 +87,21 @@ class Dialog extends Component {
           }
         </div>
 
-        <div>
-          {users.map(
-            member => member.id !== user.id
-              ? <div className={classes.userNameContainer}>
-                <a key={member.id}
-                  onClick={e => handleMessages(dialog)}
-                  className={classnames(classes.userName)}
-                >
-                  {member.login}
-                </a>
-              </div>
-              : ''
-          )
+        <div className={classes.userNames}>
+          {
+            users.length <= 4
+              ? users.map(
+                member => member.id !== user.id
+                  ? <div className={classes.userNameContainer}>
+                    <a key={member.id}
+                      onClick={e => handleMessages(dialog)}
+                      className={classnames(classes.userName, 'capitalize')}
+                    >
+                      {member.login}
+                    </a>
+                  </div>
+                  : ''
+              ) : ''
           }
         </div>
 
