@@ -1,11 +1,10 @@
 package com.textmessenger.service;
 
-import com.textmessenger.dto.receive.PostRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.transfer.PostTxDto;
+import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.PostToFront;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PostService {
 
@@ -14,8 +13,8 @@ public interface PostService {
   void updatePost(PostRxDto post);
 
   void deletePost(PostRxDto post);
-
-  Optional<List<PostTxDto>> getAll();
+  
+  List<PostToFront> getAll();
 
   List<PostTxDto> getUserPost(UserRxDto user);
 

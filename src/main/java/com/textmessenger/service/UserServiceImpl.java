@@ -11,6 +11,7 @@ import com.textmessenger.mapper.PostMapper;
 import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,12 +27,9 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-  private final PostMapper postMapper;
-  private final NotificationMapper notificationMapper;
-  private final UserMapper userMapper;
+  private UserToFrontShort userToFront;
 
-  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PostMapper postMapper,
-                         NotificationMapper notificationMapper) {
+  public UserServiceImpl(UserRepository userRepository) {
     this.userRepository = userRepository;
     this.userMapper = userMapper;
     this.notificationMapper = notificationMapper;
@@ -123,14 +121,14 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserTxDto getCurrentUser() {
+  public UserToFrontShort getCurrentUser() {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
     Optional<User> user = userRepository.findById(userPrincipal.getId());
     if (user.isPresent()) {
-      return userMapper.userToTxDto(user.get());
+      return userToFront.convertUserForFront(user.get());
     }
     throw new UsernameNotFoundException("User not found!");
   }

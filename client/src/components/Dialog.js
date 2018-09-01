@@ -59,7 +59,11 @@ const styles = theme => ({
     flexDirection: 'row',
     flexWrap: 'wrap',
     transition: 'margin .2s',
+    marginRight: '10px',
     '&:hover': {}
+  },
+  userNames: {
+    display: 'flex'
   }
 })
 
@@ -75,7 +79,7 @@ class Dialog extends Component {
             member => member.id !== user.id
               ? <div className={classnames(classes.userAvatar)}>
                 <Avatar alt="avatar"
-                  src={user.profilePhoto}
+                  src={member.profilePhoto == undefined ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png' : member.profilePhoto}
                   className={classnames(classes.avatar, 'logo')}
                   onClick={e => this.profileRender(this.props.user.id)}/>
               </div> : ''
@@ -83,19 +87,21 @@ class Dialog extends Component {
           }
         </div>
 
-        <div>
-          {users.map(
-            member => member.id !== user.id
-              ? <div className={classes.userNameContainer}>
-                <a key={member.id}
-                  onClick={e => handleMessages(dialog)}
-                  className={classnames(classes.userName)}
-                >
-                  {member.email}
-                </a>
-              </div>
-              : ''
-          )
+        <div className={classes.userNames}>
+          {
+            users.length <= 4
+              ? users.map(
+                member => member.id !== user.id
+                  ? <div className={classes.userNameContainer}>
+                    <a key={member.id}
+                      onClick={e => handleMessages(dialog)}
+                      className={classnames(classes.userName, 'capitalize')}
+                    >
+                      {member.login}
+                    </a>
+                  </div>
+                  : ''
+              ) : ''
           }
         </div>
 

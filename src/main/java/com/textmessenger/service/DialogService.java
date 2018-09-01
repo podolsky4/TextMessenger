@@ -1,15 +1,16 @@
 package com.textmessenger.service;
 
-import com.textmessenger.dto.receive.DialogRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.transfer.DialogTxDto;
+import com.textmessenger.model.entity.Dialog;
+import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.DialogToFront;
+
 import java.util.List;
 
 public interface DialogService {
 
   void createDialog(DialogRxDto dialog);
 
-  List<DialogTxDto> getDialogsByUser(UserRxDto user);
+  List<DialogToFront> getDialogsByUser(User user);
 
   void updateDialog(DialogRxDto dialog);
 

@@ -10,6 +10,7 @@ import following from './following'
 import reloadLoader from './reloadLoader'
 import notification from './notification'
 import location from './location'
+import comments from './comments'
 
 export default combineReducers({
   user,
@@ -22,5 +23,6 @@ export default combineReducers({
   following,
   reloadLoader,
   notification,
-  location
+  location,
+  comments
 })

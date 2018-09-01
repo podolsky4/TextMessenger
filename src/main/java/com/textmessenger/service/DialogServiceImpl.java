@@ -8,6 +8,7 @@ import com.textmessenger.mapper.DialogMapper;
 import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -40,9 +41,9 @@ public class DialogServiceImpl implements DialogService {
     dialogRepository.save(dialogMapper.dialRxDtoToDial(dialog));
   }
 
-  public List<DialogTxDto> getDialogsByUser(UserRxDto user) {
-    return dialogMapper.dialsToDialTxDtos(
-            dialogRepository.findDialogsByUsers(userMapper.userRxDtoToUser(user)));
+  public List<DialogToFront> getDialogsByUser(User user) {
+    return DialogToFront.convertDialogsListToResponse(dialogRepository.findDialogsByUsers(user));
+    // return dialogRepository.findDialogsByUsers(user);
   }
 
   @Override

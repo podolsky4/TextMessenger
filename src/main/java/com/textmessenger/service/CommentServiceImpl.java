@@ -1,12 +1,10 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
-import com.textmessenger.dto.receive.CommentRxDto;
-import com.textmessenger.dto.receive.PostRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.transfer.CommentTxDto;
-import com.textmessenger.mapper.CommentMapper;
-import com.textmessenger.mapper.PostMapper;
+import com.textmessenger.model.entity.Comment;
+import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.CommentToFront;
 import com.textmessenger.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,8 +37,8 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public List<CommentTxDto> findAllPostFromPost(PostRxDto post) {
-    return commentMapper.commsToCommTxDtos(commentRepository.findCommentsByPost(postMapper.postRxDtoToPost(post)));
+  public List<CommentToFront> findAllPostFromPost(Post post) {
+    return CommentToFront.convertListCommentsToResponse(commentRepository.findCommentsByPost(post));
   }
 
   @Override

@@ -10,6 +10,7 @@ import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.MessageRepository;
 import com.textmessenger.repository.UserRepository;
@@ -69,8 +70,9 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public List<MessageTxDto> getMessagesFromDialog(DialogRxDto dialog) {
-    return messageMapper.messsToMessTxDtos(messageRepository.findByDialog(dialogMapper.dialRxDtoToDial(dialog)));
+  public List<MessageToFront> getMessagesFromDialog(Dialog dialog) {
+    //return messageRepository.findByDialog(dialog);
+    return MessageToFront.convertMessagesListToResponse(messageRepository.findByDialog(dialog));
   }
 
   @Override

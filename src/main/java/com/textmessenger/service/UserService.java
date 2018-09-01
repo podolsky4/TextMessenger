@@ -1,10 +1,9 @@
 package com.textmessenger.service;
 
-import com.textmessenger.dto.receive.PostRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.transfer.NotificationTxDto;
-import com.textmessenger.dto.transfer.PostTxDto;
-import com.textmessenger.dto.transfer.UserTxDto;
+import com.textmessenger.model.entity.Notification;
+import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public interface UserService {
 
   UserTxDto logIn(String email, String password);
 
-  List<NotificationTxDto> getAllNotificationByUserId(Long id);
-  
-  UserTxDto getCurrentUser();
+  List<Notification> getAllNotificationByUserId(Long id);
+
+  UserToFrontShort getCurrentUser();
 }
