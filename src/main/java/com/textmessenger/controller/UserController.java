@@ -1,9 +1,7 @@
 package com.textmessenger.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.textmessenger.dto.receive.PostRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.view.UserView;
+import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.model.entity.dto.SearchValue;
 import com.textmessenger.service.LoginService;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-
 import java.util.Optional;
 
 @RestController
@@ -43,20 +40,17 @@ public class UserController {
     return ResponseEntity.ok().body(userService.getCurrentUser());
   }
 
-  @JsonView(UserView.UserShort.class)
   @PostMapping("/user")
-  public ResponseEntity<?> createUser(@Valid @RequestBody UserRxDto user) {
+  public ResponseEntity<?> createUser(@RequestBody User user) {
     return ResponseEntity.status(201).body(userService.createUser(user));
   }
 
-  @JsonView(UserView.UserProfile.class)
   @GetMapping("/{id}")
   public ResponseEntity<?> readUser(@PathVariable("id") long id) {
     return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
             .orElse(ResponseEntity.notFound().build());
   }
 
-  @JsonView(UserView.UserBaseId.class)
   @PostMapping("/find")
   public ResponseEntity findAllUsers(@Valid @RequestBody SearchValue str) {
     return Optional.of(ResponseEntity.ok().body(userService.findUsersBySearch(str.getSearch())))
@@ -64,7 +58,7 @@ public class UserController {
   }
 
   @PutMapping
-  public ResponseEntity<?> updateUser(@Valid @RequestBody UserRxDto user) {
+  public ResponseEntity<?> updateUser(@RequestBody User user) {
     userService.updateUser(user);
     return ResponseEntity.ok().build();
   }
@@ -75,21 +69,19 @@ public class UserController {
     return ResponseEntity.ok().build();
   }
 
-  @JsonView(UserView.UserProfile.class)
   @GetMapping("/bylogin/{login}")
   public ResponseEntity<?> getUserByLogin(@PathVariable("login") String login) {
     return ResponseEntity.ok().body(userService.getUserByLogin(login));
   }
 
-  @PutMapping("/post/{id}")
-  public ResponseEntity<?> addToFavorites(@Valid @PathVariable("id") PostRxDto post, @Valid @RequestBody UserRxDto user) {
+  @PutMapping("/like/{id}")
+  public ResponseEntity<?> addToFavorites(@PathVariable("id") Post post, @RequestBody User user) {
     userService.addLikers(post, user);
     return ResponseEntity.status(201).build();
   }
 
-  @DeleteMapping("/post/{id}")
-  public ResponseEntity<?> deleteFromFavorites(@Valid @PathVariable("id") PostRxDto post,
-                                               @Valid @RequestBody UserRxDto user) {
+  @DeleteMapping("/like/{id}")
+  public ResponseEntity<?> deleteFromFavorites(@PathVariable("id") Post post, @RequestBody User user) {
     userService.deleteFromFavorites(post, user);
     return ResponseEntity.status(204).build();
   }
@@ -104,26 +96,25 @@ public class UserController {
     return ResponseEntity.status(200).body(userService.getFavoritesByLogin(login));
   }
 
-  @JsonView(UserView.UserFull.class)
   @GetMapping("/user/{id}/getFollowing")
-  public ResponseEntity getFollowing(@PathVariable("id") long id) {
+  public ResponseEntity getFollowing(@PathVariable("id") Long id) {
     return ResponseEntity.status(200).body(userService.getFollowings(id));
   }
 
   @GetMapping("/user/{userId}/addToFollowing/{newUser}")
-  public ResponseEntity addToFollowing(@PathVariable("userId") long user, @PathVariable("newUser") long newUser) {
+  public ResponseEntity addToFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
     userService.addToFollowing(user, newUser);
     return ResponseEntity.status(200).build();
   }
 
   @DeleteMapping("/user/{userId}/addToFollowing/{newUser}")
-  public ResponseEntity deleteFromFollowing(@PathVariable("userId") long user, @PathVariable("newUser") long newUser) {
+  public ResponseEntity deleteFromFollowing(@PathVariable("userId") Long user, @PathVariable("newUser") Long newUser) {
     userService.deleteFromFollowing(user, newUser);
     return ResponseEntity.status(200).build();
   }
 
   @GetMapping("user/{id}/notification")
-  public ResponseEntity getNotification(@PathVariable("id") long id) {
+  public ResponseEntity getNotification(@PathVariable("id") Long id) {
     return ResponseEntity.ok().body(userService.getAllNotificationByUserId(id));
   }
 }
