@@ -91,7 +91,7 @@ class Dialog extends Component {
                   onClick={e => handleMessages(dialog)}
                   className={classnames(classes.userName)}
                 >
-                  {member.email}
+                  {member.login}
                 </a>
               </div>
               : ''
