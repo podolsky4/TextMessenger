@@ -3,6 +3,7 @@ package com.textmessenger.service;
 import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,9 @@ public class DialogServiceImpl implements DialogService {
     dialogRepository.save(dialog);
   }
 
-  public List<Dialog> getDialogsByUser(User user) {
-    return dialogRepository.findDialogsByUsers(user);
+  public List<DialogToFront> getDialogsByUser(User user) {
+    return DialogToFront.convertDialogsListToResponse(dialogRepository.findDialogsByUsers(user));
+ // return dialogRepository.findDialogsByUsers(user);
   }
 
   @Override

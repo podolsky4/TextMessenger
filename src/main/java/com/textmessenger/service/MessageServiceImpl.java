@@ -4,6 +4,7 @@ import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.MessageRepository;
 import com.textmessenger.repository.UserRepository;
@@ -54,8 +55,9 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public List<Message> getMessagesFromDialog(Dialog dialog) {
-    return messageRepository.findByDialog(dialog);
+  public List<MessageToFront> getMessagesFromDialog(Dialog dialog) {
+    //return messageRepository.findByDialog(dialog);
+    return MessageToFront.convertMessagesListToResponse(messageRepository.findByDialog(dialog));
   }
 
   @Override
