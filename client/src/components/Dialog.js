@@ -76,10 +76,10 @@ class Dialog extends Component {
       <div className={classes.paper}>
         <div className={classes.userAvatarContainer}>
           {users.map(
-            member => member.id !=== user.id
+            member => member.id !== user.id
               ? <div className={classnames(classes.userAvatar)}>
                 <Avatar alt="avatar"
-                  src={member.profilePhoto == undefined ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png' : member.profilePhoto}
+                  src={member.profilePhoto === undefined ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png' : member.profilePhoto}
                   className={classnames(classes.avatar, 'logo')}
                   onClick={e => this.profileRender(this.props.user.id)}/>
               </div> : ''
