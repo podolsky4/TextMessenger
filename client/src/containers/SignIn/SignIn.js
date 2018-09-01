@@ -10,6 +10,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import LockIcon from '@material-ui/icons/LockOutlined'
+import PersonAdd from '@material-ui/icons/PersonAdd'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
@@ -42,7 +43,14 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3
-  }
+  },
+  signIn: {
+    marginTop: theme.spacing.unit,
+    opacity: "0.6",
+    "&:hover": {
+        opacity: 1,
+    },
+  },
 })
 
 class LogIn extends Component {
@@ -59,6 +67,9 @@ class LogIn extends Component {
       profilePhoto: '',
       dateBirthday: '',
       signUp: false,
+      createemail: '',
+      createfirstName: '',
+      createpassword: '',
     }
   }
   change = e => {
@@ -71,11 +82,19 @@ class LogIn extends Component {
     e.preventDefault()
     loginInUser(this.state.email, this.state.password)
   };
+  Create = e => {
+    const {createUser} = this.props
+    e.preventDefault()
+    let data = {login: this.state.createfirstName, email: this.state.createemail,  password: this.state.createpassword}
+    console.log("signUp data :", data)
+    createUser(data)
+  };
 
 
 
   SignUpToggle = e => {
     this.setState({signUp: !this.state.signUp})
+
   };
 
   render () {
@@ -128,9 +147,10 @@ class LogIn extends Component {
                 </Button>
                 <Button
                   fullWidth
+                  height = "300%"
                   variant="flat"
                   color="primary"
-                  className={classes.submit}
+                  className={classes.signIn}
                   onClick={this.SignUpToggle.bind(this)}
                 >
                   Sign Up
@@ -141,30 +161,40 @@ class LogIn extends Component {
           {signUp &&
             <Paper className={classes.paper}>
               <Avatar className={classes.avatar}>
-                <LockIcon/>
+                <PersonAdd/>
               </Avatar>
               <Typography variant="headline">Sign Up</Typography>
-              <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
+              <form onSubmit={e => this.Create(e)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="email">Email Address</InputLabel>
+                  <InputLabel htmlFor="createemail">Email Address</InputLabel>
                   <Input
                     id="email"
-                    name="email"
+                    name="createemail"
                     autoComplete="email"
                     autoFocus
                     onChange={e => this.change(e)}
-                    value={this.state.email}
+                    value={this.state.createemail}
+                  />
+                </FormControl>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="name">Your Name</InputLabel>
+                  <Input
+                    id="name"
+                    name="createfirstName"
+                    autoComplete="name"
+                    onChange={e => this.change(e)}
+                    value={this.state.createfirstName}
                   />
                 </FormControl>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="password">Password</InputLabel>
                   <Input
-                    name="password"
+                    name="createpassword"
                     type="password"
                     id="password"
                     autoComplete="current-password"
                     onChange={e => this.change(e)}
-                    value={this.state.password}
+                    value={this.state.createpassword}
                   />
                 </FormControl>
                 {fetching && <Loader/>}
@@ -181,7 +211,7 @@ class LogIn extends Component {
                   fullWidth
                   variant="flat"
                   color="primary"
-                  className={classes.submit}
+                  className={classes.signIn}
                   onClick={this.SignUpToggle.bind(this)}
                 >
                   Sign In

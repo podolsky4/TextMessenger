@@ -1,4 +1,4 @@
-export const CREATE_USER = 'CREATE_USER'
+export const CREATE_USER_IN_REDUX = 'CREATE_USER_IN_REDUX'
 export const FIND_USERS = 'FIND_USERS'
 export const LOAD_POSTS = 'LOAD_POSTS'
 export const LOAD_NOTIFICATION = 'LOAD_NOTIFICATION'
