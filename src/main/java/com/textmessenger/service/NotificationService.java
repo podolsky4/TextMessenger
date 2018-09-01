@@ -1,8 +1,8 @@
 package com.textmessenger.service;
 
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.transfer.NotificationTxDto;
+import com.textmessenger.model.entity.Notification;
+import com.textmessenger.model.entity.User;
 
 public interface NotificationService {
-  NotificationTxDto createNotification(String type, UserRxDto user, Long id);
+  Notification createNotification(String type, User user, Long id);
 }

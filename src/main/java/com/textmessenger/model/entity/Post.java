@@ -29,7 +29,7 @@ public class Post extends BaseEntity {
   private String content;
 
   @Column(name = "parent_id")
-  private long parentId;
+  private Long parentId;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
