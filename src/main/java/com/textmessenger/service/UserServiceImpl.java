@@ -1,6 +1,14 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.entity.Notification;
+
+import com.textmessenger.dto.receive.PostRxDto;
+import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.dto.transfer.NotificationTxDto;
+import com.textmessenger.dto.transfer.PostTxDto;
+import com.textmessenger.dto.transfer.UserTxDto;
+import com.textmessenger.mapper.NotificationMapper;
+import com.textmessenger.mapper.PostMapper;
+import com.textmessenger.mapper.UserMapper;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.UserRepository;
@@ -18,25 +26,31 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
+  private final PostMapper postMapper;
+  private final NotificationMapper notificationMapper;
+  private final UserMapper userMapper;
 
-
-  public UserServiceImpl(UserRepository userRepository) {
+  public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PostMapper postMapper,
+                         NotificationMapper notificationMapper) {
     this.userRepository = userRepository;
+    this.userMapper = userMapper;
+    this.notificationMapper = notificationMapper;
+    this.postMapper = postMapper;
   }
 
   @Override
-  public User createUser(User user) {
-    return userRepository.save(user);
+  public UserTxDto createUser(UserRxDto user) {
+    return userMapper.userToTxDto(userRepository.save(userMapper.userRxDtoToUser(user)));
   }
 
   @Override
-  public User readUser(long id) {
-    return userRepository.getOne(id);
+  public UserTxDto readUser(long id) {
+    return userMapper.userToTxDto(userRepository.getOne(id));
   }
 
   @Override
-  public void updateUser(User user) {
-    userRepository.save(user);
+  public void updateUser(UserRxDto user) {
+    userRepository.save(userMapper.userRxDtoToUser(user));
   }
 
   @Override
@@ -45,46 +59,46 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User getUserByLogin(String login) {
-    return userRepository.findUserByLogin(login);
+  public UserTxDto getUserByLogin(String login) {
+    return userMapper.userToTxDto(userRepository.findUserByLogin(login));
   }
 
   @Override
-  public void deleteFromFavorites(Post post, User user) {
-    User userByLogin = userRepository.findUserByLogin(user.getLogin());
-    userByLogin.getFavorites().remove(post);
+  public void deleteFromFavorites(PostRxDto post, UserRxDto user) {
+    User userByLogin = userRepository.findUserByLogin(userMapper.userRxDtoToUser(user).getLogin());
+    userByLogin.getFavorites().remove(postMapper.postRxDtoToPost(post));
     userRepository.save(userByLogin);
   }
 
   @Override
-  public void addLikers(Post post, User user) {
-    User userByLogin = userRepository.findUserByLogin(user.getLogin());
-    userByLogin.getFavorites().add(post);
+  public void addLikers(PostRxDto post, UserRxDto user) {
+    User userByLogin = userRepository.findUserByLogin(userMapper.userRxDtoToUser(user).getLogin());
+    userByLogin.getFavorites().add(postMapper.postRxDtoToPost(post));
     userRepository.save(userByLogin);
   }
 
   @Override
-  public List<Post> getFavoritesById(Long id) {
+  public List<PostTxDto> getFavoritesById(Long id) {
     List<Post> favorites = userRepository.getOne(id).getFavorites();
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
-    return favorites;
+    return postMapper.postsToTxDtos(favorites);
   }
 
   @Override
-  public List<Post> getFavoritesByLogin(String login) {
+  public List<PostTxDto> getFavoritesByLogin(String login) {
     List<Post> favorites = userRepository.findUserByLogin(login).getFavorites();
     favorites.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
-    return favorites;
+    return postMapper.postsToTxDtos(favorites);
   }
 
   @Override
-  public List<User> findUsersBySearch(String str) {
-    return userRepository.findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(str, str);
+  public List<UserTxDto> findUsersBySearch(String str) {
+    return userMapper.usersToTxDtos(userRepository.findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(str, str));
   }
 
   @Override
-  public List<User> getFollowings(Long id) {
-    return userRepository.getOne(id).getFollowing();
+  public List<UserTxDto> getFollowings(Long id) {
+    return userMapper.usersToTxDtos(userRepository.getOne(id).getFollowing());
   }
 
   @Override
@@ -99,24 +113,24 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User logIn(String email, String password) {
-    return userRepository.findUserByEmail(email);
+  public UserTxDto logIn(String email, String password) {
+    return userMapper.userToTxDto(userRepository.findUserByEmail(email));
   }
 
   @Override
-  public List<Notification> getAllNotificationByUserId(Long id) {
-    return userRepository.getOne(id).getNotifications();
+  public List<NotificationTxDto> getAllNotificationByUserId(Long id) {
+    return notificationMapper.notsToNotTxDtos(userRepository.getOne(id).getNotifications());
   }
 
   @Override
-  public User getCurrentUser() {
+  public UserTxDto getCurrentUser() {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
     Optional<User> user = userRepository.findById(userPrincipal.getId());
     if (user.isPresent()) {
-      return user.get();
+      return userMapper.userToTxDto(user.get());
     }
     throw new UsernameNotFoundException("User not found!");
   }

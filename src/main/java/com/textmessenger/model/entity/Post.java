@@ -3,7 +3,6 @@ package com.textmessenger.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.CascadeType;
@@ -23,7 +22,6 @@ import java.util.List;
 @Entity
 @Table(name = "post")
 @Data
-@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Post extends BaseEntity {
 
@@ -31,7 +29,7 @@ public class Post extends BaseEntity {
   private String content;
 
   @Column(name = "parent_id")
-  private Long parentId;
+  private long parentId;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
