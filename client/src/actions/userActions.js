@@ -22,6 +22,7 @@ export const updateUser = (data, login) => dispatch => {
     .then(() => dispatch(loadUser(login)))
 }
 
+
 export const loadUser = (login) => dispatch => {
   FetchData.get(`/api/users/bylogin/${login}`)
     .then(res => res.json())

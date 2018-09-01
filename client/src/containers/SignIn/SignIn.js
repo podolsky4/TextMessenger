@@ -16,6 +16,8 @@ import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Loader from '../../components/Loader/Loader'
 
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+
 const styles = theme => ({
   layout: {
     width: 'auto',
@@ -112,7 +114,7 @@ class LogIn extends Component {
                 <LockIcon/>
               </Avatar>
               <Typography variant="headline">Sign in</Typography>
-              <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
+              <ValidatorForm ref="form" onSubmit={e => this.onSubmit(e)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="email">Email Address</InputLabel>
                   <Input
@@ -126,6 +128,7 @@ class LogIn extends Component {
                 </FormControl>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="password">Password</InputLabel>
+                  <TextValidator>
                   <Input
                     name="password"
                     type="password"
@@ -133,7 +136,10 @@ class LogIn extends Component {
                     autoComplete="current-password"
                     onChange={e => this.change(e)}
                     value={this.state.password}
+                    validators={['required', 'isEmail']}
+                    errorMessages={['this field is required', 'email is not valid']}
                   />
+                  </TextValidator>
                 </FormControl>
                 {fetching && <Loader/>}
                 <Button
@@ -155,7 +161,7 @@ class LogIn extends Component {
                 >
                   Sign Up
                 </Button>
-              </form>
+              </ValidatorForm>
             </Paper>
           }
           {signUp &&
