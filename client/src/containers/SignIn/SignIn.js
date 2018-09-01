@@ -46,17 +46,6 @@ const styles = theme => ({
 })
 
 class LogIn extends Component {
-  change = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  };
-  onSubmit = e => {
-    const {loginInUser} = this.props
-    e.preventDefault()
-    loginInUser(this.state.email, this.state.password)
-  };
-
   constructor (props) {
     super(props)
     this.state = {
@@ -68,57 +57,138 @@ class LogIn extends Component {
       address: '',
       profileHeader: '',
       profilePhoto: '',
-      dateBirthday: ''
-      // classes: 'signIn'
+      dateBirthday: '',
+      signUp: false,
     }
   }
+  change = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  };
+  onSubmit = e => {
+    const {loginInUser} = this.props
+    e.preventDefault()
+    loginInUser(this.state.email, this.state.password)
+  };
+
+
+
+  SignUpToggle = e => {
+    this.setState({signUp: !this.state.signUp})
+  };
 
   render () {
     const {classes, fetching} = this.props
+    const {signUp} = this.state
+    console.log(signUp)
+
     return (
       <React.Fragment>
         <CssBaseline/>
         <main className={classes.layout}>
-          <Paper className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockIcon/>
-            </Avatar>
-            <Typography variant="headline">Sign in</Typography>
-            <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="email">Email Address</InputLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={e => this.change(e)}
-                  value={this.state.email}
-                />
-              </FormControl>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
-                  name="password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={e => this.change(e)}
-                  value={this.state.password}
-                />
-              </FormControl>
-              {fetching && <Loader/>}
-              <Button
-                type="submit"
-                fullWidth
-                variant="raised"
-                color="primary"
-                className={classes.submit}
-              >
+          {!signUp &&
+            <Paper className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockIcon/>
+              </Avatar>
+              <Typography variant="headline">Sign in</Typography>
+              <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="email">Email Address</InputLabel>
+                  <Input
+                    id="email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    onChange={e => this.change(e)}
+                    value={this.state.email}
+                  />
+                </FormControl>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <Input
+                    name="password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={e => this.change(e)}
+                    value={this.state.password}
+                  />
+                </FormControl>
+                {fetching && <Loader/>}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="raised"
+                  color="primary"
+                  className={classes.submit}
+                >
                   Sign in
-              </Button>
-            </form>
-          </Paper>
+                </Button>
+                <Button
+                  fullWidth
+                  variant="flat"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={this.SignUpToggle.bind(this)}
+                >
+                  Sign Up
+                </Button>
+              </form>
+            </Paper>
+          }
+          {signUp &&
+            <Paper className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockIcon/>
+              </Avatar>
+              <Typography variant="headline">Sign Up</Typography>
+              <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="email">Email Address</InputLabel>
+                  <Input
+                    id="email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    onChange={e => this.change(e)}
+                    value={this.state.email}
+                  />
+                </FormControl>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <Input
+                    name="password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={e => this.change(e)}
+                    value={this.state.password}
+                  />
+                </FormControl>
+                {fetching && <Loader/>}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="raised"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign Up
+                </Button>
+                <Button
+                  fullWidth
+                  variant="flat"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={this.SignUpToggle.bind(this)}
+                >
+                  Sign In
+                </Button>
+              </form>
+            </Paper>
+          }
         </main>
       </React.Fragment>
     )
@@ -136,7 +206,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    fetching: state.loader.fetching
+    fetching: state.loader.fetching,
+    // signUp: this.state.signUp
   }
 }
 
