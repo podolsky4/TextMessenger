@@ -5,7 +5,8 @@
 }
 
 .dialogs {
-  width: 40%;
+  min-width: 300px;
+  max-width: 500px;
   margin: 10px;
   padding: 10px;
   background: aliceblue;
