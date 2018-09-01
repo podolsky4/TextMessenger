@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface PostService {
 
-  void createPost(User user, Post post);
+  void createPost(UserRxDto user, PostRxDto post);
 
-  void updatePost(Post post);
+  void updatePost(PostRxDto post);
 
-  void deletePost(Post post);
-
+  void deletePost(PostRxDto post);
+  
   List<PostToFront> getAll();
 
-  List<Post> getUserPost(User user);
+  List<PostTxDto> getUserPost(UserRxDto user);
 
-  void retwitPost(User user, Long postId);
+  void retwitPost(UserRxDto user, Long postId);
 }

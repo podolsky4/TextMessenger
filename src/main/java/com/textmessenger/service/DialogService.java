@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface DialogService {
 
-  void createDialog(Dialog dialog);
+  void createDialog(DialogRxDto dialog);
 
   List<DialogToFront> getDialogsByUser(User user);
 
-  void updateDialog(Dialog dialog);
+  void updateDialog(DialogRxDto dialog);
 
   void deleteDialog(long id);
 

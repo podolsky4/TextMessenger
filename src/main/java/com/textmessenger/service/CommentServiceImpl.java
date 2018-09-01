@@ -17,17 +17,22 @@ public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
   private final NotificationService notificationService;
+  private final CommentMapper commentMapper;
+  private final PostMapper postMapper;
 
-  CommentServiceImpl(CommentRepository commentRepository, NotificationService notificationService) {
+  CommentServiceImpl(CommentRepository commentRepository, NotificationService notificationService,
+                     CommentMapper commentMapper, PostMapper postMapper) {
     this.commentRepository = commentRepository;
     this.notificationService = notificationService;
+    this.commentMapper = commentMapper;
+    this.postMapper = postMapper;
   }
 
   @Override
-  public void createComment(Post post, User user, Comment comment) {
+  public void createComment(PostRxDto post, UserRxDto user, CommentRxDto comment) {
     comment.setPost(post);
     comment.setCommentator(user);
-    commentRepository.save(comment);
+    commentRepository.save(commentMapper.commRxDtoToComm(comment));
     notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), post.getId());
   }
 
@@ -37,12 +42,12 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public void updateComment(Comment comment) {
-    commentRepository.save(comment);
+  public void updateComment(CommentRxDto comment) {
+    commentRepository.save(commentMapper.commRxDtoToComm(comment));
   }
 
   @Override
-  public void deleteComment(Comment comment) {
-    commentRepository.delete(comment);
+  public void deleteComment(CommentRxDto comment) {
+    commentRepository.delete(commentMapper.commRxDtoToComm(comment));
   }
 }
