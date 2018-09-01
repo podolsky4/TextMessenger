@@ -1,7 +1,7 @@
 package com.textmessenger.controller;
 
-import com.textmessenger.dto.receive.DialogRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.model.entity.Dialog;
+import com.textmessenger.model.entity.User;
 import com.textmessenger.service.DialogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +26,13 @@ public class DialogController {
   }
 
   @PostMapping("/user/{id}")
-  public ResponseEntity createDialog(@PathVariable("id") Long user, @Valid @RequestBody UserRxDto mainUser) {
+  public ResponseEntity createDialog(@PathVariable("id") Long user, @Valid @RequestBody User mainUser) {
     dialogService.createdByUserDialogWithUser(mainUser.getLogin(), user);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<?> readDialog(@Valid @PathVariable("id") UserRxDto user) {
+  public ResponseEntity readDialog(@Valid @PathVariable("id") User user) {
     return Optional.of(ResponseEntity.ok().body(dialogService.getDialogsByUser(user)))
             .orElse(ResponseEntity.noContent().build());
   }
@@ -43,7 +43,7 @@ public class DialogController {
   }
 
   @PutMapping
-  public ResponseEntity updateDialog(@Valid @RequestBody DialogRxDto dialog) {
+  public ResponseEntity updateDialog(@Valid @RequestBody Dialog dialog) {
     dialogService.updateDialog(dialog);
     return Optional.of(ResponseEntity.status(200)).orElse(ResponseEntity.unprocessableEntity()).build();
   }

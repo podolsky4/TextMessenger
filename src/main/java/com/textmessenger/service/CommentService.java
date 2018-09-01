@@ -1,19 +1,19 @@
 package com.textmessenger.service;
 
-import com.textmessenger.dto.receive.CommentRxDto;
-import com.textmessenger.dto.receive.PostRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.transfer.CommentTxDto;
+import com.textmessenger.model.entity.Comment;
+import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.CommentToFront;
 
 import java.util.List;
 
 public interface CommentService {
 
-  List<CommentTxDto> findAllPostFromPost(PostRxDto post);
+  List<CommentToFront> findAllPostFromPost(Post post);
 
-  void updateComment(CommentRxDto comment);
+  void updateComment(Comment comment);
 
-  void deleteComment(CommentRxDto comment);
+  void deleteComment(Comment comment);
 
-  void createComment(PostRxDto post, UserRxDto user, CommentRxDto comment);
+  void createComment(Post post, User user, Comment comment);
 }
