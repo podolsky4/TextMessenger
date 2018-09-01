@@ -1,7 +1,6 @@
 package com.textmessenger.model.entity.dto;
 
 import com.textmessenger.model.entity.Message;
-import com.textmessenger.model.entity.User;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -25,6 +24,7 @@ public class MessageToFront {
     messageToFront.setCreatedDate(message.getCreatedDate());
     return messageToFront;
   }
+
   public static List<MessageToFront> convertMessagesListToResponse(List<Message> messageList) {
     List<MessageToFront> res = new ArrayList<>();
     messageList.stream().forEach(message -> res.add(convertMessageToFront(message)));

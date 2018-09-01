@@ -33,7 +33,7 @@ public class DialogServiceImpl implements DialogService {
 
   public List<DialogToFront> getDialogsByUser(User user) {
     return DialogToFront.convertDialogsListToResponse(dialogRepository.findDialogsByUsers(user));
- // return dialogRepository.findDialogsByUsers(user);
+    // return dialogRepository.findDialogsByUsers(user);
   }
 
   @Override
