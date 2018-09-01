@@ -29,7 +29,7 @@ public class CommentController {
   }
 
   @PostMapping("/post/{id}/user/{userId}")
-  ResponseEntity<?> createComment(@Valid @PathVariable("id") Post post,
+  ResponseEntity createComment(@Valid @PathVariable("id") Post post,
                                   @Valid @PathVariable("userId") User user,
                                   @Valid @RequestBody Comment comment) {
     commentService.createComment(post, user, comment);

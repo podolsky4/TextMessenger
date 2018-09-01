@@ -32,7 +32,7 @@ public class DialogController {
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<?> readDialog(@Valid @PathVariable("id") User user) {
+  public ResponseEntity readDialog(@Valid @PathVariable("id") User user) {
     return Optional.of(ResponseEntity.ok().body(dialogService.getDialogsByUser(user)))
             .orElse(ResponseEntity.noContent().build());
   }

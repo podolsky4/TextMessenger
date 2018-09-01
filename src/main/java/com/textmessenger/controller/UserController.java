@@ -42,13 +42,13 @@ public class UserController {
   }
 
   @PostMapping("/user")
-  public ResponseEntity<?> createUser(@RequestBody User user) {
+  public ResponseEntity createUser(@RequestBody User user) {
     return ResponseEntity.status(201).body(userService.createUser(user));
   }
 
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> readUser(@PathVariable("id") long id) {
+  public ResponseEntity readUser(@PathVariable("id") long id) {
     return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
             .orElse(ResponseEntity.notFound().build());
   }
@@ -60,42 +60,42 @@ public class UserController {
   }
 
   @PutMapping
-  public ResponseEntity<?> updateUser(@Valid @RequestBody User user) {
+  public ResponseEntity updateUser(@Valid @RequestBody User user) {
     userService.updateUser(user);
     return ResponseEntity.ok().build();
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
+  public ResponseEntity deleteUser(@PathVariable("id") long id) {
     userService.deleteUser(id);
     return ResponseEntity.ok().build();
   }
 
   @GetMapping("/bylogin/{login}")
-  public ResponseEntity<?> getUserByLogin(@PathVariable("login") String login) {
+  public ResponseEntity getUserByLogin(@PathVariable("login") String login) {
     return ResponseEntity.ok().body(userService.getUserByLogin(login));
   }
 
   @PutMapping("/like/{id}")
-  public ResponseEntity<?> addToFavorites(@PathVariable("id") Post post, @RequestBody User user) {
+  public ResponseEntity addToFavorites(@PathVariable("id") Post post, @RequestBody User user) {
     userService.addLikers(post, user);
     return ResponseEntity.status(201).build();
   }
 
   @DeleteMapping("/like/{id}")
-  public ResponseEntity<?> deleteFromFavorites(@PathVariable("id") Post post,
+  public ResponseEntity deleteFromFavorites(@PathVariable("id") Post post,
                                                @RequestBody User user) {
     userService.deleteFromFavorites(post, user);
     return ResponseEntity.status(204).build();
   }
 
   @GetMapping("/favorites/{id}")
-  public ResponseEntity<?> getFavorites(@PathVariable("id") long id) {
+  public ResponseEntity getFavorites(@PathVariable("id") long id) {
     return ResponseEntity.status(200).body(userService.getFavoritesById(id));
   }
 
   @GetMapping("/favorites/login/{login}")
-  public ResponseEntity<?> getFavoritesByLogin(@PathVariable("login") String login) {
+  public ResponseEntity getFavoritesByLogin(@PathVariable("login") String login) {
     return ResponseEntity.status(200).body(userService.getFavoritesByLogin(login));
   }
 

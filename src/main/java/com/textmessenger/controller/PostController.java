@@ -28,36 +28,36 @@ public class PostController {
   }
 
   @GetMapping
-  public ResponseEntity<?> getAllPosts() {
+  public ResponseEntity getAllPosts() {
     return ResponseEntity.ok().body(postService.getAll());
   }
 
   @PostMapping("/user/{id}")
-  public ResponseEntity<?> createPost(@PathVariable("id") User user, @RequestBody Post post) {
+  public ResponseEntity createPost(@PathVariable("id") User user, @RequestBody Post post) {
     postService.createPost(user, post);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
 
   @PutMapping
-  public ResponseEntity<?> updatePost(@RequestBody Post post) {
+  public ResponseEntity updatePost(@RequestBody Post post) {
     postService.updatePost(post);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<?> getUserPost(@PathVariable("id") User user) {
+  public ResponseEntity getUserPost(@PathVariable("id") User user) {
     return Optional.of(ResponseEntity.ok().body(postService.getUserPost(user)))
             .orElse(ResponseEntity.noContent().build());
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deletePostById(@PathVariable("id") Post post) {
+  public ResponseEntity deletePostById(@PathVariable("id") Post post) {
     postService.deletePost(post);
     return ResponseEntity.status(200).build();
   }
 
   @PostMapping("/user/{id}/post/{postId}")
-  public ResponseEntity<?> retwitePost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
+  public ResponseEntity retwitePost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
     postService.retwitPost(user, postId);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }

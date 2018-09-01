@@ -41,14 +41,14 @@ public class MessageController {
   }
 
   @PutMapping
-  public ResponseEntity<?> updateMessageById(@RequestBody Message message) {
+  public ResponseEntity updateMessageById(@RequestBody Message message) {
     messageService.updateMessage(message);
     return Optional.of(ResponseEntity.ok())
             .orElse(ResponseEntity.badRequest()).build();
   }
 
   @DeleteMapping
-  public ResponseEntity<?> deleteMessageById(@RequestBody Message message) {
+  public ResponseEntity deleteMessageById(@RequestBody Message message) {
     messageService.deleteMessage(message);
     return ResponseEntity.ok().build();
   }

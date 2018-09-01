@@ -8,10 +8,10 @@ import java.util.List;
 
 @Data
 public class UserToFrontShort {
-  private long id;
-  private String login;
-  private String email;
-  private String profilePhoto;
+  private long id;//NOSONAR
+  private String login;//NOSONAR
+  private String email;//NOSONAR
+  private String profilePhoto;//NOSONAR
 
   public static UserToFrontShort convertUserForFront(User user) {
     UserToFrontShort userToFrontShort = new UserToFrontShort();

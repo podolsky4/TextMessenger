@@ -9,10 +9,10 @@ import java.util.List;
 
 @Data
 public class DialogToFront {
-  private long id;
-  private List<MessageToFront> messages;
-  private List<UserToFrontShort> users;
-  private LocalDateTime createdDate;
+  private long id;//NOSONAR
+  private List<MessageToFront> messages;//NOSONAR
+  private List<UserToFrontShort> users;//NOSONAR
+  private LocalDateTime createdDate;//NOSONAR
   private LocalDateTime updatedDate;//NOSONAR
 
 

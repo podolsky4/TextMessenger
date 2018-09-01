@@ -10,10 +10,10 @@ import java.util.List;
 @Data
 public class CommentToFront {
   private long id;//NOSONAR
-  private String content;
+  private String content;//NOSONAR
   private long user;//NOSONAR
-  private long post;
-  private LocalDateTime createdDate;
+  private long post;//NOSONAR
+  private LocalDateTime createdDate;//NOSONAR
 
   public static CommentToFront convertCommentToFront(Comment comment) {
     CommentToFront commentToFront = new CommentToFront();

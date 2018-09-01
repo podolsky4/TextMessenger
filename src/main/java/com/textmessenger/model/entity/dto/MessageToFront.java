@@ -9,11 +9,11 @@ import java.util.List;
 
 @Data
 public class MessageToFront {
-  private long id;
-  private String content;
-  private long dialog;
-  private UserToFrontShort user;
-  private LocalDateTime createdDate;
+  private long id;//NOSONAR
+  private String content;//NOSONAR
+  private long dialog;//NOSONAR
+  private UserToFrontShort user;//NOSONAR
+  private LocalDateTime createdDate;//NOSONAR
 
   public static MessageToFront convertMessageToFront(Message message) {
     MessageToFront messageToFront = new MessageToFront();

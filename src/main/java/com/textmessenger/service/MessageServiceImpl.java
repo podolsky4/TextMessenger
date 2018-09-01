@@ -56,7 +56,6 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   public List<MessageToFront> getMessagesFromDialog(Dialog dialog) {
-    //return messageRepository.findByDialog(dialog);
     return MessageToFront.convertMessagesListToResponse(messageRepository.findByDialog(dialog));
   }
 

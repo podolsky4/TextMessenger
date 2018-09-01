@@ -9,14 +9,14 @@ import java.util.List;
 
 @Data
 public class PostToFront {
-  private long id;
-  private String content;
-  private Long parentId;
-  private UserToFrontShort user;
-  private List<UserToFrontShort> likers = new ArrayList<>();
-  private List<CommentToFront> comments = new ArrayList<>();
-  private LocalDateTime createdDate;
-  private LocalDateTime updatedDate;
+  private long id;//NOSONAR
+  private String content;//NOSONAR
+  private Long parentId;//NOSONAR
+  private UserToFrontShort user;//NOSONAR
+  private List<UserToFrontShort> likers = new ArrayList<>();//NOSONAR
+  private List<CommentToFront> comments = new ArrayList<>();//NOSONAR
+  private LocalDateTime createdDate;//NOSONAR
+  private LocalDateTime updatedDate;//NOSONAR
 
   public static PostToFront convertPostToFront(Post post) {
     PostToFront responsePost = new PostToFront();
