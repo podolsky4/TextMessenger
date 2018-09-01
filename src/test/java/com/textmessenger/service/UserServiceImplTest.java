@@ -1,6 +1,5 @@
 package com.textmessenger.service;
 
-import com.textmessenger.dto.receive.UserRxDto;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.repository.UserRepository;
 import org.junit.Rule;
@@ -28,9 +27,9 @@ public class UserServiceImplTest {
   @InjectMocks
   private UserServiceImpl userService;
 
-  /*@Test
+  @Test
   public void createUserTest() {
-    UserRxDto user = setTestUser(1L,"test","test@gmail.com","123456");
+    User user = setTestUser(1L,"test","test@gmail.com","123456");
     when(userRepository.save(user)).thenReturn(user);
     assertEquals(user, userService.createUser(user));
   }
@@ -43,7 +42,7 @@ public class UserServiceImplTest {
     List<User> result = Arrays.asList(user,user1,user2);
     when(userRepository.getOne(1L)).thenReturn(result.stream().filter(u -> u.getId() == 1L).findFirst().get());
     assertEquals(user, userService.readUser(1L));
-  }*/
+  }
 
   @Test
   public void readUserByIdNotValidTest() {
@@ -52,8 +51,8 @@ public class UserServiceImplTest {
     userService.readUser(1L);
   }
 
-  public UserRxDto setTestUser(Long id, String login, String email, String password) {
-    UserRxDto user = new UserRxDto();
+  public User setTestUser(Long id, String login, String email, String password) {
+    User user = new User();
     user.setId(id);
     user.setLogin(login);
     user.setEmail(email);

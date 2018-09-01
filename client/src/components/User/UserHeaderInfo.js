@@ -8,7 +8,6 @@ import red from '@material-ui/core/colors/red'
 import {Redirect} from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
 
-
 const styles = theme => ({
   card: {
     maxWidth: 400
@@ -83,7 +82,7 @@ class UserHeaderInfo extends React.Component {
         }
         title={
           <div className={classnames(classes.root, classes.title)}>
-            {`${user.firstName} ${user.lastName}`}
+            {`${user.login}`}
           </div>
         }
         subheader={post &&

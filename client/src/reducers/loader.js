@@ -3,7 +3,8 @@ const initialState = {
   loadingPost: false,
   commentReload: false,
   loadingUser: false,
-  loadingFavorites: false
+  loadingFavorites: false,
+  loadingComments: false
 }
 
 function loader (state = initialState, action) {
@@ -14,6 +15,8 @@ function loader (state = initialState, action) {
       return {...state, fetching: action.payload}
     case 'LOADING_USER':
       return {...state, loadingUser: action.payload}
+    case 'LOADING_COMMENTS':
+      return {...state, loadingComments: action.payload}
     case 'LOADING_FAVORITES':
       return {...state, loadingFavorites: action.payload}
     case 'START_LOADER_COMMENT':
