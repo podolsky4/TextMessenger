@@ -37,6 +37,10 @@ public class PostController {
   @PostMapping("/user")
   public ResponseEntity createPost(@RequestParam("content") String content,
                                    @RequestParam(value = "file", required = false) MultipartFile file) {
+    if (file!= null) {
+      System.out.println(file.getContentType());
+    }
+    System.out.println(content);
     postService.createPost(content, file);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }

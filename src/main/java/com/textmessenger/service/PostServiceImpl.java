@@ -1,5 +1,7 @@
 package com.textmessenger.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.textmessenger.config.AmazonConfig;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
@@ -17,13 +19,15 @@ import java.util.List;
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
-
+  final String bucket = AmazonConfig.BUCKET_NAME;
+  private AmazonConfig s3;
   private final PostRepository postRepository;
   private final UserRepository userRepository;
 
-  PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
+  PostServiceImpl(PostRepository postRepository, UserRepository userRepository, AmazonConfig s3) {
     this.postRepository = postRepository;
     this.userRepository = userRepository;
+    this.s3=s3;
   }
 
   @Override
@@ -38,6 +42,7 @@ public class PostServiceImpl implements PostService {
     post.setContent(content);
     post.setUser(userRepository.getOne(userPrincipal.getId()));
     //TODO add s3 logic
+    AmazonS3 amazonS3 = s3.getConnection();
     // save new post in DB
     postRepository.save(post);
   }
