@@ -23,7 +23,7 @@ import java.util.UUID;
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
-  final String bucket = AmazonConfig.BUCKET_NAME;//NOSONAR
+  final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
   private AmazonConfig s3;
   private final PostRepository postRepository;
   private final UserRepository userRepository;
@@ -53,11 +53,11 @@ public class PostServiceImpl implements PostService {
       InputStream fileFromFront = file.getInputStream();
       AmazonS3 amazonS3 = s3.getConnection();
       amazonS3.putObject(
-              bucket,
+              BUCKET,
               key,
               fileFromFront,
               new ObjectMetadata());
-      String urlToPost = amazonS3.getUrl(bucket, key).toString();
+      String urlToPost = amazonS3.getUrl(BUCKET, key).toString();
       post.setImgUrl(urlToPost);
       post.setImgKey(key);
     }
