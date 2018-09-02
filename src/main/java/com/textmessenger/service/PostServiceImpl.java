@@ -28,14 +28,18 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public void createPost(String content, MultipartFile file) {
+    // get user from token
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
+    // create post and set content & user
     Post post = new Post();
     post.setContent(content);
     post.setUser(userRepository.getOne(userPrincipal.getId()));
-    Post save = postRepository.save(post);
+    //TODO add s3 logic
+    // save new post in DB
+    postRepository.save(post);
   }
 
   @Override
