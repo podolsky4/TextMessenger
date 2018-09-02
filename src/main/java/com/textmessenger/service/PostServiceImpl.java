@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.textmessenger.config.AmazonConfig;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
@@ -44,16 +45,21 @@ public class PostServiceImpl implements PostService {
     Post post = new Post();
     post.setContent(content);
     post.setUser(userRepository.getOne(userPrincipal.getId()));
-    //TODO add s3 logic
+    // Amazon logic
     if (file!=null){
       String typeFile = file.getContentType();
       String type="."+typeFile.substring(6);
-      System.out.println(type);
       String key = "postImage/"+ UUID.randomUUID()+type;
-      System.out.println("=====key=====");
-      System.out.println(key);
       InputStream fileFromFront = file.getInputStream();
       AmazonS3 amazonS3 = s3.getConnection();
+      amazonS3.putObject(
+              bucket,
+              key,
+              fileFromFront,
+              new ObjectMetadata());
+      String urlToPost = amazonS3.getUrl(bucket,key).toString();
+      post.setImgUrl(urlToPost);
+      post.setImgKey(key);
     }
     // save new post in DB
     postRepository.save(post);

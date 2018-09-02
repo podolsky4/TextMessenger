@@ -117,7 +117,7 @@ class Post extends Component {
             classes
             post={post}
             currentUser={user}/>
-
+          <img src={post.imgUrl}/>
           <PostContent content={post.content}/>
 
           <Divider/>

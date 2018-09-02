@@ -27,6 +27,6 @@ public class AmazonConfig {
                     new BasicAWSCredentials(
                             accessKey,    // put your key from aws console
                             secretKey))) // put your key from aws console
-            .withRegion(Regions.US_EAST_1).build(); // put your region from aws Region
+            .withRegion(Regions.US_EAST_2).build(); // put your region from aws Region
   }
 }
