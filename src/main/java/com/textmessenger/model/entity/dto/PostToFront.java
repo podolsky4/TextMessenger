@@ -13,6 +13,7 @@ public class PostToFront {
   private String content;//NOSONAR
   private Long parentId;//NOSONAR
   private UserToFrontShort user;//NOSONAR
+  private String imgUrl; //NOSONAR
   private List<UserToFrontShort> likers = new ArrayList<>();//NOSONAR
   private List<CommentToFront> comments = new ArrayList<>();//NOSONAR
   private LocalDateTime createdDate;//NOSONAR
@@ -34,6 +35,9 @@ public class PostToFront {
     }
     if (post.getLikers() != null) {
       responsePost.setLikers(UserToFrontShort.convertListUsersForFront(post.getLikers()));
+    }
+    if (post.getImgUrl() != null){
+      responsePost.setImgUrl(post.getImgUrl());
     }
     if (post.getComments() != null) {
       responsePost.setComments(CommentToFront.convertListCommentsToResponse(post.getComments()));

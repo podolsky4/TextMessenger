@@ -44,6 +44,8 @@ CREATE TABLE IF NOT EXISTS `user_rel` (
 CREATE TABLE IF NOT EXISTS `post` (
   `id`          BIGINT       NOT NULL AUTO_INCREMENT,
   `content`     VARCHAR(280) NOT NULL,
+  `img_url`     VARCHAR(280) NOT NULL,
+  `img_key`     VARCHAR(280) NOT NULL,
   `parent_id`   BIGINT,
   `created_at`  TIMESTAMP    NOT NULL,
   `last_update` TIMESTAMP    NULL,
