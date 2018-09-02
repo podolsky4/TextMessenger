@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
-  User createUser(User user);
+  UserToFrontShort createUser(User user);
 
   User readUser(long id);
 

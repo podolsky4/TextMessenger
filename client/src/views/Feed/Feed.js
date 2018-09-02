@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createLoadPosts, loadFavorites, loadPosts} from '../../actions/postsActions'
+import {loadFavorites, loadPosts, createPostWithOrWithOutImage} from '../../actions/postsActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
@@ -56,9 +56,7 @@ class Feed extends Component {
 
   componentWillMount () {
     const {loadPosts, user, loadFavorites} = this.props
-
     loadFavorites(user.id)
-
     loadPosts()
   }
 
@@ -74,9 +72,19 @@ class Feed extends Component {
   };
 
   onSubmit = e => {
-    const {user, createPost} = this.props
+    const {createPost_Image} = this.props
     e.preventDefault()
-    createPost(user.id, this.state.text)
+    if (this.refs.inputFile.value) {
+      let data = new FormData()
+      data.append('content', this.state.text)
+      data.append('file', this.refs.inputFile.files[0])
+      createPost_Image(data)
+      this.refs.inputFile.value = ''
+    } else {
+      let data = new FormData()
+      data.append('content', this.state.text)
+      createPost_Image(data)
+    }
     this.reset()
   };
 
@@ -125,6 +133,7 @@ class Feed extends Component {
               <form className={classes.form}
                 alignItems="flex-end"
                 onSubmit={e => this.onSubmit(e)}>
+
                 <TextField
                   defaultValue=""
                   placeholder="Share something..."
@@ -141,6 +150,9 @@ class Feed extends Component {
                   onKeyUp={event => this.handleInput(event)}
 
                 />
+                <form>
+                  <input type="file" name="file" ref="inputFile"/>
+                </form>
                 <ButtonPost flowRight/>
               </form>
               {reloadLoader && <Loader/>}
@@ -166,7 +178,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadPosts: () => dispatch(loadPosts()),
-    createPost: (id, content) => dispatch(createLoadPosts(id, content)),
+    createPost_Image: (data) => dispatch(createPostWithOrWithOutImage(data)),
     loadFavorites: (id) => dispatch(loadFavorites(id))
   }
 }

@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -32,9 +35,10 @@ public class PostController {
     return ResponseEntity.ok().body(postService.getAll());
   }
 
-  @PostMapping("/user/{id}")
-  public ResponseEntity createPost(@PathVariable("id") User user, @RequestBody Post post) {
-    postService.createPost(user, post);
+  @PostMapping("/user")
+  public ResponseEntity createPost(@RequestParam("content") String content,
+                                   @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+    postService.createPost(content, file);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
 

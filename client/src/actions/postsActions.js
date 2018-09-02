@@ -1,9 +1,16 @@
 import {LOAD_COMMENTS, LOAD_FAVORITES, LOAD_POSTS, LOADING_COMMENTS} from './types'
 import {endReLoader, startLoader, startReLoader, stopLoader} from './loaderActions'
 import FetchData from './serviceAction'
-export const createLoadPosts = (id, content) => dispatch => {
+
+export const createPostWithOrWithOutImage = (data) => dispatch => {
   dispatch(startReLoader())
-  FetchData.post(`/api/posts/user/${id}`, {'content': content})
+  fetch(`/api/posts/user`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    },
+    body: data
+  })
     .then(() => dispatch(loadPosts()))
     .then(() => dispatch(endReLoader()))
 }

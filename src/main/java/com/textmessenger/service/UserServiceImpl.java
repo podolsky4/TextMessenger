@@ -6,8 +6,10 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +19,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-
+  @Autowired
+  PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
   private UserToFrontShort userToFront;
 
@@ -26,8 +29,9 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User createUser(User user) {
-    return userRepository.save(user);
+  public UserToFrontShort createUser(User user) {
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    return UserToFrontShort.convertUserForFront(userRepository.save(user));
   }
 
   @Override
@@ -117,7 +121,6 @@ public class UserServiceImpl implements UserService {
             .getPrincipal();
     Optional<User> user = userRepository.findById(userPrincipal.getId());
     if (user.isPresent()) {
-
       return userToFront.convertUserForFront(user.get());
     }
     throw new UsernameNotFoundException("User not found!");
