@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -36,9 +37,16 @@ public class PostController {
 
   @PostMapping("/user")
   public ResponseEntity createPost(@RequestParam("content") String content,
-                                   @RequestParam(value = "file", required = false) MultipartFile file) {
+                                   @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
     if (file!= null) {
+      System.out.println("===================getContentType========================");
       System.out.println(file.getContentType());
+      System.out.println("===================getOriginalFilename========================");
+      System.out.println(file.getOriginalFilename());
+      System.out.println("===================getName========================");
+      System.out.println(file.getName());
+      System.out.println("===================getSize========================");
+      System.out.println(file.getSize());
     }
     System.out.println(content);
     postService.createPost(content, file);

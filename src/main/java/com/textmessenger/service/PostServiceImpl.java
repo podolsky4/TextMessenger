@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -31,7 +34,7 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public void createPost(String content, MultipartFile file) {
+  public void createPost(String content, MultipartFile file) throws IOException {
     // get user from token
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
@@ -42,7 +45,16 @@ public class PostServiceImpl implements PostService {
     post.setContent(content);
     post.setUser(userRepository.getOne(userPrincipal.getId()));
     //TODO add s3 logic
-    AmazonS3 amazonS3 = s3.getConnection();
+    if (file!=null){
+      String typeFile = file.getContentType();
+      String type="."+typeFile.substring(6);
+      System.out.println(type);
+      String key = "postImage/"+ UUID.randomUUID()+type;
+      System.out.println("=====key=====");
+      System.out.println(key);
+      InputStream fileFromFront = file.getInputStream();
+      AmazonS3 amazonS3 = s3.getConnection();
+    }
     // save new post in DB
     postRepository.save(post);
   }

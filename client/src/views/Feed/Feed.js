@@ -77,7 +77,7 @@ class Feed extends Component {
     if (this.refs.inputFile.value) {
       let data = new FormData()
       data.append('content', this.state.text)
-      data.append('file', this.refs.inputFile.value)
+      data.append('file', this.refs.inputFile.files[0])
       createPost_Image(data)
       this.refs.inputFile.value = ''
     } else {

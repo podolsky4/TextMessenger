@@ -5,6 +5,7 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface PostService {
@@ -19,5 +20,5 @@ public interface PostService {
 
   void retwitPost(User user, Long postId);
 
-  void createPost(String content, MultipartFile file);
+  void createPost(String content, MultipartFile file) throws IOException;
 }
