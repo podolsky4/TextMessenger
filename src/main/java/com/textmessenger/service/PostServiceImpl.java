@@ -31,7 +31,7 @@ public class PostServiceImpl implements PostService {
   PostServiceImpl(PostRepository postRepository, UserRepository userRepository, AmazonConfig s3) {
     this.postRepository = postRepository;
     this.userRepository = userRepository;
-    this.s3=s3;
+    this.s3 = s3;
   }
 
   @Override
@@ -46,10 +46,10 @@ public class PostServiceImpl implements PostService {
     post.setContent(content);
     post.setUser(userRepository.getOne(userPrincipal.getId()));
     // Amazon logic
-    if (file!=null){
+    if (file != null) {
       String typeFile = file.getContentType();
-      String type="."+typeFile.substring(6);
-      String key = "postImage/"+ UUID.randomUUID()+type;
+      String type = "." + typeFile.substring(6);
+      String key = "postImage/" + UUID.randomUUID() + type;
       InputStream fileFromFront = file.getInputStream();
       AmazonS3 amazonS3 = s3.getConnection();
       amazonS3.putObject(
@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService {
               key,
               fileFromFront,
               new ObjectMetadata());
-      String urlToPost = amazonS3.getUrl(bucket,key).toString();
+      String urlToPost = amazonS3.getUrl(bucket, key).toString();
       post.setImgUrl(urlToPost);
       post.setImgKey(key);
     }
