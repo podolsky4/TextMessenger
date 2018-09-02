@@ -23,7 +23,7 @@ import java.util.UUID;
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
-  final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
+  private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
   private AmazonConfig s3;
   private final PostRepository postRepository;
   private final UserRepository userRepository;
