@@ -38,11 +38,9 @@ class HomePage extends Component {
 
   render () {
     const {classes, user} = this.props
-
     if (user.id) {
       return <Redirect to='/feed' />
     }
-
     return (
       <div className={classNames(classes.homepage, classes.root, classes.cont)}>
         <TextCard
