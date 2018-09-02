@@ -105,7 +105,7 @@ class MenuHeader extends React.Component {
             className={classes.HeaderMenuButton}
           >
             <Avatar alt={user.login}
-              src={user.profilePhoto === undefined ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png' : user.profilePhoto}
+              src={user.profilePhoto === null ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png' : user.profilePhoto}
               className={classes.avatar}
             />
             <Typography className={classes.pos} color="textPrimary">
