@@ -14,5 +14,5 @@ public class AmazonConfig {
   @Value("${Secret_key}")
   private String secretKey;
 
-
+  public static final String BUCKET_NAME = "my-text-messages";
 }
