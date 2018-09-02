@@ -21,7 +21,7 @@ public class AmazonConfig {
 
   public static final String BUCKET_NAME = "my-text-messages";
 
-  public AmazonS3 getConnection (){
+  public AmazonS3 getConnection() {
     return AmazonS3ClientBuilder.standard()
             .withCredentials(new AWSStaticCredentialsProvider(
                     new BasicAWSCredentials(

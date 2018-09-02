@@ -1,13 +1,16 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.repository.PostRepository;
+import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.UserPrincipal;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,19 +19,23 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
 
   private final PostRepository postRepository;
-  private final NotificationService notificationService;
+  private final UserRepository userRepository;
 
-  PostServiceImpl(PostRepository postRepository, NotificationService notificationService) {
+  PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
     this.postRepository = postRepository;
-    this.notificationService = notificationService;
+    this.userRepository = userRepository;
   }
 
   @Override
-  public void createPost(User user, Post post) {
-    post.setUser(user);
+  public void createPost(String content, MultipartFile file) {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    Post post = new Post();
+    post.setContent(content);
+    post.setUser(userRepository.getOne(userPrincipal.getId()));
     Post save = postRepository.save(post);
-    user.getFollowers().forEach(u -> u.getNotifications()
-            .add(notificationService.createNotification(NotificationType.POST.toString(), u, save.getId())));
   }
 
   @Override

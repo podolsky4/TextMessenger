@@ -36,7 +36,7 @@ public class PostToFront {
     if (post.getLikers() != null) {
       responsePost.setLikers(UserToFrontShort.convertListUsersForFront(post.getLikers()));
     }
-    if (post.getImgUrl() != null){
+    if (post.getImgUrl() != null) {
       responsePost.setImgUrl(post.getImgUrl());
     }
     if (post.getComments() != null) {

@@ -84,7 +84,7 @@ public class UserController {
 
   @DeleteMapping("/like/{id}")
   public ResponseEntity deleteFromFavorites(@PathVariable("id") Post post,
-                                               @RequestBody User user) {
+                                            @RequestBody User user) {
     userService.deleteFromFavorites(post, user);
     return ResponseEntity.status(204).build();
   }
