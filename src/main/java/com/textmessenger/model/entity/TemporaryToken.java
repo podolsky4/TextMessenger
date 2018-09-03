@@ -9,10 +9,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -34,4 +35,11 @@ public class TemporaryToken extends BaseEntity{
 
   @Column(name = "expiry_date")
   private Date expiryDate;
+
+  private Date calculateExpiryDate(int expiryTimeInMinutes) {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(new Timestamp(cal.getTime().getTime()));
+    cal.add(Calendar.MINUTE, expiryTimeInMinutes);
+    return new Date(cal.getTime().getTime());
+  }
 }

@@ -8,25 +8,7 @@ server:
 #   Mail Settings
 ###
 
-support:
-  email: text.messages.api@gmail.com
-
 spring:
-  mail:
-    host: smtp.gmail.com
-    port: 465
-    protocol: smtps
-    username: text.messages.api@gmail.com
-    password: test123test
-    properties:
-      mail:
-        smtps:
-          auth: true
-          startttls:
-            enable: true
-          timeout: 8000
-        transport:
-          protocols: smtps
   ###
   #   Database Settings
   ###

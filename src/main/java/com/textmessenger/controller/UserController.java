@@ -5,9 +5,12 @@ import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.model.entity.dto.SearchValue;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
+import com.textmessenger.service.EmailService;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,10 +28,12 @@ import java.util.Optional;
 public class UserController {
   private final UserService userService;
   private LoginService loginService;
+  private final EmailService emailService;
 
-  public UserController(UserService userService, LoginService loginService) {
+  public UserController(UserService userService, LoginService loginService, EmailService emailService) {
     this.userService = userService;
     this.loginService = loginService;
+    this.emailService = emailService;
   }
 
   @PostMapping("/login")
@@ -42,8 +47,19 @@ public class UserController {
   }
 
   @PostMapping("/user")
-  public ResponseEntity createUser(@RequestBody User user) {
-    return ResponseEntity.status(201).body(userService.createUser(user));
+  public ResponseEntity createUser(@Valid @RequestBody User user) {
+    UserToFrontShort user1;
+    SimpleMailMessage email = new SimpleMailMessage();
+
+    if(userService.findUserByEmailOrLogin(user).get().size() == 0){
+      user1 = userService.createUser(user);
+      email.setTo(user1.getEmail());
+      email.setSubject("confirmation link to create account at Text Messanger application");
+      email.setText("http://localhost:3000/api/" + user1.getId());
+      emailService.sendEmail(email);
+      return ResponseEntity.ok().build();
+    }
+    return ResponseEntity.status(401).build();
   }
 
 

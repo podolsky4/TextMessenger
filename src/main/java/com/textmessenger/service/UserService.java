@@ -6,6 +6,7 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -40,4 +41,6 @@ public interface UserService {
   List<Notification> getAllNotificationByUserId(Long id);
 
   UserToFrontShort getCurrentUser();
+
+  Optional<List<User>> findUserByEmailOrLogin(User user);
 }

@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserToFrontShort createUser(User user) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
+
     return UserToFrontShort.convertUserForFront(userRepository.save(user));
   }
 
@@ -96,6 +97,12 @@ public class UserServiceImpl implements UserService {
   public void addToFollowing(Long user, Long newUser) {
     User one = userRepository.getOne(newUser);
     userRepository.getOne(user).getFollowing().add(one);
+  }
+
+  @Override
+  public Optional<List<User>> findUserByEmailOrLogin(User user) {
+    return Optional.of(userRepository
+            .findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(user.getLogin(),user.getEmail()));
   }
 
   @Override
