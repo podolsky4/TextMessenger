@@ -323,7 +323,6 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     fetching: state.loader.fetching
-    // signUp: this.state.signUp
   }
 }
 
