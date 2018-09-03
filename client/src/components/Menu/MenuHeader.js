@@ -13,7 +13,7 @@ import MenuList from '@material-ui/core/MenuList'
 import Typography from '@material-ui/core/Typography/Typography'
 import MenuAccountRedirect from './MenuAccountRedirect'
 import PersonIcon from '@material-ui/icons/Person'
-import LockIcon from '../../../node_modules/@material-ui/icons/LockOutlined'
+
 
 const styles = (theme) => ({
   paper: {

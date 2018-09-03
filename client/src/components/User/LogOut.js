@@ -4,7 +4,7 @@ import {logOut} from '../../actions/userActions'
 import Button from '@material-ui/core/Button'
 import LockIcon from '@material-ui/icons/LockOutlined'
 import withStyles from '@material-ui/core/styles/withStyles'
-import {Redirect} from "react-router-dom";
+
 
 const styles = theme => ({
   layout: {

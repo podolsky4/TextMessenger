@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import red from '@material-ui/core/colors/red'
 
 import {Redirect} from 'react-router'
-import Typography from '@material-ui/core/Typography/Typography'
+
 
 const styles = theme => ({
   card: {
