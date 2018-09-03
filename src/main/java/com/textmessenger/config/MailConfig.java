@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("mail.properties")
+@PropertySource("config.properties")
 public class MailConfig {
 
   @Value("${gmail.userName}")
