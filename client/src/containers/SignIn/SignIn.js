@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Loader from '../../components/Loader/Loader'
 
-import { ValidatorForm} from 'react-material-ui-form-validator'
+import {ValidatorForm} from 'react-material-ui-form-validator'
 
 const styles = theme => ({
   layout: {
