@@ -1,4 +1,4 @@
-import {LOAD_USER, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION} from './types.js'
+import {CREATE_USER_IN_REDUX, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION} from './types.js'
 import {loadFavoritesByLogin} from './postsActions'
 import {startLoader, stopLoader, toggleLoader} from './loaderActions'
 import FetchData from './serviceAction'
@@ -11,7 +11,10 @@ export const createUser = (data) => dispatch => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
-    }).then(() => dispatch(loadUser(data.login)))
+    }
+    )
+    .then(() => dispatch(loadUser(data.login)))
+    .then(() => console.log("user loaded after create :", data))
     .then(() => dispatch(loadFavoritesByLogin(data.login)))
 }
 export const updateUser = (data, login) => dispatch => {
@@ -19,10 +22,11 @@ export const updateUser = (data, login) => dispatch => {
     .then(() => dispatch(loadUser(login)))
 }
 
+
 export const loadUser = (login) => dispatch => {
   FetchData.get(`/api/users/bylogin/${login}`)
     .then(res => res.json())
-    .then(data => dispatch({type: LOAD_USER, payload: data}))
+    .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
 }
 
 export const getFollowing = (id) => dispatch => {
@@ -62,7 +66,7 @@ export const getCurrentUser = () => dispatch => {
         dispatch({type: LOAD_USER, payload: {}})
       }
     })
-    .then(data => dispatch({type: LOAD_USER, payload: data}))
+    .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
     .catch(error => console.log(error))
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
