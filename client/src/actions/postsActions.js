@@ -1,17 +1,24 @@
-import {LOAD_FAVORITES, LOAD_POSTS, START_LOADER_COMMENT, STOP_LOADER_COMMENT} from './types'
+import {LOAD_COMMENTS, LOAD_FAVORITES, LOAD_POSTS, LOADING_COMMENTS} from './types'
 import {endReLoader, startLoader, startReLoader, stopLoader} from './loaderActions'
 import FetchData from './serviceAction'
-export const createLoadPosts = (id, content) => dispatch => {
+
+export const createPostWithOrWithOutImage = (data) => dispatch => {
   dispatch(startReLoader())
-  FetchData.post(`/api/posts/user/${id}`, {'content': content})
+  fetch(`/api/posts/user`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    },
+    body: data
+  })
     .then(() => dispatch(loadPosts()))
     .then(() => dispatch(endReLoader()))
 }
 export const createComment = (postId, userId, content) => dispatch => {
-  dispatch(startLoader(START_LOADER_COMMENT))
+  dispatch(startLoader(LOADING_COMMENTS))
   FetchData.post(`/api/comments/post/${postId}/user/${userId}`, {'content': content})
     .then(() => dispatch(loadPosts()))
-    .then(() => dispatch(stopLoader(STOP_LOADER_COMMENT)))
+    .then(() => dispatch(stopLoader(LOADING_COMMENTS)))
 }
 export const retweet = (id, postId) => dispatch => {
   FetchData.post(`/api/posts/user/${id}/post/${postId}`, {})
@@ -58,4 +65,12 @@ export const loadPosts = () => dispatch => {
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
     .then(() => dispatch(stopLoader('LOADING_POST')))
+}
+
+export const loadComments = (id) => dispatch => {
+  dispatch(startLoader('LOADING_COMMENTS'))
+  FetchData.get(`/api/comments/post/${id}`)
+    .then(res => res.json())
+    .then(data => dispatch({type: LOAD_COMMENTS, payload: data}))
+    .then(() => dispatch(stopLoader('LOADING_COMMENTS')))
 }

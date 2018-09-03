@@ -35,14 +35,16 @@ public class SearchValueTest {
   @Test
   public void shouldBeTest(){
     String message = "test";
-    searchValue = new SearchValue(message);
+    searchValue = new SearchValue();
+    searchValue.setSearch(message);
     assertThat(message.equals(searchValue.getSearch()));
   }
 
   @Test
   public void shouldBeMistake(){
     String message = " ";//передал пробел
-    searchValue = new SearchValue(message);
+    searchValue = new SearchValue();
+    searchValue.setSearch(message);
     Set<ConstraintViolation<SearchValue>> constraintViolations = localValidatorFactory.validate(searchValue);
     System.out.println(constraintViolations.iterator().next().getMessage());
     assertEquals(

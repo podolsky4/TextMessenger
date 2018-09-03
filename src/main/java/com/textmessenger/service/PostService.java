@@ -1,23 +1,24 @@
 package com.textmessenger.service;
 
-import com.textmessenger.dto.receive.PostRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.transfer.PostTxDto;
+import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.PostToFront;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public interface PostService {
 
-  void createPost(UserRxDto user, PostRxDto post);
+  void updatePost(Post post);
 
-  void updatePost(PostRxDto post);
+  void deletePost(Post post);
 
-  void deletePost(PostRxDto post);
+  List<PostToFront> getAll();
 
-  Optional<List<PostTxDto>> getAll();
+  List<Post> getUserPost(User user);
 
-  List<PostTxDto> getUserPost(UserRxDto user);
+  void retwitPost(User user, Long postId);
 
-  void retwitPost(UserRxDto user, Long postId);
+  void createPost(String content, MultipartFile file) throws IOException;
 }

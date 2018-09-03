@@ -1,73 +1,88 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.NotificationType;
-import com.textmessenger.dto.receive.PostRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
-import com.textmessenger.dto.transfer.PostTxDto;
-import com.textmessenger.mapper.NotificationMapper;
-import com.textmessenger.mapper.PostMapper;
-import com.textmessenger.mapper.UserMapper;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.textmessenger.config.AmazonConfig;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.repository.PostRepository;
+import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.UserPrincipal;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
-
+  private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
+  private AmazonConfig s3;
   private final PostRepository postRepository;
-  private final NotificationService notificationService;
-  private final PostMapper postMapper;
-  private final UserMapper userMapper;
-  private final NotificationMapper notificationMapper;
+  private final UserRepository userRepository;
 
-  PostServiceImpl(PostRepository postRepository, NotificationService notificationService, PostMapper postMapper,
-                  UserMapper userMapper, NotificationMapper notificationMapper) {
+  PostServiceImpl(PostRepository postRepository, UserRepository userRepository, AmazonConfig s3) {
     this.postRepository = postRepository;
-    this.notificationService = notificationService;
-    this.postMapper = postMapper;
-    this.userMapper = userMapper;
-    this.notificationMapper = notificationMapper;
+    this.userRepository = userRepository;
+    this.s3 = s3;
   }
 
   @Override
-  public void createPost(UserRxDto user, PostRxDto post) {
-    Post tempPost = postMapper.postRxDtoToPost(post);
-    tempPost.setUser(userMapper.userRxDtoToUser(user));
-    Post save = postRepository.save(tempPost);
-    long tempSave = save.getId();
-    User tempUser = userMapper.userRxDtoToUser(user);
-    tempUser.getFollowers().forEach(u -> u.getNotifications()
-            .add(notificationMapper
-                    .notTxDtoToNot(notificationService
-                            .createNotification(NotificationType.POST.toString(), user, tempSave))));
+  public void createPost(String content, MultipartFile file) throws IOException {
+    // get user from token
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    // create post and set content & user
+    Post post = new Post();
+    post.setContent(content);
+    post.setUser(userRepository.getOne(userPrincipal.getId()));
+    // Amazon logic
+    if (file != null) {
+      String typeFile = file.getContentType();
+      String type = "." + typeFile.substring(6);
+      String key = "postImage/" + UUID.randomUUID() + type;
+      InputStream fileFromFront = file.getInputStream();
+      AmazonS3 amazonS3 = s3.getConnection();
+      amazonS3.putObject(
+              BUCKET,
+              key,
+              fileFromFront,
+              new ObjectMetadata());
+      String urlToPost = amazonS3.getUrl(BUCKET, key).toString();
+      post.setImgUrl(urlToPost);
+      post.setImgKey(key);
+    }
+    // save new post in DB
+    postRepository.save(post);
   }
 
   @Override
-  public void updatePost(PostRxDto post) {
-    postRepository.save(postMapper.postRxDtoToPost(post));
+  public void updatePost(Post post) {
+    postRepository.save(post);
   }
 
   @Override
-  public void deletePost(PostRxDto post) {
-    postRepository.delete(postMapper.postRxDtoToPost(post));
+  public void deletePost(Post post) {
+    postRepository.delete(post);
   }
 
   @Override
-  public Optional<List<PostTxDto>> getAll() {
-
-    return Optional.of(postMapper.postsToTxDtos(postRepository.findAll(orderBy())));
+  public List<PostToFront> getAll() {
+    return PostToFront.convertListPostsToResponse(postRepository.findAll(orderBy()));
   }
 
   @Override
-  public List<PostTxDto> getUserPost(UserRxDto user) {
-    return postMapper.postsToTxDtos(postRepository.findPostsByUser(userMapper.userRxDtoToUser(user)));
+  public List<Post> getUserPost(User user) {
+    return postRepository.findPostsByUser(user);
   }
 
   private Sort orderBy() {
@@ -75,9 +90,9 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public void retwitPost(UserRxDto user, Long postId) {
+  public void retwitPost(User user, Long postId) {
     Post retwite = new Post();
-    retwite.setUser(userMapper.userRxDtoToUser(user));
+    retwite.setUser(user);
     retwite.setParentId(postId);
     postRepository.save(retwite);
   }

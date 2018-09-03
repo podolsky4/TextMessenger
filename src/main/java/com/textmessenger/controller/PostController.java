@@ -1,7 +1,7 @@
 package com.textmessenger.controller;
 
-import com.textmessenger.dto.receive.PostRxDto;
-import com.textmessenger.dto.receive.UserRxDto;
+import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.User;
 import com.textmessenger.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -29,36 +31,37 @@ public class PostController {
   }
 
   @GetMapping
-  public ResponseEntity<?> getAllPosts() {
+  public ResponseEntity getAllPosts() {
     return ResponseEntity.ok().body(postService.getAll());
   }
 
-  @PostMapping("/user/{id}")
-  public ResponseEntity<?> createPost(@Valid @PathVariable("id") UserRxDto user, @Valid @RequestBody PostRxDto post) {
-    postService.createPost(user, post);
+  @PostMapping("/user")
+  public ResponseEntity createPost(@RequestParam("content") String content,
+                                   @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+    postService.createPost(content, file);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
 
   @PutMapping
-  public ResponseEntity<?> updatePost(@Valid @RequestBody PostRxDto post) {
+  public ResponseEntity updatePost(@RequestBody Post post) {
     postService.updatePost(post);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
   @GetMapping("/user/{id}")
-  public ResponseEntity<?> getUserPost(@Valid @PathVariable("id") UserRxDto user) {
+  public ResponseEntity getUserPost(@PathVariable("id") User user) {
     return Optional.of(ResponseEntity.ok().body(postService.getUserPost(user)))
             .orElse(ResponseEntity.noContent().build());
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deletePostById(@Valid @PathVariable("id") PostRxDto post) {
+  public ResponseEntity deletePostById(@PathVariable("id") Post post) {
     postService.deletePost(post);
     return ResponseEntity.status(200).build();
   }
 
   @PostMapping("/user/{id}/post/{postId}")
-  public ResponseEntity<?> retwitePost(@Valid @PathVariable("id") UserRxDto user, @PathVariable("postId") Long postId) {
+  public ResponseEntity retwitePost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
     postService.retwitPost(user, postId);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
