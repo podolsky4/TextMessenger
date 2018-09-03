@@ -89,6 +89,7 @@ export const loginIn = (email, password) => dispatch => {
 }
 
 export const logOut = () => dispatch => {
+    window.location.assign("/")
   localStorage.removeItem('accessToken')
     .then(() => dispatch(getCurrentUser()))
 }
