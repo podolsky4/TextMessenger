@@ -1,7 +1,6 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem'
-import UserHeaderInfo from '../User/UserHeaderInfo'
 import LogOut from '../User/LogOut'
 import {withStyles} from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
@@ -12,6 +11,9 @@ import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import MenuList from '@material-ui/core/MenuList'
 import Typography from '@material-ui/core/Typography/Typography'
+import MenuAccountRedirect from './MenuAccountRedirect'
+import PersonIcon from '@material-ui/icons/Person'
+
 
 const styles = (theme) => ({
   paper: {
@@ -20,14 +22,20 @@ const styles = (theme) => ({
     left: '-1.7%'
   },
   poper: {
-    left: 10
+    position: 'absolute',
+    left: 10,
+    marginLeft: '-68px',
+    marginTop: '5px',
+    zIndex: 1001,
+    width: 200
   },
   root: {
     display: 'flex'
     // padding: "1px",
   },
   anchorEl: {
-    marginTop: 40
+    marginTop: 40,
+    width: 200
   },
   menuButton: {
     marginLeft: -12,
@@ -53,6 +61,9 @@ const styles = (theme) => ({
     }
 
   },
+  lockIcon: {
+    marginRight: '1em'
+  },
   HeaderMenuButton: {
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -73,7 +84,9 @@ const styles = (theme) => ({
 
 class MenuHeader extends React.Component {
   state = {
-    open: false
+    open: false,
+    toredirect: true
+    // id: this.state.user.id
   };
 
   handleToggle = () => {
@@ -85,7 +98,9 @@ class MenuHeader extends React.Component {
       return
     }
 
-    this.setState({ open: false })
+    this.setState({
+      open: false
+    })
   };
 
   render () {
@@ -123,9 +138,13 @@ class MenuHeader extends React.Component {
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
                       <MenuItem onClick={this.handleClose}
-                        className={classes.menuItem}><UserHeaderInfo padding={0} user={user}/></MenuItem>
-                      <MenuItem onClick={this.handleClose}
-                        className={classes.menuItem}>My account</MenuItem>
+                        className={classes.menuItem}>
+                        <PersonIcon className={classes.lockIcon}/>
+                        <MenuAccountRedirect padding={0}
+                          user={user}
+                        />
+                      </MenuItem>
+
                       <MenuItem onClick={this.handleClose}
                         className={classes.menuItem}><LogOut/></MenuItem>
                     </MenuList>
