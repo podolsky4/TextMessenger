@@ -78,9 +78,9 @@ class MenuAccountRedirect extends React.Component {
         className={classnames(classes.AccountCont)}
         onClick={e => this.profileRender(user.id)}
       >
-        <Typography component={'p'}>
-        Account
-        </Typography>
+
+        My Account
+
       </div>
     )
   }

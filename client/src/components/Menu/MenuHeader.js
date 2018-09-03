@@ -12,6 +12,8 @@ import Popper from '@material-ui/core/Popper'
 import MenuList from '@material-ui/core/MenuList'
 import Typography from '@material-ui/core/Typography/Typography'
 import MenuAccountRedirect from './MenuAccountRedirect'
+import PersonIcon from '@material-ui/icons/Person'
+import LockIcon from '../../../node_modules/@material-ui/icons/LockOutlined'
 
 const styles = (theme) => ({
   paper: {
@@ -25,7 +27,7 @@ const styles = (theme) => ({
     marginLeft: '-68px',
     marginTop: '5px',
     zIndex: 1001,
-    width: 200,
+    width: 200
   },
   root: {
     display: 'flex'
@@ -33,7 +35,7 @@ const styles = (theme) => ({
   },
   anchorEl: {
     marginTop: 40,
-    width: 200,
+    width: 200
   },
   menuButton: {
     marginLeft: -12,
@@ -58,6 +60,9 @@ const styles = (theme) => ({
       fontWeight: '700'
     }
 
+  },
+  lockIcon: {
+    marginRight: '1em'
   },
   HeaderMenuButton: {
     justifyContent: 'space-between',
@@ -133,12 +138,13 @@ class MenuHeader extends React.Component {
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
                       <MenuItem onClick={this.handleClose}
-                        className={classes.menuItem}><MenuAccountRedirect padding={0}
+                        className={classes.menuItem}>
+                        <PersonIcon className={classes.lockIcon}/>
+                        <MenuAccountRedirect padding={0}
                           user={user}
                         />
                       </MenuItem>
-                      <MenuItem onClick={this.handleClose}
-                        className={classes.menuItem}>My account</MenuItem>
+
                       <MenuItem onClick={this.handleClose}
                         className={classes.menuItem}><LogOut/></MenuItem>
                     </MenuList>
