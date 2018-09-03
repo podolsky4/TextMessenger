@@ -2,19 +2,24 @@ package com.textmessenger.service;
 
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
+import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -22,17 +27,56 @@ public class UserServiceImpl implements UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
+  private final TemporaryTokenRepository temporaryTokenRepository;
   private UserToFrontShort userToFront;
+  private final EmailService emailService;
 
-  public UserServiceImpl(UserRepository userRepository) {
+
+  public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
+                         EmailService emailService) {
     this.userRepository = userRepository;
+    this.temporaryTokenRepository = temporaryTokenRepository;
+    this.emailService = emailService;
   }
 
   @Override
-  public UserToFrontShort createUser(User user) {
+  public String setUserIsEnabled(String token){
+    Optional<TemporaryToken> byToken = temporaryTokenRepository.findByToken(token);
+    if (byToken.isPresent()){
+      User user = byToken.get().getUser();
+      if(byToken.get().getExpiryDate().compareTo(new Date()) <= 0){
+        user.setEnabled(true);
+        userRepository.save(user);
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(user.getEmail());
+        email.setSubject("Congratulation your account is activate");
+        email.setText("Enjoy our application");
+        emailService.sendEmail(email);
+        temporaryTokenRepository.delete(byToken.get());
+        return new String("your user is activate");
+      }
+      TemporaryToken temporaryToken = byToken.get();
+      temporaryToken.setToken(UUID.randomUUID().toString());
+      temporaryToken.setExpiryDate(temporaryToken.calculateExpiryDate(new Date().getMinutes()));
+      User save = userRepository.save(user);
+      temporaryToken.setUser(save);
+      temporaryTokenRepository.save(temporaryToken);
+      SimpleMailMessage email = new SimpleMailMessage();
+      email.setTo(user.getEmail());
+      email.setSubject("repeated link to activate");
+      email.setText("http://localhost:3000/api/users/registered/" + temporaryToken.getToken());
+      emailService.sendEmail(email);
+      return new String("your link is old, we send new link, please check your registration email");
+    }else {
+      return new String("this token is not valid");
+    }
+  }
+
+  @Override
+  public User createUser(User user) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-    return UserToFrontShort.convertUserForFront(userRepository.save(user));
+    return userRepository.save(user);
   }
 
   @Override

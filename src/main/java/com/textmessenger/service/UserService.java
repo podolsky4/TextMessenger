@@ -10,7 +10,9 @@ import java.util.Optional;
 
 public interface UserService {
 
-  UserToFrontShort createUser(User user);
+  String setUserIsEnabled(String token);
+
+  User createUser(User user);
 
   User readUser(long id);
 

@@ -59,9 +59,9 @@ public class User extends BaseEntity {
   @Column(name = "is_enabled")
   private boolean isEnabled;
 
-  @OneToOne(mappedBy = "user", targetEntity = TemporaryToken.class, fetch = FetchType.LAZY,
+  /*@OneToOne(mappedBy = "user", targetEntity = TemporaryToken.class, fetch = FetchType.LAZY,
           cascade = CascadeType.ALL)
-  private TemporaryToken temporaryToken;
+  private TemporaryToken temporaryToken;*/
 
   public List<String> getRoles() {
     List<String> roles = new ArrayList<>();

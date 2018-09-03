@@ -23,12 +23,13 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 CREATE TABLE IF NOT EXISTS `temporary_token` (
   `id`             BIGINT       NOT NULL,
+  `user_id`        BIGINT       NOT NULL,
   `token`          VARCHAR(255) NOT NULL,
   `expiry_date`    TIMESTAMP    NOT NULL,
   `created_at`     TIMESTAMP    NOT NULL,
   `last_update`    TIMESTAMP    NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `temporary_token` FOREIGN KEY (`id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+  CONSTRAINT `temporary_token` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 );
 
 --
