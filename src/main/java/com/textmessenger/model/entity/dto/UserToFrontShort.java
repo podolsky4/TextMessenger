@@ -13,6 +13,7 @@ public class UserToFrontShort {
   private String email;//NOSONAR
   private String profilePhoto;//NOSONAR
 
+
   public static UserToFrontShort convertUserForFront(User user) {
     UserToFrontShort userToFrontShort = new UserToFrontShort();
     userToFrontShort.setEmail(user.getEmail());

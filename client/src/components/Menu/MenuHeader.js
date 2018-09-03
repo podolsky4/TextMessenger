@@ -1,7 +1,6 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem'
-import UserHeaderInfo from '../User/UserHeaderInfo'
 import LogOut from '../User/LogOut'
 import {withStyles} from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
@@ -12,7 +11,7 @@ import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import MenuList from '@material-ui/core/MenuList'
 import Typography from '@material-ui/core/Typography/Typography'
-import MenuAccountRedirect from "./MenuAccountRedirect";
+import MenuAccountRedirect from './MenuAccountRedirect'
 
 const styles = (theme) => ({
   paper: {
@@ -75,7 +74,7 @@ const styles = (theme) => ({
 class MenuHeader extends React.Component {
   state = {
     open: false,
-    toredirect: true,
+    toredirect: true
     // id: this.state.user.id
   };
 
@@ -89,11 +88,9 @@ class MenuHeader extends React.Component {
     }
 
     this.setState({
-      open: false,
+      open: false
     })
   };
-
-
 
   render () {
     const { open } = this.state
@@ -131,9 +128,8 @@ class MenuHeader extends React.Component {
                     <MenuList>
                       <MenuItem onClick={this.handleClose}
                         className={classes.menuItem}><MenuAccountRedirect padding={0}
-                                                                          user={user}
-
-                      />
+                          user={user}
+                        />
                       </MenuItem>
                       <MenuItem onClick={this.handleClose}
                         className={classes.menuItem}>My account</MenuItem>

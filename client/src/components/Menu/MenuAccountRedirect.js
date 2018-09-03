@@ -2,13 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
-import CardHeader from '@material-ui/core/CardHeader'
 import red from '@material-ui/core/colors/red'
 
 import {Redirect} from 'react-router'
-import Avatar from '@material-ui/core/Avatar'
-import Typography from "@material-ui/core/Typography/Typography";
-
+import Typography from '@material-ui/core/Typography/Typography'
 
 const styles = theme => ({
   card: {
@@ -45,8 +42,8 @@ const styles = theme => ({
     cursor: 'pointer'
   },
   AccountCont: {
-    width: '100%',
-  },
+    width: '100%'
+  }
 
 })
 
@@ -80,10 +77,10 @@ class MenuAccountRedirect extends React.Component {
         style={{padding}}
         className={classnames(classes.AccountCont)}
         onClick={e => this.profileRender(user.id)}
-        >
-      <Typography component={'p'}>
+      >
+        <Typography component={'p'}>
         Account
-      </Typography>
+        </Typography>
       </div>
     )
   }
@@ -91,7 +88,7 @@ class MenuAccountRedirect extends React.Component {
 
 MenuAccountRedirect.propTypes = {
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(MenuAccountRedirect)
