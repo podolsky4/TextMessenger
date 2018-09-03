@@ -1,4 +1,4 @@
-import {LOAD_USER, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION} from './types.js'
+import {CREATE_USER_IN_REDUX, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION} from './types.js'
 import {loadFavoritesByLogin} from './postsActions'
 import {startLoader, stopLoader, toggleLoader} from './loaderActions'
 import FetchData from './serviceAction'
@@ -11,7 +11,10 @@ export const createUser = (data) => dispatch => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
-    }).then(() => dispatch(loadUser(data.login)))
+    }
+  )
+    .then(() => dispatch(loadUser(data.login)))
+    .then(() => console.log('user loaded after create :', data))
     .then(() => dispatch(loadFavoritesByLogin(data.login)))
 }
 export const updateUser = (data, login) => dispatch => {
@@ -22,7 +25,7 @@ export const updateUser = (data, login) => dispatch => {
 export const loadUser = (login) => dispatch => {
   FetchData.get(`/api/users/bylogin/${login}`)
     .then(res => res.json())
-    .then(data => dispatch({type: LOAD_USER, payload: data}))
+    .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
 }
 
 export const getFollowing = (id) => dispatch => {
@@ -59,10 +62,10 @@ export const getCurrentUser = () => dispatch => {
       if (response.ok) {
         return response.json()
       } else {
-        dispatch({type: LOAD_USER, payload: {}})
+        dispatch({type: CREATE_USER_IN_REDUX, payload: {}})
       }
     })
-    .then(data => dispatch({type: LOAD_USER, payload: data}))
+    .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
     .catch(error => console.log(error))
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
@@ -85,9 +88,12 @@ export const loginIn = (email, password) => dispatch => {
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
 
+
 export const logOut = () => dispatch => {
+    window.location.assign("/")
   localStorage.removeItem('accessToken')
     .then(() => dispatch(getCurrentUser()))
+
 }
 
 export const loadUserNotification = (id) => dispatch => {
