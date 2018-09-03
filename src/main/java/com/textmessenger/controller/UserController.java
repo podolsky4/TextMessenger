@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,7 +73,8 @@ public class UserController {
       email.setTo(user1.getEmail());
       email.setSubject("confirmation link to create account at Text Messanger application");
       email.setText("http://localhost:3000/api/users/registered/" + tempToken.getToken());
-      emailService.sendEmail(email);
+     emailService.sendEmail(email);
+      //javaMailSender.send(email);
       return ResponseEntity.ok().build();
     }
     return ResponseEntity.status(401).build();
