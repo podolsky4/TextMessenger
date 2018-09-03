@@ -88,12 +88,12 @@ export const loginIn = (email, password) => dispatch => {
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
 
-export const logOut = () => {
-  return dispatch => {
-    localStorage.removeItem('accessToken')
-      .then(() => dispatch(getCurrentUser()))
-      .then(() => window.location.assign('localhost:3000'))
-  }
+
+export const logOut = () => dispatch => {
+    window.location.assign("/")
+  localStorage.removeItem('accessToken')
+    .then(() => dispatch(getCurrentUser()))
+
 }
 
 export const loadUserNotification = (id) => dispatch => {
