@@ -63,12 +63,12 @@ public class UserController {
     User user1;
     SimpleMailMessage email = new SimpleMailMessage();
     if(userService.findUserByEmailOrLogin(user).get().size() == 0){
+      user1 = userService.createUser(user);
       TemporaryToken tempToken = new TemporaryToken();
       tempToken.setToken(UUID.randomUUID().toString());
       tempToken.setExpiryDate(new Date());
-      tempToken.setUser(user);
+      tempToken.setUser(user1);
       temporaryTokenRepository.save(tempToken);
-      user1 = userService.createUser(user);
       email.setTo(user1.getEmail());
       email.setSubject("confirmation link to create account at Text Messanger application");
       email.setText("http://localhost:3000/api/users/registered/" + tempToken.getToken());

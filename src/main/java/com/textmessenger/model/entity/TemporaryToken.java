@@ -29,7 +29,7 @@ public class TemporaryToken extends BaseEntity{
   @Column(name = "token")
   private String token;
 
-  @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+  @OneToOne
   @JoinColumn(name = "user_id")
   private User user;
 

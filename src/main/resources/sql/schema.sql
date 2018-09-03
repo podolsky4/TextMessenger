@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Create table temporary token
 --
 CREATE TABLE IF NOT EXISTS `temporary_token` (
-  `id`             BIGINT       NOT NULL,
+  `id`             BIGINT       NOT NULL AUTO_INCREMENT,
   `user_id`        BIGINT       NOT NULL,
   `token`          VARCHAR(255) NOT NULL,
   `expiry_date`    TIMESTAMP    NOT NULL,
