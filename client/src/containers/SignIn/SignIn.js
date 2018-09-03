@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Loader from '../../components/Loader/Loader'
 
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 
 const styles = theme => ({
   layout: {
@@ -48,11 +48,11 @@ const styles = theme => ({
   },
   signIn: {
     marginTop: theme.spacing.unit,
-    opacity: "0.6",
-    "&:hover": {
-        opacity: 1,
-    },
-  },
+    opacity: '0.6',
+    '&:hover': {
+      opacity: 1
+    }
+  }
 })
 
 class LogIn extends Component {
@@ -71,7 +71,7 @@ class LogIn extends Component {
       signUp: false,
       createemail: '',
       createfirstName: '',
-      createpassword: '',
+      createpassword: ''
     }
   }
   change = e => {
@@ -84,19 +84,16 @@ class LogIn extends Component {
     e.preventDefault()
     loginInUser(this.state.email, this.state.password)
   };
-  Create = e => {
-    const {createUser} = this.props
+  create = e => {
+    // const {createUser} = this.props
     e.preventDefault()
-    let data = {login: this.state.createfirstName, email: this.state.createemail,  password: this.state.createpassword}
-    console.log("signUp data :", data)
-    createUser(data)
+    let data = {login: this.state.createfirstName, email: this.state.createemail, password: this.state.createpassword}
+    console.log('signUp data :', data)
+    // createUser(data)
   };
-
-
 
   SignUpToggle = e => {
     this.setState({signUp: !this.state.signUp})
-
   };
   change = e => {
     this.setState({
@@ -109,22 +106,20 @@ class LogIn extends Component {
     loginInUser(this.state.email, this.state.password)
   };
 
-
-
-render () {
+  render () {
     const {classes, fetching} = this.props
     const {signUp} = this.state
-  return (
-    <React.Fragment>
-      <CssBaseline/>
-      <main className={classes.layout}>
-        <React.Fragment>
-        {!signUp &&
+    return (
+      <React.Fragment>
+        <CssBaseline/>
+        <main className={classes.layout}>
+          <React.Fragment>
+            {!signUp &&
         <Paper className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockIcon/>
           </Avatar>
-          <ValidatorForm>
+          <ValidatorForm className={classes.paper}>
             <Typography variant="headline">Sign in</Typography>
             <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
               <FormControl margin="normal" fullWidth >
@@ -149,37 +144,37 @@ render () {
                   value={this.state.password}
                 />
               </FormControl>
-                {fetching && <Loader/>}
-                <Button
-                  type="submit"
-                  variant="raised"
-                  color="primary"
-                  className={classes.submit}
-                >
+              {fetching && <Loader/>}
+              <Button
+                type="submit"
+                variant="raised"
+                color="primary"
+                className={classes.submit}
+              >
                       Sign in
-                </Button>
-                <Button
-                  fullWidth
-                  height = "300%"
-                  variant="flat"
-                  color="primary"
-                  className={classes.signIn}
-                  onClick={this.SignUpToggle.bind(this)}
-                >
+              </Button>
+              <Button
+                fullWidth
+                height = "300%"
+                variant="flat"
+                color="primary"
+                className={classes.signIn}
+                onClick={this.SignUpToggle.bind(this)}
+              >
                   Sign Up
-                </Button>
+              </Button>
             </form>
           </ValidatorForm>
         </Paper>
-        }
-        </React.Fragment>
+            }
+          </React.Fragment>
           {signUp &&
             <Paper className={classes.paper}>
               <Avatar className={classes.avatar}>
                 <PersonAdd/>
               </Avatar>
-              <Typography variant="headline">Sign Up</Typography>
-              <form onSubmit={e => this.Create(e)} className={classes.form}>
+              <Typography variant="headline">Registration</Typography>
+              <form onSubmit={e => this.create(e)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="createemail">Email Address</InputLabel>
                   <Input
@@ -192,7 +187,7 @@ render () {
                   />
                 </FormControl>
                 <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Your Name</InputLabel>
+                  <InputLabel htmlFor="name">Your Username</InputLabel>
                   <Input
                     id="name"
                     name="createfirstName"
@@ -238,7 +233,6 @@ render () {
       </React.Fragment>
     )
   }
-
 }
 
 const mapDispatchToProps = dispatch => {
@@ -252,7 +246,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    fetching: state.loader.fetching,
+    fetching: state.loader.fetching
     // signUp: this.state.signUp
   }
 }

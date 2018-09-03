@@ -48,7 +48,7 @@ class HomePage extends Component {
         <TextCard
           text="TextMessenger проект предполагает создание приложения с использованием всех знаний, которые мы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS."
           classes={'TextCard'}/>
-        {!user.id && <SignIn  classes={'SignIn'}/>}
+        {!user.id && <SignIn classes={'SignIn'}/>}
       </div>
     )
   }
