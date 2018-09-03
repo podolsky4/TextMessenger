@@ -8,10 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -23,8 +21,8 @@ import java.util.Date;
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @EntityListeners(AuditingEntityListener.class)
-public class TemporaryToken extends BaseEntity{
-  public static final int EXPIRATION = 60*24;
+public class TemporaryToken extends BaseEntity {
+  public static final int EXPIRATION = 60 * 24;
 
   @Column(name = "token")
   private String token;

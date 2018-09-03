@@ -40,11 +40,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public String setUserIsEnabled(String token){
+  public String setUserIsEnabled(String token) {
     Optional<TemporaryToken> byToken = temporaryTokenRepository.findByToken(token);
-    if (byToken.isPresent()){
+    if (byToken.isPresent()) {
       User user = byToken.get().getUser();
-      if(byToken.get().getExpiryDate().compareTo(new Date()) <= 0){
+      if (byToken.get().getExpiryDate().compareTo(new Date()) <= 0) {
         user.setEnabled(true);
         userRepository.save(user);
         SimpleMailMessage email = new SimpleMailMessage();
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
       email.setText("http://localhost:3000/api/users/registered/" + temporaryToken.getToken());
       emailService.sendEmail(email);
       return new String("your link is old, we send new link, please check your registration email");
-    }else {
+    } else {
       return new String("this token is not valid");
     }
   }
@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Optional<List<User>> findUserByEmailOrLogin(User user) {
     return Optional.of(userRepository
-            .findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(user.getLogin(),user.getEmail()));
+            .findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(user.getLogin(), user.getEmail()));
   }
 
   @Override

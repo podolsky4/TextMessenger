@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -58,10 +57,6 @@ public class User extends BaseEntity {
 
   @Column(name = "is_enabled")
   private boolean isEnabled;
-
-  /*@OneToOne(mappedBy = "user", targetEntity = TemporaryToken.class, fetch = FetchType.LAZY,
-          cascade = CascadeType.ALL)
-  private TemporaryToken temporaryToken;*/
 
   public List<String> getRoles() {
     List<String> roles = new ArrayList<>();

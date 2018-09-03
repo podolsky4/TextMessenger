@@ -21,8 +21,8 @@ public class RuntimeAddToDataBase {
         User user = new User();
         user.setEmail("admin@gmail.com");
         user.setLogin("admin");
+        user.setEnabled(true);
         user.setPassword(passwordEncoder.encode("admin"));
-
         userRepository.save(user);
       }
     };
