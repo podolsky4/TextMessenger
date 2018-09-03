@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.validation.ConstraintViolation;
-
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +32,7 @@ public class SearchValueTest {
 
 
   @Test
-  public void shouldBeTest(){
+  public void shouldBeTest() {
     String message = "test";
     searchValue = new SearchValue();
     searchValue.setSearch(message);
@@ -41,7 +40,7 @@ public class SearchValueTest {
   }
 
   @Test
-  public void shouldBeMistake(){
+  public void shouldBeMistake() {
     String message = " ";//передал пробел
     searchValue = new SearchValue();
     searchValue.setSearch(message);
