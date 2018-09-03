@@ -1,4 +1,4 @@
-import {CREATE_USER_IN_REDUX, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION} from './types.js'
+import {CREATE_USER_IN_REDUX, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION, LOAD_USER} from './types.js'
 import {loadFavoritesByLogin} from './postsActions'
 import {startLoader, stopLoader, toggleLoader} from './loaderActions'
 import FetchData from './serviceAction'
@@ -63,7 +63,7 @@ export const getCurrentUser = () => dispatch => {
       if (response.ok) {
         return response.json()
       } else {
-        dispatch({type: LOAD_USER, payload: {}})
+        dispatch({type: CREATE_USER_IN_REDUX, payload: {}})
       }
     })
     .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))

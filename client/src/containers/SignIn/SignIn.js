@@ -108,102 +108,55 @@ class LogIn extends Component {
     e.preventDefault()
     loginInUser(this.state.email, this.state.password)
   };
-cd
 
 
-  render () {
+
+render () {
     const {classes, fetching} = this.props
     const {signUp} = this.state
-    console.log(signUp)
-
-    return (
-      <React.Fragment>
-        <CssBaseline/>
-        <main className={classes.layout}>
-          {!signUp &&
-            <Paper className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <LockIcon/>
-              </Avatar>
-              <Typography variant="headline">Sign in</Typography>
-              <ValidatorForm ref="form" onSubmit={e => this.onSubmit(e)} className={classes.form}>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="email">Email Address</InputLabel>
-                  <Input
-                    id="email"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    onChange={e => this.change(e)}
-                    value={this.state.email}
-                  />
-                </FormControl>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="password">Password</InputLabel>
-                  <TextValidator>
-                  <Input
-                    name="password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={e => this.change(e)}
-                    value={this.state.password}
-                    validators={['required', 'isEmail']}
-                    errorMessages={['this field is required', 'email is not valid']}
-                  />
-                  </TextValidator>
-                </FormControl>
-                {fetching && <Loader/>}
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="raised"
-                  color="primary"
-                  className={classes.submit}
-                >
-render () {
-  const {classes, fetching} = this.props
-
   return (
     <React.Fragment>
       <CssBaseline/>
       <main className={classes.layout}>
+        <React.Fragment>
+        {!signUp &&
         <Paper className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockIcon/>
           </Avatar>
-          <Typography variant="headline">Sign in</Typography>
-          <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
-            <FormControl margin="normal" fullWidth >
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input
-                id="email"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={e => this.change(e)}
-                value={this.state.email}
-              />
-            </FormControl>
-            <FormControl margin="normal" fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                name="password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={e => this.change(e)}
-                value={this.state.password}
-              />
-            </FormControl>
-            {fetching && <Loader/>}
-            <Button
-              type="submit"
-              variant="raised"
-              color="primary"
-              className={classes.submit}
-            >
-                  Sign in
+          <ValidatorForm>
+            <Typography variant="headline">Sign in</Typography>
+            <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
+              <FormControl margin="normal" fullWidth >
+                <InputLabel htmlFor="email">Email Address</InputLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={e => this.change(e)}
+                  value={this.state.email}
+                />
+              </FormControl>
+              <FormControl margin="normal" fullWidth>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  name="password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={e => this.change(e)}
+                  value={this.state.password}
+                />
+              </FormControl>
+                {fetching && <Loader/>}
+                <Button
+                  type="submit"
+                  variant="raised"
+                  color="primary"
+                  className={classes.submit}
+                >
+                      Sign in
                 </Button>
                 <Button
                   fullWidth
@@ -215,9 +168,11 @@ render () {
                 >
                   Sign Up
                 </Button>
-              </ValidatorForm>
-            </Paper>
-          }
+            </form>
+          </ValidatorForm>
+        </Paper>
+        }
+        </React.Fragment>
           {signUp &&
             <Paper className={classes.paper}>
               <Avatar className={classes.avatar}>

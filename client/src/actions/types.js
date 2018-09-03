@@ -1,4 +1,5 @@
 export const CREATE_USER_IN_REDUX = 'CREATE_USER_IN_REDUX'
+export const LOAD_USER = 'LOAD_USER'
 export const FIND_USERS = 'FIND_USERS'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const LOAD_POSTS = 'LOAD_POSTS'
