@@ -36,6 +36,14 @@ const styles = theme => ({
     alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
   },
+  center: {
+
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+
+  },
+
   avatar: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main
@@ -69,6 +77,8 @@ class LogIn extends Component {
       profilePhoto: '',
       dateBirthday: '',
       signUp: false,
+      signIn: true,
+      forgotPassword: false,
       createemail: '',
       createfirstName: '',
       createpassword: ''
@@ -93,8 +103,23 @@ class LogIn extends Component {
   };
 
   SignUpToggle = e => {
-    this.setState({signUp: !this.state.signUp})
+    this.setState({signUp: true})
+    if (this.state.signUp) {
+      this.setState({forgotPassword: false, signIn: false})
+    }
   };
+  SignUpForgotPassword = e => {
+    this.setState({forgotPassword: true})
+    if (this.state.forgotPassword) {
+      this.setState({signUp: false, signIn: false})
+    }
+  };
+  SignInToggle = e => {
+    this.setState({signIn: true})
+    if (this.state.signIn) {
+      this.setState({signUp: false, forgotPassword: false})
+    }
+  }
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -108,18 +133,18 @@ class LogIn extends Component {
 
   render () {
     const {classes, fetching} = this.props
-    const {signUp} = this.state
+    const {signUp, forgotPassword, signIn} = this.state
     return (
       <React.Fragment>
         <CssBaseline/>
         <main className={classes.layout}>
           <React.Fragment>
-            {!signUp &&
+            {signIn && !signUp && !forgotPassword &&
         <Paper className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockIcon/>
           </Avatar>
-          <ValidatorForm className={classes.paper}>
+          <ValidatorForm className={classes.center}>
             <Typography variant="headline">Sign in</Typography>
             <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
               <FormControl margin="normal" fullWidth >
@@ -146,6 +171,25 @@ class LogIn extends Component {
               </FormControl>
               {fetching && <Loader/>}
               <Button
+                height = "300%"
+                variant="flat"
+                color="primary"
+                className={classes.signIn}
+                onClick={this.SignUpToggle.bind(this)}
+              >
+                Registration
+              </Button>
+              <Button
+                height = "300%"
+                variant="flat"
+                color="primary"
+                className={classes.signIn}
+                onClick={this.SignUpForgotPassword.bind(this)}
+              >
+                Forgot Password
+              </Button>
+              <Button
+                fullWidth
                 type="submit"
                 variant="raised"
                 color="primary"
@@ -153,21 +197,53 @@ class LogIn extends Component {
               >
                       Sign in
               </Button>
-              <Button
-                fullWidth
-                height = "300%"
-                variant="flat"
-                color="primary"
-                className={classes.signIn}
-                onClick={this.SignUpToggle.bind(this)}
-              >
-                  Sign Up
-              </Button>
+
             </form>
           </ValidatorForm>
         </Paper>
             }
           </React.Fragment>
+          {forgotPassword &&
+          <Paper className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <PersonAdd/>
+            </Avatar>
+            <Typography variant="headline">Forgot Password</Typography>
+            <form onSubmit={e => this.create(e)} className={classes.form}>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="createemail">Email Address</InputLabel>
+                <Input
+                  id="email"
+                  name="createemail"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={e => this.change(e)}
+                  value={this.state.createemail}
+                />
+              </FormControl>
+
+              {fetching && <Loader/>}
+              <Button
+                type="submit"
+                fullWidth
+                variant="raised"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
+              <Button
+                fullWidth
+                variant="flat"
+                color="primary"
+                className={classes.signIn}
+                onClick={this.SignInToggle.bind(this)}
+              >
+                Sign In
+              </Button>
+            </form>
+          </Paper>
+          }
           {signUp &&
             <Paper className={classes.paper}>
               <Avatar className={classes.avatar}>
@@ -222,7 +298,7 @@ class LogIn extends Component {
                   variant="flat"
                   color="primary"
                   className={classes.signIn}
-                  onClick={this.SignUpToggle.bind(this)}
+                  onClick={this.SignInToggle.bind(this)}
                 >
                   Sign In
                 </Button>
