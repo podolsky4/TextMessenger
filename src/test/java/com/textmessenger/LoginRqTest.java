@@ -1,4 +1,5 @@
 package com.textmessenger;
+
 import com.textmessenger.model.entity.dto.LoginRq;
 import org.hibernate.validator.HibernateValidator;
 import org.junit.Before;
@@ -8,7 +9,6 @@ import org.junit.runners.JUnit4;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.validation.ConstraintViolation;
-
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +27,7 @@ public class LoginRqTest {
   }
 
   @Test
-  public void shouldBeTest(){
+  public void shouldBeTest() {
     String loginOrEmail = "testLoginOrEmail";
     String password = "testttttttt";
     loginRq = new LoginRq();
@@ -43,7 +43,7 @@ public class LoginRqTest {
     loginRq.setPassword("DD-AB-123");
     loginRq.setLoginOrEmail("Morris");
     Set<ConstraintViolation<LoginRq>> constraintViolations = localValidatorFactory.validate(loginRq);
-    assertEquals( 0, constraintViolations.size() );
+    assertEquals(0, constraintViolations.size());
   }
 
   @Test
@@ -52,15 +52,16 @@ public class LoginRqTest {
     loginRq.setPassword(" ");
     loginRq.setLoginOrEmail(" ");
     Set<ConstraintViolation<LoginRq>> constraintViolations = localValidatorFactory.validate(loginRq);
-    assertEquals( 2, constraintViolations.size() );
+    assertEquals(2, constraintViolations.size());
   }
+
   @Test
   public void loginRqNotValidLogin() {
     loginRq = new LoginRq();
     loginRq.setPassword(" ");
     loginRq.setLoginOrEmail("fdfd");
     Set<ConstraintViolation<LoginRq>> constraintViolations = localValidatorFactory.validate(loginRq);
-    assertEquals( 1, constraintViolations.size() );
+    assertEquals(1, constraintViolations.size());
   }
 
   @Test
@@ -69,6 +70,6 @@ public class LoginRqTest {
     loginRq.setPassword("fdfd");
     loginRq.setLoginOrEmail(" ");
     Set<ConstraintViolation<LoginRq>> constraintViolations = localValidatorFactory.validate(loginRq);
-    assertEquals( 1, constraintViolations.size() );
+    assertEquals(1, constraintViolations.size());
   }
 }
