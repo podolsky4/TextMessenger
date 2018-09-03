@@ -20,14 +20,20 @@ const styles = (theme) => ({
     left: '-1.7%'
   },
   poper: {
-    left: 10
+    position: 'absolute',
+    left: 10,
+    marginLeft: '-68px',
+    marginTop: '5px',
+    zIndex: 1001,
+    width: 200,
   },
   root: {
     display: 'flex'
     // padding: "1px",
   },
   anchorEl: {
-    marginTop: 40
+    marginTop: 40,
+    width: 200,
   },
   menuButton: {
     marginLeft: -12,
