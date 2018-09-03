@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import MenuList from '@material-ui/core/MenuList'
 import Typography from '@material-ui/core/Typography/Typography'
+import MenuAccountRedirect from "./MenuAccountRedirect";
 
 const styles = (theme) => ({
   paper: {
@@ -73,7 +74,9 @@ const styles = (theme) => ({
 
 class MenuHeader extends React.Component {
   state = {
-    open: false
+    open: false,
+    toredirect: true,
+    // id: this.state.user.id
   };
 
   handleToggle = () => {
@@ -85,8 +88,12 @@ class MenuHeader extends React.Component {
       return
     }
 
-    this.setState({ open: false })
+    this.setState({
+      open: false,
+    })
   };
+
+
 
   render () {
     const { open } = this.state
@@ -123,7 +130,11 @@ class MenuHeader extends React.Component {
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
                       <MenuItem onClick={this.handleClose}
-                        className={classes.menuItem}><UserHeaderInfo padding={0} user={user}/></MenuItem>
+                        className={classes.menuItem}><MenuAccountRedirect padding={0}
+                                                                          user={user}
+
+                      />
+                      </MenuItem>
                       <MenuItem onClick={this.handleClose}
                         className={classes.menuItem}>My account</MenuItem>
                       <MenuItem onClick={this.handleClose}
