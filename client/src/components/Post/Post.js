@@ -61,6 +61,13 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: cyan[500]
+  },
+  img: {
+    width: '100%',
+    objectFit: 'cover',
+    maxHeight: '400px',
+    // clip: "rect(0px,100%,400px,0px)",
+    position: "relative"
   }
 })
 
@@ -117,7 +124,7 @@ class Post extends Component {
             classes
             post={post}
             currentUser={user}/>
-          {post.imgUrl && <img alt="Здесь должно быть изображение" src={post.imgUrl}/>}
+          {post.imgUrl && <img className={classes.img} alt="Здесь должно быть изображение" src={post.imgUrl}/>}
           <PostContent content={post.content}/>
 
           <Divider/>
