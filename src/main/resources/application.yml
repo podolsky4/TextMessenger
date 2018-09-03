@@ -5,9 +5,31 @@ server:
   port: 9000
 
 ###
-#   Database Settings
+#   Mail Settings
 ###
+
+support:
+  email: text.messages.api@gmail.com
+
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    protocol: smtps
+    username: text.messages.api@gmail.com
+    password: test123test
+    properties:
+      mail:
+        smtps:
+          auth: true
+          startttls:
+            enable: true
+          timeout: 8000
+        transport:
+          protocols: smtps
+  ###
+  #   Database Settings
+  ###
   datasource:
     url: jdbc:h2:mem:example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;
     platform: h2
