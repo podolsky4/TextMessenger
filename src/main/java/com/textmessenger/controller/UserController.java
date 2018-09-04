@@ -63,13 +63,13 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
               .body(ResponseToFront.convertResponseToFront("this email is busy"));
     }
-    User user1 = userService.createUser(user);
-    SimpleMailMessage email = new SimpleMailMessage();
     TemporaryToken tempToken = new TemporaryToken();
     tempToken.setToken(UUID.randomUUID().toString());
     tempToken.setExpiryDate(new Date());
+    User user1 = userService.createUser(user);
     tempToken.setUser(user1);
     temporaryTokenRepository.save(tempToken);
+    SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(user1.getEmail());
     email.setSubject("confirmation link to create account at Text Messenger application");
     email.setText("http://localhost:3000/api/users/registered/" + tempToken.getToken());
