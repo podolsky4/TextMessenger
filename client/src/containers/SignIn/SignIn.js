@@ -17,7 +17,6 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Loader from '../../components/Loader/Loader'
 
 import {ValidatorForm} from 'react-material-ui-form-validator'
-import registration from '../../reducers/registration'
 
 const styles = theme => ({
   layout: {
@@ -251,7 +250,7 @@ class LogIn extends Component {
                 <PersonAdd/>
               </Avatar>
               <Typography variant="headline">Registration</Typography>
-              {registration.message != undefined && <a>{registration.message}</a>}
+              {registration.message !== undefined && <a>{registration.message}</a>}
               <form onSubmit={e => this.create(e)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="createemail">Email Address</InputLabel>
