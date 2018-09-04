@@ -13,7 +13,8 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    width: '100%'
+    width: '100%',
+    height: '100vh'
   },
   cont: {
     background: 'red'
