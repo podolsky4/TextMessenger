@@ -14,7 +14,6 @@ import Typography from '@material-ui/core/Typography/Typography'
 import MenuAccountRedirect from './MenuAccountRedirect'
 import PersonIcon from '@material-ui/icons/Person'
 
-
 const styles = (theme) => ({
   paper: {
     marginRight: theme.spacing.unit * 2,

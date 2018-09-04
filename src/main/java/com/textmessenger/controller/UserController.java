@@ -2,12 +2,17 @@ package com.textmessenger.controller;
 
 
 import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.model.entity.dto.SearchValue;
+import com.textmessenger.repository.TemporaryTokenRepository;
+import com.textmessenger.service.EmailService;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,17 +23,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
   private final UserService userService;
   private LoginService loginService;
+  private final EmailService emailService;
+  @Autowired
+  private TemporaryTokenRepository temporaryTokenRepository;
 
-  public UserController(UserService userService, LoginService loginService) {
+  public UserController(UserService userService, LoginService loginService, EmailService emailService) {
     this.userService = userService;
     this.loginService = loginService;
+    this.emailService = emailService;
   }
 
   @PostMapping("/login")
@@ -42,8 +53,28 @@ public class UserController {
   }
 
   @PostMapping("/user")
-  public ResponseEntity createUser(@RequestBody User user) {
-    return ResponseEntity.status(201).body(userService.createUser(user));
+  public ResponseEntity createUser(@Valid @RequestBody User user) {
+    User user1;
+    SimpleMailMessage email = new SimpleMailMessage();
+    if (userService.findUserByEmailOrLogin(user).get().size() == 0) {
+      user1 = userService.createUser(user);
+      TemporaryToken tempToken = new TemporaryToken();
+      tempToken.setToken(UUID.randomUUID().toString());
+      tempToken.setExpiryDate(new Date());
+      tempToken.setUser(user1);
+      temporaryTokenRepository.save(tempToken);
+      email.setTo(user1.getEmail());
+      email.setSubject("confirmation link to create account at Text Messanger application");
+      email.setText("http://localhost:3000/api/users/registered/" + tempToken.getToken());
+      emailService.sendEmail(email);
+      return ResponseEntity.ok().build();
+    }
+    return ResponseEntity.status(401).build();
+  }
+
+  @GetMapping("/registered/{token}")
+  public ResponseEntity enableUser(@PathVariable("token") String token) {
+    return ResponseEntity.ok().body(userService.setUserIsEnabled(token));
   }
 
 
