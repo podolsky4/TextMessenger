@@ -7,7 +7,6 @@ import {connect} from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import HomePage from '../../views/HomePage/HomePage'
-import location from '../../reducers/location'
 import {Redirect} from 'react-router-dom'
 
 class App extends Component {
