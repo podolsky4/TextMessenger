@@ -17,7 +17,7 @@ public interface PostService {
 
   List<PostToFront> getAll();
 
-  ResponseEntity getPage(int page, int size);
+  List<PostToFront> getPage(int page, int size);
 
   List<Post> getUserPost(User user);
 

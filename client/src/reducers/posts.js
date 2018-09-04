@@ -7,7 +7,7 @@ function posts (state = [], action) {
     case 'LOAD_POSTS':
       return action.payload
     case 'ADD_TO_POSTS':
-      return [...state, action.payload]
+      return [...state, ...action.payload]
 
     default:
       return state

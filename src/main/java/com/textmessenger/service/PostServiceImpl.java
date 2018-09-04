@@ -82,12 +82,12 @@ public class PostServiceImpl implements PostService {
     return PostToFront.convertListPostsToResponse(postRepository.findAll(orderBy()));
   }
   @Override
-  public ResponseEntity getPage(int page, int size){
+  public List<PostToFront> getPage(int page, int size){
     List<Post> all = postRepository.findAll(orderBy());
-      return ResponseEntity.status(200).body(PostToFront.convertListPostsToResponse(all.stream()
+      return PostToFront.convertListPostsToResponse(all.stream()
               .skip(page*size)
               .limit(size)
-              .collect(Collectors.toList())));
+              .collect(Collectors.toList()));
   }
 
   @Override
