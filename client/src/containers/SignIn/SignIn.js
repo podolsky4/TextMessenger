@@ -95,11 +95,11 @@ class LogIn extends Component {
     loginInUser(this.state.email, this.state.password)
   };
   create = e => {
-    // const {createUser} = this.props
+    const {createUser} = this.props
     e.preventDefault()
     let data = {login: this.state.createfirstName, email: this.state.createemail, password: this.state.createpassword}
     console.log('signUp data :', data)
-    // createUser(data)
+    createUser(data)
   };
 
   SignUpToggle = e => {

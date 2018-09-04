@@ -13,9 +13,6 @@ export const createUser = (data) => dispatch => {
       body: JSON.stringify(data)
     }
   )
-    .then(() => dispatch(loadUser(data.login)))
-    .then(() => console.log('user loaded after create :', data))
-    .then(() => dispatch(loadFavoritesByLogin(data.login)))
 }
 export const updateUser = (data, login) => dispatch => {
   FetchData.put('/api/users/', data)
