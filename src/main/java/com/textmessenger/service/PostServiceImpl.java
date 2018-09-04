@@ -84,8 +84,9 @@ public class PostServiceImpl implements PostService {
   @Override
   public List<PostToFront> getPage(int page, int size) {
     List<Post> all = postRepository.findAll(orderBy());
+    int count = page * size;
     return PostToFront.convertListPostsToResponse(all.stream()
-            .skip((int)page * size)
+            .skip(count)
             .limit(size)
             .collect(Collectors.toList()));
   }
