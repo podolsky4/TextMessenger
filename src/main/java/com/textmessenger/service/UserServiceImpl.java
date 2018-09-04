@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
         email.setText("Enjoy our application");
         emailService.sendEmail(email);
         temporaryTokenRepository.delete(byToken.get());
-        return new String("your user is activate");
+        return "your user is activate";
       }
       TemporaryToken temporaryToken = byToken.get();
       temporaryToken.setToken(UUID.randomUUID().toString());
@@ -66,9 +66,9 @@ public class UserServiceImpl implements UserService {
       email.setSubject("repeated link to activate");
       email.setText("http://localhost:3000/api/users/registered/" + temporaryToken.getToken());
       emailService.sendEmail(email);
-      return new String("your link is old, we send new link, please check your registration email");
+      return "your link is old, we send new link, please check your registration email";
     } else {
-      return new String("this token is not valid");
+      return "this token is not valid";
     }
   }
 
