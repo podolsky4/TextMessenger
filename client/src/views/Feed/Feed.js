@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadFavorites, loadPosts, createPostWithOrWithOutImage, loadPagePost} from '../../actions/postsActions'
+import {loadFavorites, createPostWithOrWithOutImage, loadPagePost} from '../../actions/postsActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
@@ -57,10 +57,8 @@ class Feed extends Component {
   }
 
   componentWillMount () {
-    const {loadPosts, user, loadFavorites, pageAble} = this.props
+    const {user, loadFavorites, pageAble} = this.props
     loadFavorites(user.id)
-    // loadPosts()
-
     pageAble(this.state.page, this.state.size)
     this.setState({page: 1})
   }
@@ -193,7 +191,6 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadPosts: () => dispatch(loadPosts()),
     createPost_Image: (data) => dispatch(createPostWithOrWithOutImage(data)),
     loadFavorites: (id) => dispatch(loadFavorites(id)),
     pageAble: (page, size) => dispatch(loadPagePost(page, size))
