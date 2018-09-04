@@ -11,8 +11,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
