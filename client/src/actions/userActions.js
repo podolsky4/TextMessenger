@@ -1,5 +1,4 @@
-import {CREATE_USER_IN_REDUX, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION} from './types.js'
-import {loadFavoritesByLogin} from './postsActions'
+import {CREATE_USER_IN_REDUX, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION, REGISTRATED_MESSAGE} from './types.js'
 import {startLoader, stopLoader, toggleLoader} from './loaderActions'
 import FetchData from './serviceAction'
 
@@ -12,7 +11,8 @@ export const createUser = (data) => dispatch => {
       },
       body: JSON.stringify(data)
     }
-  )
+  ).then(res => res.json())
+    .then(data => dispatch({type: REGISTRATED_MESSAGE, payload: data}))
 }
 export const updateUser = (data, login) => dispatch => {
   FetchData.put('/api/users/', data)

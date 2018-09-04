@@ -5,12 +5,14 @@ import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.LoginRq;
+import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.service.EmailService;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,22 +56,27 @@ public class UserController {
 
   @PostMapping("/user")
   public ResponseEntity createUser(@Valid @RequestBody User user) {
-    User user1;
-    SimpleMailMessage email = new SimpleMailMessage();
-    if (userService.findUserByEmailOrLogin(user).get().size() == 0) {
-      user1 = userService.createUser(user);
-      TemporaryToken tempToken = new TemporaryToken();
-      tempToken.setToken(UUID.randomUUID().toString());
-      tempToken.setExpiryDate(new Date());
-      tempToken.setUser(user1);
-      temporaryTokenRepository.save(tempToken);
-      email.setTo(user1.getEmail());
-      email.setSubject("confirmation link to create account at Text Messanger application");
-      email.setText("http://localhost:3000/api/users/registered/" + tempToken.getToken());
-      emailService.sendEmail(email);
-      return ResponseEntity.ok().build();
+    if (userService.getUserByLogin(user.getLogin()) != null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(ResponseToFront.convertResponseToFront("this login is busy"));
+    } else if (userService.getUserByEmail(user.getEmail()) != null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(ResponseToFront.convertResponseToFront("this email is busy"));
     }
-    return ResponseEntity.status(401).build();
+    User user1 = userService.createUser(user);
+    SimpleMailMessage email = new SimpleMailMessage();
+    TemporaryToken tempToken = new TemporaryToken();
+    tempToken.setToken(UUID.randomUUID().toString());
+    tempToken.setExpiryDate(new Date());
+    tempToken.setUser(user1);
+    temporaryTokenRepository.save(tempToken);
+    email.setTo(user1.getEmail());
+    email.setSubject("confirmation link to create account at Text Messenger application");
+    email.setText("http://localhost:3000/api/users/registered/" + tempToken.getToken());
+    emailService.sendEmail(email);
+    return ResponseEntity.ok()
+            .body(ResponseToFront.convertResponseToFront("Check you email we send you registration link"));
+
   }
 
   @GetMapping("/registered/{token}")

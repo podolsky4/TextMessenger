@@ -11,6 +11,7 @@ import reloadLoader from './reloadLoader'
 import notification from './notification'
 import location from './location'
 import comments from './comments'
+import registration from './registration'
 
 export default combineReducers({
   user,
@@ -24,5 +25,6 @@ export default combineReducers({
   reloadLoader,
   notification,
   location,
-  comments
+  comments,
+  registration
 })
