@@ -16,6 +16,8 @@ public interface PostService {
 
   List<PostToFront> getAll();
 
+  List<PostToFront> getPage(int page, int size);
+
   List<Post> getUserPost(User user);
 
   void retwitPost(User user, Long postId);

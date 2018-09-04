@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadFavorites, loadPosts, createPostWithOrWithOutImage} from '../../actions/postsActions'
+import {loadFavorites, createPostWithOrWithOutImage, loadPagePost} from '../../actions/postsActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
@@ -50,14 +50,17 @@ class Feed extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      text: ''
+      text: '',
+      page: 0,
+      size: 3
     }
   }
 
   componentWillMount () {
-    const {loadPosts, user, loadFavorites} = this.props
+    const {user, loadFavorites, pageAble} = this.props
     loadFavorites(user.id)
-    loadPosts()
+    pageAble(this.state.page, this.state.size)
+    this.setState({page: 1})
   }
 
   change = e => {
@@ -109,16 +112,27 @@ class Feed extends Component {
       })
     }
   }
-
+  yHandler () {
+    const {page, size} = this.state
+    let wrap = document.getElementById('wrappp')
+    let content = wrap.offsetHeight
+    let yOffset = window.pageYOffset
+    let y = yOffset + window.innerHeight
+    if (y >= content) {
+      this.props.pageAble(page, size)
+      this.setState({page: this.state.page + 1})
+    }
+  }
   render () {
     const {posts, user, classes} = this.props
     const {reloadLoader} = this.props
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
+    window.onscroll = this.yHandler.bind(this)
     return (
 
-      <div style={{padding: 15}}>
+      <div id='wrappp' style={{padding: 15}}>
         <Grid
           container
           direction="column"
@@ -177,9 +191,9 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadPosts: () => dispatch(loadPosts()),
     createPost_Image: (data) => dispatch(createPostWithOrWithOutImage(data)),
-    loadFavorites: (id) => dispatch(loadFavorites(id))
+    loadFavorites: (id) => dispatch(loadFavorites(id)),
+    pageAble: (page, size) => dispatch(loadPagePost(page, size))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Feed))
