@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
       }
       TemporaryToken temporaryToken = byToken.get();
       temporaryToken.setToken(UUID.randomUUID().toString());
-      temporaryToken.setExpiryDate(temporaryToken.calculateExpiryDate(new Date().getMinutes()));
+      temporaryToken.setExpiryDate(temporaryToken.calculateExpiryDate());
       User save = userRepository.save(user);
       temporaryToken.setUser(save);
       temporaryTokenRepository.save(temporaryToken);

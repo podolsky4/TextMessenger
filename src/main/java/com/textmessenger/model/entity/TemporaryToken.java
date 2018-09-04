@@ -22,7 +22,7 @@ import java.util.Date;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @EntityListeners(AuditingEntityListener.class)
 public class TemporaryToken extends BaseEntity {
-  public static final int EXPIRATION = 60 * 24;
+  public static final int EXPIRATION = 86400000;
 
   @Column(name = "token")
   private String token;
@@ -34,10 +34,7 @@ public class TemporaryToken extends BaseEntity {
   @Column(name = "expiry_date")
   private Date expiryDate;
 
-  public Date calculateExpiryDate(int expiryTimeInMinutes) {
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(new Timestamp(cal.getTime().getTime()));
-    cal.add(Calendar.MINUTE, expiryTimeInMinutes);
-    return new Date(cal.getTime().getTime());
+  public Date calculateExpiryDate() {
+    return new Date(new Date().getTime() + EXPIRATION);
   }
 }
