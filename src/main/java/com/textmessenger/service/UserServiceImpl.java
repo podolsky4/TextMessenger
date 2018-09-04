@@ -176,4 +176,9 @@ public class UserServiceImpl implements UserService {
     }
     throw new UsernameNotFoundException("User not found!");
   }
+
+  @Override
+  public User getUserByEmail(String email) {
+    return userRepository.findUserByEmail(email);
+  }
 }

@@ -45,4 +45,6 @@ public interface UserService {
   UserToFrontShort getCurrentUser();
 
   Optional<List<User>> findUserByEmailOrLogin(User user);
+
+  User getUserByEmail(String email);
 }

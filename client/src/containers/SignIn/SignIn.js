@@ -95,11 +95,11 @@ class LogIn extends Component {
     loginInUser(this.state.email, this.state.password)
   };
   create = e => {
-    // const {createUser} = this.props
+    const {createUser} = this.props
     e.preventDefault()
     let data = {login: this.state.createfirstName, email: this.state.createemail, password: this.state.createpassword}
     console.log('signUp data :', data)
-    // createUser(data)
+    createUser(data)
   };
 
   SignUpToggle = e => {
@@ -132,7 +132,7 @@ class LogIn extends Component {
   };
 
   render () {
-    const {classes, fetching} = this.props
+    const {classes, fetching, registration} = this.props
     const {signUp, forgotPassword, signIn} = this.state
     return (
       <React.Fragment>
@@ -250,6 +250,7 @@ class LogIn extends Component {
                 <PersonAdd/>
               </Avatar>
               <Typography variant="headline">Registration</Typography>
+              {registration.message !== undefined && <a>{registration.message}</a>}
               <form onSubmit={e => this.create(e)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="createemail">Email Address</InputLabel>
@@ -322,7 +323,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    fetching: state.loader.fetching
+    fetching: state.loader.fetching,
+    registration: state.registration
   }
 }
 
