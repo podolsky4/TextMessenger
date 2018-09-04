@@ -73,8 +73,8 @@ public class UserController {
   }
 
   @GetMapping("/registered/{token}")
-  public void enableUser(@PathVariable("token") String token) {
-    userService.setUserIsEnabled(token);
+  public ResponseEntity enableUser(@PathVariable("token") String token) {
+    return ResponseEntity.ok().body(userService.setUserIsEnabled(token));
   }
 
 
