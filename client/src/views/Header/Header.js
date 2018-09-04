@@ -20,7 +20,6 @@ import MenuHeader from '../../components/Menu/MenuHeader'
 const styles = (theme) => ({
   root: {
     flexGrow: 1
-    // padding: "1px",
   },
   menuButton: {
     marginLeft: -12,
@@ -43,24 +42,12 @@ const styles = (theme) => ({
 
 class Header extends React.Component {
   state = {
-    anchorEl: null,
-    open: false,
     noUser: false
-  };
-
-  handleClick = event => {
-    const {currentTarget} = event
-    this.setState(state => ({
-      anchorEl: currentTarget,
-      open: !state.open
-    }))
   };
 
   render () {
     const {classes, user} = this.props
     let {noUser} = this.state.noUser
-    // const { open} = this.state
-
     if (!user) {
       noUser = true
     }
@@ -91,10 +78,6 @@ class Header extends React.Component {
               <NotificationsIcon className={classes.icon}/>
             </Badge>
           </IconButton>
-          <IconButton color="inherit" component={Link} to={`/profile/${user.id}`}>
-            <PersonIcon className={classes.icon}/>
-          </IconButton>
-
           {!noUser &&
           <MenuHeader classes user={user}/>
           }
@@ -105,7 +88,6 @@ class Header extends React.Component {
   }
 }
 
-// {/*<Poper classes={'poper'} content={conten} />*/}
 Header.propTypes = {
   classes: PropTypes.object.isRequired
 }
