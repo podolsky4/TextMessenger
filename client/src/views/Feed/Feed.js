@@ -115,12 +115,13 @@ class Feed extends Component {
     }
   }
   yHandler () {
+    const {page, size} = this.state
     let wrap = document.getElementById('wrappp')
     let content = wrap.offsetHeight
     let yOffset = window.pageYOffset
     let y = yOffset + window.innerHeight
     if (y >= content) {
-      this.props.pageAble(this.state.page, this.state.size)
+      this.props.pageAble(page, size)
       this.setState({page: this.state.page + 1})
     }
   }
@@ -130,7 +131,7 @@ class Feed extends Component {
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
-    window.onscroll = this.yHandler
+    window.onscroll = this.yHandler.bind(this)
     return (
 
       <div id='wrappp' style={{padding: 15}}>
