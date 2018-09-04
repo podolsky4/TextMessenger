@@ -113,13 +113,14 @@ class Feed extends Component {
     }
   }
   yHandler () {
+    const {pageAble, able} = this.props
     if (window.location.pathname === '/feed') {
       const {page, size} = this.state
       let wrap = document.getElementById('wrappp')
       let content = wrap.offsetHeight
       let yOffset = window.pageYOffset
-      let y = yOffset + window.innerHeight
-      if (y >= content) {
+      let y = yOffset + window.innerHeight - 10
+      if (able && y >= content) {
         this.props.pageAble(page, size)
         this.setState({page: this.state.page + 1})
       }
@@ -131,9 +132,7 @@ class Feed extends Component {
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
-
     window.onscroll = this.yHandler.bind(this)
-
     return (
 
       <div id='wrappp' style={{padding: 15}}>
@@ -151,7 +150,6 @@ class Feed extends Component {
               <form className={classes.form}
                 alignItems="flex-end"
                 onSubmit={e => this.onSubmit(e)}>
-
                 <TextField
                   defaultValue=""
                   placeholder="Share something..."
@@ -166,7 +164,6 @@ class Feed extends Component {
                   multiline
                   className={classes.textfield}
                   onKeyUp={event => this.handleInput(event)}
-
                 />
                 <form>
                   <input type="file" name="file" ref="inputFile"/>
@@ -175,7 +172,6 @@ class Feed extends Component {
               </form>
               {reloadLoader && <Loader/>}
             </Paper>
-
             <PostList posts={posts} user={user}/>
           </Grid>
         </Grid>
@@ -190,7 +186,8 @@ const mapStateToProps = state => {
     posts: state.posts,
     favorites: state.favorites,
     reloadLoader: state.reloadLoader,
-    fetching: state.loader.loadingPost
+    fetching: state.loader.loadingPost,
+    able: state.able.postAble
   }
 }
 const mapDispatchToProps = dispatch => {
