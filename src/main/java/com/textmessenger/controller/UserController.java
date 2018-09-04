@@ -74,7 +74,7 @@ public class UserController {
 
   @GetMapping("/registered/{token}")
   public void enableUser(@PathVariable("token") String token) {
-    String s = userService.setUserIsEnabled(token);
+    userService.setUserIsEnabled(token);
   }
 
 
