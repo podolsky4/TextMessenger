@@ -3,6 +3,7 @@ package com.textmessenger.service;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ public interface PostService {
   void deletePost(Post post);
 
   List<PostToFront> getAll();
+
+  ResponseEntity getPage(int page, int size);
 
   List<Post> getUserPost(User user);
 

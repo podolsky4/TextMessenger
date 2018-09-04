@@ -10,6 +10,7 @@ import com.textmessenger.repository.PostRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -78,6 +80,14 @@ public class PostServiceImpl implements PostService {
   @Override
   public List<PostToFront> getAll() {
     return PostToFront.convertListPostsToResponse(postRepository.findAll(orderBy()));
+  }
+  @Override
+  public ResponseEntity getPage(int page, int size){
+    List<Post> all = postRepository.findAll(orderBy());
+      return ResponseEntity.status(200).body(PostToFront.convertListPostsToResponse(all.stream()
+              .skip(page*size)
+              .limit(size)
+              .collect(Collectors.toList())));
   }
 
   @Override
