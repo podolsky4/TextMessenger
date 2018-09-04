@@ -85,7 +85,7 @@ public class PostServiceImpl implements PostService {
   public List<PostToFront> getPage(int page, int size) {
     List<Post> all = postRepository.findAll(orderBy());
     return PostToFront.convertListPostsToResponse(all.stream()
-            .skip(page * size)
+            .skip((int)page * size)
             .limit(size)
             .collect(Collectors.toList()));
   }
