@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createUser, loadUser, loginIn} from '../../actions/userActions'
+import {createUser, forgotPassword, loadUser, loginIn} from '../../actions/userActions'
 import {loadFavorites} from '../../actions/postsActions'
 
 import Avatar from '@material-ui/core/Avatar'
@@ -98,7 +98,6 @@ class LogIn extends Component {
     const {createUser} = this.props
     e.preventDefault()
     let data = {login: this.state.createfirstName, email: this.state.createemail, password: this.state.createpassword}
-    console.log('signUp data :', data)
     createUser(data)
   };
 
@@ -130,9 +129,14 @@ class LogIn extends Component {
     e.preventDefault()
     loginInUser(this.state.email, this.state.password)
   };
-
+  forgotPassword = e => {
+    const {forgotPasswordForm} = this.props
+    e.preventDefault()
+    alert('You press forgot button' + this.state.createemail)
+    forgotPasswordForm(this.state.createemail)
+  }
   render () {
-    const {classes, fetching, registration} = this.props
+    const {classes, fetching, messageFromCreateForm, messageFromForgotPasswordFrom} = this.props
     const {signUp, forgotPassword, signIn} = this.state
     return (
       <React.Fragment>
@@ -209,7 +213,8 @@ class LogIn extends Component {
               <PersonAdd/>
             </Avatar>
             <Typography variant="headline">Forgot Password</Typography>
-            <form onSubmit={e => this.create(e)} className={classes.form}>
+            {messageFromForgotPasswordFrom.message !== undefined && <a>{messageFromForgotPasswordFrom.message}</a>}
+            <form onSubmit={e => this.forgotPassword(e)} className={classes.form}>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="createemail">Email Address</InputLabel>
                 <Input
@@ -250,7 +255,7 @@ class LogIn extends Component {
                 <PersonAdd/>
               </Avatar>
               <Typography variant="headline">Registration</Typography>
-              {registration.message !== undefined && <a>{registration.message}</a>}
+              {messageFromCreateForm.message !== undefined && <a>{messageFromCreateForm.message}</a>}
               <form onSubmit={e => this.create(e)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="createemail">Email Address</InputLabel>
@@ -317,14 +322,16 @@ const mapDispatchToProps = dispatch => {
     createUser: (data) => dispatch(createUser(data)),
     loadUser: (some) => dispatch(loadUser(some)),
     loadFavorites: (id) => dispatch(loadFavorites(id)),
-    loginInUser: (email, password) => dispatch(loginIn(email, password))
+    loginInUser: (email, password) => dispatch(loginIn(email, password)),
+    forgotPasswordForm: (email) => dispatch(forgotPassword(email))
   }
 }
 const mapStateToProps = state => {
   return {
     user: state.user,
     fetching: state.loader.fetching,
-    registration: state.registration
+    messageFromCreateForm: state.registration.createForm,
+    messageFromForgotPasswordFrom: state.registration.forgotPassword
   }
 }
 

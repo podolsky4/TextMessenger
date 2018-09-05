@@ -6,7 +6,7 @@ function posts (state = [], action) {
   switch (action.type) {
     case 'LOAD_POSTS':
       return action.payload
-    case 'ADD_TO_POSTS':
+    case 'ADD_TO_POSTS_PAGE':
       return [...state, ...action.payload]
 
     default:

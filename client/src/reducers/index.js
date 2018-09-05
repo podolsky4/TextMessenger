@@ -12,6 +12,7 @@ import notification from './notification'
 import location from './location'
 import comments from './comments'
 import registration from './registration'
+import able from './able'
 
 export default combineReducers({
   user,
@@ -26,5 +27,6 @@ export default combineReducers({
   notification,
   location,
   comments,
-  registration
+  registration,
+  able
 })
