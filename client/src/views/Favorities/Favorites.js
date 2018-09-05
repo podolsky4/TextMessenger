@@ -31,7 +31,6 @@ const styles = theme => ({
 class Favorites extends Component {
   componentWillMount () {
     const {favorites, user, loadFavorites, getCurrentUserPoint} = this.props
-    getCurrentUserPoint()
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }

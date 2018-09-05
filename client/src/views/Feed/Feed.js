@@ -17,11 +17,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center'
   },
-  // grid: {
-  //   flexGrow: '0',
-  //   width: '75%',
-  //   flexBasis: '75%'
-  // },
   icon: {
     paddingRight: theme.spacing.unit,
     marginTop: -4
@@ -57,8 +52,10 @@ class Feed extends Component {
   }
 
   componentWillMount () {
-    const {user, loadFavorites, pageAble} = this.props
-    loadFavorites(user.id)
+    const {user, favorites, loadFavorites, pageAble} = this.props
+    if (favorites.length === 0) {
+      loadFavorites(user.id)
+    }
     pageAble(this.state.page, this.state.size)
     this.setState({page: 1})
   }
@@ -121,18 +118,20 @@ class Feed extends Component {
       let yOffset = window.pageYOffset
       let y = yOffset + window.innerHeight - 10
       if (able && y >= content) {
-        this.props.pageAble(page, size)
+        pageAble(page, size)
         this.setState({page: this.state.page + 1})
       }
     }
   }
   render () {
-    const {posts, user, classes} = this.props
+    const {able, posts, user, classes} = this.props
     const {reloadLoader} = this.props
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
-    window.onscroll = this.yHandler.bind(this)
+    if (able) {
+      window.onscroll = this.yHandler.bind(this)
+    }
     return (
 
       <div id='wrappp' style={{padding: 15}}>
