@@ -98,7 +98,6 @@ class LogIn extends Component {
     const {createUser} = this.props
     e.preventDefault()
     let data = {login: this.state.createfirstName, email: this.state.createemail, password: this.state.createpassword}
-    console.log('signUp data :', data)
     createUser(data)
   };
 
@@ -131,6 +130,10 @@ class LogIn extends Component {
     loginInUser(this.state.email, this.state.password)
   };
 
+  forgotPassword = e => {
+    e.preventDefault()
+    alert('You press forgot button' + this.state.createemail)
+  }
   render () {
     const {classes, fetching, registration} = this.props
     const {signUp, forgotPassword, signIn} = this.state
@@ -209,7 +212,7 @@ class LogIn extends Component {
               <PersonAdd/>
             </Avatar>
             <Typography variant="headline">Forgot Password</Typography>
-            <form onSubmit={e => this.create(e)} className={classes.form}>
+            <form onSubmit={e => this.forgotPassword(e)} className={classes.form}>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="createemail">Email Address</InputLabel>
                 <Input

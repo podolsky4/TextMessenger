@@ -1,7 +1,8 @@
-import {CREATE_USER_IN_REDUX, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION, REGISTRATED_MESSAGE} from './types.js'
+import {CREATE_USER_IN_REDUX, FORGOT_PASSWORD_MESSAGE, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION, REGISTRATED_MESSAGE} from './types.js'
 import {startLoader, stopLoader, toggleLoader} from './loaderActions'
 import FetchData from './serviceAction'
 
+// main action with user
 export const createUser = (data) => dispatch => {
   fetch('/api/users/user',
     {
@@ -14,37 +15,14 @@ export const createUser = (data) => dispatch => {
   ).then(res => res.json())
     .then(data => dispatch({type: REGISTRATED_MESSAGE, payload: data}))
 }
-export const updateUser = (data, login) => dispatch => {
-  FetchData.put('/api/users/', data)
-    .then(() => dispatch(loadUser(login)))
-}
-
-export const loadUser = (login) => dispatch => {
-  FetchData.get(`/api/users/bylogin/${login}`)
+export const forgotPassword = (email) => dispatch => {
+  fetch('api/users/forgotpassword', {
+    method: 'POST',
+    body: JSON.stringify(email)
+  })
     .then(res => res.json())
-    .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
+    .then(data => dispatch({type: FORGOT_PASSWORD_MESSAGE, payload: data}))
 }
-
-export const getFollowing = (id) => dispatch => {
-  FetchData.get(`/api/users/user/${id}/getFollowing`)
-    .then(res => res.json())
-    .then(data => dispatch({type: LOAD_FOLLOWING, payload: data}))
-}
-export const addFollowing = (userId, newUser) => dispatch => {
-  FetchData.get(`/api/users/user/${userId}/addToFollowing/${newUser}`)
-    .then(() => dispatch(getFollowing(userId)))
-}
-export const deleteFollowing = (userId, newUser) => dispatch => {
-  FetchData.deleteApi(`/api/users/user/${userId}/addToFollowing/${newUser}`)
-    .then(() => dispatch(getFollowing(userId)))
-}
-export const findUsers = (str) => dispatch => {
-  dispatch(toggleLoader())
-  FetchData.post(`/api/users/find`, {search: str})
-    .then(res => res.json())
-    .then(data => dispatch({type: FIND_USERS, payload: data}))
-}
-
 export const getCurrentUser = () => dispatch => {
   dispatch(startLoader('LOADING_USER'))
   fetch('api/users/current', {
@@ -66,7 +44,13 @@ export const getCurrentUser = () => dispatch => {
     .catch(error => console.log(error))
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
+export const loadUser = (login) => dispatch => {
+  FetchData.get(`/api/users/bylogin/${login}`)
+    .then(res => res.json())
+    .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
+}
 
+// logIn & logOut action
 export const loginIn = (email, password) => dispatch => {
   dispatch(startLoader('LOADING_USER'))
   fetch(`/api/users/login`, {
@@ -84,13 +68,36 @@ export const loginIn = (email, password) => dispatch => {
     .then(() => dispatch(getCurrentUser()))
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
-
 export const logOut = () => dispatch => {
   window.location.assign('/')
   localStorage.removeItem('accessToken')
     .then(() => dispatch(getCurrentUser()))
 }
 
+// sub action for user
+export const updateUser = (data, login) => dispatch => {
+  FetchData.put('/api/users/', data)
+    .then(() => dispatch(loadUser(login)))
+}
+export const getFollowing = (id) => dispatch => {
+  FetchData.get(`/api/users/user/${id}/getFollowing`)
+    .then(res => res.json())
+    .then(data => dispatch({type: LOAD_FOLLOWING, payload: data}))
+}
+export const addFollowing = (userId, newUser) => dispatch => {
+  FetchData.get(`/api/users/user/${userId}/addToFollowing/${newUser}`)
+    .then(() => dispatch(getFollowing(userId)))
+}
+export const deleteFollowing = (userId, newUser) => dispatch => {
+  FetchData.deleteApi(`/api/users/user/${userId}/addToFollowing/${newUser}`)
+    .then(() => dispatch(getFollowing(userId)))
+}
+export const findUsers = (str) => dispatch => {
+  dispatch(toggleLoader())
+  FetchData.post(`/api/users/find`, {search: str})
+    .then(res => res.json())
+    .then(data => dispatch({type: FIND_USERS, payload: data}))
+}
 export const loadUserNotification = (id) => dispatch => {
   FetchData.get(`/api/users/user/${id}/notification`)
     .then(res => res.json())
