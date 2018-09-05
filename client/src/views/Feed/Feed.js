@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadFavorites, createPostWithOrWithOutImage, loadPagePost} from '../../actions/postsActions'
+import {createPostWithOrWithOutImage, loadFavorites, loadPagePost} from '../../actions/postsActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
@@ -53,10 +53,11 @@ class Feed extends Component {
 
   componentWillMount () {
     const {user, favorites, loadFavorites, pageAble} = this.props
+    const {size, page} = this.state
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
-    this.props.pageAble(this.state.page, this.state.size, this.setState.bind(this, {page: this.state.page + 1}))
+    pageAble(page, size, this.setState.bind(this, {page: page + 1}))
   }
 
   change = e => {
@@ -108,6 +109,7 @@ class Feed extends Component {
       })
     }
   }
+
   yHandler () {
     const {pageAble, able, fetching} = this.props
     const {page, size} = this.state
@@ -120,10 +122,11 @@ class Feed extends Component {
       let yOffset = window.pageYOffset
       let y = yOffset + window.innerHeight - 10
       if (able && y >= content) {
-        this.props.pageAble(page, size, this.setState.bind(this, {page: this.state.page + 1}))
+        pageAble(page, size, this.setState.bind(this, {page: this.state.page + 1}))
       }
     }
   }
+
   render () {
     const {able, posts, user, classes} = this.props
     const {reloadLoader} = this.props
@@ -143,13 +146,13 @@ class Feed extends Component {
           alignItems="center"
         >
           <Grid container
-            justify="center"
-            alignItems="stretch"
-            lg={10} sm={12} md={10}>
+                justify="center"
+                alignItems="stretch"
+                lg={10} sm={12} md={10}>
             <Paper className={classes.paper}>
               <form className={classes.form}
-                alignItems="flex-end"
-                onSubmit={e => this.onSubmit(e)}>
+                    alignItems="flex-end"
+                    onSubmit={e => this.onSubmit(e)}>
                 <TextField
                   defaultValue=""
                   placeholder="Share something..."
@@ -157,7 +160,7 @@ class Feed extends Component {
                     maxLength: 280,
                     padding: '3.7% 0 7px',
                     style:
-                            {borderRadius: '2px'}
+                      {borderRadius: '2px'}
                   }}
                   id="content"
                   name="text"
