@@ -87,14 +87,7 @@ class Post extends Component {
     }
   }
 
-  handleRetwite = e => {
-    const {post, user, retweets, unRetweets, postId} = this.props
-    if (e.target.className === 'tweet') {
-      retweets(user.id, post.id)
-    } else {
-      unRetweets(postId)
-    }
-  };
+
   handleComments = e => {
     this.setState({flag: true})
   };
@@ -130,12 +123,11 @@ class Post extends Component {
           <Divider/>
 
           <CardActions className={classes.actions}
-            disableActionSpacing>
+                       disableActionSpacing>
             <PostFooter whoo={whoo}
               post={post}
               user={user}
               favorites={favorites}
-              handleRetwite={this.handleRetwite.bind(this)}
               handleComments={this.handleComments.bind(this)}
               className={classes.footer}/>
           </CardActions>
