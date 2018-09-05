@@ -1,4 +1,11 @@
-import {CREATE_USER_IN_REDUX, FORGOT_PASSWORD_MESSAGE, FIND_USERS, LOAD_FOLLOWING, LOAD_NOTIFICATION, REGISTRATED_MESSAGE} from './types.js'
+import {
+  CREATE_USER_IN_REDUX,
+  FORGOT_PASSWORD_MESSAGE,
+  FIND_USERS,
+  LOAD_FOLLOWING,
+  LOAD_NOTIFICATION,
+  CREATE_USER_FORM_MESSAGE
+} from './types.js'
 import {startLoader, stopLoader, toggleLoader} from './loaderActions'
 import FetchData from './serviceAction'
 
@@ -13,12 +20,12 @@ export const createUser = (data) => dispatch => {
       body: JSON.stringify(data)
     }
   ).then(res => res.json())
-    .then(data => dispatch({type: REGISTRATED_MESSAGE, payload: data}))
+    .then(data => dispatch({type: CREATE_USER_FORM_MESSAGE, payload: data}))
 }
 export const forgotPassword = (email) => dispatch => {
   fetch('api/users/forgotpassword', {
     method: 'POST',
-    body: JSON.stringify(email)
+    body: email
   })
     .then(res => res.json())
     .then(data => dispatch({type: FORGOT_PASSWORD_MESSAGE, payload: data}))

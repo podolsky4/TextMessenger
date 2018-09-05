@@ -48,13 +48,13 @@ public class UserController {
   @PostMapping("/forgotpassword")
   public ResponseEntity forgotPassword (@RequestBody String email){
     User userByEmail = userService.getUserByEmail(email);
-    if (userByEmail == null){
+    if (userByEmail != null){
+      userService.sendEmailToResetPassword(userByEmail);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).
-              body(ResponseToFront.convertResponseToFront("This email is not registration on our Application"));
+              body(ResponseToFront.convertResponseToFront("We send you mail please check you email"));
     }
-    userService.sendEmailToResetPassword(userByEmail);
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).
-            body(ResponseToFront.convertResponseToFront("We send you mail please check you email"));
+            body(ResponseToFront.convertResponseToFront("This email is not registration on our Application"));
   }
 
   @PostMapping("/login")
