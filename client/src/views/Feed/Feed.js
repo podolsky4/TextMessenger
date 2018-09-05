@@ -146,13 +146,13 @@ class Feed extends Component {
           alignItems="center"
         >
           <Grid container
-                justify="center"
-                alignItems="stretch"
-                lg={10} sm={12} md={10}>
+            justify="center"
+            alignItems="stretch"
+            lg={10} sm={12} md={10}>
             <Paper className={classes.paper}>
               <form className={classes.form}
-                    alignItems="flex-end"
-                    onSubmit={e => this.onSubmit(e)}>
+                alignItems="flex-end"
+                onSubmit={e => this.onSubmit(e)}>
                 <TextField
                   defaultValue=""
                   placeholder="Share something..."
