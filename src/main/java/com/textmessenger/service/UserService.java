@@ -47,4 +47,6 @@ public interface UserService {
   Optional<List<User>> findUserByEmailOrLogin(User user);
 
   User getUserByEmail(String email);
+
+  void sendEmailToResetPassword(User userByEmail);
 }

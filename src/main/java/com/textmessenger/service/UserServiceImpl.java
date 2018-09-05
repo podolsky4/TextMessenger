@@ -181,4 +181,18 @@ public class UserServiceImpl implements UserService {
   public User getUserByEmail(String email) {
     return userRepository.findUserByEmail(email);
   }
+
+  @Override
+  public void sendEmailToResetPassword(User userByEmail) {
+    TemporaryToken tempToken = new TemporaryToken();
+    tempToken.setToken(UUID.randomUUID().toString());
+    tempToken.setExpiryDate(new Date());
+    tempToken.setUser(userByEmail);
+    temporaryTokenRepository.save(tempToken);
+    SimpleMailMessage email = new SimpleMailMessage();
+    email.setTo(userByEmail.getEmail());
+    email.setSubject("Follow the link to reset you password in the Text Messenger");
+    email.setText("http://localhost:3000/api/users/resetPassword/" + tempToken.getToken());
+    emailService.sendEmail(email);
+  }
 }

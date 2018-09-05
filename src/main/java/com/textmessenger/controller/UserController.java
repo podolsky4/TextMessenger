@@ -45,6 +45,18 @@ public class UserController {
     this.temporaryTokenRepository = temporaryTokenRepository;
   }
 
+  @PostMapping("/forgotpassword")
+  public ResponseEntity forgotPassword (@RequestBody String email){
+    User userByEmail = userService.getUserByEmail(email);
+    if (userByEmail == null){
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+              body(ResponseToFront.convertResponseToFront("This email is not registration on our Application"));
+    }
+    userService.sendEmailToResetPassword(userByEmail);
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+            body(ResponseToFront.convertResponseToFront("We send you mail please check you email"));
+  }
+
   @PostMapping("/login")
   public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user) {
     return loginService.authenticateUser(user);

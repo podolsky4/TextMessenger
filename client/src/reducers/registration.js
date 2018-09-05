@@ -7,7 +7,7 @@ function registration (state = initialState, action) {
     case 'REGISTRATED_MESSAGE':
       return {...state, createForm: action.payload}
     case 'FORGOT_PASSWORD_MESSAGE':
-      return {...state, createForm: action.payload}
+      return {...state, forgotPassword: action.payload}
 
     default:
       return state
