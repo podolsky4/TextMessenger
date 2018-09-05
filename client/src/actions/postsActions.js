@@ -66,10 +66,15 @@ export const loadPosts = () => dispatch => {
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
     .then(() => dispatch(stopLoader('LOADING_POST')))
 }
-export const loadPagePost = (page, size) => dispatch => {
+export const loadPagePost = (page, size, callback) => dispatch => {
+  dispatch(startLoader('LOADING_PAGE_POSTS'))
   FetchData.get(`/api/posts/${page}/${size}`)
     .then(res => res.json())
-    .then(data => dispatch({type: ADD_TO_POSTS, payload: data}))
+    .then(data => {
+      dispatch({type: ADD_TO_POSTS, payload: data})
+      dispatch(stopLoader('LOADING_PAGE_POSTS'))
+      callback && callback()
+    })
 }
 
 export const loadComments = (id) => dispatch => {
