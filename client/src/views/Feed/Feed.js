@@ -114,13 +114,17 @@ class Feed extends Component {
   }
   yHandler () {
     const {page, size} = this.state
+
+    if (this.props.loadingPage) {
+      return
+    }
+
     let wrap = document.getElementById('wrappp')
     let content = wrap.offsetHeight
     let yOffset = window.pageYOffset
     let y = yOffset + window.innerHeight
     if (y >= content) {
-      this.props.pageAble(page, size)
-      this.setState({page: this.state.page + 1})
+      this.props.pageAble(page, size, this.setState.bind(this, {page: this.state.page + 1}))
     }
   }
   render () {
