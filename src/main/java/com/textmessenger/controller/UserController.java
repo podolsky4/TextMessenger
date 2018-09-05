@@ -1,6 +1,5 @@
 package com.textmessenger.controller;
 
-
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
@@ -11,7 +10,6 @@ import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.service.EmailService;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -35,13 +33,16 @@ public class UserController {
   private final UserService userService;
   private LoginService loginService;
   private final EmailService emailService;
-  @Autowired
   private TemporaryTokenRepository temporaryTokenRepository;
 
-  public UserController(UserService userService, LoginService loginService, EmailService emailService) {
+  public UserController(UserService userService,
+                        LoginService loginService,
+                        EmailService emailService,
+                        TemporaryTokenRepository temporaryTokenRepository) {
     this.userService = userService;
     this.loginService = loginService;
     this.emailService = emailService;
+    this.temporaryTokenRepository = temporaryTokenRepository;
   }
 
   @PostMapping("/login")
