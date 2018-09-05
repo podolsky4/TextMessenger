@@ -46,9 +46,9 @@ public class UserController {
   }
 
   @PostMapping("/forgotpassword")
-  public ResponseEntity forgotPassword (@RequestBody String email){
+  public ResponseEntity forgotPassword(@RequestBody String email) {
     User userByEmail = userService.getUserByEmail(email);
-    if (userByEmail != null){
+    if (userByEmail != null) {
       userService.sendEmailToResetPassword(userByEmail);
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).
               body(ResponseToFront.convertResponseToFront("We send you mail please check you email"));

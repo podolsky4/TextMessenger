@@ -56,8 +56,7 @@ class Feed extends Component {
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
-    pageAble(this.state.page, this.state.size)
-    this.setState({page: 1})
+    this.props.pageAble(this.state.page, this.state.size, this.setState.bind(this, {page: this.state.page + 1}))
   }
 
   change = e => {
@@ -110,16 +109,18 @@ class Feed extends Component {
     }
   }
   yHandler () {
-    const {pageAble, able} = this.props
+    const {pageAble, able, fetching} = this.props
+    const {page, size} = this.state
     if (window.location.pathname === '/feed') {
-      const {page, size} = this.state
+      if (fetching) {
+        return
+      }
       let wrap = document.getElementById('wrappp')
       let content = wrap.offsetHeight
       let yOffset = window.pageYOffset
       let y = yOffset + window.innerHeight - 10
       if (able && y >= content) {
-        pageAble(page, size)
-        this.setState({page: this.state.page + 1})
+        this.props.pageAble(page, size, this.setState.bind(this, {page: this.state.page + 1}))
       }
     }
   }
@@ -193,7 +194,7 @@ const mapDispatchToProps = dispatch => {
   return {
     createPost_Image: (data) => dispatch(createPostWithOrWithOutImage(data)),
     loadFavorites: (id) => dispatch(loadFavorites(id)),
-    pageAble: (page, size) => dispatch(loadPagePost(page, size))
+    pageAble: (page, size, call) => dispatch(loadPagePost(page, size, call))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Feed))
