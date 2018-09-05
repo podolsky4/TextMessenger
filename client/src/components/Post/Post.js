@@ -89,7 +89,7 @@ class Post extends Component {
 
 
   handleComments = e => {
-    this.setState({flag: true})
+    this.setState({flag: !this.state.flag})
   };
 
   handleExpandClick = () => {
@@ -129,7 +129,10 @@ class Post extends Component {
               user={user}
               favorites={favorites}
               handleComments={this.handleComments.bind(this)}
-              className={classes.footer}/>
+              className={classes.footer}
+              classes={classes}
+              flag = {this.state.flag}
+            />
           </CardActions>
 
           {this.state.flag &&

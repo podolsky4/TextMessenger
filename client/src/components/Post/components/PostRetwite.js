@@ -77,13 +77,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PostRetwite))
-
-{/*<a className={whoo ? 'tweet--checked' : 'tweet'}*/
-}
-
-{/*onClick={event => handleRetwite(event)}>*/
-}
-{/*<SendIcon/> {text}*/
-}
-{/*</a>*/
-}
