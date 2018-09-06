@@ -5,9 +5,11 @@ import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.MessageToFront;
+import com.textmessenger.model.entity.dto.TestingWs;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.MessageRepository;
 import com.textmessenger.repository.UserRepository;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,16 +23,21 @@ public class MessageServiceImpl implements MessageService {
   private final UserRepository userRepository;
   private final DialogRepository dialogRepository;
   private final NotificationService notificationService;
+  private SimpMessagingTemplate simpMessagingTemplate;
+  private final String wsPath = "/queue/messages";
 
   public MessageServiceImpl(MessageRepository messageRepository,
                             DialogRepository dialogRepository,
                             UserRepository userRepository,
-                            NotificationService notificationService) {
+                            NotificationService notificationService,
+                            SimpMessagingTemplate simpMessagingTemplate
+  ) {
 
     this.messageRepository = messageRepository;
     this.dialogRepository = dialogRepository;
     this.userRepository = userRepository;
     this.notificationService = notificationService;
+    this.simpMessagingTemplate = simpMessagingTemplate;
   }
 
   @Override
@@ -67,7 +74,15 @@ public class MessageServiceImpl implements MessageService {
     message.setContent(msg);
     message.setDialog(userD);
     message.setUser(userM);
-    messageRepository.save(message);
+    Message save = messageRepository.save(message);
+
+    userD.getUsers().forEach(user1 -> {
+      if (user1.getId() != userM.getId()) {
+        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(),
+                wsPath,
+                new TestingWs(userM.getLogin(), user1.getLogin(), MessageToFront.convertMessageToFront(save)));
+      }
+    });
   }
 }
 

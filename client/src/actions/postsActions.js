@@ -73,6 +73,7 @@ export const loadPagePost = (page, size, callback) => dispatch => {
     .then(data => {
       if (data.length === 0) {
         dispatch({type: NO_FETCH_LIST_IS_EMPTY, payload: false})
+        dispatch(stopLoader('LOADING_POST'))
       } else {
         dispatch({type: ADD_TO_POSTS_PAGE, payload: data})
         dispatch(stopLoader('LOADING_POST'))
