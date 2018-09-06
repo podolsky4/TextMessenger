@@ -78,7 +78,7 @@ class Like extends Component {
 
   render () {
     const {classes, post} = this.props
-    let {likers} = post
+
     return (
 
       <div className={classes.diva}>
