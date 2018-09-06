@@ -22,6 +22,9 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center'
   },
+  selected: {
+    background: '#00000'
+  }
 })
 
 class Like extends Component {
@@ -36,8 +39,27 @@ class Like extends Component {
     const {favorites, post, user} = this.props
     loadFavorites(user.id)
     favorites.some(p => p.id === post.id)
-      ? this.setState({liked: true})
-      : this.setState({liked: false})
+      ? this.setState({liked: true, likers: post.likers})
+      : this.setState({liked: false, likers: post.likers})
+  }
+
+  // componentWillReceiveProps(nextProp) {
+  //   let post = this.props.post
+  //   loadFavorites(post.id)
+  // }
+
+  // componentDidUpdate (prevProps) {
+  //   // Typical usage (don't forget to compare props):
+  //   let post = this.props.post
+  //   if (post.liked !== prevProps.post.liked) {
+  //     this.loadFavorites(post.id)
+  //   }
+  // }
+  componentWillReceiveProps (nextProps) {
+    if (this.props.post.likers !== nextProps.post.likers) {
+      this.setState({likers: nextProps.post.likers})
+      this.forceUpdate()
+    }
   }
 
   handleLike = (id) => {
@@ -55,6 +77,7 @@ class Like extends Component {
 
   render () {
     const {classes, post} = this.props
+    let {likers} = post
     return (
 
       <div className={classes.diva}>
@@ -65,7 +88,7 @@ class Like extends Component {
           aria-label="Add to favorites"
         >
           <ThumbUpIcon/>
-        </IconButton><Typography>{1}</Typography>
+        </IconButton><Typography>{this.state.likers.length}</Typography>
       </div>
     )
   }
