@@ -15,18 +15,13 @@ const styles = theme => ({
       duration: theme.transitions.duration.short
     }),
     '&$selected': {
-      // color: theme.palette.primary.main,
       color: theme.palette.primary.main
     }
-
   },
   diva: {
     display: 'flex',
     alignItems: 'center'
-
   },
-  /* Styles applied to the root element if selected. */
-  selected: {}
 })
 
 class Like extends Component {
