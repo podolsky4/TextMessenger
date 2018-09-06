@@ -22,9 +22,11 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center'
   },
+
   selected: {
     background: '#00000'
   }
+
 })
 
 class Like extends Component {
