@@ -7,6 +7,7 @@ import Dialogs from '../../components/Dialogs/Dialogs'
 import Notifications from '../../components/Notifications'
 import Login from '../../views/Login/LogIn'
 import Profile from '../../views/Profile/Profile'
+import Page404 from '../../views/404/Page404'
 
 class Router extends Component {
   render () {
@@ -18,7 +19,8 @@ class Router extends Component {
         <Route exact path='/dialogs' component={Dialogs}/>
         <Route exact path='/notifications' component={Notifications}/>
         <Route exact path='/login' component={Login}/>
-        <Route path='/profile/:id' component={Profile}/>
+        <Route exact path='/profile/:id' component={Profile}/>
+        <Route path='*' component={Page404}/>
       </Switch>
     )
   }

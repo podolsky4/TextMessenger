@@ -30,6 +30,11 @@ public class PostController {
     this.postService = postService;
   }
 
+  @GetMapping("/{page}/{size}")
+  public ResponseEntity getPagePost(@PathVariable("page") int page, @PathVariable("size") int size) {
+    return ResponseEntity.ok().body(postService.getPage(page, size));
+  }
+
   @GetMapping
   public ResponseEntity getAllPosts() {
     return ResponseEntity.ok().body(postService.getAll());

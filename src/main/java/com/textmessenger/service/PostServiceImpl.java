@@ -9,6 +9,8 @@ import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.repository.PostRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -78,6 +80,12 @@ public class PostServiceImpl implements PostService {
   @Override
   public List<PostToFront> getAll() {
     return PostToFront.convertListPostsToResponse(postRepository.findAll(orderBy()));
+  }
+
+  @Override
+  public List<PostToFront> getPage(int page, int size) {
+    Page<Post> posts = postRepository.findAllByOrderByCreatedDateDesc(PageRequest.of(page, size));
+    return PostToFront.convertListPostsToResponse(posts.getContent());
   }
 
   @Override

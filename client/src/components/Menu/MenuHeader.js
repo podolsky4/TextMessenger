@@ -14,7 +14,6 @@ import Typography from '@material-ui/core/Typography/Typography'
 import MenuAccountRedirect from './MenuAccountRedirect'
 import PersonIcon from '@material-ui/icons/Person'
 
-
 const styles = (theme) => ({
   paper: {
     marginRight: theme.spacing.unit * 2,
@@ -31,7 +30,6 @@ const styles = (theme) => ({
   },
   root: {
     display: 'flex'
-    // padding: "1px",
   },
   anchorEl: {
     marginTop: 40,
@@ -51,9 +49,6 @@ const styles = (theme) => ({
   pos: {
     color: '#fafafa' // todo
   },
-  // menu: {
-  //   marginTop: 40,
-  // },
   HeaderMenu: {
     '&:hover': {
       color: 'black',
@@ -71,6 +66,7 @@ const styles = (theme) => ({
     width: 130,
     border: '1px solid #fff3e00d',
     background: '#fafafa21',
+    marginLeft: '10px',
 
     '&:hover': {
       background: '#fafafa',
@@ -86,7 +82,6 @@ class MenuHeader extends React.Component {
   state = {
     open: false,
     toredirect: true
-    // id: this.state.user.id
   };
 
   handleToggle = () => {

@@ -1,10 +1,10 @@
 -- Add several users
-INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `created_at`) VALUES ('test', 'test@gmail.com', '$2a$10$Nxv31bE4lCSQtJoGy.x3SOlzjUqnxLBvGHqII69caX0LQf53tpCy6', 'test', 'test','2008-03-01 17:05:33');
-INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`) VALUES ('sarah', 'sarah.g@gmail.com', '1334FDSADS', 'Sarah', 'Garcia', 'https://randomuser.me/api/portraits/women/82.jpg' ,'2008-03-01 17:04:33');
-INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`) VALUES ('johny', 'j.doe@gmail.com', 'qwt264878', 'John', 'Doe', 'https://randomuser.me/api/portraits/men/43.jpg', '2008-11-10 20:05:12');
-INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`) VALUES ('samurai', 'typeserf@yahoo.com', '400037jkdfh', 'Tanaka', 'Shirakawa', 'https://randomuser.me/api/portraits/women/60.jpg', '2010-12-08 04:05:37');
-INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`) VALUES ('alex007', 'alexgType@gmail.com', '264734hsjfdjvb', 'Alex', 'Green', 'https://randomuser.me/api/portraits/men/79.jpg', '2011-01-07 07:12:24');
-INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`) VALUES ('amilyUta', 'lang@kito.org', 'MyRunnerMouse550', 'Rio', 'Sanchez', 'https://randomuser.me/api/portraits/men/86.jpg', '2016-09-02 18:54:03');
+INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `created_at`,`is_enabled`) VALUES ('test', 'test@gmail.com', '$2a$10$Nxv31bE4lCSQtJoGy.x3SOlzjUqnxLBvGHqII69caX0LQf53tpCy6', 'test', 'test','2008-03-01 17:05:33',true);
+INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`,`is_enabled`) VALUES ('sarah', 'sarah.g@gmail.com', '1334FDSADS', 'Sarah', 'Garcia', 'https://randomuser.me/api/portraits/women/82.jpg' ,'2008-03-01 17:04:33',true);
+INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`,`is_enabled`) VALUES ('johny', 'j.doe@gmail.com', 'qwt264878', 'John', 'Doe', 'https://randomuser.me/api/portraits/men/43.jpg', '2008-11-10 20:05:12',true);
+INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`,`is_enabled`) VALUES ('samurai', 'typeserf@yahoo.com', '400037jkdfh', 'Tanaka', 'Shirakawa', 'https://randomuser.me/api/portraits/women/60.jpg', '2010-12-08 04:05:37',true);
+INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`,`is_enabled`) VALUES ('alex007', 'alexgType@gmail.com', '264734hsjfdjvb', 'Alex', 'Green', 'https://randomuser.me/api/portraits/men/79.jpg', '2011-01-07 07:12:24',true);
+INSERT INTO `user` (`login`, `email`, `password`, `first_name`, `last_name`, `profile_photo`, `created_at`,`is_enabled`) VALUES ('amilyUta', 'lang@kito.org', 'MyRunnerMouse550', 'Rio', 'Sanchez', 'https://randomuser.me/api/portraits/men/86.jpg', '2016-09-02 18:54:03',true);
 
 
 -- Add several posts
