@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
-import classNames from "classnames";
+import classNames from 'classnames'
 import RepeateIcon from '@material-ui/icons/Repeat'
 import IconButton from '@material-ui/core/IconButton'
-import Typography from "@material-ui/core/Typography/Typography";
 import {withStyles} from '@material-ui/core/styles'
-import {addedLikers, deleteLikers, loadFavorites, retweet, unRetweet} from "../../../actions/postsActions";
+import {retweet, unRetweet} from '../../../actions/postsActions'
 import {connect} from 'react-redux'
 
 const styles = theme => ({
@@ -26,9 +25,8 @@ const styles = theme => ({
   selected: {}
 })
 
-
 class PostRetwite extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       retweet: false
@@ -45,35 +43,33 @@ class PostRetwite extends Component {
     }
   };
 
-  render() {
-    const {whoo, classes} = this.props
+  render () {
+    const {classes} = this.props
     // const text = whoo ? 'Remove retweet' : 'Retweet'
     return (
       <div className={classes.diva}>
         <IconButton className={classNames(classes.root,
-                                         {[classes.selected]: this.state.retweet,
-                                          [classes.retweet]: this.state.retweet,
-                                          [classes.tweet]: true})}
+          {[classes.selected]: this.state.retweet,
+            [classes.retweet]: this.state.retweet,
+            [classes.tweet]: true})}
                     onClick={(e) => this.handleRetwite(e)}
                     aria-live={this.state.retweet}
                     aria-label="ReTweet">
           <RepeateIcon/>
         </IconButton>
-        {/*<Typography>{text}</Typography>*/}
+        {/* <Typography>{text}</Typography> */}
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  {
-  }
 }
 const mapDispatchToProps = dispatch => {
   return {
     retweets: (id, postId) => dispatch(retweet(id, postId)),
-    unRetweets: (postId) => dispatch(unRetweet(postId)),
+    unRetweets: (postId) => dispatch(unRetweet(postId))
   }
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PostRetwite))

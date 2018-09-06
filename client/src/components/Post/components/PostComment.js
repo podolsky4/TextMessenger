@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import {addedLikers, deleteLikers, loadFavorites, retweet, unRetweet} from '../../../actions/postsActions'
-import {withStyles} from '@material-ui/core/styles/index'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -10,7 +8,7 @@ class PostComment extends Component {
   // };
 
   render () {
-    const {classes, handleComments} = this.props
+    const { handleComments} = this.props
     return (
         <a className="comment" onClick={handleComments}>Comments</a>
     )
@@ -18,10 +16,8 @@ class PostComment extends Component {
 }
 
 const mapStateToProps = state => {
-  {}
 }
 const mapDispatchToProps = dispatch => {
-  {}
 }
 
 PostComment.propTypes = {
