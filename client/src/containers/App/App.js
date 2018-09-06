@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import HomePage from '../../views/HomePage/HomePage'
+import {Redirect} from 'react-router-dom'
 
 class App extends Component {
   componentWillMount () {
@@ -16,17 +17,15 @@ class App extends Component {
     }
   }
 
-
-
   render () {
-    const {user} = this.props
+    const {user, location} = this.props
 
     if (!user) {
       return <Loader />
     }
 
     if (!user.id) {
-      return <HomePage/>
+      return location.pathname === '/' ? <HomePage/> : <Redirect to='/'/>
     }
 
     return (

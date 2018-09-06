@@ -4,6 +4,7 @@ import cyan from '@material-ui/core/colors/cyan'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import Avatar from '@material-ui/core/Avatar'
+import {Redirect} from 'react-router'
 
 const styles = theme => ({
   root: {
@@ -68,12 +69,28 @@ const styles = theme => ({
 })
 
 class Dialog extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      toredirect: false,
+      id: ''
+    }
+  }
+  profileRender = id => {
+    this.setState({
+      toredirect: true,
+      id: id
+    })
+  }
   render () {
     const {user, handleMessages, dialog, addUserToDialog, classes} = this.props
     const {users} = this.props.dialog
-
+    if (this.state.toredirect) {
+      this.setState({toredirect: false})
+      return <Redirect to={`/profile/${this.state.id}`}/>
+    }
     return (
-      <div className={classes.paper}>
+      <div className={classes.paper} onClick={e => handleMessages(dialog)}>
         <div className={classes.userAvatarContainer}>
           {users.map(
             member => member.id !== user.id
@@ -81,20 +98,19 @@ class Dialog extends Component {
                 <Avatar alt="avatar"
                   src={member.profilePhoto === null ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png' : member.profilePhoto}
                   className={classnames(classes.avatar, 'logo')}
-                  onClick={e => this.profileRender(this.props.user.id)}/>
+                  onClick={e => this.profileRender(member.id)}/>
               </div> : ''
           )
           }
         </div>
 
-        <div className={classes.userNames}>
+        <div className={classes.userNames} >
           {
             users.length <= 4
               ? users.map(
                 member => member.id !== user.id
                   ? <div className={classes.userNameContainer}>
                     <a key={member.id}
-                      onClick={e => handleMessages(dialog)}
                       className={classnames(classes.userName, 'capitalize')}
                     >
                       {member.login}

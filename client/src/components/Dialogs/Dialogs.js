@@ -113,6 +113,7 @@ class Dialogs extends Component {
 
   addUserToDialog = e => {
     const {cleanUserSearch} = this.props
+    e.stopPropagation()
     cleanUserSearch()
     this.setState({
       flag: false,

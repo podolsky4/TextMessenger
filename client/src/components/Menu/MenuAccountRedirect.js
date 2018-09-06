@@ -6,7 +6,6 @@ import red from '@material-ui/core/colors/red'
 
 import {Redirect} from 'react-router'
 
-
 const styles = theme => ({
   card: {
     maxWidth: 400

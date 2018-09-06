@@ -1,13 +1,18 @@
 package com.textmessenger.controller;
 
-
 import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.LoginRq;
+import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
+import com.textmessenger.repository.TemporaryTokenRepository;
+import com.textmessenger.service.EmailService;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,17 +23,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
   private final UserService userService;
   private LoginService loginService;
+  private final EmailService emailService;
+  private TemporaryTokenRepository temporaryTokenRepository;
 
-  public UserController(UserService userService, LoginService loginService) {
+  public UserController(UserService userService,
+                        LoginService loginService,
+                        EmailService emailService,
+                        TemporaryTokenRepository temporaryTokenRepository) {
     this.userService = userService;
     this.loginService = loginService;
+    this.emailService = emailService;
+    this.temporaryTokenRepository = temporaryTokenRepository;
+  }
+
+  @PostMapping("/forgotpassword")
+  public ResponseEntity forgotPassword(@RequestBody String email) {
+    User userByEmail = userService.getUserByEmail(email);
+    if (userByEmail != null) {
+      userService.sendEmailToResetPassword(userByEmail);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(ResponseToFront.convertResponseToFront("We send you mail please check you email"));
+    }
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ResponseToFront.convertResponseToFront("This email is not registration on our Application"));
   }
 
   @PostMapping("/login")
@@ -42,8 +68,33 @@ public class UserController {
   }
 
   @PostMapping("/user")
-  public ResponseEntity createUser(@RequestBody User user) {
-    return ResponseEntity.status(201).body(userService.createUser(user));
+  public ResponseEntity createUser(@Valid @RequestBody User user) {
+    if (userService.getUserByLogin(user.getLogin()) != null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(ResponseToFront.convertResponseToFront("this login is busy"));
+    } else if (userService.getUserByEmail(user.getEmail()) != null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(ResponseToFront.convertResponseToFront("this email is busy"));
+    }
+    TemporaryToken tempToken = new TemporaryToken();
+    tempToken.setToken(UUID.randomUUID().toString());
+    tempToken.setExpiryDate(new Date());
+    User user1 = userService.createUser(user);
+    tempToken.setUser(user1);
+    temporaryTokenRepository.save(tempToken);
+    SimpleMailMessage email = new SimpleMailMessage();
+    email.setTo(user1.getEmail());
+    email.setSubject("confirmation link to create account at Text Messenger application");
+    email.setText("http://localhost:3000/api/users/registered/" + tempToken.getToken());
+    emailService.sendEmail(email);
+    return ResponseEntity.ok()
+            .body(ResponseToFront.convertResponseToFront("Check you email we send you registration link"));
+
+  }
+
+  @GetMapping("/registered/{token}")
+  public ResponseEntity enableUser(@PathVariable("token") String token) {
+    return ResponseEntity.ok().body(userService.setUserIsEnabled(token));
   }
 
 

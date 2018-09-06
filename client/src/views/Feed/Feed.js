@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadFavorites, loadPosts, createPostWithOrWithOutImage} from '../../actions/postsActions'
+import {createPostWithOrWithOutImage, loadFavorites, loadPagePost} from '../../actions/postsActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
@@ -17,11 +17,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center'
   },
-  // grid: {
-  //   flexGrow: '0',
-  //   width: '75%',
-  //   flexBasis: '75%'
-  // },
   icon: {
     paddingRight: theme.spacing.unit,
     marginTop: -4
@@ -50,14 +45,19 @@ class Feed extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      text: ''
+      text: '',
+      page: 0,
+      size: 3
     }
   }
 
   componentWillMount () {
-    const {loadPosts, user, loadFavorites} = this.props
-    loadFavorites(user.id)
-    loadPosts()
+    const {user, favorites, loadFavorites, pageAble} = this.props
+    const {size, page} = this.state
+    if (favorites.length === 0) {
+      loadFavorites(user.id)
+    }
+    pageAble(page, size, this.setState.bind(this, {page: page + 1}))
   }
 
   change = e => {
@@ -110,15 +110,35 @@ class Feed extends Component {
     }
   }
 
+  yHandler () {
+    const {pageAble, able, fetching} = this.props
+    const {page, size} = this.state
+    if (window.location.pathname === '/feed') {
+      if (fetching) {
+        return
+      }
+      let wrap = document.getElementById('wrappp')
+      let content = wrap.offsetHeight
+      let yOffset = window.pageYOffset
+      let y = yOffset + window.innerHeight - 10
+      if (able && y >= content) {
+        pageAble(page, size, this.setState.bind(this, {page: this.state.page + 1}))
+      }
+    }
+  }
+
   render () {
-    const {posts, user, classes} = this.props
+    const {able, posts, user, classes} = this.props
     const {reloadLoader} = this.props
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
+    if (able) {
+      window.onscroll = this.yHandler.bind(this)
+    }
     return (
 
-      <div style={{padding: 15}}>
+      <div id='wrappp' style={{padding: 15}}>
         <Grid
           container
           direction="column"
@@ -133,7 +153,6 @@ class Feed extends Component {
               <form className={classes.form}
                 alignItems="flex-end"
                 onSubmit={e => this.onSubmit(e)}>
-
                 <TextField
                   defaultValue=""
                   placeholder="Share something..."
@@ -141,14 +160,13 @@ class Feed extends Component {
                     maxLength: 280,
                     padding: '3.7% 0 7px',
                     style:
-                            {borderRadius: '2px'}
+                      {borderRadius: '2px'}
                   }}
                   id="content"
                   name="text"
                   multiline
                   className={classes.textfield}
                   onKeyUp={event => this.handleInput(event)}
-
                 />
                 <form>
                   <input type="file" name="file" ref="inputFile"/>
@@ -157,7 +175,6 @@ class Feed extends Component {
               </form>
               {reloadLoader && <Loader/>}
             </Paper>
-
             <PostList posts={posts} user={user}/>
           </Grid>
         </Grid>
@@ -172,14 +189,15 @@ const mapStateToProps = state => {
     posts: state.posts,
     favorites: state.favorites,
     reloadLoader: state.reloadLoader,
-    fetching: state.loader.loadingPost
+    fetching: state.loader.loadingPost,
+    able: state.able.postAble
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadPosts: () => dispatch(loadPosts()),
     createPost_Image: (data) => dispatch(createPostWithOrWithOutImage(data)),
-    loadFavorites: (id) => dispatch(loadFavorites(id))
+    loadFavorites: (id) => dispatch(loadFavorites(id)),
+    pageAble: (page, size, call) => dispatch(loadPagePost(page, size, call))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Feed))

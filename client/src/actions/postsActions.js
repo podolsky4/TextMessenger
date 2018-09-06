@@ -1,4 +1,4 @@
-import {LOAD_COMMENTS, LOAD_FAVORITES, LOAD_POSTS, LOADING_COMMENTS} from './types'
+import {LOAD_COMMENTS, LOAD_FAVORITES, LOAD_POSTS, LOADING_COMMENTS, ADD_TO_POSTS_PAGE, NO_FETCH_LIST_IS_EMPTY} from './types'
 import {endReLoader, startLoader, startReLoader, stopLoader} from './loaderActions'
 import FetchData from './serviceAction'
 
@@ -65,6 +65,20 @@ export const loadPosts = () => dispatch => {
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
     .then(() => dispatch(stopLoader('LOADING_POST')))
+}
+export const loadPagePost = (page, size, callback) => dispatch => {
+  dispatch(startLoader('LOADING_POST'))
+  FetchData.get(`/api/posts/${page}/${size}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.length === 0) {
+        dispatch({type: NO_FETCH_LIST_IS_EMPTY, payload: false})
+      } else {
+        dispatch({type: ADD_TO_POSTS_PAGE, payload: data})
+        dispatch(stopLoader('LOADING_POST'))
+        callback && callback()
+      }
+    })
 }
 
 export const loadComments = (id) => dispatch => {
