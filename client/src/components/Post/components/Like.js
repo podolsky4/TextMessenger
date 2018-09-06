@@ -31,7 +31,8 @@ class Like extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      liked: false
+      liked: false,
+      likers: {}
     }
   }
 
@@ -55,7 +56,7 @@ class Like extends Component {
   //     this.loadFavorites(post.id)
   //   }
   // }
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps) { // TODO: doesn't yet rerender the number
     if (this.props.post.likers !== nextProps.post.likers) {
       this.setState({likers: nextProps.post.likers})
       this.forceUpdate()
