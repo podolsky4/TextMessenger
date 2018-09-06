@@ -328,3 +328,4 @@ yarn.lock
 /vcs.xml
 /ui.lnf.xml
 /ui.lnf.xml
+src/main/resources/amazon.properties
