@@ -4,15 +4,12 @@
     <option name="selectedTheme" value="LIGHT_CUSTOM" />
     <option name="highlightColor" value="ff0021" />
     <option name="highlightColorEnabled" value="true" />
-    <option name="isMaterialDesign" value="false" />
-    <option name="accentColor" value="3F51B5" />
+    <option name="accentColor" value="80cbc4" />
     <option name="tabsHeight" value="43" />
-    <option name="isCompactStatusBar" value="true" />
     <option name="upperCaseTabs" value="true" />
     <option name="darkTitleBar" value="true" />
     <option name="tabOpacity" value="73" />
     <option name="settingsSelectedTab" value="6" />
     <option name="userId" value="-45245555:165804ec770:-8000" />
-    <option name="allowDataCollection" value="true" />
   </component>
 </application>
