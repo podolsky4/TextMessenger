@@ -14,14 +14,15 @@ const styles = theme => ({
   },
   paper: {
     flexDirection: 'row',
+    margin: 1,
     width: '100%',
     display: 'flex',
-    padding: theme.spacing.unit * 1,
+    padding: theme.spacing.unit,
     cursor: 'pointer',
     alignItems: 'center',
     justifyContent: 'space-between',
     '&:hover': {
-      background: 'blue'
+      background: theme.palette.primary.main
     }
   },
   avatar: {

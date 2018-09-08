@@ -51,7 +51,8 @@ const styles = theme => ({
     textAlign: 'right',
     alignSelf: 'flex-end',
     '&$message': {
-      borderRadius: '12px+4px+4px+12px'
+      borderRadius: '12px+4px+4px+12px',
+      background: theme.palette.primary.background
     }
   },
   other: {
