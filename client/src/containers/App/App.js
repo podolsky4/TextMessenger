@@ -6,8 +6,6 @@ import {getCurrentUser} from '../../actions/userActions'
 import {connect} from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
-import HomePage from '../../views/HomePage/HomePage'
-import {Redirect} from 'react-router-dom'
 
 class App extends Component {
   componentWillMount () {
@@ -24,9 +22,9 @@ class App extends Component {
       return <Loader />
     }
 
-    if (!user.id) {
-      return location.pathname === '/' ? <HomePage/> : <Redirect to='/'/>
-    }
+    // if (!user.id) {
+    //   return location.pathname === '/' ? <HomePage/> : <Redirect to='/'/>
+    // }
 
     return (
       <Fragment>

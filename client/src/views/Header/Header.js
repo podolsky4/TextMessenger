@@ -40,7 +40,7 @@ const styles = (theme) => ({
 })
 
 class Header extends React.Component {
-  state = {
+  this.state = {
     noUser: false
   };
 
@@ -77,6 +77,7 @@ class Header extends React.Component {
               <NotificationsIcon className={classes.icon}/>
             </Badge>
           </IconButton>
+          {/*TODO fix*/}
           {!noUser &&
           <MenuHeader classes user={user}/>
           }
