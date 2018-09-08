@@ -86,6 +86,7 @@ class CurrentUserProfile extends Component {
 
   render () {
     const {user, classes, userPosts} = this.props
+
     return (
       <div className={classes.ProfileCnt}>
         {this.state.viewMode &&

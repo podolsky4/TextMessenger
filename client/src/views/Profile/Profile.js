@@ -33,20 +33,30 @@ class Profile extends React.Component {
       return <Loader fullscreen={true}/>
     }
     let flag = user.id === +match.params.id
-    let userPosts = posts.filter(function (post) {
-      return post.user.id === user.id
-    })
+    let userPosts
+    if (flag) {
+      userPosts = posts.filter(function (post) {
+          return post.user.id === user.id
+        }
+      )
+    } else {
+      userPosts = posts.filter(function (post) {
+          return post.user.id === +match.params.id
+        }
+      )
+    }
+
     console.log('userPosts: \n', userPosts)
     return (
       <React.Fragment>
+        {flag && <CurrentUserProfile userPosts={userPosts}/>}
+        {!flag && <OtherUserProfile currentUser={match.params.id} userPosts={userPosts}/>}
         <CardMedia
           className={classes.media}
           component="img"
           image={'https://picsum.photos/1400/320?gravity=north&blur'}
           title={user.name}
         />
-        {flag && <CurrentUserProfile userPosts={userPosts}/>}
-        {!flag && <OtherUserProfile currentUser={match.params.id}/>}
       </React.Fragment>
     )
   }
