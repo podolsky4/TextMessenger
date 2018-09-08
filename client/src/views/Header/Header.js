@@ -40,7 +40,7 @@ const styles = (theme) => ({
 })
 
 class Header extends React.Component {
-  this.state = {
+  state = {
     noUser: false
   };
 
