@@ -66,7 +66,7 @@ class Chat extends Component {
     const {user, addMessage, currentDialog} = this.props
     e.preventDefault()
     addMessage(currentDialog.id, user, this.state.text)
-    debugger
+    this.messageInput.value = ''
     console.log("onSubmit", e.target)
     console.log("onSubmit inner", e.target)
     // this.value = ''
@@ -85,7 +85,7 @@ class Chat extends Component {
               placeholder=" Write message"
               maxLength={280}
               type="text"
-              inputRef='msg'
+              inputRef={(el) => this.messageInput = el}
               onKeyUp={event => this.myFunction(event)}
               className={classnames(classes.margin, classes.text, 'messageInput')}
               label="Your Message"
