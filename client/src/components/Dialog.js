@@ -5,6 +5,7 @@ import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import Avatar from '@material-ui/core/Avatar'
 import {Redirect} from 'react-router'
+import Button from '@material-ui/core/Button/Button'
 
 const styles = theme => ({
   root: {
@@ -14,14 +15,19 @@ const styles = theme => ({
   },
   paper: {
     flexDirection: 'row',
+    margin: 1,
     width: '100%',
     display: 'flex',
-    padding: theme.spacing.unit * 1,
+    padding: theme.spacing.unit,
     cursor: 'pointer',
     alignItems: 'center',
     justifyContent: 'space-between',
     '&:hover': {
-      background: 'blue'
+      '& $button': {
+        background: '#fafafa',
+        opacity: 1
+      },
+      background: theme.palette.primary.main,
     }
   },
   avatar: {
@@ -38,10 +44,14 @@ const styles = theme => ({
     flexDirection: 'row',
     display: 'flex',
     width: 'fit-content',
+    marginLeft: 6,
     '&:hover': {
       zIndex: '10',
       marginLeft: +3,
-      marginRight: +3
+      marginRight: +3,
+      '&:first-child': {
+        marginLeft: 6
+      }
     }
   },
   userAvatar: {
@@ -65,6 +75,15 @@ const styles = theme => ({
   },
   userNames: {
     display: 'flex'
+  },
+  button: {
+    padding: theme.spacing.unit / 1,
+    margin: theme.spacing.unit / 4,
+    marginRight: 0,
+    background: theme.palette.background.main,
+    '&:hover': {
+      background: theme.palette.secondary.main
+    }
   }
 })
 
@@ -121,7 +140,13 @@ class Dialog extends Component {
           }
         </div>
 
-        <button value={dialog.id} onClick={e => addUserToDialog(e)}>Add user</button>
+        <Button value={dialog.id}
+                onClick={e => addUserToDialog(e)}
+                variant="outlined"
+                color='background'
+                type="submit" className={classes.button}>
+          Add user
+        </Button>
       </div>
 
     )

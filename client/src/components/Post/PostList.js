@@ -19,7 +19,7 @@ class PostList extends Component {
   render () {
     const {posts, user, classes} = this.props
     let current = post => {
-      if (post.parentId == null) {
+      if (post.parentId === null) {
         return (
           <Post
             key={post.id}

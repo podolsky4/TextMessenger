@@ -1,4 +1,11 @@
-import {LOAD_COMMENTS, LOAD_FAVORITES, LOAD_POSTS, LOADING_COMMENTS, ADD_TO_POSTS_PAGE, NO_FETCH_LIST_IS_EMPTY} from './types'
+import {
+  ADD_TO_POSTS_PAGE,
+  LOAD_COMMENTS,
+  LOAD_FAVORITES,
+  LOAD_POSTS,
+  LOADING_COMMENTS,
+  NO_FETCH_LIST_IS_EMPTY
+} from './types'
 import {endReLoader, startLoader, startReLoader, stopLoader} from './loaderActions'
 import FetchData from './serviceAction'
 
@@ -61,6 +68,7 @@ export const loadFavoritesByLogin = (login) => dispatch => {
 
 export const loadPosts = () => dispatch => {
   dispatch(startLoader('LOADING_POST'))
+  console.log("loadPost reducer triggered with LOADING_POST type")
   FetchData.get(`/api/posts`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))

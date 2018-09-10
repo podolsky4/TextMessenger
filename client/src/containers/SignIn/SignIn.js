@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createUser, forgotPassword, loadUser, loginIn} from '../../actions/userActions'
-import {loadFavorites} from '../../actions/postsActions'
 
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -119,16 +118,8 @@ class LogIn extends Component {
       this.setState({signUp: false, forgotPassword: false})
     }
   }
-  change = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  };
-  onSubmit = e => {
-    const {loginInUser} = this.props
-    e.preventDefault()
-    loginInUser(this.state.email, this.state.password)
-  };
+
+
   forgotPassword = e => {
     const {forgotPasswordForm} = this.props
     e.preventDefault()
@@ -321,7 +312,7 @@ const mapDispatchToProps = dispatch => {
   return {
     createUser: (data) => dispatch(createUser(data)),
     loadUser: (some) => dispatch(loadUser(some)),
-    loadFavorites: (id) => dispatch(loadFavorites(id)),
+    // loadFavorites: (id) => dispatch(loadFavorites(id)),
     loginInUser: (email, password) => dispatch(loginIn(email, password)),
     forgotPasswordForm: (email) => dispatch(forgotPassword(email))
   }
