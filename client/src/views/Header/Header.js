@@ -45,7 +45,7 @@ class Header extends React.Component {
   };
 
   render () {
-    const {classes, user} = this.props
+    const {classes, user, notification} = this.props
     let {noUser} = this.state.noUser
     if (!user) {
       noUser = true
@@ -73,7 +73,7 @@ class Header extends React.Component {
             <MessageIcon className={classes.icon}/>
           </IconButton>
           <IconButton aria-label="4 pending messages" color="inherit" component={Link} to='/notifications'>
-            <Badge badgeContent={4} color='secondary' classes={{badge: classes.badge}}>
+            <Badge badgeContent={notification.length} color='secondary' classes={{badge: classes.badge}}>
               <NotificationsIcon className={classes.icon}/>
             </Badge>
           </IconButton>
@@ -94,7 +94,8 @@ Header.propTypes = {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    currentLocation: state.location
+    currentLocation: state.location,
+    notification: state.notification
   }
 }
 

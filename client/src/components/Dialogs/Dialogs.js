@@ -62,7 +62,7 @@ class Dialogs extends Component {
     super(props)
     this.state = {
       flag: false,
-      dialog: '',
+      dialog: null,
       newDialog: false,
       userList: false,
       exist: false
@@ -87,31 +87,32 @@ class Dialogs extends Component {
     }
   };
 
-  handleMessages = e => {
-    const {loadMessages, cleanUserSearch} = this.props
-    loadMessages(e.id)
-    if (this.state.newDialog) {
-      this.setState({
-        flag: true,
-        dialog: e,
-        newDialog: false
-      })
-    } else if (this.state.userList) {
-      this.setState({
-        flag: true,
-        dialog: e,
-        userList: false
-      })
-    } else {
-      this.setState({
-        flag: true,
-        dialog: e
-      })
-    }
-    cleanUserSearch()
+  handleMessages = dialog => {
+    const {loadMessages} = this.props
+    this.setState({dialog: dialog})
+    loadMessages(dialog.id)
+    // if (this.state.newDialog) {
+    //   this.setState({
+    //     flag: true,
+    //     dialog: e,
+    //     newDialog: false
+    //   })
+    // } else if (this.state.userList) {
+    //   this.setState({
+    //     flag: true,
+    //     dialog: e,
+    //     userList: false
+    //   })
+    // } else {
+    //   this.setState({
+    //     flag: true,
+    //     dialog: e
+    //   })
+    // }
+    // cleanUserSearch()
   };
 
-  addUserToDialog = e => {
+  addUserToDialog = (e, dialogId) => {
     const {cleanUserSearch} = this.props
     e.stopPropagation()
     cleanUserSearch()
@@ -119,19 +120,24 @@ class Dialogs extends Component {
       flag: false,
       newDialog: true,
       exist: true,
-      dialog: e.target.value
+      dialogId: dialogId
     })
   };
 
   render () {
-    const {user, dialogs, loadDialog, classes} = this.props
-    const {flag, newDialog} = this.state
+    const {user, dialogs, loadDialog, classes, match} = this.props
+    const {newDialog, exist, dialog, dialogId} = this.state
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
+
+    if (dialog && +match.params.dialogId !== dialog.id) {
+      return <Redirect to={`/dialogs/${dialog.id}`}/>
+    }
+
     return (
       <div className="wrap">
         <div className="dialogs">
@@ -142,7 +148,7 @@ class Dialogs extends Component {
                 dialog = {dialog}
                 handleMessages = {this.handleMessages.bind(this)}
                 user={user}
-                addUserToDialog = {this.addUserToDialog.bind(this)}
+                addUserToDialog = {(e) => this.addUserToDialog.bind(this, e, dialog.id)()}
               />
             </Paper>
           )}
@@ -150,11 +156,11 @@ class Dialogs extends Component {
             Create new Dialog
           </button>
         </div>
-        {flag && <Chat className="chat" user={user.id} currentDialog={this.state.dialog}/>}
+        {dialog && <Chat className="chat" user={user.id} currentDialog={dialog}/>}
         {newDialog &&
         <SearchUser
-          exist={this.state.exist}
-          dialog={this.state.dialog}
+          exist={exist}
+          dialog={dialogId}
         />}
       </div>
     )

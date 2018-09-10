@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import './App.css'
 import Router from '../Router/Router'
 import Header from '../../views/Header/Header'
@@ -29,12 +29,11 @@ class App extends Component {
     }
 
     return (
-      <Fragment>
         <CssBaseline>
+          <Router wsHandler={true}/>
           <Header/>
           <Router/>
         </CssBaseline>
-      </Fragment>
     )
   }
 }

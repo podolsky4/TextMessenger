@@ -17,7 +17,7 @@ class Notifications extends Component {
     return (
       <React.Fragment>
         {notification.length === 0 && <h3>Nothing to show</h3>}
-        {notification.length !== 0 && notification.map(u => <a>{u.content}</a>)}
+        {notification.length !== 0 && notification.map(u => <a>{u.messageToFront.content}</a>)}
       </React.Fragment>
     )
   }
