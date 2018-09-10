@@ -8,6 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import HomePage from '../../views/HomePage/HomePage'
 import {Redirect} from 'react-router-dom'
+import WebSocketHandler from '../../components/WebSocketHandler'
 
 class App extends Component {
   componentWillMount () {
@@ -30,7 +31,6 @@ class App extends Component {
 
     return (
         <CssBaseline>
-          {/*<WebSocketHandler />*/}
           <Router wsHandler={true}/>
           <Header/>
           <Router/>

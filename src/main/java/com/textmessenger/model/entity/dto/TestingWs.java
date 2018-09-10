@@ -8,6 +8,7 @@ import lombok.Data;
 public class TestingWs {
   private String sender;
   private String receiver;
+  private String type;
   private MessageToFront messageToFront;
 
 }

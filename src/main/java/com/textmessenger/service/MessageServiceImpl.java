@@ -80,7 +80,7 @@ public class MessageServiceImpl implements MessageService {
       if (user1.getId() != userM.getId()) {
         simpMessagingTemplate.convertAndSendToUser(user1.getLogin(),
                 wsPath,
-                new TestingWs(userM.getLogin(), user1.getLogin(), MessageToFront.convertMessageToFront(save)));
+                new TestingWs(userM.getLogin(), user1.getLogin(), "NEW_MESSAGE", MessageToFront.convertMessageToFront(save)));
       }
     });
   }

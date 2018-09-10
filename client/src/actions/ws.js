@@ -4,8 +4,8 @@ import SockJS from 'sockjs-client'
 export const webSocketDialog = (callback) => {
   let ws = new SockJS(`http://localhost:9000/WTF?accessToken=Bearer ${localStorage.getItem('accessToken')}`)
   let stompClient = Stomp.over(ws)
-  stompClient.connect({}, function (frame) {
-    stompClient.subscribe('/user/queue/messages', function (resp) {
+  stompClient.connect({}, frame => {
+    stompClient.subscribe('/user/queue/messages', resp => {
       const message = JSON.parse(resp.body)
       callback && callback(message)
     })

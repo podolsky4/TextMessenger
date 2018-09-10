@@ -8,8 +8,8 @@ import Notifications from '../../components/Notifications'
 import Login from '../../views/Login/LogIn'
 import Profile from '../../views/Profile/Profile'
 import Page404 from '../../views/404/Page404'
-import WsHandler from '../../views/404/Page404'
 import ConfirmRegistration from '../../views/Confirm/ConfirmRegistration'
+import WebSocketHandler from '../../components/WebSocketHandler'
 
 class Router extends Component {
   render () {
@@ -17,16 +17,16 @@ class Router extends Component {
 
     return (
       <Switch>
-        <Route exact path='/' component={wsHandler ? WsHandler : HomePage}/>
-        <Route exact path='/feed' component={wsHandler ? WsHandler : Feed}/>
-        <Route exact path='/favorites' component={wsHandler ? WsHandler : Favorites}/>
-        <Route exact path='/dialogs/:dialogId' component={wsHandler ? WsHandler : Dialogs}/>
-        <Route exact path='/dialogs' component={wsHandler ? WsHandler : Dialogs}/>
-        <Route exact path='/notifications' component={wsHandler ? WsHandler : Notifications}/>
-        <Route exact path='/login' component={wsHandler ? WsHandler : Login}/>
-        <Route exact path='/profile/:id' component={wsHandler ? WsHandler : Profile}/>
-        <Route exact path='/confirm/registration/:id' component={wsHandler ? WsHandler : ConfirmRegistration}/>
-        <Route path='*' component={Page404}/>
+        <Route exact path='/' component={wsHandler ? WebSocketHandler : HomePage}/>
+        <Route exact path='/feed' component={wsHandler ? WebSocketHandler : Feed}/>
+        <Route exact path='/favorites' component={wsHandler ? WebSocketHandler : Favorites}/>
+        <Route exact path='/dialogs/:dialogId' component={wsHandler ? WebSocketHandler : Dialogs}/>
+        <Route exact path='/dialogs' component={wsHandler ? WebSocketHandler : Dialogs}/>
+        <Route exact path='/notifications' component={wsHandler ? WebSocketHandler : Notifications}/>
+        <Route exact path='/login' component={wsHandler ? WebSocketHandler : Login}/>
+        <Route exact path='/profile/:id' component={wsHandler ? WebSocketHandler : Profile}/>
+        <Route exact path='/confirm/registration/:id' component={wsHandler ? WebSocketHandler : ConfirmRegistration}/>
+        <Route path='*' component={wsHandler ? WebSocketHandler : Page404}/>
       </Switch>
     )
   }

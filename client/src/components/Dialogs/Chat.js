@@ -34,26 +34,7 @@ class Chat extends Component {
       flag: false
     }
   }
-  componentDidMount () {
-    const {dialogId, userId} = this.props.match.params
-    webSocketDialog(message => {
-      // addToNotifications(message)
 
-      switch (message.type) {
-        case 'NEW_MESSAGE':
-          if (dialogId && dialogId === message.dialogId) {
-            // add to redux
-          } else {
-            // add to notifications
-          }
-        case 'NEW_DIALOG':
-          if (this.props.location.pathname.startsWith('/dialogs')) {
-            // add to redux
-          }
-        case 'NEW_COMMENT':
-      }
-    })
-  }
   myFunction (e) {
     if (e.key === 'Enter') {
       this.onSubmit(e)
