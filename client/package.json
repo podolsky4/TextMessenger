@@ -44,6 +44,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "eslint": "^5.5.0",
     "standard": "^10.0.3"
   },
   "watch": {

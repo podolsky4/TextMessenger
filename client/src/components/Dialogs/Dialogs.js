@@ -62,7 +62,7 @@ class Dialogs extends Component {
     super(props)
     this.state = {
       flag: false,
-      dialog: '',
+      dialog: null,
       newDialog: false,
       userList: false,
       exist: false
@@ -87,28 +87,29 @@ class Dialogs extends Component {
     }
   };
 
-  handleMessages = e => {
+  handleMessages = dialog => {
     const {loadMessages, cleanUserSearch} = this.props
-    loadMessages(e.id)
-    if (this.state.newDialog) {
-      this.setState({
-        flag: true,
-        dialog: e,
-        newDialog: false
-      })
-    } else if (this.state.userList) {
-      this.setState({
-        flag: true,
-        dialog: e,
-        userList: false
-      })
-    } else {
-      this.setState({
-        flag: true,
-        dialog: e
-      })
-    }
-    cleanUserSearch()
+    this.setState({dialog: dialog})
+    loadMessages(dialog.id)
+    // if (this.state.newDialog) {
+    //   this.setState({
+    //     flag: true,
+    //     dialog: e,
+    //     newDialog: false
+    //   })
+    // } else if (this.state.userList) {
+    //   this.setState({
+    //     flag: true,
+    //     dialog: e,
+    //     userList: false
+    //   })
+    // } else {
+    //   this.setState({
+    //     flag: true,
+    //     dialog: e
+    //   })
+    // }
+    // cleanUserSearch()
   };
 
   addUserToDialog = e => {
@@ -124,14 +125,19 @@ class Dialogs extends Component {
   };
 
   render () {
-    const {user, dialogs, loadDialog, classes} = this.props
-    const {flag, newDialog} = this.state
+    const {user, dialogs, loadDialog, classes, match} = this.props
+    const {flag, newDialog, dialog} = this.state
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
+
+    if (dialog && +match.params.dialogId !== dialog.id) {
+      return <Redirect to={`/dialogs/${dialog.id}`}/>
+    }
+
     return (
       <div className="wrap">
         <div className="dialogs">
@@ -150,7 +156,7 @@ class Dialogs extends Component {
             Create new Dialog
           </button>
         </div>
-        {flag && <Chat className="chat" user={user.id} currentDialog={this.state.dialog}/>}
+        {dialog && <Chat className="chat" user={user.id} currentDialog={dialog}/>}
         {newDialog &&
         <SearchUser
           exist={this.state.exist}

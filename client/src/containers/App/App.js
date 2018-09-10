@@ -29,12 +29,12 @@ class App extends Component {
     }
 
     return (
-      <Fragment>
         <CssBaseline>
+          {/*<WebSocketHandler />*/}
+          <Router wsHandler={true}/>
           <Header/>
           <Router/>
         </CssBaseline>
-      </Fragment>
     )
   }
 }
