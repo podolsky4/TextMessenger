@@ -15,7 +15,7 @@ const styles = theme => ({
     alignItems: 'strech',
     justifyContent: 'space-between',
     background: '#fafafaf7',
-    borderRadius: '1px 1px 2px 2px',
+    borderRadius: '1px 1px 2px 2px'
   },
   margin: {
     margin: theme.spacing.unit
@@ -66,6 +66,10 @@ class Chat extends Component {
     const {user, addMessage, currentDialog} = this.props
     e.preventDefault()
     addMessage(currentDialog.id, user, this.state.text)
+    debugger
+    console.log("onSubmit", e.target)
+    console.log("onSubmit inner", e.target)
+    // this.value = ''
   };
 
   render () {
@@ -74,13 +78,14 @@ class Chat extends Component {
       <div className={classes.chat}>
 
         <MessagesList messages={messages} user={user}/>
-        {!fetching &&
+
           <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
             <TextField
-              defaultValue=""
+              defaultValue={null}
               placeholder=" Write message"
               maxLength={280}
               type="text"
+              inputRef='msg'
               onKeyUp={event => this.myFunction(event)}
               className={classnames(classes.margin, classes.text, 'messageInput')}
               label="Your Message"
@@ -93,7 +98,7 @@ class Chat extends Component {
             </TextField>
             <SubmitButton/>
           </form>
-        }
+
       </div>
 
     )

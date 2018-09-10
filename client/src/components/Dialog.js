@@ -23,11 +23,11 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     '&:hover': {
-      background: theme.palette.primary.main,
       '& $button': {
         background: '#fafafa',
         opacity: 1
-      }
+      },
+      background: theme.palette.primary.main,
     }
   },
   avatar: {
@@ -50,7 +50,7 @@ const styles = theme => ({
       marginLeft: +3,
       marginRight: +3,
       '&:first-child': {
-        marginLeft: 0
+        marginLeft: 6
       }
     }
   },
