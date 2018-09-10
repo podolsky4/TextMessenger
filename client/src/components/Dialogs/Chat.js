@@ -7,7 +7,6 @@ import TextField from '@material-ui/core/TextField'
 import {withStyles} from '@material-ui/core/styles'
 import SubmitButton from '../../components/buttons/ButtonSubmit/ButtonSubmit'
 import classnames from 'classnames'
-import {webSocketDialog} from '../../actions/ws'
 
 const styles = theme => ({
   container: {

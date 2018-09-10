@@ -26,6 +26,8 @@ class WebSocketHandler extends React.Component {
             addNotification(message)
           }
           return
+        default:
+          return
       }
     }).bind(this))
   }

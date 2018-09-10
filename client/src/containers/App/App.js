@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import './App.css'
 import Router from '../Router/Router'
 import Header from '../../views/Header/Header'
@@ -8,7 +8,6 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import HomePage from '../../views/HomePage/HomePage'
 import {Redirect} from 'react-router-dom'
-import WebSocketHandler from '../../components/WebSocketHandler'
 
 class App extends Component {
   componentWillMount () {

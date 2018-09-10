@@ -88,7 +88,7 @@ class Dialogs extends Component {
   };
 
   handleMessages = dialog => {
-    const {loadMessages, cleanUserSearch} = this.props
+    const {loadMessages} = this.props
     this.setState({dialog: dialog})
     loadMessages(dialog.id)
     // if (this.state.newDialog) {
@@ -126,7 +126,7 @@ class Dialogs extends Component {
 
   render () {
     const {user, dialogs, loadDialog, classes, match} = this.props
-    const {flag, newDialog, exist, dialog, dialogId} = this.state
+    const {newDialog, exist, dialog, dialogId} = this.state
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
