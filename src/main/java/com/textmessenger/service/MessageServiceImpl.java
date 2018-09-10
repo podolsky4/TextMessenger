@@ -4,7 +4,6 @@ import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
-import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.model.entity.dto.TestingWs;
 import com.textmessenger.repository.DialogRepository;

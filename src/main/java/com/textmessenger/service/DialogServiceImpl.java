@@ -4,7 +4,6 @@ import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.DialogToFront;
-import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.model.entity.dto.TestingWs;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.UserRepository;
@@ -64,13 +63,13 @@ public class DialogServiceImpl implements DialogService {
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
     save.getUsers().forEach(user1 -> {
-      if (user1.getId() != firstUser.getId()){
+      if (user1.getId() != firstUser.getId()) {
         TestingWs testingWs = new TestingWs();
         testingWs.setSender(firstUser.getLogin());
         testingWs.setReceiver(user1.getLogin());
         testingWs.setType("NEW_DIALOG");
         testingWs.setDialogToFront(DialogToFront.convertDialogToFront(save));
-        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), wsPath,testingWs);
+        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), wsPath, testingWs);
       }
     });
 
