@@ -10,6 +10,7 @@ import cyan from '@material-ui/core/colors/cyan'
 
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper/Paper'
+import Button from '@material-ui/core/Button/Button'
 
 const styles = theme => ({
   root: {
@@ -43,6 +44,17 @@ const styles = theme => ({
   paper: {
     width: '100%',
     margin: '0 auto 0 0'
+  },
+  button: {
+    padding: theme.spacing.unit / 2,
+    margin: theme.spacing.unit,
+    marginLeft: 0,
+    lineHeight: 1,
+    background: theme.palette.secondary.main,
+    fontSize: 12,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 })
 
@@ -135,9 +147,10 @@ class Dialogs extends Component {
               />
             </Paper>
           )}
-          <button onClick={e => this.handleCreateDialog(e)}>
-            Create new Dialog
-          </button>
+          <Button onClick={e => this.handleCreateDialog(e)}
+                  variant="contained" type="submit" color="primary" className={classes.button}>
+            new Dialog
+          </Button>
         </div>
         {flag &&
         <Chat user={user.id} currentDialog={this.state.dialog}/>

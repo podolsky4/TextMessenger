@@ -18,11 +18,14 @@ import MenuHeader from '../../components/Menu/MenuHeader'
 
 const styles = (theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+  },
+  appBar: {
+    background: '#455A64',
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
+    marginRight: 20,
   },
   icon: {
     margin: theme.spacing.unit
@@ -52,11 +55,11 @@ class Header extends React.Component {
     }
 
     return <div className={classes.root}>
-      <AppBar position='static'>
+      <AppBar position='static' className={classes.appBar}>
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon/>
-          </IconButton>
+          {/*<IconButton className={classes.menuButton} color="inherit" aria-label="Menu">*/}
+            {/*<MenuIcon/>*/}
+          {/*</IconButton>*/}
           <Typography variant="title" color="inherit" className={classes.root}>
             Feed
           </Typography>

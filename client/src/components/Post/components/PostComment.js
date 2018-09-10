@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-
+import CommentIcon from '@material-ui/icons/Comment'
 class PostComment extends Component {
   // handleComments = e => {
   //   this.setState({flag: !flag})
@@ -10,7 +10,7 @@ class PostComment extends Component {
   render () {
     const { handleComments} = this.props
     return (
-        <a className="comment" onClick={handleComments}>Comments</a>
+        <a className="comment" onClick={handleComments}><CommentIcon /></a>
     )
   }
 }
