@@ -98,7 +98,6 @@ class Post extends Component {
 
   render () {
     const {post, owner, user, classes, favorites, whoo} = this.props
-    console.log("post post: ", post)
 
     return (
       <Grid className={classes.grid}
