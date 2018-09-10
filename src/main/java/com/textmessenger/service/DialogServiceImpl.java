@@ -21,7 +21,7 @@ public class DialogServiceImpl implements DialogService {
   private final UserRepository userRepository;
   private final NotificationService notificationService;
   private SimpMessagingTemplate simpMessagingTemplate;
-  private final String wsPath = "/queue/messages";//NOSONAR
+  private final String wsPath = "/queue/messages"; //NOSONAR
 
   public DialogServiceImpl(DialogRepository dialogRepository, UserRepository userRepository,
                            NotificationService notificationService, SimpMessagingTemplate simpMessagingTemplate) {
