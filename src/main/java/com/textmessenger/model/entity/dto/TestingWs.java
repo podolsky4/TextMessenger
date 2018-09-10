@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class TestingWs {
-  private String sender;
-  private String receiver;
-  private String type;
-  private MessageToFront messageToFront;
-  private DialogToFront dialogToFront;
+  private String sender;//NOSONAR
+  private String receiver;//NOSONAR
+  private String type;//NOSONAR
+  private MessageToFront messageToFront;//NOSONAR
+  private DialogToFront dialogToFront;//NOSONAR
 
 }

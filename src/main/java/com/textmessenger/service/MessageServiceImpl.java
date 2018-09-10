@@ -24,7 +24,7 @@ public class MessageServiceImpl implements MessageService {
   private final DialogRepository dialogRepository;
   private final NotificationService notificationService;
   private SimpMessagingTemplate simpMessagingTemplate;
-  private final String wsPath = "/queue/messages";
+  private final String wsPath = "/queue/messages";//NOSONAR
 
   public MessageServiceImpl(MessageRepository messageRepository,
                             DialogRepository dialogRepository,
@@ -86,13 +86,6 @@ public class MessageServiceImpl implements MessageService {
         simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), wsPath, testingWs);
       }
     });
-
-//    one.getUsers().forEach(u -> {
-//      if (u.getId()!=firstUser.getId()){
-//
-//
-//      }
-//    });
   }
 }
 
