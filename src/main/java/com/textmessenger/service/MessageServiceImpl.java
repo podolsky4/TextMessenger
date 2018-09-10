@@ -4,6 +4,7 @@ import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.model.entity.dto.TestingWs;
 import com.textmessenger.repository.DialogRepository;
@@ -78,11 +79,21 @@ public class MessageServiceImpl implements MessageService {
 
     userD.getUsers().forEach(user1 -> {
       if (user1.getId() != userM.getId()) {
-        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(),
-                wsPath,
-                new TestingWs(userM.getLogin(), user1.getLogin(), "NEW_MESSAGE", MessageToFront.convertMessageToFront(save)));
+        TestingWs testingWs = new TestingWs();
+        testingWs.setSender(userM.getLogin());
+        testingWs.setReceiver(user1.getLogin());
+        testingWs.setType("NEW_MESSAGE");
+        testingWs.setMessageToFront(MessageToFront.convertMessageToFront(save));
+        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), wsPath, testingWs);
       }
     });
+
+//    one.getUsers().forEach(u -> {
+//      if (u.getId()!=firstUser.getId()){
+//
+//
+//      }
+//    });
   }
 }
 

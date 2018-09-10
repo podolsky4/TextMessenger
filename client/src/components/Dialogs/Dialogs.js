@@ -137,7 +137,7 @@ class Dialogs extends Component {
     if (dialog && +match.params.dialogId !== dialog.id) {
       return <Redirect to={`/dialogs/${dialog.id}`}/>
     }
-
+debugger
     return (
       <div className="wrap">
         <div className="dialogs">
