@@ -11,6 +11,7 @@ import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -208,6 +209,8 @@ public class UserServiceImpl implements UserService {
             .getAuthentication()
             .getPrincipal();
     User one = userRepository.getOne(userPrincipal.getId());
-    return NotificationToFront.convertListNotificationToFront(one.getNotifications());
+    List<Notification> notifications = one.getNotifications();
+    notifications.sort((e1, e2)->e2.getCreatedDate().compareTo(e1.getCreatedDate()));
+    return NotificationToFront.convertListNotificationToFront(notifications);
   }
 }

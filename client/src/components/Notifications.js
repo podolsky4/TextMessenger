@@ -9,6 +9,16 @@ class Notifications extends Component {
     loadNotification()
   }
 
+  read = item => {
+    if (item.type === 'POST') {
+      return (
+       <h3>Юзер {item.fromUser.login} написал новый пост</h3>
+      )
+    } else if (item.type === 'COMMENT') {
+      return <h3>Юзер {item.fromUser.login} comment your post</h3>
+    }
+  }
+
   render () {
     const {user, notification} = this.props
     if (!user) {
@@ -17,7 +27,7 @@ class Notifications extends Component {
     return (
       <React.Fragment>
         {notification.length === 0 && <h3>Nothing to show</h3>}
-        {notification.length !== 0 && notification.map(u => <a>{u.messageToFront.content}</a>)}
+        {notification.length !== 0 && notification.map(u => this.read(u))}
       </React.Fragment>
     )
   }
