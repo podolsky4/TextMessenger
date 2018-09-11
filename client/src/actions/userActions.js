@@ -105,8 +105,8 @@ export const findUsers = (str) => dispatch => {
     .then(res => res.json())
     .then(data => dispatch({type: FIND_USERS, payload: data}))
 }
-export const loadUserNotification = (id) => dispatch => {
-  FetchData.get(`/api/users/user/${id}/notification`)
+export const loadUserNotification = () => dispatch => {
+  FetchData.get(`/api/users/notification`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_NOTIFICATION, payload: data}))
 }

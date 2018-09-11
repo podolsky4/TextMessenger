@@ -1,6 +1,5 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.NotificationType;
 import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
@@ -49,7 +48,7 @@ public class MessageServiceImpl implements MessageService {
     User user = save.getUser();
     save.getDialog().getUsers().forEach(u -> {
       if (u.getId() != user.getId()) {
-        notificationService.createNotification(NotificationType.MESSAGE.toString(), u, save.getId());
+        notificationService.createNotification(WebSocketType.NEW_MESSAGE.toString(), u, user, save.getId());
       }
     });
   }

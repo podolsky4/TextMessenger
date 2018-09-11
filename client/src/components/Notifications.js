@@ -5,8 +5,23 @@ import {loadUserNotification} from '../actions/userActions'
 
 class Notifications extends Component {
   componentWillMount () {
-    const {user, loadNotification} = this.props
-    loadNotification(user.id)
+    const {loadNotification} = this.props
+    loadNotification()
+  }
+
+  read = item => {
+    // TODO replace switch
+    if (item.type === 'NEW_POST') {
+      return <h3>Юзер {item.fromUser.login} написал новый пост</h3>
+    } else if (item.type === 'NEW_RETWEET') {
+      return <h3>Юзер {item.fromUser.login} retweet your post</h3>
+    } else if (item.type === 'NEW_COMMENT') {
+      return <h3>Юзер {item.fromUser.login} comment your post</h3>
+    } else if (item.type === 'NEW_LIKE') {
+      return <h3>Юзер {item.fromUser.login} liked your post</h3>
+    } else if (item.type === 'NEW_FOLLOWER') {
+      return <h3>Юзер {item.fromUser.login} following you</h3>
+    }
   }
 
   render () {
@@ -17,7 +32,7 @@ class Notifications extends Component {
     return (
       <React.Fragment>
         {notification.length === 0 && <h3>Nothing to show</h3>}
-        {notification.length !== 0 && notification.map(u => <a>{u.messageToFront.content}</a>)}
+        {notification.length !== 0 && notification.map(u => this.read(u))}
       </React.Fragment>
     )
   }
@@ -31,7 +46,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadNotification: (id) => dispatch(loadUserNotification(id))
+    loadNotification: () => dispatch(loadUserNotification())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications)

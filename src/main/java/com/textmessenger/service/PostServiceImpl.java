@@ -7,15 +7,12 @@ import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
-import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.PostRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,19 +30,17 @@ public class PostServiceImpl implements PostService {
   private AmazonConfig s3;
   private final PostRepository postRepository;
   private final UserRepository userRepository;
-  private SimpMessagingTemplate simpMessagingTemplate;
-  @Value("${ws.path}")
-  private String path;
+  private final NotificationService notificationService;
 
 
   PostServiceImpl(PostRepository postRepository,
                   UserRepository userRepository,
                   AmazonConfig s3,
-                  SimpMessagingTemplate simpMessagingTemplate) {
+                  NotificationService notificationService) {
     this.postRepository = postRepository;
     this.userRepository = userRepository;
     this.s3 = s3;
-    this.simpMessagingTemplate = simpMessagingTemplate;
+    this.notificationService = notificationService;
   }
 
   @Override
@@ -78,9 +73,8 @@ public class PostServiceImpl implements PostService {
     }
     // save new post in DB
     Post save = postRepository.save(post);
-    one.getFollowers().forEach(user -> simpMessagingTemplate.convertAndSendToUser(user.getLogin(), path,
-            setField(one.getLogin(),
-                    user.getLogin(), save, WebSocketType.NEW_POST.toString())));
+    one.getFollowers().forEach(user ->
+            notificationService.createSome(WebSocketType.NEW_POST.toString(), user, one, save));
   }
 
   @Override
@@ -117,12 +111,12 @@ public class PostServiceImpl implements PostService {
   public void retwitPost(User user, Long postId) {
     Post retweet = new Post();
     Post original = postRepository.getOne(postId);
-    String login = original.getUser().getLogin();
-    retweet.setUser(user);
+    User user1 = original.getUser();
     retweet.setParent(original);
-    Post save = postRepository.save(retweet);
-    simpMessagingTemplate.convertAndSendToUser(login, path,
-            setField(user.getLogin(), login, save, WebSocketType.NEW_RETWEET.toString()));
+    notificationService.createSome(WebSocketType.NEW_RETWEET.toString(), user1, user, original);
+    retweet.setUser(user);
+    postRepository.save(retweet);
+
   }
 
   @Override
@@ -130,12 +124,4 @@ public class PostServiceImpl implements PostService {
     return postRepository.getOne(id);
   }
 
-  public static WebSocketMessage setField(String senderLogin, String receiverLogin, Post post, String type) {
-    WebSocketMessage testingWs = new WebSocketMessage();
-    testingWs.setType(type);
-    testingWs.setSender(senderLogin);
-    testingWs.setReceiver(receiverLogin);
-    testingWs.setPostToFront(PostToFront.convertPostToFront(post));
-    return testingWs;
-  }
 }
