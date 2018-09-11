@@ -26,7 +26,7 @@ class WebSocketHandler extends React.Component {
           }
           break
         case 'NEW_COMMENT' :
-          addNotification(message)
+          reloadNotification()
           break
         case 'NEW_POST' :
           reloadNotification()

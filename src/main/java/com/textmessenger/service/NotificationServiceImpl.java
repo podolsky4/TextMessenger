@@ -1,18 +1,17 @@
 package com.textmessenger.service;
 
 
-import com.textmessenger.constant.WebSocketType;
+import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-
-import static com.textmessenger.service.PostServiceImpl.setField;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -34,11 +33,20 @@ public class NotificationServiceImpl implements NotificationService {
 
   @Override
   public void createSome(String type, User toUser, User fromUser, Post post) {
-    notificationRepository.save(new Notification(false,post.getId(),type,toUser,fromUser));
+    notificationRepository.save(new Notification(false, post.getId(), type, toUser, fromUser));
     WebSocketMessage webSocketMessage = setField(fromUser.getLogin(),
-            toUser.getLogin(), WebSocketType.NEW_POST.toString());
+            toUser.getLogin(), type);
     webSocketMessage.setPostToFront(PostToFront.convertPostToFront(post));
-    simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path,webSocketMessage);
+    simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path, webSocketMessage);
+  }
+
+  @Override
+  public void createSome(String type, User toUser, User fromUser, Dialog dialog) {
+    notificationRepository.save(new Notification(false, dialog.getId(), type, toUser, fromUser));
+    WebSocketMessage webSocketMessage = setField(fromUser.getLogin(),
+            toUser.getLogin(), type);
+    webSocketMessage.setDialogToFront(DialogToFront.convertDialogToFront(dialog));
+    simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path, webSocketMessage);
   }
 
   public static WebSocketMessage setField(String senderLogin, String receiverLogin, String type) {

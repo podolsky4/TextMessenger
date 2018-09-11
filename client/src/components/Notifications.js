@@ -16,6 +16,8 @@ class Notifications extends Component {
       )
     } else if (item.type === 'NEW_RETWEET') {
       return <h3>Юзер {item.fromUser.login} retweet your post</h3>
+    }else if (item.type === 'NEW_COMMENT') {
+      return <h3>Юзер {item.fromUser.login} comment your post</h3>
     }
   }
 
