@@ -1,5 +1,6 @@
 package com.textmessenger.constant;
 
 public enum NotificationType {
-  POST, MESSAGE, LIKE, COMMENT, FOLLOWER, DIALOG;
+  POST, MESSAGE, LIKE, COMMENT, FOLLOWER, DIALOG, RETWEET;
+
 }

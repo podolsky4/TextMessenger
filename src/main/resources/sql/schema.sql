@@ -138,10 +138,12 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `is_checked` BOOLEAN DEFAULT FALSE,
   `type` VARCHAR(255),
-  `user_id` BIGINT NOT NULL,
+  `user_to` BIGINT NOT NULL,
+  `user_from` BIGINT NOT NULL,
   `content_id` BIGINT NOT NULL,
   `created_at`  TIMESTAMP    NOT NULL,
   `last_update` TIMESTAMP    NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  FOREIGN KEY (`user_to`) REFERENCES `user` (`id`),
+  FOREIGN KEY (`user_from`) REFERENCES `user` (`id`)
 );

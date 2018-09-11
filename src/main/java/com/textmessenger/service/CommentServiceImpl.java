@@ -8,8 +8,11 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CommentToFront;
 import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.CommentRepository;
+import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,23 +25,31 @@ public class CommentServiceImpl implements CommentService {
   private final CommentRepository commentRepository;
   private final NotificationService notificationService;
   private SimpMessagingTemplate simpMessagingTemplate;
+  private final UserRepository userRepository;
   @Value("${ws.path}")
   private String path;
 
   CommentServiceImpl(CommentRepository commentRepository,
                      NotificationService notificationService,
-                     SimpMessagingTemplate simpMessagingTemplate) {
+                     SimpMessagingTemplate simpMessagingTemplate,
+                     UserRepository userRepository) {
     this.commentRepository = commentRepository;
     this.notificationService = notificationService;
     this.simpMessagingTemplate = simpMessagingTemplate;
+    this.userRepository = userRepository;
   }
 
   @Override
   public void createComment(Post post, User user, Comment comment) {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    User mainUser = userRepository.getOne(userPrincipal.getId());
     comment.setPost(post);
     comment.setCommentator(user);
     Comment save = commentRepository.save(comment);
-    notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), post.getId());
+    notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(),mainUser, post.getId());
     simpMessagingTemplate.convertAndSendToUser(post.getUser().getLogin(), path, setField(user.getLogin(),
             post.getUser().getLogin(), save, WebSocketType.NEW_COMMENT.toString()));
   }

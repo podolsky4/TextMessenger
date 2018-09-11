@@ -5,8 +5,8 @@ import {loadUserNotification} from '../actions/userActions'
 
 class Notifications extends Component {
   componentWillMount () {
-    const {user, loadNotification} = this.props
-    loadNotification(user.id)
+    const {loadNotification} = this.props
+    loadNotification()
   }
 
   render () {
@@ -31,7 +31,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadNotification: (id) => dispatch(loadUserNotification(id))
+    loadNotification: () => dispatch(loadUserNotification())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications)

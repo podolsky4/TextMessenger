@@ -8,8 +8,10 @@ import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,10 +77,15 @@ public class DialogServiceImpl implements DialogService {
 
   @Override
   public void addToDialogNewUser(Long dialog, Long user) {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    User mainUser = userRepository.getOne(userPrincipal.getId());
     User one = userRepository.getOne(user);
     Dialog save = dialogRepository.getOne(dialog);
     one.getDialogs().add(save);
-    notificationService.createNotification(NotificationType.DIALOG.toString(), one, save.getId());
+    notificationService.createNotification(NotificationType.DIALOG.toString(), one,mainUser, save.getId());
   }
 
   public static WebSocketMessage setField(String senderLogin, String receiverLogin, Dialog dialog, String type) {

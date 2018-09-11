@@ -3,7 +3,9 @@ package com.textmessenger.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.textmessenger.config.AmazonConfig;
+import com.textmessenger.constant.NotificationType;
 import com.textmessenger.constant.WebSocketType;
+import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
@@ -34,6 +36,7 @@ public class PostServiceImpl implements PostService {
   private final PostRepository postRepository;
   private final UserRepository userRepository;
   private SimpMessagingTemplate simpMessagingTemplate;
+  private final NotificationService notificationService;
   @Value("${ws.path}")
   private String path;
 
@@ -41,11 +44,13 @@ public class PostServiceImpl implements PostService {
   PostServiceImpl(PostRepository postRepository,
                   UserRepository userRepository,
                   AmazonConfig s3,
-                  SimpMessagingTemplate simpMessagingTemplate) {
+                  SimpMessagingTemplate simpMessagingTemplate,
+                  NotificationService notificationService) {
     this.postRepository = postRepository;
     this.userRepository = userRepository;
     this.s3 = s3;
     this.simpMessagingTemplate = simpMessagingTemplate;
+    this.notificationService = notificationService;
   }
 
   @Override
@@ -78,9 +83,14 @@ public class PostServiceImpl implements PostService {
     }
     // save new post in DB
     Post save = postRepository.save(post);
-    one.getFollowers().forEach(user -> simpMessagingTemplate.convertAndSendToUser(user.getLogin(), path,
-            setField(one.getLogin(),
-                    user.getLogin(), save, WebSocketType.NEW_POST.toString())));
+    one.getFollowers().forEach(user -> {
+     notificationService.createNotification(NotificationType.POST.toString(), user, one, save.getId());
+      simpMessagingTemplate.convertAndSendToUser(user.getLogin(), path,
+                      setField(one.getLogin(),
+                              user.getLogin(), save, WebSocketType.NEW_POST.toString()));
+            }
+    );
+
   }
 
   @Override

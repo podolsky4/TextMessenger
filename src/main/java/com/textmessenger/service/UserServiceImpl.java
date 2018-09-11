@@ -4,7 +4,9 @@ import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
+import com.textmessenger.repository.NotificationRepository;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
@@ -30,13 +32,16 @@ public class UserServiceImpl implements UserService {
   private final TemporaryTokenRepository temporaryTokenRepository;
   private UserToFrontShort userToFront;
   private final EmailService emailService;
+  private final NotificationRepository notificationRepository;
 
 
   public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
-                         EmailService emailService) {
+                         EmailService emailService,
+                         NotificationRepository notificationRepository) {
     this.userRepository = userRepository;
     this.temporaryTokenRepository = temporaryTokenRepository;
     this.emailService = emailService;
+    this.notificationRepository = notificationRepository;
   }
 
   @Override
@@ -194,5 +199,15 @@ public class UserServiceImpl implements UserService {
     email.setSubject("Follow the link to reset you password in the Text Messenger");
     email.setText("http://localhost:3000/api/users/resetPassword/" + tempToken.getToken());
     emailService.sendEmail(email);
+  }
+
+  @Override
+  public List<NotificationToFront> getAllNotificationByUser() {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    User one = userRepository.getOne(userPrincipal.getId());
+    return NotificationToFront.convertListNotificationToFront(one.getNotifications());
   }
 }
