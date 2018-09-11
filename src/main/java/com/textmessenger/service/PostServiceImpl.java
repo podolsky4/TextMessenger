@@ -121,9 +121,8 @@ public class PostServiceImpl implements PostService {
     retweet.setUser(user);
     retweet.setParent(original);
     Post save = postRepository.save(retweet);
-    simpMessagingTemplate.convertAndSendToUser(login, path
-            , setField(user.getLogin(),
-                    login, save, WebSocketType.NEW_RETWEET.toString()));
+    simpMessagingTemplate.convertAndSendToUser(login, path,
+            setField(user.getLogin(), login, save, WebSocketType.NEW_RETWEET.toString()));
   }
 
   @Override
