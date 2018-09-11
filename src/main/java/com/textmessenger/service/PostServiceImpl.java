@@ -7,7 +7,7 @@ import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
-import com.textmessenger.model.entity.dto.TestingWs;
+import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.PostRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
@@ -76,7 +76,7 @@ public class PostServiceImpl implements PostService {
     // save new post in DB
     Post save = postRepository.save(post);
     one.getFollowers().forEach(user -> {
-      TestingWs testingWs = new TestingWs();
+      WebSocketMessage testingWs = new WebSocketMessage();
       testingWs.setType(WebSocketType.NEW_POST.toString());
       testingWs.setSender(one.getLogin());
       testingWs.setReceiver(user.getLogin());
@@ -118,8 +118,15 @@ public class PostServiceImpl implements PostService {
   @Override
   public void retwitPost(User user, Long postId) {
     Post retwite = new Post();
+    String login = postRepository.getOne(postId).getUser().getLogin();
     retwite.setUser(user);
     retwite.setParentId(postId);
-    postRepository.save(retwite);
+    Post save = postRepository.save(retwite);
+    WebSocketMessage testingWs = new WebSocketMessage();
+    testingWs.setType(WebSocketType.NEW_RETWEET.toString());
+    testingWs.setSender(user.getLogin());
+    testingWs.setReceiver(login);
+    testingWs.setPostToFront(PostToFront.convertPostToFront(save));
+    simpMessagingTemplate.convertAndSendToUser(login, wsPath, testingWs);
   }
 }

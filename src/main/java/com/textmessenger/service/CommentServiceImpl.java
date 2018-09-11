@@ -6,7 +6,7 @@ import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CommentToFront;
-import com.textmessenger.model.entity.dto.TestingWs;
+import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.CommentRepository;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class CommentServiceImpl implements CommentService {
     comment.setCommentator(user);
     Comment save = commentRepository.save(comment);
     notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), post.getId());
-    TestingWs testingWs = new TestingWs();
+    WebSocketMessage testingWs = new WebSocketMessage();
     testingWs.setType(WebSocketType.NEW_COMMENT.toString());
     testingWs.setSender(user.getLogin());
     testingWs.setReceiver(post.getUser().getLogin());

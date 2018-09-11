@@ -6,7 +6,7 @@ import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.MessageToFront;
-import com.textmessenger.model.entity.dto.TestingWs;
+import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.MessageRepository;
 import com.textmessenger.repository.UserRepository;
@@ -79,7 +79,7 @@ public class MessageServiceImpl implements MessageService {
 
     userD.getUsers().forEach(user1 -> {
       if (user1.getId() != userM.getId()) {
-        TestingWs testingWs = new TestingWs();
+        WebSocketMessage testingWs = new WebSocketMessage();
         testingWs.setSender(userM.getLogin());
         testingWs.setReceiver(user1.getLogin());
         testingWs.setType(WebSocketType.NEW_MESSAGE.toString());

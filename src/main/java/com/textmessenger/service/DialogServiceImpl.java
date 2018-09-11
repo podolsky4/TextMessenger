@@ -5,7 +5,7 @@ import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.DialogToFront;
-import com.textmessenger.model.entity.dto.TestingWs;
+import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.UserRepository;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -65,7 +65,7 @@ public class DialogServiceImpl implements DialogService {
     secondUser.getDialogs().add(save);
     save.getUsers().forEach(user1 -> {
       if (user1.getId() != firstUser.getId()) {
-        TestingWs testingWs = new TestingWs();
+        WebSocketMessage testingWs = new WebSocketMessage();
         testingWs.setSender(firstUser.getLogin());
         testingWs.setReceiver(user1.getLogin());
         testingWs.setType(WebSocketType.NEW_DIALOG.toString());
