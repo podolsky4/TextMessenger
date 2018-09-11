@@ -37,6 +37,9 @@ class WebSocketHandler extends React.Component {
         case 'NEW_RETWEET' :
           reloadNotification()
           break
+        case 'NEW_FOLLOWER' :
+          reloadNotification()
+          break
         default:
       }
     })

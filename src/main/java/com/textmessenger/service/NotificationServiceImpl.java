@@ -49,6 +49,13 @@ public class NotificationServiceImpl implements NotificationService {
     simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path, webSocketMessage);
   }
 
+  @Override
+  public void createSome(String type, User toUser, User fromUser) {
+    notificationRepository.save(new Notification(false,type,toUser,fromUser));
+    simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path, setField(fromUser.getLogin(),
+            toUser.getLogin(), type));
+  }
+
   public static WebSocketMessage setField(String senderLogin, String receiverLogin, String type) {
     WebSocketMessage testingWs = new WebSocketMessage();
     testingWs.setType(type);

@@ -150,7 +150,9 @@ public class UserServiceImpl implements UserService {
   @Override
   public void addToFollowing(Long user, Long newUser) {
     User one = userRepository.getOne(newUser);
-    userRepository.getOne(user).getFollowing().add(one);
+    User main = userRepository.getOne(user);
+    main.getFollowing().add(one);
+    notificationService.createSome(WebSocketType.NEW_FOLLOWER.toString(),one,main);
   }
 
   @Override

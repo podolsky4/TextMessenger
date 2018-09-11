@@ -20,6 +20,8 @@ class Notifications extends Component {
       return <h3>Юзер {item.fromUser.login} comment your post</h3>
     } else if (item.type === 'NEW_LIKE') {
       return <h3>Юзер {item.fromUser.login} liked your post</h3>
+    } else if (item.type === 'NEW_FOLLOWER') {
+      return <h3>Юзер {item.fromUser.login} following you</h3>
     }
   }
 
