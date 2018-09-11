@@ -5,7 +5,6 @@ import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +51,6 @@ public interface UserService {
 
   void sendEmailToResetPassword(User userByEmail);
 
-  List<NotificationToFront>  getAllNotificationByUser();
+  List<NotificationToFront> getAllNotificationByUser();
 }
 

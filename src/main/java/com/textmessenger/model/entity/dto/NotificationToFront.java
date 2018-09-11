@@ -2,11 +2,8 @@ package com.textmessenger.model.entity.dto;
 
 import com.textmessenger.constant.NotificationType;
 import com.textmessenger.model.entity.Notification;
-import com.textmessenger.service.DialogService;
-import com.textmessenger.service.PostService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -37,7 +34,7 @@ public class NotificationToFront {
             || notification.getType().equals(NotificationType.LIKE.toString())
             || notification.getType().equals(NotificationType.RETWEET.toString())) {
       notification.getFrom().getPosts().forEach(post1 -> {
-        if (post1.getId()==notification.getContentId()){
+        if (post1.getId() == notification.getContentId()) {
           response.setPost(PostToFront.convertPostToFront(post1));
         }
       });
@@ -47,11 +44,11 @@ public class NotificationToFront {
     return response;
   }
 
-  public static List<NotificationToFront> convertListNotificationToFront(List<Notification> list){
+  public static List<NotificationToFront> convertListNotificationToFront(List<Notification> list) {
     List<NotificationToFront> res = new ArrayList<>();
-     list.forEach(notification -> {
+    list.forEach(notification -> {
       res.add(convertNotificationToFront(notification));
     });
-     return res;
+    return res;
   }
 }

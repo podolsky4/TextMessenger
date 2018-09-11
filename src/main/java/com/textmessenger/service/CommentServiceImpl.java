@@ -49,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
     comment.setPost(post);
     comment.setCommentator(user);
     Comment save = commentRepository.save(comment);
-    notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(),mainUser, post.getId());
+    notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), mainUser, post.getId());
     simpMessagingTemplate.convertAndSendToUser(post.getUser().getLogin(), path, setField(user.getLogin(),
             post.getUser().getLogin(), save, WebSocketType.NEW_COMMENT.toString()));
   }

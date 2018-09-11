@@ -49,7 +49,7 @@ public class MessageServiceImpl implements MessageService {
     User user = save.getUser();
     save.getDialog().getUsers().forEach(u -> {
       if (u.getId() != user.getId()) {
-        notificationService.createNotification(NotificationType.MESSAGE.toString(), u,user, save.getId());
+        notificationService.createNotification(NotificationType.MESSAGE.toString(), u, user, save.getId());
       }
     });
   }

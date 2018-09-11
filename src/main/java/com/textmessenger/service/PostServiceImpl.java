@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.textmessenger.config.AmazonConfig;
 import com.textmessenger.constant.NotificationType;
 import com.textmessenger.constant.WebSocketType;
-import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
@@ -84,8 +83,8 @@ public class PostServiceImpl implements PostService {
     // save new post in DB
     Post save = postRepository.save(post);
     one.getFollowers().forEach(user -> {
-     notificationService.createNotification(NotificationType.POST.toString(), user, one, save.getId());
-      simpMessagingTemplate.convertAndSendToUser(user.getLogin(), path,
+              notificationService.createNotification(NotificationType.POST.toString(), user, one, save.getId());
+              simpMessagingTemplate.convertAndSendToUser(user.getLogin(), path,
                       setField(one.getLogin(),
                               user.getLogin(), save, WebSocketType.NEW_POST.toString()));
             }
