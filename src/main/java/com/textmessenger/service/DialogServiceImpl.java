@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.DialogToFront;
@@ -67,12 +68,11 @@ public class DialogServiceImpl implements DialogService {
         TestingWs testingWs = new TestingWs();
         testingWs.setSender(firstUser.getLogin());
         testingWs.setReceiver(user1.getLogin());
-        testingWs.setType("NEW_DIALOG");
+        testingWs.setType(WebSocketType.NEW_DIALOG.toString());
         testingWs.setDialogToFront(DialogToFront.convertDialogToFront(save));
         simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), wsPath, testingWs);
       }
     });
-
   }
 
   @Override

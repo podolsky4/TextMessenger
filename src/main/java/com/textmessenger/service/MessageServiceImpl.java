@@ -1,6 +1,7 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
@@ -81,7 +82,7 @@ public class MessageServiceImpl implements MessageService {
         TestingWs testingWs = new TestingWs();
         testingWs.setSender(userM.getLogin());
         testingWs.setReceiver(user1.getLogin());
-        testingWs.setType("NEW_MESSAGE");
+        testingWs.setType(WebSocketType.NEW_MESSAGE.toString());
         testingWs.setMessageToFront(MessageToFront.convertMessageToFront(save));
         simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), wsPath, testingWs);
       }

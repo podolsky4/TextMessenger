@@ -9,5 +9,7 @@ public class TestingWs {
   private String type;//NOSONAR
   private MessageToFront messageToFront;//NOSONAR
   private DialogToFront dialogToFront;//NOSONAR
+  private CommentToFront commentToFront; //NOSONAR
+  private PostToFront postToFront; //NOSONAR
 
 }

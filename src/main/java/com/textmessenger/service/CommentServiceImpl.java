@@ -1,11 +1,14 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CommentToFront;
+import com.textmessenger.model.entity.dto.TestingWs;
 import com.textmessenger.repository.CommentRepository;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,18 +20,29 @@ public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
   private final NotificationService notificationService;
+  private SimpMessagingTemplate simpMessagingTemplate;
+  private final String wsPath = "/queue/messages";//NOSONAR
 
-  CommentServiceImpl(CommentRepository commentRepository, NotificationService notificationService) {
+  CommentServiceImpl(CommentRepository commentRepository,
+                     NotificationService notificationService,
+                     SimpMessagingTemplate simpMessagingTemplate) {
     this.commentRepository = commentRepository;
     this.notificationService = notificationService;
+    this.simpMessagingTemplate = simpMessagingTemplate;
   }
 
   @Override
   public void createComment(Post post, User user, Comment comment) {
     comment.setPost(post);
     comment.setCommentator(user);
-    commentRepository.save(comment);
+    Comment save = commentRepository.save(comment);
     notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), post.getId());
+    TestingWs testingWs = new TestingWs();
+    testingWs.setType(WebSocketType.NEW_COMMENT.toString());
+    testingWs.setSender(user.getLogin());
+    testingWs.setReceiver(post.getUser().getLogin());
+    testingWs.setCommentToFront(CommentToFront.convertCommentToFront(save));
+    simpMessagingTemplate.convertAndSendToUser(post.getUser().getLogin(), wsPath, testingWs);
   }
 
   @Override
