@@ -8,13 +8,12 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CommentToFront;
 import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.CommentRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.textmessenger.constant.Constants.WS_PATH;
 
 @Service
 @Transactional
@@ -23,6 +22,8 @@ public class CommentServiceImpl implements CommentService {
   private final CommentRepository commentRepository;
   private final NotificationService notificationService;
   private SimpMessagingTemplate simpMessagingTemplate;
+  @Value("${ws.path}")
+  private String path;
 
   CommentServiceImpl(CommentRepository commentRepository,
                      NotificationService notificationService,
@@ -38,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
     comment.setCommentator(user);
     Comment save = commentRepository.save(comment);
     notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), post.getId());
-    simpMessagingTemplate.convertAndSendToUser(post.getUser().getLogin(), WS_PATH, setField(user.getLogin(),
+    simpMessagingTemplate.convertAndSendToUser(post.getUser().getLogin(), path, setField(user.getLogin(),
             post.getUser().getLogin(), save, WebSocketType.NEW_COMMENT.toString()));
   }
 

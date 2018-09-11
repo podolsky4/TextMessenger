@@ -11,6 +11,7 @@ import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.PostRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -25,8 +26,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
-import static com.textmessenger.constant.Constants.WS_PATH;
-
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
@@ -35,6 +34,9 @@ public class PostServiceImpl implements PostService {
   private final PostRepository postRepository;
   private final UserRepository userRepository;
   private SimpMessagingTemplate simpMessagingTemplate;
+  @Value("${ws.path}")
+  private String path;
+
 
   PostServiceImpl(PostRepository postRepository,
                   UserRepository userRepository,
@@ -76,7 +78,7 @@ public class PostServiceImpl implements PostService {
     }
     // save new post in DB
     Post save = postRepository.save(post);
-    one.getFollowers().forEach(user -> simpMessagingTemplate.convertAndSendToUser(user.getLogin(), WS_PATH,
+    one.getFollowers().forEach(user -> simpMessagingTemplate.convertAndSendToUser(user.getLogin(), path,
             setField(one.getLogin(),
                     user.getLogin(), save, WebSocketType.NEW_POST.toString())));
   }
@@ -119,7 +121,7 @@ public class PostServiceImpl implements PostService {
     retweet.setUser(user);
     retweet.setParent(original);
     Post save = postRepository.save(retweet);
-    simpMessagingTemplate.convertAndSendToUser(login, WS_PATH
+    simpMessagingTemplate.convertAndSendToUser(login, path
             , setField(user.getLogin(),
                     login, save, WebSocketType.NEW_RETWEET.toString()));
   }

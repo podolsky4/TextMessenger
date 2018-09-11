@@ -10,13 +10,12 @@ import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.MessageRepository;
 import com.textmessenger.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.textmessenger.constant.Constants.WS_PATH;
 
 @Service
 @Transactional
@@ -27,6 +26,8 @@ public class MessageServiceImpl implements MessageService {
   private final DialogRepository dialogRepository;
   private final NotificationService notificationService;
   private SimpMessagingTemplate simpMessagingTemplate;
+  @Value("${ws.path}")
+  private String path;
 
   public MessageServiceImpl(MessageRepository messageRepository,
                             DialogRepository dialogRepository,
@@ -80,7 +81,7 @@ public class MessageServiceImpl implements MessageService {
     userD.getUsers().forEach(user1 -> {
       if (user1.getId() != userM.getId()) {
         simpMessagingTemplate.convertAndSendToUser(user1.getLogin(),
-                WS_PATH,
+                path,
                 setField(userM.getLogin(),
                         user1.getLogin(),
                         save,
