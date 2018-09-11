@@ -114,12 +114,19 @@ public class PostServiceImpl implements PostService {
   @Override
   public void retwitPost(User user, Long postId) {
     Post retweet = new Post();
-    String login = postRepository.getOne(postId).getUser().getLogin();
+    Post original = postRepository.getOne(postId);
+    String login = original.getUser().getLogin();
     retweet.setUser(user);
-    retweet.setParentId(postId);
+    retweet.setParent(original);
     Post save = postRepository.save(retweet);
-    simpMessagingTemplate.convertAndSendToUser(login, WS_PATH, setField(user.getLogin(),
-            login, save, WebSocketType.NEW_RETWEET.toString()));
+    simpMessagingTemplate.convertAndSendToUser(login, WS_PATH
+            , setField(user.getLogin(),
+                    login, save, WebSocketType.NEW_RETWEET.toString()));
+  }
+
+  @Override
+  public Post getPostById(long id) {
+    return postRepository.getOne(id);
   }
 
   public static WebSocketMessage setField(String senderLogin, String receiverLogin, Post post, String type) {

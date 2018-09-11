@@ -66,7 +66,8 @@ CREATE TABLE IF NOT EXISTS `post` (
   `last_update` TIMESTAMP    NULL,
   `user_id`     BIGINT       NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  FOREIGN KEY (`parent_id`) REFERENCES `post` (`id`)
 );
 
 --
