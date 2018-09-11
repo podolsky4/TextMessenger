@@ -113,9 +113,9 @@ public class PostServiceImpl implements PostService {
     Post original = postRepository.getOne(postId);
     User user1 = original.getUser();
     retweet.setParent(original);
+    notificationService.createSome(WebSocketType.NEW_RETWEET.toString(), user1, user, original);
     retweet.setUser(user);
     postRepository.save(retweet);
-    notificationService.createSome(WebSocketType.NEW_RETWEET.toString(), user1, user, original);
 
   }
 
