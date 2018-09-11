@@ -33,14 +33,14 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   public void createComment(Post post, User user, Comment comment) {
+    comment.setPost(post);
+    comment.setCommentator(user);
+    commentRepository.save(comment);
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
     User mainUser = userRepository.getOne(userPrincipal.getId());
-    comment.setPost(post);
-    comment.setCommentator(user);
-    commentRepository.save(comment);
     notificationService.createSome(WebSocketType.NEW_COMMENT.toString(), post.getUser(), mainUser, post);
   }
 
