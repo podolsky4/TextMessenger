@@ -7,7 +7,6 @@ import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
-import com.textmessenger.repository.NotificationRepository;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
@@ -33,18 +32,15 @@ public class UserServiceImpl implements UserService {
   private final TemporaryTokenRepository temporaryTokenRepository;
   private UserToFrontShort userToFront;
   private final EmailService emailService;
-  private final NotificationRepository notificationRepository;
   private final NotificationService notificationService;
 
 
   public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
                          EmailService emailService,
-                         NotificationRepository notificationRepository,
                          NotificationService notificationService) {
     this.userRepository = userRepository;
     this.temporaryTokenRepository = temporaryTokenRepository;
     this.emailService = emailService;
-    this.notificationRepository = notificationRepository;
     this.notificationService = notificationService;
   }
 

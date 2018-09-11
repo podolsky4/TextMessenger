@@ -52,9 +52,7 @@ public class NotificationToFront {
 
   public static List<NotificationToFront> convertListNotificationToFront(List<Notification> list) {
     List<NotificationToFront> res = new ArrayList<>();
-    list.forEach(notification -> {
-      res.add(convertNotificationToFront(notification));
-    });
+    list.forEach(notification -> res.add(convertNotificationToFront(notification)));
     return res;
   }
 }
