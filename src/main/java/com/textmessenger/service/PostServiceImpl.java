@@ -84,9 +84,7 @@ public class PostServiceImpl implements PostService {
     Post save = postRepository.save(post);
     one.getFollowers().forEach(user -> {
       notificationService.createSome(WebSocketType.NEW_POST.toString(), user, one, save);
-              //notificationService.createNotification( WebSocketType.NEW_POST.toString(), user, one, save.getId());
-             // simpMessagingTemplate.convertAndSendToUser(user.getLogin(), path,setField(one.getLogin(),user.getLogin(), save, WebSocketType.NEW_POST.toString()));
-            }
+              }
     );
 
   }
@@ -125,12 +123,12 @@ public class PostServiceImpl implements PostService {
   public void retwitPost(User user, Long postId) {
     Post retweet = new Post();
     Post original = postRepository.getOne(postId);
-    String login = original.getUser().getLogin();
+    User user1 = original.getUser();
     retweet.setUser(user);
     retweet.setParent(original);
     Post save = postRepository.save(retweet);
-    simpMessagingTemplate.convertAndSendToUser(login, path,
-            setField(user.getLogin(), login, save, WebSocketType.NEW_RETWEET.toString()));
+    notificationService.createSome(WebSocketType.NEW_RETWEET.toString(), user1,user, save);
+
   }
 
   @Override
