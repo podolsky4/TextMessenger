@@ -76,12 +76,8 @@ public class PostServiceImpl implements PostService {
     // save new post in DB
     Post save = postRepository.save(post);
     one.getFollowers().forEach(user -> {
-      WebSocketMessage testingWs = new WebSocketMessage();
-      testingWs.setType(WebSocketType.NEW_POST.toString());
-      testingWs.setSender(one.getLogin());
-      testingWs.setReceiver(user.getLogin());
-      testingWs.setPostToFront(PostToFront.convertPostToFront(save));
-      simpMessagingTemplate.convertAndSendToUser(user.getLogin(), wsPath, testingWs);
+      simpMessagingTemplate.convertAndSendToUser(user.getLogin(), wsPath, setField(one.getLogin(),
+              user.getLogin(), save, WebSocketType.NEW_POST.toString()));
     });
   }
 
@@ -117,16 +113,21 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public void retwitPost(User user, Long postId) {
-    Post retwite = new Post();
+    Post retweet = new Post();
     String login = postRepository.getOne(postId).getUser().getLogin();
-    retwite.setUser(user);
-    retwite.setParentId(postId);
-    Post save = postRepository.save(retwite);
+    retweet.setUser(user);
+    retweet.setParentId(postId);
+    Post save = postRepository.save(retweet);
+    simpMessagingTemplate.convertAndSendToUser(login, wsPath, setField(user.getLogin(),
+            login, save, WebSocketType.NEW_RETWEET.toString()));
+  }
+
+  public static WebSocketMessage setField(String senderLogin, String receiverLogin, Post post, String type) {
     WebSocketMessage testingWs = new WebSocketMessage();
-    testingWs.setType(WebSocketType.NEW_RETWEET.toString());
-    testingWs.setSender(user.getLogin());
-    testingWs.setReceiver(login);
-    testingWs.setPostToFront(PostToFront.convertPostToFront(save));
-    simpMessagingTemplate.convertAndSendToUser(login, wsPath, testingWs);
+    testingWs.setType(type);
+    testingWs.setSender(senderLogin);
+    testingWs.setReceiver(receiverLogin);
+    testingWs.setPostToFront(PostToFront.convertPostToFront(post));
+    return testingWs;
   }
 }
