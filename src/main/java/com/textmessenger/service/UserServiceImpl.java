@@ -1,5 +1,6 @@
 package com.textmessenger.service;
 
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
@@ -33,15 +34,18 @@ public class UserServiceImpl implements UserService {
   private UserToFrontShort userToFront;
   private final EmailService emailService;
   private final NotificationRepository notificationRepository;
+  private final NotificationService notificationService;
 
 
   public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
                          EmailService emailService,
-                         NotificationRepository notificationRepository) {
+                         NotificationRepository notificationRepository,
+                         NotificationService notificationService) {
     this.userRepository = userRepository;
     this.temporaryTokenRepository = temporaryTokenRepository;
     this.emailService = emailService;
     this.notificationRepository = notificationRepository;
+    this.notificationService = notificationService;
   }
 
   @Override
@@ -116,6 +120,7 @@ public class UserServiceImpl implements UserService {
     User userByLogin = userRepository.findUserByLogin(user.getLogin());
     userByLogin.getFavorites().add(post);
     userRepository.save(userByLogin);
+    notificationService.createSome(WebSocketType.NEW_LIKE.toString(), post.getUser(), userByLogin, post);
   }
 
   @Override

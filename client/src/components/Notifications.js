@@ -12,12 +12,14 @@ class Notifications extends Component {
   read = item => {
     if (item.type === 'NEW_POST') {
       return (
-       <h3>Юзер {item.fromUser.login} написал новый пост</h3>
+        <h3>Юзер {item.fromUser.login} написал новый пост</h3>
       )
     } else if (item.type === 'NEW_RETWEET') {
       return <h3>Юзер {item.fromUser.login} retweet your post</h3>
-    }else if (item.type === 'NEW_COMMENT') {
+    } else if (item.type === 'NEW_COMMENT') {
       return <h3>Юзер {item.fromUser.login} comment your post</h3>
+    } else if (item.type === 'NEW_LIKE') {
+      return <h3>Юзер {item.fromUser.login} liked your post</h3>
     }
   }
 
