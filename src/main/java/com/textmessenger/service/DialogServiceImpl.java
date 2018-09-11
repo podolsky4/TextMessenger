@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.textmessenger.constant.Constants.WS_PATH;
+
 @Service
 @Transactional
 public class DialogServiceImpl implements DialogService {
@@ -22,7 +24,6 @@ public class DialogServiceImpl implements DialogService {
   private final UserRepository userRepository;
   private final NotificationService notificationService;
   private SimpMessagingTemplate simpMessagingTemplate;
-  private final String wsPath = "/queue/messages"; //NOSONAR
 
   public DialogServiceImpl(DialogRepository dialogRepository, UserRepository userRepository,
                            NotificationService notificationService, SimpMessagingTemplate simpMessagingTemplate) {
@@ -65,12 +66,8 @@ public class DialogServiceImpl implements DialogService {
     secondUser.getDialogs().add(save);
     save.getUsers().forEach(user1 -> {
       if (user1.getId() != firstUser.getId()) {
-        WebSocketMessage testingWs = new WebSocketMessage();
-        testingWs.setSender(firstUser.getLogin());
-        testingWs.setReceiver(user1.getLogin());
-        testingWs.setType(WebSocketType.NEW_DIALOG.toString());
-        testingWs.setDialogToFront(DialogToFront.convertDialogToFront(save));
-        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), wsPath, testingWs);
+        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), WS_PATH, setField(firstUser.getLogin(),
+                user1.getLogin(), save, WebSocketType.NEW_DIALOG.toString()));
       }
     });
   }
@@ -81,5 +78,14 @@ public class DialogServiceImpl implements DialogService {
     Dialog save = dialogRepository.getOne(dialog);
     one.getDialogs().add(save);
     notificationService.createNotification(NotificationType.DIALOG.toString(), one, save.getId());
+  }
+
+  public static WebSocketMessage setField(String senderLogin, String receiverLogin, Dialog dialog, String type) {
+    WebSocketMessage testingWs = new WebSocketMessage();
+    testingWs.setType(type);
+    testingWs.setSender(senderLogin);
+    testingWs.setReceiver(receiverLogin);
+    testingWs.setDialogToFront(DialogToFront.convertDialogToFront(dialog));
+    return testingWs;
   }
 }

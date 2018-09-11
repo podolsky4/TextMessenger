@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
+import static com.textmessenger.constant.Constants.WS_PATH;
+
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
@@ -33,7 +35,6 @@ public class PostServiceImpl implements PostService {
   private final PostRepository postRepository;
   private final UserRepository userRepository;
   private SimpMessagingTemplate simpMessagingTemplate;
-  private final String wsPath = "/queue/messages";//NOSONAR
 
   PostServiceImpl(PostRepository postRepository,
                   UserRepository userRepository,
@@ -75,10 +76,9 @@ public class PostServiceImpl implements PostService {
     }
     // save new post in DB
     Post save = postRepository.save(post);
-    one.getFollowers().forEach(user -> {
-      simpMessagingTemplate.convertAndSendToUser(user.getLogin(), wsPath, setField(one.getLogin(),
-              user.getLogin(), save, WebSocketType.NEW_POST.toString()));
-    });
+    one.getFollowers().forEach(user -> simpMessagingTemplate.convertAndSendToUser(user.getLogin(), WS_PATH,
+            setField(one.getLogin(),
+                    user.getLogin(), save, WebSocketType.NEW_POST.toString())));
   }
 
   @Override
@@ -118,7 +118,7 @@ public class PostServiceImpl implements PostService {
     retweet.setUser(user);
     retweet.setParentId(postId);
     Post save = postRepository.save(retweet);
-    simpMessagingTemplate.convertAndSendToUser(login, wsPath, setField(user.getLogin(),
+    simpMessagingTemplate.convertAndSendToUser(login, WS_PATH, setField(user.getLogin(),
             login, save, WebSocketType.NEW_RETWEET.toString()));
   }
 

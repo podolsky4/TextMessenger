@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.textmessenger.constant.Constants.WS_PATH;
+
 @Service
 @Transactional
 public class CommentServiceImpl implements CommentService {
@@ -21,7 +23,6 @@ public class CommentServiceImpl implements CommentService {
   private final CommentRepository commentRepository;
   private final NotificationService notificationService;
   private SimpMessagingTemplate simpMessagingTemplate;
-  private final String wsPath = "/queue/messages";//NOSONAR
 
   CommentServiceImpl(CommentRepository commentRepository,
                      NotificationService notificationService,
@@ -37,12 +38,8 @@ public class CommentServiceImpl implements CommentService {
     comment.setCommentator(user);
     Comment save = commentRepository.save(comment);
     notificationService.createNotification(NotificationType.COMMENT.toString(), post.getUser(), post.getId());
-    WebSocketMessage testingWs = new WebSocketMessage();
-    testingWs.setType(WebSocketType.NEW_COMMENT.toString());
-    testingWs.setSender(user.getLogin());
-    testingWs.setReceiver(post.getUser().getLogin());
-    testingWs.setCommentToFront(CommentToFront.convertCommentToFront(save));
-    simpMessagingTemplate.convertAndSendToUser(post.getUser().getLogin(), wsPath, testingWs);
+    simpMessagingTemplate.convertAndSendToUser(post.getUser().getLogin(), WS_PATH, setField(user.getLogin(),
+            post.getUser().getLogin(), save, WebSocketType.NEW_COMMENT.toString()));
   }
 
   @Override
@@ -58,5 +55,14 @@ public class CommentServiceImpl implements CommentService {
   @Override
   public void deleteComment(Comment comment) {
     commentRepository.delete(comment);
+  }
+
+  public static WebSocketMessage setField(String senderLogin, String receiverLogin, Comment comment, String type) {
+    WebSocketMessage testingWs = new WebSocketMessage();
+    testingWs.setType(type);
+    testingWs.setSender(senderLogin);
+    testingWs.setReceiver(receiverLogin);
+    testingWs.setCommentToFront(CommentToFront.convertCommentToFront(comment));
+    return testingWs;
   }
 }
