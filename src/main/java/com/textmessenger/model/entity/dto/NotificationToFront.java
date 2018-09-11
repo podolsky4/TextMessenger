@@ -38,7 +38,7 @@ public class NotificationToFront {
         }
       });
 
-    }else if (notification.getType().equals(WebSocketType.NEW_POST.toString())){
+    } else if (notification.getType().equals(WebSocketType.NEW_POST.toString())) {
       notification.getFrom().getPosts().forEach(post1 -> {
         if (post1.getId() == notification.getContentId()) {
           response.setPost(PostToFront.convertPostToFront(post1));

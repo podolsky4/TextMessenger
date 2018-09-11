@@ -51,7 +51,7 @@ public class NotificationServiceImpl implements NotificationService {
 
   @Override
   public void createSome(String type, User toUser, User fromUser) {
-    notificationRepository.save(new Notification(false,type,toUser,fromUser));
+    notificationRepository.save(new Notification(false, type, toUser, fromUser));
     simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path, setField(fromUser.getLogin(),
             toUser.getLogin(), type));
   }

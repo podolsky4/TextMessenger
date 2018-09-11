@@ -152,7 +152,7 @@ public class UserServiceImpl implements UserService {
     User one = userRepository.getOne(newUser);
     User main = userRepository.getOne(user);
     main.getFollowing().add(one);
-    notificationService.createSome(WebSocketType.NEW_FOLLOWER.toString(),one,main);
+    notificationService.createSome(WebSocketType.NEW_FOLLOWER.toString(), one, main);
   }
 
   @Override
