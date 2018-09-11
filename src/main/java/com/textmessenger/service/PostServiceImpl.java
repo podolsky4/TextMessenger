@@ -83,10 +83,9 @@ public class PostServiceImpl implements PostService {
     // save new post in DB
     Post save = postRepository.save(post);
     one.getFollowers().forEach(user -> {
-              notificationService.createNotification(NotificationType.POST.toString(), user, one, save.getId());
-              simpMessagingTemplate.convertAndSendToUser(user.getLogin(), path,
-                      setField(one.getLogin(),
-                              user.getLogin(), save, WebSocketType.NEW_POST.toString()));
+      notificationService.createSome(WebSocketType.NEW_POST.toString(), user, one, save);
+              //notificationService.createNotification( WebSocketType.NEW_POST.toString(), user, one, save.getId());
+             // simpMessagingTemplate.convertAndSendToUser(user.getLogin(), path,setField(one.getLogin(),user.getLogin(), save, WebSocketType.NEW_POST.toString()));
             }
     );
 

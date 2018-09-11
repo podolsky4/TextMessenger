@@ -1,6 +1,7 @@
 package com.textmessenger.model.entity.dto;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Notification;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,7 @@ public class NotificationToFront {
     response.setToUser(UserToFrontShort.convertUserForFront(notification.getUser()));
     response.setFromUser(UserToFrontShort.convertUserForFront(notification.getFrom()));
 
-    if (notification.getType().equals(NotificationType.POST.toString())
+    if (notification.getType().equals(WebSocketType.NEW_POST.toString())
             || notification.getType().equals(NotificationType.COMMENT.toString())
             || notification.getType().equals(NotificationType.LIKE.toString())
             || notification.getType().equals(NotificationType.RETWEET.toString())) {

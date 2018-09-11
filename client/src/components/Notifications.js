@@ -10,7 +10,7 @@ class Notifications extends Component {
   }
 
   read = item => {
-    if (item.type === 'POST') {
+    if (item.type === 'NEW_POST') {
       return (
        <h3>Юзер {item.fromUser.login} написал новый пост</h3>
       )
