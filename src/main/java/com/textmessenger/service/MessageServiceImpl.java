@@ -1,14 +1,16 @@
 package com.textmessenger.service;
 
 import com.textmessenger.constant.NotificationType;
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.MessageToFront;
-import com.textmessenger.model.entity.dto.TestingWs;
+import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.MessageRepository;
 import com.textmessenger.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,8 @@ public class MessageServiceImpl implements MessageService {
   private final DialogRepository dialogRepository;
   private final NotificationService notificationService;
   private SimpMessagingTemplate simpMessagingTemplate;
-  private final String wsPath = "/queue/messages";//NOSONAR
+  @Value("${ws.path}")
+  private String path;
 
   public MessageServiceImpl(MessageRepository messageRepository,
                             DialogRepository dialogRepository,
@@ -75,17 +78,25 @@ public class MessageServiceImpl implements MessageService {
     message.setDialog(userD);
     message.setUser(userM);
     Message save = messageRepository.save(message);
-
     userD.getUsers().forEach(user1 -> {
       if (user1.getId() != userM.getId()) {
-        TestingWs testingWs = new TestingWs();
-        testingWs.setSender(userM.getLogin());
-        testingWs.setReceiver(user1.getLogin());
-        testingWs.setType("NEW_MESSAGE");
-        testingWs.setMessageToFront(MessageToFront.convertMessageToFront(save));
-        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), wsPath, testingWs);
+        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(),
+                path,
+                setField(userM.getLogin(),
+                        user1.getLogin(),
+                        save,
+                        WebSocketType.NEW_MESSAGE.toString()));
       }
     });
+  }
+
+  public static WebSocketMessage setField(String senderLogin, String receiverLogin, Message message, String type) {
+    WebSocketMessage testingWs = new WebSocketMessage();
+    testingWs.setType(type);
+    testingWs.setSender(senderLogin);
+    testingWs.setReceiver(receiverLogin);
+    testingWs.setMessageToFront(MessageToFront.convertMessageToFront(message));
+    return testingWs;
   }
 }
 

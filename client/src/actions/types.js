@@ -25,5 +25,3 @@ export const NEW_MESSAGE = 'NEW_MESSAGE'
 export const NEW_DIALOG = 'NEW_DIALOG'
 
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION'
-
-

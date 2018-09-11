@@ -91,25 +91,6 @@ class Dialogs extends Component {
     const {loadMessages} = this.props
     this.setState({dialog: dialog})
     loadMessages(dialog.id)
-    // if (this.state.newDialog) {
-    //   this.setState({
-    //     flag: true,
-    //     dialog: e,
-    //     newDialog: false
-    //   })
-    // } else if (this.state.userList) {
-    //   this.setState({
-    //     flag: true,
-    //     dialog: e,
-    //     userList: false
-    //   })
-    // } else {
-    //   this.setState({
-    //     flag: true,
-    //     dialog: e
-    //   })
-    // }
-    // cleanUserSearch()
   };
 
   addUserToDialog = (e, dialogId) => {

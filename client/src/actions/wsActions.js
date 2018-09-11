@@ -1,7 +1,7 @@
 import { NEW_MESSAGE, ADD_NOTIFICATION, NEW_DIALOG } from './types'
 
 export const addMessageFromWs = (message) => dispatch => {
-   dispatch({type: NEW_MESSAGE, payload: message})
+  dispatch({type: NEW_MESSAGE, payload: message})
 }
 
 export const addDialogFromWs = (message) => dispatch => {

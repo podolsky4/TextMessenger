@@ -1,3 +1,5 @@
+ws:
+  path: /queue/messages
 ###
 #   Server port
 ###
