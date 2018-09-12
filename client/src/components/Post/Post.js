@@ -67,7 +67,7 @@ const styles = theme => ({
     objectFit: 'cover',
     maxHeight: '400px',
     // clip: "rect(0px,100%,400px,0px)",
-    position: "relative"
+    position: 'relative'
   }
 })
 
@@ -86,7 +86,6 @@ class Post extends Component {
       loadFavorites(user.id)
     }
   }
-
 
   handleComments = e => {
     this.setState({flag: !this.state.flag})
