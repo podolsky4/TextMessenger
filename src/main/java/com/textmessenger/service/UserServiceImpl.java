@@ -1,9 +1,11 @@
 package com.textmessenger.service;
 
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
@@ -30,13 +32,16 @@ public class UserServiceImpl implements UserService {
   private final TemporaryTokenRepository temporaryTokenRepository;
   private UserToFrontShort userToFront;
   private final EmailService emailService;
+  private final NotificationService notificationService;
 
 
   public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
-                         EmailService emailService) {
+                         EmailService emailService,
+                         NotificationService notificationService) {
     this.userRepository = userRepository;
     this.temporaryTokenRepository = temporaryTokenRepository;
     this.emailService = emailService;
+    this.notificationService = notificationService;
   }
 
   @Override
@@ -111,6 +116,7 @@ public class UserServiceImpl implements UserService {
     User userByLogin = userRepository.findUserByLogin(user.getLogin());
     userByLogin.getFavorites().add(post);
     userRepository.save(userByLogin);
+    notificationService.createSome(WebSocketType.NEW_LIKE.toString(), post.getUser(), userByLogin, post);
   }
 
   @Override
@@ -140,7 +146,9 @@ public class UserServiceImpl implements UserService {
   @Override
   public void addToFollowing(Long user, Long newUser) {
     User one = userRepository.getOne(newUser);
-    userRepository.getOne(user).getFollowing().add(one);
+    User main = userRepository.getOne(user);
+    main.getFollowing().add(one);
+    notificationService.createSome(WebSocketType.NEW_FOLLOWER.toString(), one, main);
   }
 
   @Override
@@ -194,5 +202,17 @@ public class UserServiceImpl implements UserService {
     email.setSubject("Follow the link to reset you password in the Text Messenger");
     email.setText("http://localhost:3000/api/users/resetPassword/" + tempToken.getToken());
     emailService.sendEmail(email);
+  }
+
+  @Override
+  public List<NotificationToFront> getAllNotificationByUser() {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    User one = userRepository.getOne(userPrincipal.getId());
+    List<Notification> notifications = one.getNotifications();
+    notifications.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
+    return NotificationToFront.convertListNotificationToFront(notifications);
   }
 }

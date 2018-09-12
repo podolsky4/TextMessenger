@@ -3,6 +3,7 @@ package com.textmessenger.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.textmessenger.config.AmazonConfig;
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
@@ -29,11 +30,17 @@ public class PostServiceImpl implements PostService {
   private AmazonConfig s3;
   private final PostRepository postRepository;
   private final UserRepository userRepository;
+  private final NotificationService notificationService;
 
-  PostServiceImpl(PostRepository postRepository, UserRepository userRepository, AmazonConfig s3) {
+
+  PostServiceImpl(PostRepository postRepository,
+                  UserRepository userRepository,
+                  AmazonConfig s3,
+                  NotificationService notificationService) {
     this.postRepository = postRepository;
     this.userRepository = userRepository;
     this.s3 = s3;
+    this.notificationService = notificationService;
   }
 
   @Override
@@ -46,7 +53,8 @@ public class PostServiceImpl implements PostService {
     // create post and set content & user
     Post post = new Post();
     post.setContent(content);
-    post.setUser(userRepository.getOne(userPrincipal.getId()));
+    User one = userRepository.getOne(userPrincipal.getId());
+    post.setUser(one);
     // Amazon logic
     if (file != null) {
       String typeFile = file.getContentType();
@@ -64,7 +72,9 @@ public class PostServiceImpl implements PostService {
       post.setImgKey(key);
     }
     // save new post in DB
-    postRepository.save(post);
+    Post save = postRepository.save(post);
+    one.getFollowers().forEach(user ->
+            notificationService.createSome(WebSocketType.NEW_POST.toString(), user, one, save));
   }
 
   @Override
@@ -99,9 +109,19 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public void retwitPost(User user, Long postId) {
-    Post retwite = new Post();
-    retwite.setUser(user);
-    retwite.setParentId(postId);
-    postRepository.save(retwite);
+    Post retweet = new Post();
+    Post original = postRepository.getOne(postId);
+    User user1 = original.getUser();
+    retweet.setParent(original);
+    notificationService.createSome(WebSocketType.NEW_RETWEET.toString(), user1, user, original);
+    retweet.setUser(user);
+    postRepository.save(retweet);
+
   }
+
+  @Override
+  public Post getPostById(long id) {
+    return postRepository.getOne(id);
+  }
+
 }

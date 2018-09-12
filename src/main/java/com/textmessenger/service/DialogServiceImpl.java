@@ -1,11 +1,13 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.NotificationType;
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.UserPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,17 +52,30 @@ public class DialogServiceImpl implements DialogService {
     User firstUser = userRepository.findUserByLogin(login);
     User secondUser = userRepository.getOne(user);
     Dialog dialog = new Dialog();
+    List<User> users = dialog.getUsers();
+    users.add(firstUser);
+    users.add(secondUser);
+    dialog.setUsers(users);
     Dialog save = dialogRepository.save(dialog);
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
-    notificationService.createNotification(NotificationType.DIALOG.toString(), firstUser, save.getId());
+    save.getUsers().forEach(toUser -> {
+      if (toUser.getId() != firstUser.getId()) {
+        notificationService.createSome(WebSocketType.NEW_DIALOG.toString(), toUser, firstUser, save);
+      }
+    });
   }
 
   @Override
   public void addToDialogNewUser(Long dialog, Long user) {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    User mainUser = userRepository.getOne(userPrincipal.getId());
     User one = userRepository.getOne(user);
     Dialog save = dialogRepository.getOne(dialog);
     one.getDialogs().add(save);
-    notificationService.createNotification(NotificationType.DIALOG.toString(), one, save.getId());
+    notificationService.createSome(WebSocketType.ADD_TO_DIALOG.toString(), one, mainUser, save);
   }
 }

@@ -16,26 +16,6 @@ export function toggleLoader () {
   }
 }
 
-export function startingLoader () {
-  return (dispatch) => {
-    dispatch({
-      type: START_LOADER,
-      payload: true
-    }
-    )
-  }
-}
-
-export function endLoader () {
-  return (dispatch) => {
-    dispatch({
-      type: STOP_LOADER,
-      payload: false
-    }
-    )
-  }
-}
-
 export function startReLoader () {
   return (dispatch) => {
     dispatch({

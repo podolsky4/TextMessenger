@@ -12,6 +12,9 @@
       }
     ],
     "no-return-assign": 0,
-    "eol-last": 0
+    "eol-last": 0,
+    "jsx-a11y/href-no-hash": 0
+
+
   }
 }

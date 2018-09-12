@@ -1,7 +1,4 @@
 import React, {Component} from 'react'
-import UserLogin from '../../components/User/UserLogin'
-import UserEmail from '../../components/User/UserEmail'
-import UserFullName from '../../components/User/UserFullName'
 import UserProfileInfoCard from './UserProfileInfoCard'
 
 import {withStyles} from '@material-ui/core/styles'
@@ -20,9 +17,9 @@ class CurrentUserInfo extends Component {
     return (
       <div className={classnames(classes.UserProfileInfoCard)}>
         <UserProfileInfoCard user={user}/>
-        <UserLogin login={user.login}/>
-        <UserEmail email={user.email}/>
-        <UserFullName user={user}/>
+        {/* <UserLogin login={user.login}/> */}
+        {/* <UserEmail email={user.email}/> */}
+        {/* <UserFullName user={user}/> */}
       </div>
     )
   }

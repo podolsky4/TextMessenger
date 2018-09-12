@@ -10,50 +10,54 @@ import cyan from '@material-ui/core/colors/cyan'
 
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper/Paper'
+import Button from '@material-ui/core/Button/Button'
 
 const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center'
   },
-  grid: {
-    flexGrow: '0',
-    width: '100%',
-    padding: theme.spacing.unit * 1
-  },
-  icon: {
-    paddingRight: theme.spacing.unit,
-    marginTop: -4
-  },
-  actions: {
-    display: 'flex',
-    justifyContent: 'space-around'
-  },
   footer: {
     display: 'flex'
   },
-  reTweet: {
-    padding: '0.5em',
-    display: 'flex',
-    background: '#EF6C00',
-    color: 'white',
-    textShadow: '0px 1px #3d4e56'
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    }),
-    marginLeft: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8
-    }
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)'
-  },
   avatar: {
     backgroundColor: cyan[500]
+  },
+  wrap: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    padding: '32px',
+    background: '#009688',
+    minHeight: '96vh'
+  },
+  dialogs: {
+    flexShrink: 1,
+    flexBasis: 1,
+    flexGrow: 1,
+    margin: '0 auto',
+    maxWidth: 320,
+    padding: '0 1%'
+  },
+  paper: {
+    width: '100%',
+    margin: '0 auto 0 0'
+  },
+  button: {
+    padding: theme.spacing.unit / 2,
+    margin: theme.spacing.unit,
+    marginLeft: 0,
+    lineHeight: 1,
+    background: theme.palette.secondary.main,
+    fontSize: 12,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
+  },
+  chat: {
+    maxWidth: 620,
   }
 })
 
@@ -62,7 +66,7 @@ class Dialogs extends Component {
     super(props)
     this.state = {
       flag: false,
-      dialog: '',
+      dialog: null,
       newDialog: false,
       userList: false,
       exist: false
@@ -87,31 +91,13 @@ class Dialogs extends Component {
     }
   };
 
-  handleMessages = e => {
-    const {loadMessages, cleanUserSearch} = this.props
-    loadMessages(e.id)
-    if (this.state.newDialog) {
-      this.setState({
-        flag: true,
-        dialog: e,
-        newDialog: false
-      })
-    } else if (this.state.userList) {
-      this.setState({
-        flag: true,
-        dialog: e,
-        userList: false
-      })
-    } else {
-      this.setState({
-        flag: true,
-        dialog: e
-      })
-    }
-    cleanUserSearch()
+  handleMessages = dialog => {
+    const {loadMessages} = this.props
+    this.setState({dialog: dialog})
+    loadMessages(dialog.id)
   };
 
-  addUserToDialog = e => {
+  addUserToDialog = (e, dialogId) => {
     const {cleanUserSearch} = this.props
     e.stopPropagation()
     cleanUserSearch()
@@ -119,22 +105,27 @@ class Dialogs extends Component {
       flag: false,
       newDialog: true,
       exist: true,
-      dialog: e.target.value
+      dialogId: dialogId
     })
   };
 
   render () {
-    const {user, dialogs, loadDialog, classes} = this.props
-    const {flag, newDialog} = this.state
+    const {user, dialogs, loadDialog, classes, match} = this.props
+    const {newDialog, exist, dialog, dialogId} = this.state
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
+
+    if (dialog && +match.params.dialogId !== dialog.id) {
+      return <Redirect to={`/dialogs/${dialog.id}`}/>
+    }
+
     return (
-      <div className="wrap">
-        <div className="dialogs">
+      <div className={classes.wrap}>
+        <div className={classes.dialogs}>
           {dialogs.map((dialog, index) =>
             <Paper key = {index} className={classes.paper} elevation={0}>
               <Dialog
@@ -142,19 +133,20 @@ class Dialogs extends Component {
                 dialog = {dialog}
                 handleMessages = {this.handleMessages.bind(this)}
                 user={user}
-                addUserToDialog = {this.addUserToDialog.bind(this)}
+                addUserToDialog = {(e) => this.addUserToDialog.bind(this, e, dialog.id)()}
               />
             </Paper>
           )}
-          <button onClick={e => this.handleCreateDialog(e)}>
-            Create new Dialog
-          </button>
+          <Button onClick={e => this.handleCreateDialog(e)}
+                  variant="contained" type="submit" color="primary" className={classes.button}>
+            new Dialog
+          </Button>
         </div>
-        {flag && <Chat className="chat" user={user.id} currentDialog={this.state.dialog}/>}
+        {dialog && <Chat className={classes.chat} user={user.id} currentDialog={dialog}/>}
         {newDialog &&
         <SearchUser
-          exist={this.state.exist}
-          dialog={this.state.dialog}
+          exist={exist}
+          dialog={dialogId}
         />}
       </div>
     )
