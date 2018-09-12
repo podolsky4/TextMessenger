@@ -44,4 +44,10 @@ public class Notification extends BaseEntity {
   @JsonIgnoreProperties(allowSetters = true)
   private User from;
 
+  public Notification(boolean isChecked, String type, User user, User from) {
+    this.isChecked = isChecked;
+    this.type = type;
+    this.user = user;
+    this.from = from;
+  }
 }

@@ -1,17 +1,16 @@
 package com.textmessenger.service;
 
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
-import com.textmessenger.repository.NotificationRepository;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,16 +32,16 @@ public class UserServiceImpl implements UserService {
   private final TemporaryTokenRepository temporaryTokenRepository;
   private UserToFrontShort userToFront;
   private final EmailService emailService;
-  private final NotificationRepository notificationRepository;
+  private final NotificationService notificationService;
 
 
   public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
                          EmailService emailService,
-                         NotificationRepository notificationRepository) {
+                         NotificationService notificationService) {
     this.userRepository = userRepository;
     this.temporaryTokenRepository = temporaryTokenRepository;
     this.emailService = emailService;
-    this.notificationRepository = notificationRepository;
+    this.notificationService = notificationService;
   }
 
   @Override
@@ -117,6 +116,7 @@ public class UserServiceImpl implements UserService {
     User userByLogin = userRepository.findUserByLogin(user.getLogin());
     userByLogin.getFavorites().add(post);
     userRepository.save(userByLogin);
+    notificationService.createSome(WebSocketType.NEW_LIKE.toString(), post.getUser(), userByLogin, post);
   }
 
   @Override
@@ -146,7 +146,9 @@ public class UserServiceImpl implements UserService {
   @Override
   public void addToFollowing(Long user, Long newUser) {
     User one = userRepository.getOne(newUser);
-    userRepository.getOne(user).getFollowing().add(one);
+    User main = userRepository.getOne(user);
+    main.getFollowing().add(one);
+    notificationService.createSome(WebSocketType.NEW_FOLLOWER.toString(), one, main);
   }
 
   @Override
@@ -210,7 +212,7 @@ public class UserServiceImpl implements UserService {
             .getPrincipal();
     User one = userRepository.getOne(userPrincipal.getId());
     List<Notification> notifications = one.getNotifications();
-    notifications.sort((e1, e2)->e2.getCreatedDate().compareTo(e1.getCreatedDate()));
+    notifications.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return NotificationToFront.convertListNotificationToFront(notifications);
   }
 }

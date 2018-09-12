@@ -1,6 +1,5 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.NotificationType;
 import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
@@ -85,7 +84,7 @@ public class DialogServiceImpl implements DialogService {
     User one = userRepository.getOne(user);
     Dialog save = dialogRepository.getOne(dialog);
     one.getDialogs().add(save);
-    notificationService.createNotification(NotificationType.DIALOG.toString(), one,mainUser, save.getId());
+    notificationService.createNotification(WebSocketType.NEW_DIALOG.toString(), one, mainUser, save.getId());
   }
 
   public static WebSocketMessage setField(String senderLogin, String receiverLogin, Dialog dialog, String type) {
