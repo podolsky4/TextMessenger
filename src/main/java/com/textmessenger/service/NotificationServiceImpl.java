@@ -50,7 +50,8 @@ public class NotificationServiceImpl implements NotificationService {
     if (!type.equals(WebSocketType.NEW_MESSAGE.toString())) {
       webSocketMessage.setDialogToFront(DialogToFront.convertDialogToFront(dialog));
     } else {
-      webSocketMessage.setMessageToFront(MessageToFront.convertMessageToFront(dialog.getMessages().get(dialog.getMessages().size() - 1)));
+      webSocketMessage.setMessageToFront(MessageToFront
+              .convertMessageToFront(dialog.getMessages().get(dialog.getMessages().size() - 1)));
     }
     simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path, webSocketMessage);
   }
