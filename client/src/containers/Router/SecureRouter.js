@@ -11,7 +11,7 @@ import Page404 from '../../views/404/Page404'
 import ConfirmRegistration from '../../views/Confirm/ConfirmRegistration'
 import WebSocketHandler from '../../components/WebSocketHandler'
 
-class Router extends Component {
+class SecureRouter extends Component {
   render () {
     const {wsHandler} = this.props
 
@@ -32,4 +32,4 @@ class Router extends Component {
   }
 }
 
-export default Router
+export default SecureRouter

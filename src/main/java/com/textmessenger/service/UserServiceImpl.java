@@ -200,7 +200,7 @@ public class UserServiceImpl implements UserService {
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(userByEmail.getEmail());
     email.setSubject("Follow the link to reset you password in the Text Messenger");
-    email.setText("http://localhost:3000/api/users/resetPassword/" + tempToken.getToken());
+    email.setText("http://localhost:3000/resetPassword?token=" + tempToken.getToken());
     emailService.sendEmail(email);
   }
 
