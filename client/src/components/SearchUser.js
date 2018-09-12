@@ -6,7 +6,7 @@ import {addUserToExistDialog, createDialog} from '../actions/dialogActions'
 import {withStyles} from '@material-ui/core/styles/index'
 import classnames from 'classnames'
 import Button from '@material-ui/core/Button/Button'
-import {Input, Typography} from '@material-ui/core/umd/material-ui.production.min'
+import {Input} from '@material-ui/core/umd/material-ui.production.min'
 
 const styles = theme => ({
   search_input: {
