@@ -15,7 +15,6 @@ const styles = theme => ({
   },
   paper: {
     flexDirection: 'row',
-    margin: 1,
     width: '100%',
     display: 'flex',
     padding: theme.spacing.unit,
@@ -24,10 +23,11 @@ const styles = theme => ({
     justifyContent: 'space-between',
     '&:hover': {
       '& $button': {
-        background: '#fafafa',
+        backgroundColor: '#fafafa',
         opacity: 1
       },
-      background: theme.palette.primary.main,
+      backgroundColor: theme.palette.primary.main,
+      borderRadius: 4
     }
   },
   avatar: {
