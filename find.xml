@@ -1,7 +1,7 @@
 <application>
   <component name="FindSettings">
-    <option name="customScope" value="Module 'text_messenger'" />
-    <option name="defaultScopeName" value="Module 'text_messenger'" />
-    <option name="SEARCH_SCOPE" value="Module 'text_messenger'" />
+    <option name="customScope" value="All Places" />
+    <option name="defaultScopeName" value="All Places" />
+    <option name="SEARCH_SCOPE" value="All Places" />
   </component>
 </application>
