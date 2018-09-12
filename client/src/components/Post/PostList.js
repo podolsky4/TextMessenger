@@ -8,11 +8,6 @@ const styles = theme => ({
     flexGrow: 1,
     maxWidth: 862
   }
-  // paper: {
-  //   padding: theme.spacing.unit * 2,
-  //   textAlign: 'center',
-  //   color: theme.palette.text.secondary,
-  // },
 })
 
 class PostList extends Component {
@@ -56,5 +51,4 @@ class PostList extends Component {
     )
   }
 }
-
 export default withStyles(styles)(PostList)
