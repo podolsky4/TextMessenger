@@ -22,7 +22,7 @@ class WebSocketHandler extends React.Component {
           if (this.props.location.pathname.startsWith('/dialogs')) {
             addDialog(message.dialogToFront)
           } else {
-            addNotification(message)
+            reloadNotification()
           }
           break
         case 'NEW_COMMENT' :

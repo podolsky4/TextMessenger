@@ -66,10 +66,11 @@ public class DialogServiceImpl implements DialogService {
     Dialog save = dialogRepository.save(dialog);
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
-    save.getUsers().forEach(user1 -> {
-      if (user1.getId() != firstUser.getId()) {
-        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), path, setField(firstUser.getLogin(),
-                user1.getLogin(), save, WebSocketType.NEW_DIALOG.toString()));
+    save.getUsers().forEach(toUser -> {
+      if (toUser.getId() != firstUser.getId()) {
+        notificationService.createSome(WebSocketType.NEW_DIALOG.toString(),toUser,firstUser,save);
+//        simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path, setField(firstUser.getLogin(),
+//                toUser.getLogin(), save, WebSocketType.NEW_DIALOG.toString()));
       }
     });
   }
