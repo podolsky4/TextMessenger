@@ -11,7 +11,11 @@ import classnames from 'classnames'
 const styles = theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    alignItems: 'strech',
+    justifyContent: 'space-between',
+    background: '#fafafaf7',
+    borderRadius: '1px 1px 2px 2px'
   },
   margin: {
     margin: theme.spacing.unit
@@ -22,6 +26,20 @@ const styles = theme => ({
   },
   textarea: {
     borderRadius: '2px'
+  },
+  chat: {
+    flexBasis: 1,
+    flexGrow: 1.8,
+    flexShrink: 1,
+    width: 500,
+    maxWidth: 720,
+    minWidth: 400,
+    borderRadius: 6,
+    padding: '14px 2px',
+    background: '#00897B',
+    marginTop: -15,
+    marginRight: 'auto'
+    // marginLeft: 64
   }
 })
 
@@ -48,21 +66,26 @@ class Chat extends Component {
     const {user, addMessage, currentDialog} = this.props
     e.preventDefault()
     addMessage(currentDialog.id, user, this.state.text)
+    this.messageInput.value = ''
+    console.log("onSubmit", e.target)
+    console.log("onSubmit inner", e.target)
+    // this.value = ''
   };
 
   render () {
     const {user, fetching, messages, classes} = this.props
     return (
-      <div className="chat">
+      <div className={classes.chat}>
         {fetching && <Loader classes={{progress: 'root'}}/>}
         {!fetching && <MessagesList messages={messages} user={user}/>}
-        {!fetching &&
+
           <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
             <TextField
-              defaultValue=""
+              defaultValue={null}
               placeholder=" Write message"
               maxLength={280}
               type="text"
+              inputRef={(el) => this.messageInput = el}
               onKeyUp={event => this.myFunction(event)}
               className={classnames(classes.margin, classes.text, 'messageInput')}
               label="Your Message"
@@ -75,7 +98,7 @@ class Chat extends Component {
             </TextField>
             <SubmitButton/>
           </form>
-        }
+
       </div>
 
     )

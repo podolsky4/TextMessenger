@@ -8,6 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import UnsecureRouter from '../Router/UnsecureRouter'
 
+
 class App extends Component {
   componentWillMount () {
     const {user, getCurrentUserPoint} = this.props

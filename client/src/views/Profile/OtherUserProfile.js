@@ -3,6 +3,51 @@ import {connect} from 'react-redux'
 import {addFollowing, deleteFollowing, getFollowing} from '../../actions/userActions'
 import Loader from '../../components/Loader/Loader'
 import PropTypes from 'prop-types'
+import CurrentUserInfo from './CurrentUserInfo'
+import {withStyles} from '@material-ui/core/styles/index'
+import PostList from '../../components/Post/PostList'
+
+const styles = (theme) => ({
+  ChangeUserProfileInfoCard: {
+    Width: '25%',
+    maxWidth: '300px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyItems: 'space-between',
+    alignContent: 'center',
+    '*': {
+      borderRadius: '2px',
+      justifyContent: 'space-between',
+      alignItems: 'baseline'
+    }
+  },
+  ProfileCnt: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'space-evenly',
+    padding: '32px',
+    background: '#009688'
+  },
+  UserInfoCnt: {
+    flexShrink: 1,
+    flexBasis: 1,
+    flexGrow: 1,
+    maxWidth: 'fit-content'
+  },
+  userPostList: {
+    flexBasis: 1,
+    flexGrow: 5,
+    flexShrink: 1,
+    width: 500,
+    maxWidth: 862,
+    minWidth: 400,
+    borderRadius: 6,
+    padding: '1em',
+    background: '#00897B'
+  }
+})
 
 class OtherUserProfile extends Component {
   constructor (props) {
@@ -31,6 +76,7 @@ class OtherUserProfile extends Component {
     }
   }
 
+
   handleFollowing = e => {
     const {user, addToFollowing, deleteFromFollowing, following, currentUser} = this.props
 
@@ -43,21 +89,31 @@ class OtherUserProfile extends Component {
 
   render () {
     const {userFromPost} = this.state
-    const {following, currentUser} = this.props
+    const {following, currentUser, classes, userPosts} = this.props
+    console.log('OTHER userPosts :/n', userPosts)
     if (this.state.userFromPost.length === 0) {
       return <Loader fullscreen={true}/>
     }
     return (
-      <div>
-        <h1>{userFromPost.login}</h1>
-        <h1>{userFromPost.lastName}</h1>
-        <h1>{userFromPost.firstName}</h1>
-        <h1>{userFromPost.email}</h1>
+      <div className={classes.ProfileCnt}>
+        <div className={classes.UserInfoCnt}>
+          {/* <h1>{userFromPost.login}</h1> */}
+          {/* <h1>{userFromPost.lastName}</h1> */}
+          {/* <h1>{userFromPost.firstName}</h1> */}
+          {/* <h1>{userFromPost.email}</h1> */}
+          <CurrentUserInfo user={userFromPost}/>
+          <button
+            onClick={e => this.handleFollowing(e)}>{following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}
+          </button>
 
-        <button
-          onClick={e => this.handleFollowing(e)}>{following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}</button>
-
+        </div>
+        <PostList user={userFromPost}
+                  posts={userPosts}
+                  className={classes.userPostList}
+                  classes
+        />
       </div>
+
     )
   }
 }
@@ -78,4 +134,4 @@ const mapDispatchToProps = dispatch => {
 OtherUserProfile.propTypes = {
   currentUser: PropTypes.string.isRequired
 }
-export default connect(mapStateToProps, mapDispatchToProps)(OtherUserProfile)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(OtherUserProfile))

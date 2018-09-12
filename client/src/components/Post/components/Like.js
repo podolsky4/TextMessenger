@@ -73,7 +73,8 @@ class Like extends Component {
       deleteLiker(id, user)
     }
     this.setState({
-      liked: !this.state.liked
+      liked: !this.state.liked,
+      likers: this.state.liked ? this.state.likers.filter(l => l.id !== user.id) : [...this.state.likers, user]
     })
     loadFavorites(user.id)
   };
@@ -86,7 +87,6 @@ class Like extends Component {
       <div className={classes.diva}>
         <IconButton className={classNames(classes.root, {[classes.selected]: this.state.liked})}
           onClick={() => this.handleLike(post.id)}
-
           aria-live={this.state.liked}
           aria-label="Add to favorites"
         >

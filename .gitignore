@@ -322,10 +322,5 @@ yarn.lock
 /material_theme.xml
 /filetypes.xml
 /debugger.xml
-/colors/
-/codestyles/
-/_mac/
-/vcs.xml
-/ui.lnf.xml
 /ui.lnf.xml
 src/main/resources/amazon.properties
