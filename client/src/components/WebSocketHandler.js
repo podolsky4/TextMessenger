@@ -15,10 +15,17 @@ class WebSocketHandler extends React.Component {
           if (dialogId) {
             addMessage(message.messageToFront)
           } else {
-            addNotification(message)
+            reloadNotification()
           }
           break
         case 'NEW_DIALOG' :
+          if (this.props.location.pathname.startsWith('/dialogs')) {
+            addDialog(message.dialogToFront)
+          } else {
+            reloadNotification()
+          }
+          break
+        case 'ADD_TO_DIALOG' :
           if (this.props.location.pathname.startsWith('/dialogs')) {
             addDialog(message.dialogToFront)
           } else {

@@ -47,9 +47,11 @@ public class NotificationToFront {
         }
       });
 
-    }else if (notification.getType().equals(WebSocketType.NEW_DIALOG.toString())){
+    } else if (notification.getType().equals(WebSocketType.NEW_DIALOG.toString())
+            || notification.getType().equals(WebSocketType.ADD_TO_DIALOG.toString())
+            || notification.getType().equals(WebSocketType.NEW_MESSAGE.toString())) {
       notification.getUser().getDialogs().forEach(dialog -> {
-        if (dialog.getId() == notification.getContentId()){
+        if (dialog.getId() == notification.getContentId()) {
           response.setDialog(DialogToFront.convertDialogToFront(dialog));
         }
       });
