@@ -10,7 +10,12 @@ import {Redirect} from 'react-router-dom'
 
 import {withStyles} from '@material-ui/core/styles'
 import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
-import TextField from '@material-ui/core/TextField/TextField'
+import ButtonUploadFloating from '../../components/buttons/ButtonUploadFloating'
+import InputAdornment from '@material-ui/core/InputAdornment/InputAdornment'
+import IconButton from '@material-ui/core/IconButton/IconButton'
+import FormControl from '@material-ui/core/FormControl/FormControl'
+import Input from '@material-ui/core/Input/Input'
+import classNames from 'classnames'
 
 const styles = theme => ({
   root: {
@@ -29,7 +34,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'space-around'
   },
-  textfield: {
+  textField: {
     padding: '30px 8px 16px 16px',
     alignSelf: 'flex-end',
     width: '73%'
@@ -39,6 +44,9 @@ const styles = theme => ({
     maxWidth: '700px',
     justifyItems: 'stretch'
   }
+  // textField: {
+  //   flexBasis: 200,
+  // },
 })
 
 class Feed extends Component {
@@ -130,6 +138,7 @@ class Feed extends Component {
   render () {
     const {able, posts, user, classes} = this.props
     const {reloadLoader} = this.props
+    const upload = <ButtonUploadFloating />
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
@@ -148,29 +157,49 @@ class Feed extends Component {
           <Grid container
             justify="center"
             alignItems="stretch"
-            lg={10} sm={12} md={10}>
+            lg={8} sm={12} md={10}>
             <Paper className={classes.paper}>
               <form className={classes.form}
                 alignItems="flex-end"
                 onSubmit={e => this.onSubmit(e)}>
-                <TextField
+                <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
+                <Input
+                  children = {upload}
                   defaultValue=""
+                  fullWidth
                   placeholder="Share something..."
                   inputProps={{
                     maxLength: 280,
                     padding: '3.7% 0 7px',
                     style:
                       {borderRadius: '2px'}
+
                   }}
                   id="content"
                   name="text"
                   multiline
                   className={classes.textfield}
                   onKeyUp={event => this.handleInput(event)}
-                />
-                <form>
-                  <input type="file" name="file" ref="inputFile"/>
-                </form>
+                  endAdornment={
+
+                    <InputAdornment position="end">
+                      <Input type="file" name="file" ref="inputFile"/>
+                      <IconButton
+
+                        aria-label="upload"
+                      >
+                        <ButtonUploadFloating classes>
+                        </ButtonUploadFloating>
+                      </IconButton>
+                    </InputAdornment>
+
+                  }
+                >
+                </Input>
+                </FormControl>
+                {/* <form> */}
+                  {/* <input type="file" name="file" ref="inputFile"/> */}
+                {/* </form> */}
                 <ButtonPost flowRight/>
               </form>
               {reloadLoader && <Loader/>}

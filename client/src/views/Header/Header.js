@@ -6,7 +6,6 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
 import HomeIcon from '@material-ui/icons/Home'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import MessageIcon from '@material-ui/icons/ChatBubble'
@@ -19,6 +18,9 @@ import MenuHeader from '../../components/Menu/MenuHeader'
 const styles = (theme) => ({
   root: {
     flexGrow: 1
+  },
+  appBar: {
+    background: '#455A64'
   },
   menuButton: {
     marginLeft: -12,
@@ -52,11 +54,11 @@ class Header extends React.Component {
     }
 
     return <div className={classes.root}>
-      <AppBar position='static'>
+      <AppBar position='static' className={classes.appBar}>
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon/>
-          </IconButton>
+          {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"> */}
+            {/* <MenuIcon/> */}
+          {/* </IconButton> */}
           <Typography variant="title" color="inherit" className={classes.root}>
             Feed
           </Typography>
@@ -77,6 +79,7 @@ class Header extends React.Component {
               <NotificationsIcon className={classes.icon}/>
             </Badge>
           </IconButton>
+          {/* TODO fix */}
           {!noUser &&
           <MenuHeader classes user={user}/>
           }
