@@ -5,7 +5,6 @@ import Loader from '../../components/Loader/Loader'
 import PropTypes from 'prop-types'
 import CurrentUserInfo from './CurrentUserInfo'
 import {withStyles} from '@material-ui/core/styles/index'
-import classnames from 'classnames'
 import PostList from '../../components/Post/PostList'
 
 const styles = (theme) => ({

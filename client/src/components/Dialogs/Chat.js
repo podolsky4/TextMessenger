@@ -75,7 +75,7 @@ class Chat extends Component {
   render () {
     const {user, fetching, messages, classes} = this.props
     return (
-      <div className="chat">
+      <div className={classes.chat}>
         {fetching && <Loader classes={{progress: 'root'}}/>}
         {!fetching && <MessagesList messages={messages} user={user}/>}
 

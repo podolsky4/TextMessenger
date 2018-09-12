@@ -55,6 +55,9 @@ const styles = theme => ({
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
+  },
+  chat: {
+    maxWidth: 620,
   }
 })
 
@@ -139,7 +142,7 @@ class Dialogs extends Component {
             new Dialog
           </Button>
         </div>
-        {dialog && <Chat className="chat" user={user.id} currentDialog={dialog}/>}
+        {dialog && <Chat className={classes.chat} user={user.id} currentDialog={dialog}/>}
         {newDialog &&
         <SearchUser
           exist={exist}
