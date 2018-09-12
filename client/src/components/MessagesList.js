@@ -9,10 +9,12 @@ const styles = theme => ({
   massageList: {
     display: 'flex',
     flexDirection: 'column',
-    background: '#F5F5F5',
+    // background: '#F5F5F5',
     padding: '4px',
     paddingBottom: '.5em',
-    paddingTop: '8px'
+    paddingTop: '32px',
+    background: 'rgba(0, 0, 0, 0.29)',
+    borderRadius: 2
   }
 })
 

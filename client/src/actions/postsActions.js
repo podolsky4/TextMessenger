@@ -61,6 +61,7 @@ export const loadFavoritesByLogin = (login) => dispatch => {
 
 export const loadPosts = () => dispatch => {
   dispatch(startLoader('LOADING_POST'))
+  console.log("loadPost reducer triggered with LOADING_POST type")
   FetchData.get(`/api/posts`)
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))

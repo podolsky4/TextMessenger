@@ -10,50 +10,54 @@ import cyan from '@material-ui/core/colors/cyan'
 
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper/Paper'
+import Button from '@material-ui/core/Button/Button'
 
 const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center'
   },
-  grid: {
-    flexGrow: '0',
-    width: '100%',
-    padding: theme.spacing.unit * 1
-  },
-  icon: {
-    paddingRight: theme.spacing.unit,
-    marginTop: -4
-  },
-  actions: {
-    display: 'flex',
-    justifyContent: 'space-around'
-  },
   footer: {
     display: 'flex'
   },
-  reTweet: {
-    padding: '0.5em',
-    display: 'flex',
-    background: '#EF6C00',
-    color: 'white',
-    textShadow: '0px 1px #3d4e56'
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    }),
-    marginLeft: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8
-    }
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)'
-  },
   avatar: {
     backgroundColor: cyan[500]
+  },
+  wrap: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    padding: '32px',
+    background: '#009688',
+    minHeight: '96vh'
+  },
+  dialogs: {
+    flexShrink: 1,
+    flexBasis: 1,
+    flexGrow: 1,
+    margin: '0 auto',
+    maxWidth: 320,
+    padding: '0 1%'
+  },
+  paper: {
+    width: '100%',
+    margin: '0 auto 0 0'
+  },
+  button: {
+    padding: theme.spacing.unit / 2,
+    margin: theme.spacing.unit,
+    marginLeft: 0,
+    lineHeight: 1,
+    background: theme.palette.secondary.main,
+    fontSize: 12,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
+  },
+  chat: {
+    maxWidth: 620,
   }
 })
 
@@ -120,8 +124,8 @@ class Dialogs extends Component {
     }
 
     return (
-      <div className="wrap">
-        <div className="dialogs">
+      <div className={classes.wrap}>
+        <div className={classes.dialogs}>
           {dialogs.map((dialog, index) =>
             <Paper key = {index} className={classes.paper} elevation={0}>
               <Dialog
@@ -133,11 +137,12 @@ class Dialogs extends Component {
               />
             </Paper>
           )}
-          <button onClick={e => this.handleCreateDialog(e)}>
-            Create new Dialog
-          </button>
+          <Button onClick={e => this.handleCreateDialog(e)}
+                  variant="contained" type="submit" color="primary" className={classes.button}>
+            new Dialog
+          </Button>
         </div>
-        {dialog && <Chat className="chat" user={user.id} currentDialog={dialog}/>}
+        {dialog && <Chat className={classes.chat} user={user.id} currentDialog={dialog}/>}
         {newDialog &&
         <SearchUser
           exist={exist}
