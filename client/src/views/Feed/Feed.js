@@ -14,7 +14,7 @@ import ButtonUploadFloating from '../../components/buttons/ButtonUploadFloating'
 import InputAdornment from '@material-ui/core/InputAdornment/InputAdornment'
 import IconButton from '@material-ui/core/IconButton/IconButton'
 import FormControl from '@material-ui/core/FormControl/FormControl'
-import Input from '@material-ui/core/es/Input/Input'
+import Input from '@material-ui/core/Input/Input'
 import classNames from 'classnames'
 
 const styles = theme => ({
