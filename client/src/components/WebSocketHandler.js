@@ -1,12 +1,12 @@
 import React from 'react'
 import { webSocketDialog } from '../actions/ws'
 import connect from 'react-redux/es/connect/connect'
-import { addDialogFromWs, addMessageFromWs, addNotificationFromWs } from '../actions/wsActions'
+import { addDialogFromWs, addMessageFromWs } from '../actions/wsActions'
 import { loadUserNotification } from '../actions/userActions'
 
 class WebSocketHandler extends React.Component {
   componentDidMount () {
-    const {addMessage, addNotification, addDialog, reloadNotification} = this.props
+    const {addMessage, addDialog, reloadNotification} = this.props
     webSocketDialog(message => {
       const {dialogId} = this.props.match.params
       switch (message.type) {
@@ -63,7 +63,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addMessage: messages => dispatch(addMessageFromWs(messages)),
-    addNotification: messages => dispatch(addNotificationFromWs(messages)),
     addDialog: message => dispatch(addDialogFromWs(message)),
     reloadNotification: () => dispatch(loadUserNotification())
   }
