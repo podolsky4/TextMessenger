@@ -12,7 +12,7 @@ class Notifications extends Component {
   read = item => {
     // TODO replace switch
     if (item.type === 'NEW_POST') {
-      return <h3>Юзер {item.fromUser.login} написал новый пост</h3>
+      return <h3>Юзер {item.fromUser.login} write new post</h3>
     } else if (item.type === 'NEW_RETWEET') {
       return <h3>Юзер {item.fromUser.login} retweet your post</h3>
     } else if (item.type === 'NEW_COMMENT') {
@@ -21,6 +21,12 @@ class Notifications extends Component {
       return <h3>Юзер {item.fromUser.login} liked your post</h3>
     } else if (item.type === 'NEW_FOLLOWER') {
       return <h3>Юзер {item.fromUser.login} following you</h3>
+    } else if (item.type === 'NEW_DIALOG') {
+      return <h3>Юзер {item.fromUser.login} create with you chat</h3>
+    } else if (item.type === 'ADD_TO_DIALOG') {
+      return <h3>Юзер {item.fromUser.login} join you to chat</h3>
+    } else if (item.type === 'NEW_MESSAGE') {
+      return <h3>{item.fromUser.login} write you new message</h3>
     }
   }
 

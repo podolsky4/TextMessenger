@@ -4,12 +4,9 @@ import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.DialogToFront;
-import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.UserPrincipal;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +20,12 @@ public class DialogServiceImpl implements DialogService {
   private final DialogRepository dialogRepository;
   private final UserRepository userRepository;
   private final NotificationService notificationService;
-  private SimpMessagingTemplate simpMessagingTemplate;
-  @Value("${ws.path}")
-  private String path;
 
   public DialogServiceImpl(DialogRepository dialogRepository, UserRepository userRepository,
-                           NotificationService notificationService, SimpMessagingTemplate simpMessagingTemplate) {
+                           NotificationService notificationService) {
     this.dialogRepository = dialogRepository;
     this.userRepository = userRepository;
     this.notificationService = notificationService;
-    this.simpMessagingTemplate = simpMessagingTemplate;
   }
 
   @Override
@@ -66,10 +59,9 @@ public class DialogServiceImpl implements DialogService {
     Dialog save = dialogRepository.save(dialog);
     firstUser.getDialogs().add(save);
     secondUser.getDialogs().add(save);
-    save.getUsers().forEach(user1 -> {
-      if (user1.getId() != firstUser.getId()) {
-        simpMessagingTemplate.convertAndSendToUser(user1.getLogin(), path, setField(firstUser.getLogin(),
-                user1.getLogin(), save, WebSocketType.NEW_DIALOG.toString()));
+    save.getUsers().forEach(toUser -> {
+      if (toUser.getId() != firstUser.getId()) {
+        notificationService.createSome(WebSocketType.NEW_DIALOG.toString(), toUser, firstUser, save);
       }
     });
   }
@@ -84,15 +76,6 @@ public class DialogServiceImpl implements DialogService {
     User one = userRepository.getOne(user);
     Dialog save = dialogRepository.getOne(dialog);
     one.getDialogs().add(save);
-    notificationService.createNotification(WebSocketType.NEW_DIALOG.toString(), one, mainUser, save.getId());
-  }
-
-  public static WebSocketMessage setField(String senderLogin, String receiverLogin, Dialog dialog, String type) {
-    WebSocketMessage testingWs = new WebSocketMessage();
-    testingWs.setType(type);
-    testingWs.setSender(senderLogin);
-    testingWs.setReceiver(receiverLogin);
-    testingWs.setDialogToFront(DialogToFront.convertDialogToFront(dialog));
-    return testingWs;
+    notificationService.createSome(WebSocketType.ADD_TO_DIALOG.toString(), one, mainUser, save);
   }
 }

@@ -1,11 +1,13 @@
 package com.textmessenger.service;
 
 
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.DialogToFront;
+import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.model.entity.dto.WebSocketMessage;
 import com.textmessenger.repository.NotificationRepository;
@@ -45,7 +47,12 @@ public class NotificationServiceImpl implements NotificationService {
     notificationRepository.save(new Notification(false, dialog.getId(), type, toUser, fromUser));
     WebSocketMessage webSocketMessage = setField(fromUser.getLogin(),
             toUser.getLogin(), type);
-    webSocketMessage.setDialogToFront(DialogToFront.convertDialogToFront(dialog));
+    if (!type.equals(WebSocketType.NEW_MESSAGE.toString())) {
+      webSocketMessage.setDialogToFront(DialogToFront.convertDialogToFront(dialog));
+    } else {
+      webSocketMessage.setMessageToFront(MessageToFront
+              .convertMessageToFront(dialog.getMessages().get(dialog.getMessages().size() - 1)));
+    }
     simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path, webSocketMessage);
   }
 

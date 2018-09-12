@@ -15,6 +15,7 @@ public class NotificationToFront {
   private long id;//NOSONAR
   private PostToFront post;//NOSONAR
   private String type;//NOSONAR
+  private boolean status;//NOSONAR
   private DialogToFront dialog;//NOSONAR
   private UserToFrontShort toUser;//NOSONAR
   private UserToFrontShort fromUser;//NOSONAR
@@ -28,6 +29,7 @@ public class NotificationToFront {
     response.setCreatedDate(notification.getCreatedDate());
     response.setToUser(UserToFrontShort.convertUserForFront(notification.getUser()));
     response.setFromUser(UserToFrontShort.convertUserForFront(notification.getFrom()));
+    response.setStatus(notification.isChecked());
 
     if (notification.getType().equals(WebSocketType.NEW_COMMENT.toString())
             || notification.getType().equals(WebSocketType.NEW_RETWEET.toString())
@@ -45,6 +47,14 @@ public class NotificationToFront {
         }
       });
 
+    } else if (notification.getType().equals(WebSocketType.NEW_DIALOG.toString())
+            || notification.getType().equals(WebSocketType.ADD_TO_DIALOG.toString())
+            || notification.getType().equals(WebSocketType.NEW_MESSAGE.toString())) {
+      notification.getUser().getDialogs().forEach(dialog -> {
+        if (dialog.getId() == notification.getContentId()) {
+          response.setDialog(DialogToFront.convertDialogToFront(dialog));
+        }
+      });
     }
 
     return response;
