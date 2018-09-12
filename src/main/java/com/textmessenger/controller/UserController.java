@@ -167,8 +167,8 @@ public class UserController {
     return ResponseEntity.status(200).build();
   }
 
-  @GetMapping("user/{id}/notification")
-  public ResponseEntity getNotification(@PathVariable("id") long id) {
-    return ResponseEntity.ok().body(userService.getAllNotificationByUserId(id));
+  @GetMapping("/notification")
+  public ResponseEntity getNotification() {
+    return ResponseEntity.status(200).body(userService.getAllNotificationByUser());
   }
 }

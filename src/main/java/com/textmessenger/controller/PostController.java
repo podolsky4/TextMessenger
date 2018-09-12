@@ -70,4 +70,9 @@ public class PostController {
     postService.retwitPost(user, postId);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity getPostById(@PathVariable("id") long id) {
+    return ResponseEntity.status(200).body(postService.getPostById(id));
+  }
 }

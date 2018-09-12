@@ -31,6 +31,7 @@ class App extends Component {
     return (
       <Fragment>
         <CssBaseline>
+          <Router wsHandler={true}/>
           <Header/>
           <Router/>
         </CssBaseline>

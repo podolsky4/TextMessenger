@@ -18,14 +18,14 @@ import MenuHeader from '../../components/Menu/MenuHeader'
 
 const styles = (theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   appBar: {
-    background: '#455A64',
+    background: '#455A64'
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
+    marginRight: 20
   },
   icon: {
     margin: theme.spacing.unit
@@ -48,7 +48,7 @@ class Header extends React.Component {
   };
 
   render () {
-    const {classes, user} = this.props
+    const {classes, user, notification} = this.props
     let {noUser} = this.state.noUser
     if (!user) {
       noUser = true
@@ -57,9 +57,9 @@ class Header extends React.Component {
     return <div className={classes.root}>
       <AppBar position='static' className={classes.appBar}>
         <Toolbar>
-          {/*<IconButton className={classes.menuButton} color="inherit" aria-label="Menu">*/}
-            {/*<MenuIcon/>*/}
-          {/*</IconButton>*/}
+          {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"> */}
+            {/* <MenuIcon/> */}
+          {/* </IconButton> */}
           <Typography variant="title" color="inherit" className={classes.root}>
             Feed
           </Typography>
@@ -76,11 +76,11 @@ class Header extends React.Component {
             <MessageIcon className={classes.icon}/>
           </IconButton>
           <IconButton aria-label="4 pending messages" color="inherit" component={Link} to='/notifications'>
-            <Badge badgeContent={4} color='secondary' classes={{badge: classes.badge}}>
+            <Badge badgeContent={notification.length} color='secondary' classes={{badge: classes.badge}}>
               <NotificationsIcon className={classes.icon}/>
             </Badge>
           </IconButton>
-          {/*TODO fix*/}
+          {/* TODO fix */}
           {!noUser &&
           <MenuHeader classes user={user}/>
           }
@@ -98,7 +98,8 @@ Header.propTypes = {
 const mapStateToProps = state => {
   return {
     user: state.user,
-    currentLocation: state.location
+    currentLocation: state.location,
+    notification: state.notification
   }
 }
 

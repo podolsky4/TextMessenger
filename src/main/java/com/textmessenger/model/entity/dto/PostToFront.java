@@ -11,7 +11,7 @@ import java.util.List;
 public class PostToFront {
   private long id;//NOSONAR
   private String content;//NOSONAR
-  private Long parentId;//NOSONAR
+  private PostToFront parent;//NOSONAR
   private UserToFrontShort user;//NOSONAR
   private String imgUrl; //NOSONAR
   private List<UserToFrontShort> likers = new ArrayList<>();//NOSONAR
@@ -30,8 +30,8 @@ public class PostToFront {
       responsePost.setContent(post.getContent());
     }
     responsePost.setUser(UserToFrontShort.convertUserForFront(post.getUser()));
-    if (post.getParentId() != null) {
-      responsePost.setParentId(post.getParentId());
+    if (post.getParent() != null) {
+      responsePost.setParent(convertPostToFront(post.getParent()));
     }
     if (post.getLikers() != null) {
       responsePost.setLikers(UserToFrontShort.convertListUsersForFront(post.getLikers()));

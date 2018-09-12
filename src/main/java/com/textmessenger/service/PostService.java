@@ -23,4 +23,6 @@ public interface PostService {
   void retwitPost(User user, Long postId);
 
   void createPost(String content, MultipartFile file) throws IOException;
+
+  Post getPostById(long id);
 }

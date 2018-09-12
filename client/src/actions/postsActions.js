@@ -1,11 +1,4 @@
-import {
-  ADD_TO_POSTS_PAGE,
-  LOAD_COMMENTS,
-  LOAD_FAVORITES,
-  LOAD_POSTS,
-  LOADING_COMMENTS,
-  NO_FETCH_LIST_IS_EMPTY
-} from './types'
+import {LOAD_COMMENTS, LOAD_FAVORITES, LOAD_POSTS, LOADING_COMMENTS, ADD_TO_POSTS_PAGE, NO_FETCH_LIST_IS_EMPTY} from './types'
 import {endReLoader, startLoader, startReLoader, stopLoader} from './loaderActions'
 import FetchData from './serviceAction'
 

@@ -34,8 +34,9 @@ public class Post extends BaseEntity {
   @Column(name = "img_key")
   private String imgKey;
 
-  @Column(name = "parent_id")
-  private Long parentId;
+  @ManyToOne
+  @JoinColumn(name = "parent_id")
+  private Post parent;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")

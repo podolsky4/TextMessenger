@@ -39,7 +39,8 @@ class Like extends Component {
   }
 
   componentWillMount () {
-    const {favorites, post, user, loadFavorites} = this.props
+    const {favorites, post, user} = this.props
+    loadFavorites(user.id)
     favorites.some(p => p.id === post.id)
       ? this.setState({liked: true, likers: post.likers})
       : this.setState({liked: false, likers: post.likers})

@@ -75,9 +75,9 @@ class Chat extends Component {
   render () {
     const {user, fetching, messages, classes} = this.props
     return (
-      <div className={classes.chat}>
-
-        <MessagesList messages={messages} user={user}/>
+      <div className="chat">
+        {fetching && <Loader classes={{progress: 'root'}}/>}
+        {!fetching && <MessagesList messages={messages} user={user}/>}
 
           <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
             <TextField

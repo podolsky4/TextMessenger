@@ -19,17 +19,16 @@ class PostList extends Component {
   render () {
     const {posts, user, classes} = this.props
     let current = post => {
-      if (post.parentId === null) {
+      if (post.parent) {
+        let who = user.id === post.user.id
+        return <Post key={post.id} post={post.parent} owner={post.user} whoo={who} postId={post.id}/>
+      } else {
         return (
           <Post
             key={post.id}
             post={post}
           />
         )
-      } else {
-        let currentPost = posts.find(i => i.id === post.parentId)
-        let who = user.id === post.user.id
-        return <Post key={post.id} post={currentPost} owner={post.user} whoo={who} postId={post.id}/>
       }
     }
 
