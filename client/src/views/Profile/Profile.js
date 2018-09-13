@@ -36,13 +36,13 @@ class Profile extends React.Component {
     let userPosts
     if (flag) {
       userPosts = posts.filter(function (post) {
-          return post.user.id === user.id
-        }
+        return post.user.id === user.id
+      }
       )
     } else {
       userPosts = posts.filter(function (post) {
-          return post.user.id === +match.params.id
-        }
+        return post.user.id === +match.params.id
+      }
       )
     }
 

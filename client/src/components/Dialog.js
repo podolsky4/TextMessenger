@@ -27,7 +27,7 @@ const styles = theme => ({
         background: '#fafafa',
         opacity: 1
       },
-      background: theme.palette.primary.main,
+      background: theme.palette.primary.main
     }
   },
   avatar: {

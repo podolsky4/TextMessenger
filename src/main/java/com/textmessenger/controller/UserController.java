@@ -3,6 +3,7 @@ package com.textmessenger.controller;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
@@ -57,6 +58,12 @@ public class UserController {
             .body(ResponseToFront.convertResponseToFront("This email is not registration on our Application"));
   }
 
+  @PostMapping("/changePassword")
+  public ResponseEntity changePasswordFromForgotPage(@Valid @RequestBody CredentialsPassword credentialsPassword) {
+    return ResponseEntity.status(200)
+            .body(ResponseToFront.convertResponseToFront(userService.changePasswordForgot(credentialsPassword)));
+  }
+
   @PostMapping("/login")
   public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user) {
     return loginService.authenticateUser(user);
@@ -85,7 +92,7 @@ public class UserController {
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(user1.getEmail());
     email.setSubject("confirmation link to create account at Text Messenger application");
-    email.setText("http://localhost:3000/api/users/registered/" + tempToken.getToken());
+    email.setText("http://localhost:3000/registered/" + tempToken.getToken());
     emailService.sendEmail(email);
     return ResponseEntity.ok()
             .body(ResponseToFront.convertResponseToFront("Check you email we send you registration link"));
@@ -94,7 +101,7 @@ public class UserController {
 
   @GetMapping("/registered/{token}")
   public ResponseEntity enableUser(@PathVariable("token") String token) {
-    return ResponseEntity.ok().body(userService.setUserIsEnabled(token));
+    return ResponseEntity.ok().body(ResponseToFront.convertResponseToFront(userService.setUserIsEnabled(token)));
   }
 
 

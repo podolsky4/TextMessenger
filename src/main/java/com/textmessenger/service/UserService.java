@@ -3,6 +3,7 @@ package com.textmessenger.service;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
 
@@ -52,5 +53,7 @@ public interface UserService {
   void sendEmailToResetPassword(User userByEmail);
 
   List<NotificationToFront> getAllNotificationByUser();
+
+  String changePasswordForgot(CredentialsPassword credentialsPassword);
 }
 
