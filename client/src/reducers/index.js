@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux'
 import user from './user'
 import posts from './posts'
 import favorites from './favorites'
@@ -10,6 +10,9 @@ import following from './following'
 import reloadLoader from './reloadLoader'
 import notification from './notification'
 import location from './location'
+import comments from './comments'
+import registration from './registration'
+import able from './able'
 
 export default combineReducers({
   user,
@@ -22,5 +25,8 @@ export default combineReducers({
   following,
   reloadLoader,
   notification,
-  location
+  location,
+  comments,
+  registration,
+  able
 })

@@ -1,23 +1,78 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadDialog, createDialog, loadMessages, cleanUserSearch} from '../../actions/dialogActions'
+import {cleanUserSearch, createDialog, loadDialog, loadMessages} from '../../actions/dialogActions'
 import Dialog from '../Dialog'
 import './Dialogs.css'
 import Chat from './Chat'
 import SearchUser from '../SearchUser'
 import {Redirect} from 'react-router-dom'
+import cyan from '@material-ui/core/colors/cyan'
+
+import {withStyles} from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper/Paper'
+import Button from '@material-ui/core/Button/Button'
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  footer: {
+    display: 'flex'
+  },
+  avatar: {
+    backgroundColor: cyan[500]
+  },
+  wrap: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    padding: '32px',
+    background: '#009688',
+    minHeight: '96vh'
+  },
+  dialogs: {
+    flexShrink: 1,
+    flexBasis: 1,
+    flexGrow: 1,
+    margin: '0 auto',
+    maxWidth: 320,
+    padding: '0 1%'
+  },
+  paper: {
+    width: '100%',
+    margin: '0 auto 0 0'
+  },
+  button: {
+    padding: theme.spacing.unit / 2,
+    margin: theme.spacing.unit,
+    marginLeft: 0,
+    lineHeight: 1,
+    background: theme.palette.secondary.main,
+    fontSize: 12,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
+  },
+  chat: {
+    maxWidth: 620,
+  }
+})
 
 class Dialogs extends Component {
   constructor (props) {
     super(props)
     this.state = {
       flag: false,
-      dialog: '',
+      dialog: null,
       newDialog: false,
       userList: false,
       exist: false
     }
   }
+
   componentWillMount () {
     const {user, dialogs, loadDialog} = this.props
     if (dialogs.length === 0) {
@@ -34,74 +89,64 @@ class Dialogs extends Component {
     } else {
       this.setState({newDialog: true})
     }
-  }
+  };
 
-  handleMessages = e => {
-    const {loadMessages, cleanUserSearch} = this.props
-    loadMessages(e.id)
-    if (this.state.newDialog) {
-      this.setState({
-        flag: true,
-        dialog: e,
-        newDialog: false
-      })
-    } else if (this.state.userList) {
-      this.setState({
-        flag: true,
-        dialog: e,
-        userList: false
-      })
-    } else {
-      this.setState({
-        flag: true,
-        dialog: e
-      })
-    }
-    cleanUserSearch()
-  }
+  handleMessages = dialog => {
+    const {loadMessages} = this.props
+    this.setState({dialog: dialog})
+    loadMessages(dialog.id)
+  };
 
-  addUserToDialog = e => {
+  addUserToDialog = (e, dialogId) => {
     const {cleanUserSearch} = this.props
+    e.stopPropagation()
     cleanUserSearch()
-    console.log('e', e.target.value)
     this.setState({
       flag: false,
       newDialog: true,
       exist: true,
-      dialog: e.target.value
+      dialogId: dialogId
     })
-  }
+  };
 
   render () {
-    const {user, dialogs, loadDialog} = this.props
-    const {flag, newDialog} = this.state
-    if (user.length === 0) {
+    const {user, dialogs, loadDialog, classes, match} = this.props
+    const {newDialog, exist, dialog, dialogId} = this.state
+    if (!user.id) {
       return <Redirect to={`/`}/>
     }
     if (dialogs.length === 0) {
       loadDialog(user.id)
     }
+
+    if (dialog && +match.params.dialogId !== dialog.id) {
+      return <Redirect to={`/dialogs/${dialog.id}`}/>
+    }
+
     return (
-      <div className="wrap">
-        <div className="dialogs">
-          {dialogs.map(dialog =>
-            <Dialog
-              key = {dialog.id}
-              dialog = {dialog}
-              handleMessages = {this.handleMessages.bind(this)}
-              user={user}
-              addUserToDialog = {this.addUserToDialog.bind(this)}
-            />
+      <div className={classes.wrap}>
+        <div className={classes.dialogs}>
+          {dialogs.map((dialog, index) =>
+            <Paper key = {index} className={classes.paper} elevation={0}>
+              <Dialog
+                key = {dialog.id}
+                dialog = {dialog}
+                handleMessages = {this.handleMessages.bind(this)}
+                user={user}
+                addUserToDialog = {(e) => this.addUserToDialog.bind(this, e, dialog.id)()}
+              />
+            </Paper>
           )}
-          <button onClick={e => this.handleCreateDialog(e)}>
-            Create new Dialog
-          </button>
+          <Button onClick={e => this.handleCreateDialog(e)}
+                  variant="contained" type="submit" color="primary" className={classes.button}>
+            new Dialog
+          </Button>
         </div>
-        {flag && <Chat user={user.id} currentDialog = {this.state.dialog}/>}
+        {dialog && <Chat className={classes.chat} user={user.id} currentDialog={dialog}/>}
         {newDialog &&
         <SearchUser
-          exist={this.state.exist}
-          dialog={this.state.dialog}
+          exist={exist}
+          dialog={dialogId}
         />}
       </div>
     )
@@ -126,4 +171,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Dialogs))

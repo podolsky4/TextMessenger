@@ -1,8 +1,52 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadUser, updateUser} from '../../actions/userActions'
-import View from '../../components/View'
-import Typography from '@material-ui/core/Typography/Typography'
+import CurrentUserInfo from './CurrentUserInfo'
+import classnames from 'classnames'
+import {withStyles} from '@material-ui/core/styles'
+import PostList from '../../components/Post/PostList'
+
+const styles = (theme) => ({
+  ChangeUserProfileInfoCard: {
+    Width: '25%',
+    maxWidth: '300px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyItems: 'space-between',
+    alignContent: 'center',
+    '*': {
+      borderRadius: '2px',
+      justifyContent: 'space-between',
+      alignItems: 'baseline'
+    }
+  },
+  ProfileCnt: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'space-evenly',
+    padding: '32px',
+    background: '#009688'
+  },
+  UserInfoCnt: {
+    flexShrink: 1,
+    flexBasis: 1,
+    flexGrow: 1,
+    maxWidth: 'fit-content'
+  },
+  userPostList: {
+    flexBasis: 1,
+    flexGrow: 5,
+    flexShrink: 1,
+    width: 500,
+    maxWidth: 862,
+    minWidth: 400,
+    borderRadius: 6,
+    padding: '1em',
+    background: '#00897B'
+  }
+})
 
 class CurrentUserProfile extends Component {
   constructor (props) {
@@ -20,6 +64,7 @@ class CurrentUserProfile extends Component {
       viewMode: true
     }
   }
+
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -40,19 +85,19 @@ class CurrentUserProfile extends Component {
   };
 
   render () {
-    const {user} = this.props
+    const {user, classes, userPosts} = this.props
+
     return (
-      <div>
-        <Typography variant='title'>Hello, {user.firstName} {user.lastName}</Typography>
-        <Typography paragraph variant='subheading'>your are login with {user.login} and email {user.email}</Typography>
+      <div className={classes.ProfileCnt}>
         {this.state.viewMode &&
-          <div>
-            <View user={user}/>
+          <div className={classes.UserInfoCnt}>
+            <CurrentUserInfo user={user}/>
             <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
           </div>
         }
         {!this.state.viewMode &&
-          <form>
+          <form className={classnames(classes.ChangeUserProfileInfoCard)}>     display: flex;
+
             <label>
               password:
               <input id='password-change' name='password' type='password' onChange={e => this.change(e)}/>
@@ -89,9 +134,15 @@ class CurrentUserProfile extends Component {
             </label>
 
             <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)}/>
-            <input type='button' name='Cancel'value='Cancel' onClick={this.editableField}/>
+            <input type='button' name='Cancel' value='Cancel' onClick={this.editableField}/>
           </form>
         }
+
+        <PostList user={user}
+                  posts={userPosts}
+                  className={classes.userPostList}
+                  classes />
+
       </div>
     )
   }
@@ -111,4 +162,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CurrentUserProfile))

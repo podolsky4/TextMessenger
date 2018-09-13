@@ -1,26 +1,86 @@
 package com.textmessenger.service;
 
+import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
+import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.NotificationToFront;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
+import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.UserPrincipal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-
+  @Autowired
+  PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
+  private final TemporaryTokenRepository temporaryTokenRepository;
+  private UserToFrontShort userToFront;
+  private final EmailService emailService;
+  private final NotificationService notificationService;
 
-  public UserServiceImpl(UserRepository userRepository) {
+
+  public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
+                         EmailService emailService,
+                         NotificationService notificationService) {
     this.userRepository = userRepository;
+    this.temporaryTokenRepository = temporaryTokenRepository;
+    this.emailService = emailService;
+    this.notificationService = notificationService;
+  }
+
+  @Override
+  public String setUserIsEnabled(String token) {
+    Optional<TemporaryToken> byToken = temporaryTokenRepository.findByToken(token);
+    if (byToken.isPresent()) {
+      User user = byToken.get().getUser();
+      if (byToken.get().getExpiryDate().compareTo(new Date()) <= 0) {
+        user.setEnabled(true);
+        userRepository.save(user);
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(user.getEmail());
+        email.setSubject("Congratulation your account is activate");
+        email.setText("Enjoy our application");
+        emailService.sendEmail(email);
+        temporaryTokenRepository.delete(byToken.get());
+        return "your user is activate";
+      }
+      TemporaryToken temporaryToken = byToken.get();
+      temporaryToken.setToken(UUID.randomUUID().toString());
+      temporaryToken.setExpiryDate(temporaryToken.calculateExpiryDate());
+      User save = userRepository.save(user);
+      temporaryToken.setUser(save);
+      temporaryTokenRepository.save(temporaryToken);
+      SimpleMailMessage email = new SimpleMailMessage();
+      email.setTo(user.getEmail());
+      email.setSubject("repeated link to activate");
+      email.setText("http://localhost:3000/api/users/registered/" + temporaryToken.getToken());
+      emailService.sendEmail(email);
+      return "your link is old, we send new link, please check your registration email";
+    } else {
+      return "this token is not valid";
+    }
   }
 
   @Override
   public User createUser(User user) {
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+
     return userRepository.save(user);
   }
 
@@ -56,6 +116,7 @@ public class UserServiceImpl implements UserService {
     User userByLogin = userRepository.findUserByLogin(user.getLogin());
     userByLogin.getFavorites().add(post);
     userRepository.save(userByLogin);
+    notificationService.createSome(WebSocketType.NEW_LIKE.toString(), post.getUser(), userByLogin, post);
   }
 
   @Override
@@ -85,7 +146,15 @@ public class UserServiceImpl implements UserService {
   @Override
   public void addToFollowing(Long user, Long newUser) {
     User one = userRepository.getOne(newUser);
-    userRepository.getOne(user).getFollowing().add(one);
+    User main = userRepository.getOne(user);
+    main.getFollowing().add(one);
+    notificationService.createSome(WebSocketType.NEW_FOLLOWER.toString(), one, main);
+  }
+
+  @Override
+  public Optional<List<User>> findUserByEmailOrLogin(User user) {
+    return Optional.of(userRepository
+            .findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(user.getLogin(), user.getEmail()));
   }
 
   @Override
@@ -101,5 +170,49 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<Notification> getAllNotificationByUserId(Long id) {
     return userRepository.getOne(id).getNotifications();
+  }
+
+  @Override
+  public UserToFrontShort getCurrentUser() {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    Optional<User> user = userRepository.findById(userPrincipal.getId());
+    if (user.isPresent()) {
+      return userToFront.convertUserForFront(user.get());
+    }
+    throw new UsernameNotFoundException("User not found!");
+  }
+
+  @Override
+  public User getUserByEmail(String email) {
+    return userRepository.findUserByEmail(email);
+  }
+
+  @Override
+  public void sendEmailToResetPassword(User userByEmail) {
+    TemporaryToken tempToken = new TemporaryToken();
+    tempToken.setToken(UUID.randomUUID().toString());
+    tempToken.setExpiryDate(new Date());
+    tempToken.setUser(userByEmail);
+    temporaryTokenRepository.save(tempToken);
+    SimpleMailMessage email = new SimpleMailMessage();
+    email.setTo(userByEmail.getEmail());
+    email.setSubject("Follow the link to reset you password in the Text Messenger");
+    email.setText("http://localhost:3000/api/users/resetPassword/" + tempToken.getToken());
+    emailService.sendEmail(email);
+  }
+
+  @Override
+  public List<NotificationToFront> getAllNotificationByUser() {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    User one = userRepository.getOne(userPrincipal.getId());
+    List<Notification> notifications = one.getNotifications();
+    notifications.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
+    return NotificationToFront.convertListNotificationToFront(notifications);
   }
 }

@@ -55,6 +55,15 @@ public class User extends BaseEntity {
   @Column(name = "birthday")
   private LocalDate dateBirthday;
 
+  @Column(name = "is_enabled")
+  private boolean isEnabled;
+
+  public List<String> getRoles() {
+    List<String> roles = new ArrayList<>();
+    roles.add("ROLE_USER");
+    return roles;
+  }
+
   @OneToMany(mappedBy = "user")
   @JsonIgnore
   private List<Post> posts = new ArrayList<>();

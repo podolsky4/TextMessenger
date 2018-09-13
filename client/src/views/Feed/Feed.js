@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {createLoadPosts, loadFavorites, loadPosts} from '../../actions/postsActions'
-import {getCurrentUser} from '../../actions/userActions'
+import {createPostWithOrWithOutImage, loadFavorites, loadPagePost} from '../../actions/postsActions'
 import PostList from '../../components/Post/PostList'
 import Loader from '../../components/Loader/Loader'
 
@@ -11,17 +10,17 @@ import {Redirect} from 'react-router-dom'
 
 import {withStyles} from '@material-ui/core/styles'
 import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
-import TextField from '@material-ui/core/TextField/TextField'
+import ButtonUploadFloating from '../../components/buttons/ButtonUploadFloating'
+import InputAdornment from '@material-ui/core/InputAdornment/InputAdornment'
+import IconButton from '@material-ui/core/IconButton/IconButton'
+import FormControl from '@material-ui/core/FormControl/FormControl'
+import Input from '@material-ui/core/Input/Input'
+import classNames from 'classnames'
 
 const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center'
-  },
-  grid: {
-    flexGrow: '0',
-    width: '75%',
-    flexBasis: '75%'
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -32,30 +31,41 @@ const styles = theme => ({
   },
   form: {
     background: '#fafafa',
-    display:'flex'
+    display: 'flex',
+    justifyContent: 'space-around'
   },
-  textfield: {
-    width: '75%',
-    padding: "30px 8px 16px 16px",
+  textField: {
+    padding: '30px 8px 16px 16px',
     alignSelf: 'flex-end',
+    width: '73%'
+  },
+  paper: {
+    width: '100%',
+    maxWidth: '700px',
+    justifyItems: 'stretch'
   }
-});
+  // textField: {
+  //   flexBasis: 200,
+  // },
+})
 
 class Feed extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
-      text: ''
+      text: '',
+      page: 0,
+      size: 3
     }
   }
 
-  componentDidMount () {
-    const {loadPosts, user, loadFavorites, getCurrentUserPoint} = this.props;
-    getCurrentUserPoint();
-    if (user.length !== 0) {
+  componentWillMount () {
+    const {user, favorites, loadFavorites, pageAble} = this.props
+    const {size, page} = this.state
+    if (favorites.length === 0) {
       loadFavorites(user.id)
     }
-    loadPosts()
+    pageAble(page, size, this.setState.bind(this, {page: page + 1}))
   }
 
   change = e => {
@@ -65,14 +75,24 @@ class Feed extends Component {
   };
 
   reset = () => {
-    this.setState({text: ''});
+    this.setState({text: ''})
     document.getElementById('content').value = ''
   };
 
   onSubmit = e => {
-    const {user, createPost} = this.props;
-    e.preventDefault();
-    createPost(user.id, this.state.text);
+    const {createPost_Image} = this.props
+    e.preventDefault()
+    if (this.refs.inputFile.value) {
+      let data = new FormData()
+      data.append('content', this.state.text)
+      data.append('file', this.refs.inputFile.files[0])
+      createPost_Image(data)
+      this.refs.inputFile.value = ''
+    } else {
+      let data = new FormData()
+      data.append('content', this.state.text)
+      createPost_Image(data)
+    }
     this.reset()
   };
 
@@ -98,53 +118,94 @@ class Feed extends Component {
     }
   }
 
+  yHandler () {
+    const {pageAble, able, fetching} = this.props
+    const {page, size} = this.state
+    if (window.location.pathname === '/feed') {
+      if (fetching) {
+        return
+      }
+      let wrap = document.getElementById('wrappp')
+      let content = wrap.offsetHeight
+      let yOffset = window.pageYOffset
+      let y = yOffset + window.innerHeight - 10
+      if (able && y >= content) {
+        pageAble(page, size, this.setState.bind(this, {page: this.state.page + 1}))
+      }
+    }
+  }
+
   render () {
-    const {posts, user, fetching, classes} = this.props;
-    const {reloadLoader} = this.props;
-    if (user.length === 0) {
+    const {able, posts, user, classes} = this.props
+    const {reloadLoader} = this.props
+    const upload = <ButtonUploadFloating />
+    if (!user.id) {
       return <Redirect to={`/`}/>
     }
-    console.log(fetching);
+    if (able) {
+      window.onscroll = this.yHandler.bind(this)
+    }
     return (
 
-      <div style={{padding: 15}}>
+      <div id='wrappp' style={{padding: 15}}>
         <Grid
           container
-          direction='column'
-          justify='center'
-          alignItems='center'
-          spacing={16}
+          direction="column"
+          justify="center"
+          alignItems="center"
         >
-          <Grid className={classes.grid} item xs={12} sm={9} md={8} lg={6}>
-            <Paper>
-              <form className={classes.form} onSubmit={e => this.onSubmit(e)}>
-                <TextField
+          <Grid container
+            justify="center"
+            alignItems="stretch"
+            lg={8} sm={12} md={10}>
+            <Paper className={classes.paper}>
+              <form className={classes.form}
+                alignItems="flex-end"
+                onSubmit={e => this.onSubmit(e)}>
+                <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
+                <Input
+                  children = {upload}
                   defaultValue=""
+                  fullWidth
                   placeholder="Share something..."
                   inputProps={{
                     maxLength: 280,
                     padding: '3.7% 0 7px',
                     style:
                       {borderRadius: '2px'}
+
                   }}
                   id="content"
                   name="text"
                   multiline
                   className={classes.textfield}
                   onKeyUp={event => this.handleInput(event)}
-                  // onClick={event => Feed.handleHeight(event)} onKeyUp={event => this.handleInput(event)}
-                />
+                  endAdornment={
+
+                    <InputAdornment position="end">
+                      <Input type="file" name="file" ref="inputFile"/>
+                      <IconButton
+
+                        aria-label="upload"
+                      >
+                        <ButtonUploadFloating classes>
+                        </ButtonUploadFloating>
+                      </IconButton>
+                    </InputAdornment>
+
+                  }
+                >
+                </Input>
+                </FormControl>
+                {/* <form> */}
+                  {/* <input type="file" name="file" ref="inputFile"/> */}
+                {/* </form> */}
                 <ButtonPost flowRight/>
-                {/* <button className="btn-create-post">Publish</button> */}
               </form>
+              {reloadLoader && <Loader/>}
             </Paper>
-            {reloadLoader && <Loader/>}
+            <PostList posts={posts} user={user}/>
           </Grid>
-          {/* {reloadLoader && <Loader/>} */}
-          {/* <PostList posts={posts} user={user}/> */}
-          {/* {fetching && <Loader/>} */}
-          {/* {!fetching && <PostList posts={posts} user={user}/>} */}
-          <PostList posts={posts} user={user}/>
         </Grid>
       </div>
     )
@@ -156,17 +217,16 @@ const mapStateToProps = state => {
     user: state.user,
     posts: state.posts,
     favorites: state.favorites,
-    // fetching: state.loader.fetching,
     reloadLoader: state.reloadLoader,
-    fetching: state.loader.loadingPost
+    fetching: state.loader.loadingPost,
+    able: state.able.postAble
   }
-};
+}
 const mapDispatchToProps = dispatch => {
   return {
-    loadPosts: () => dispatch(loadPosts()),
-    createPost: (id, content) => dispatch(createLoadPosts(id, content)),
+    createPost_Image: (data) => dispatch(createPostWithOrWithOutImage(data)),
     loadFavorites: (id) => dispatch(loadFavorites(id)),
-    getCurrentUserPoint: () => dispatch(getCurrentUser())
+    pageAble: (page, size, call) => dispatch(loadPagePost(page, size, call))
   }
-};
+}
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Feed))

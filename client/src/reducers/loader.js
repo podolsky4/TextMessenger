@@ -1,7 +1,10 @@
 const initialState = {
   fetching: false,
   loadingPost: false,
-  commentReload: false
+  commentReload: false,
+  loadingUser: false,
+  loadingFavorites: false,
+  loadingComments: false
 }
 
 function loader (state = initialState, action) {
@@ -10,24 +13,22 @@ function loader (state = initialState, action) {
       return {...state, fetching: action.payload}
     case 'STOP_LOADER':
       return {...state, fetching: action.payload}
+    case 'LOADING_USER':
+      return {...state, loadingUser: action.payload}
+    case 'LOADING_COMMENTS':
+      return {...state, loadingComments: action.payload}
+    case 'LOADING_FAVORITES':
+      return {...state, loadingFavorites: action.payload}
     case 'START_LOADER_COMMENT':
       return {...state, commentReload: action.payload}
     case 'STOP_LOADER_COMMENT':
       return {...state, commentReload: action.payload}
     case 'LOADING_POST':
-      console.log('Loader action received:', action)
       return {...state, loadingPost: action.payload}
 
     default:
       return state
   }
-  // if (action.type === 'START_LOADER') {
-  //     return { ...state, fetching: action.payload}
-  // }
-  // if (action.type === 'STOP_LOADER') {
-  //     return { ...state, fetching: action.payload}
-  // }
-  // return state
 }
 
 export default loader

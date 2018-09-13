@@ -2,6 +2,12 @@
 .idea
 *.iml
 
+#excluded properties
+#application.yml
+src/main/resources/config.properties
+#src/main/resources/application.yml
+
+
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
@@ -296,3 +302,25 @@ node_modules/
 /client/package-lock.json
 yarn.lock
 /client/.stylelintcache
+/_mac/
+/.settings/
+/colors/
+/codestyles/
+/colors.scheme.xml
+/code.style.schemes.xml
+/databaseSettings.xml
+/editor.xml
+/editor.codeinsight.xml
+/ignore.xml
+/lombok-plugin.xml
+/ide.general.xml
+/plugin_ui.xml
+/material_custom_theme.xml
+/vcs.xml
+/find.xml
+/databaseDrivers.xml
+/material_theme.xml
+/filetypes.xml
+/debugger.xml
+/ui.lnf.xml
+src/main/resources/amazon.properties

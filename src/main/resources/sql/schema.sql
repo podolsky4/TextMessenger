@@ -12,9 +12,24 @@ CREATE TABLE IF NOT EXISTS `user` (
   `profile_photo`  VARCHAR(255),
   `profile_header` VARCHAR(255),
   `birthday`       DATE,
+  `is_enabled`     BOOLEAN DEFAULT FALSE,
   `created_at`     TIMESTAMP    NOT NULL,
   `last_update`    TIMESTAMP    NULL,
   PRIMARY KEY (`id`)
+);
+
+--
+-- Create table temporary token
+--
+CREATE TABLE IF NOT EXISTS `temporary_token` (
+  `id`             BIGINT       NOT NULL AUTO_INCREMENT,
+  `user_id`        BIGINT       NOT NULL,
+  `token`          VARCHAR(255) NOT NULL,
+  `expiry_date`    TIMESTAMP    NOT NULL,
+  `created_at`     TIMESTAMP    NOT NULL,
+  `last_update`    TIMESTAMP    NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `temporary_token` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 );
 
 --
@@ -44,12 +59,15 @@ CREATE TABLE IF NOT EXISTS `user_rel` (
 CREATE TABLE IF NOT EXISTS `post` (
   `id`          BIGINT       NOT NULL AUTO_INCREMENT,
   `content`     VARCHAR(280) NOT NULL,
+  `img_url`     VARCHAR(280),
+  `img_key`     VARCHAR(280),
   `parent_id`   BIGINT,
   `created_at`  TIMESTAMP    NOT NULL,
   `last_update` TIMESTAMP    NULL,
   `user_id`     BIGINT       NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  FOREIGN KEY (`parent_id`) REFERENCES `post` (`id`)
 );
 
 --
@@ -118,12 +136,14 @@ CREATE TABLE IF NOT EXISTS `user_dialog` (
 --
 CREATE TABLE IF NOT EXISTS `notification` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `is_checked` BOOLEAN DEFAULT FALSE ,
+  `is_checked` BOOLEAN DEFAULT FALSE,
   `type` VARCHAR(255),
-  `user_id` BIGINT NOT NULL,
+  `user_to` BIGINT NOT NULL,
+  `user_from` BIGINT NOT NULL,
   `content_id` BIGINT NOT NULL,
   `created_at`  TIMESTAMP    NOT NULL,
   `last_update` TIMESTAMP    NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  FOREIGN KEY (`user_to`) REFERENCES `user` (`id`),
+  FOREIGN KEY (`user_from`) REFERENCES `user` (`id`)
 );

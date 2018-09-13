@@ -15,36 +15,54 @@ const styles = theme => ({
       duration: theme.transitions.duration.short
     }),
     '&$selected': {
-      // color: theme.palette.primary.main,
       color: theme.palette.primary.main
     }
-
   },
   diva: {
     display: 'flex',
     alignItems: 'center'
-
   },
-  /* Styles applied to the root element if selected. */
-  selected: {}
+
+  selected: {
+    background: '#00000'
+  }
+
 })
 
 class Like extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      liked: false
+      liked: false,
+      likers: {}
     }
   }
 
   componentWillMount () {
     const {favorites, post, user} = this.props
     loadFavorites(user.id)
-    console.log(favorites)
-    console.log(user)
     favorites.some(p => p.id === post.id)
-      ? this.setState({liked: true})
-      : this.setState({liked: false})
+      ? this.setState({liked: true, likers: post.likers})
+      : this.setState({liked: false, likers: post.likers})
+  }
+
+  // componentWillReceiveProps(nextProp) {
+  //   let post = this.props.post
+  //   loadFavorites(post.id)
+  // }
+
+  // componentDidUpdate (prevProps) {
+  //   // Typical usage (don't forget to compare props):
+  //   let post = this.props.post
+  //   if (post.liked !== prevProps.post.liked) {
+  //     this.loadFavorites(post.id)
+  //   }
+  // }
+  componentWillReceiveProps (nextProps) { // TODO: doesn't yet rerender the number
+    if (this.props.post.likers !== nextProps.post.likers) {
+      this.setState({likers: nextProps.post.likers})
+      this.forceUpdate()
+    }
   }
 
   handleLike = (id) => {
@@ -55,24 +73,25 @@ class Like extends Component {
       deleteLiker(id, user)
     }
     this.setState({
-      liked: !this.state.liked
+      liked: !this.state.liked,
+      likers: this.state.liked ? this.state.likers.filter(l => l.id !== user.id) : [...this.state.likers, user]
     })
     loadFavorites(user.id)
   };
 
   render () {
     const {classes, post} = this.props
+
     return (
 
       <div className={classes.diva}>
         <IconButton className={classNames(classes.root, {[classes.selected]: this.state.liked})}
           onClick={() => this.handleLike(post.id)}
-
           aria-live={this.state.liked}
           aria-label="Add to favorites"
         >
           <ThumbUpIcon/>
-        </IconButton><Typography>{1}</Typography>
+        </IconButton><Typography>{this.state.likers.length}</Typography>
       </div>
     )
   }

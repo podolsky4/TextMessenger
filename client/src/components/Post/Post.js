@@ -25,8 +25,8 @@ const styles = theme => ({
   },
   grid: {
     flexGrow: '0',
-    width: '75%',
-    flexBasis: '75%'
+    width: '100%',
+    padding: theme.spacing.unit * 1
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -61,6 +61,13 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: cyan[500]
+  },
+  img: {
+    width: '100%',
+    objectFit: 'cover',
+    maxHeight: '400px',
+    // clip: "rect(0px,100%,400px,0px)",
+    position: 'relative'
   }
 })
 
@@ -80,20 +87,12 @@ class Post extends Component {
     }
   }
 
-  handleRetwite = e => {
-    const {post, user, retweets, unRetweets, postId} = this.props
-    if (e.target.className === 'tweet') {
-      retweets(user.id, post.id)
-    } else {
-      unRetweets(postId)
-    }
-  };
   handleComments = e => {
-    this.setState({flag: true})
+    this.setState({flag: !this.state.flag})
   };
 
   handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }))
+    this.setState(state => ({expanded: !state.expanded}))
   };
 
   render () {
@@ -101,35 +100,38 @@ class Post extends Component {
 
     return (
       <Grid className={classes.grid}
-        fullWidth
         item
-        key={`${post.id} ${post.parentId}`}>
+        key={`${post.id} ${post.parentId}`}
+        spacing={24}
+      >
 
-        <Card fullWidth>
+        <Card>
 
           {owner &&
             <div className={classes.reTweet}
-              children={`Ретвитнул ${owner.login}`} />
+              children={`Ретвитнул ${owner.login}`}/>
           }
 
           <UserHeaderInfo user={post.user}
             classes
             post={post}
             currentUser={user}/>
-
+          {post.imgUrl && <img className={classes.img} alt="Здесь должно быть изображение" src={post.imgUrl}/>}
           <PostContent content={post.content}/>
 
-          <Divider />
+          <Divider/>
 
           <CardActions className={classes.actions}
-            disableActionSpacing>
+                       disableActionSpacing>
             <PostFooter whoo={whoo}
               post={post}
               user={user}
               favorites={favorites}
-              handleRetwite={this.handleRetwite.bind(this)}
               handleComments={this.handleComments.bind(this)}
-              className={classes.footer} />
+              className={classes.footer}
+              classes={classes}
+              flag = {this.state.flag}
+            />
           </CardActions>
 
           {this.state.flag &&

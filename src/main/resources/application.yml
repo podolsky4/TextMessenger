@@ -1,3 +1,5 @@
+ws:
+  path: /queue/messages
 ###
 #   Server port
 ###
@@ -5,9 +7,13 @@ server:
   port: 9000
 
 ###
-#   Database Settings
+#   Mail Settings
 ###
+
 spring:
+  ###
+  #   Database Settings
+  ###
   datasource:
     url: jdbc:h2:mem:example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;
     platform: h2
@@ -22,7 +28,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        show_sql: true
+        #        show_sql: true
         use_sql_comments: true
         format_sql: true
 
@@ -36,3 +42,5 @@ spring:
       settings:
         trace: true
         web-allow-others: true
+
+

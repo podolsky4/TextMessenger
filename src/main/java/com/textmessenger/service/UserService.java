@@ -3,10 +3,15 @@ package com.textmessenger.service;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.NotificationToFront;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
+
+  String setUserIsEnabled(String token);
 
   User createUser(User user);
 
@@ -37,4 +42,15 @@ public interface UserService {
   User logIn(String email, String password);
 
   List<Notification> getAllNotificationByUserId(Long id);
+
+  UserToFrontShort getCurrentUser();
+
+  Optional<List<User>> findUserByEmailOrLogin(User user);
+
+  User getUserByEmail(String email);
+
+  void sendEmailToResetPassword(User userByEmail);
+
+  List<NotificationToFront> getAllNotificationByUser();
 }
+

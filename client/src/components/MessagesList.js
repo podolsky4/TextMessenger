@@ -9,10 +9,12 @@ const styles = theme => ({
   massageList: {
     display: 'flex',
     flexDirection: 'column',
-    background: '#F5F5F5',
+    // background: '#F5F5F5',
     padding: '4px',
     paddingBottom: '.5em',
-    paddingTop: '8px'
+    paddingTop: '32px',
+    background: 'rgba(0, 0, 0, 0.29)',
+    borderRadius: 2
   }
 })
 
@@ -22,7 +24,7 @@ class MessagesList extends Component {
     return (
       <div className={classes.massageList}>
         {messages.map(function (message) {
-          return <Message key={message.id} message = {message} user={user}/>
+          return <Message key={message.id} message={message} user={user}/>
         })}
       </div>
     )

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -28,27 +29,27 @@ public class CommentController {
   }
 
   @PostMapping("/post/{id}/user/{userId}")
-  ResponseEntity<?> createComment(@PathVariable("id") Post post,
-                                  @PathVariable("userId") User user,
-                                  @RequestBody Comment comment) {
+  ResponseEntity createComment(@Valid @PathVariable("id") Post post,
+                               @Valid @PathVariable("userId") User user,
+                               @Valid @RequestBody Comment comment) {
     commentService.createComment(post, user, comment);
     return ResponseEntity.ok().build();
   }
 
   @GetMapping("/post/{id}")
-  ResponseEntity<?> getAllCommentsFromPost(@PathVariable("id") Post post) {
+  ResponseEntity getAllCommentsFromPost(@Valid @PathVariable("id") Post post) {
     return Optional.of(ResponseEntity.ok().body(commentService.findAllPostFromPost(post)))
             .orElse(ResponseEntity.noContent().build());
   }
 
   @PutMapping
-  ResponseEntity<?> updateComment(@RequestBody Comment comment) {
+  ResponseEntity updateComment(@RequestBody Comment comment) {
     commentService.updateComment(comment);
     return ResponseEntity.ok().build();
   }
 
   @DeleteMapping
-  ResponseEntity<?> deleteComment(@RequestBody Comment comment) {
+  ResponseEntity deleteComment(@RequestBody Comment comment) {
     commentService.deleteComment(comment);
     return ResponseEntity.ok().build();
   }
