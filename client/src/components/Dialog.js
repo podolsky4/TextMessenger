@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import cyan from '@material-ui/core/colors/cyan'
-
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import Avatar from '@material-ui/core/Avatar'
@@ -74,7 +73,11 @@ const styles = theme => ({
     '&:hover': {}
   },
   userNames: {
-    display: 'flex'
+    display: 'flex',
+    maxWidth: '30%',
+    flexWrap: 'wrap',
+    alignItems: 'start',
+    justifyContent: 'space-between',
   },
   button: {
     padding: theme.spacing.unit / 1,
