@@ -1,5 +1,4 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import PersonAdd from '@material-ui/icons/PersonAdd'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
