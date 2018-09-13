@@ -17,9 +17,6 @@ class CurrentUserInfo extends Component {
     return (
       <div className={classnames(classes.UserProfileInfoCard)}>
         <UserProfileInfoCard user={user}/>
-        {/* <UserLogin login={user.login}/> */}
-        {/* <UserEmail email={user.email}/> */}
-        {/* <UserFullName user={user}/> */}
       </div>
     )
   }

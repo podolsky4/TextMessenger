@@ -22,8 +22,9 @@ export const createUser = (data) => dispatch => {
   ).then(res => res.json())
     .then(data => dispatch({type: CREATE_USER_FORM_MESSAGE, payload: data}))
 }
+
 export const forgotPassword = (email) => dispatch => {
-  fetch('api/users/forgotpassword', {
+  fetch('/api/users/forgotpassword', {
     method: 'POST',
     body: email
   })
@@ -32,7 +33,7 @@ export const forgotPassword = (email) => dispatch => {
 }
 export const getCurrentUser = () => dispatch => {
   dispatch(startLoader('LOADING_USER'))
-  fetch('api/users/current', {
+  fetch('/api/users/current', {
     method: 'GET',
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),

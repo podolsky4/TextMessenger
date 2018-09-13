@@ -30,7 +30,8 @@ class ResetPassword extends React.Component {
     super(props)
     this.state = {
       firstPassword: '',
-      secondPassword: ''
+      secondPassword: '',
+      message: ''
     }
   }
 
@@ -41,13 +42,25 @@ class ResetPassword extends React.Component {
   }
 
   resetPassword = e => {
-    alert(this.state.firstPassword)
+    e.preventDefault()
+    fetch('/api/users/changePassword', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        password: this.state.firstPassword,
+        token: this.props.match.params.token
+      })
+    }).then(res => res.json())
+      .then(data => this.setState({message: data.message}))
   }
   render () {
     const {classes} = this.props
     return (
         <Paper className={classes.paper}>
           <Typography variant="headline">Enter new password</Typography>
+          <h1>{this.state.message}</h1>
           <form onSubmit={e => this.resetPassword(e)} className={classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="firstPassword">New Password</InputLabel>

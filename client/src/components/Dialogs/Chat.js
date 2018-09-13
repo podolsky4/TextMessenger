@@ -67,8 +67,8 @@ class Chat extends Component {
     e.preventDefault()
     addMessage(currentDialog.id, user, this.state.text)
     this.messageInput.value = ''
-    console.log("onSubmit", e.target)
-    console.log("onSubmit inner", e.target)
+    console.log('onSubmit', e.target)
+    console.log('onSubmit inner', e.target)
     // this.value = ''
   };
 

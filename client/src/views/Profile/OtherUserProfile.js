@@ -76,7 +76,6 @@ class OtherUserProfile extends Component {
     }
   }
 
-
   handleFollowing = e => {
     const {user, addToFollowing, deleteFromFollowing, following, currentUser} = this.props
 

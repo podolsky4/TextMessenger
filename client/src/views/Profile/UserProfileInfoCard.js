@@ -89,10 +89,4 @@ class UserProfileInfoCard extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  }
-}
-
-export default withStyles(styles)(connect(mapStateToProps)(UserProfileInfoCard))
+export default withStyles(styles)(UserProfileInfoCard)

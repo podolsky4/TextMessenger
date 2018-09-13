@@ -51,13 +51,13 @@ const styles = theme => ({
     marginLeft: 0,
     lineHeight: 1,
     background: theme.palette.secondary.main,
-    fontSize: 12,
+    fontSize: 12
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
   },
   chat: {
-    maxWidth: 620,
+    maxWidth: 620
   }
 })
 

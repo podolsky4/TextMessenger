@@ -14,7 +14,6 @@ const styles = theme => ({
 })
 
 class ButtonUploadFloating extends Component {
-
     // const input = <form><input type="file" name="file" ref="inputFile"/></form>
   render () {
     const { classes } = this.props
