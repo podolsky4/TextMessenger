@@ -1,4 +1,5 @@
 <code_scheme name="Default" version="173">
+  <option name="AUTODETECT_INDENTS" value="false" />
   <codeStyleSettings language="JAVA">
     <indentOptions>
       <option name="INDENT_SIZE" value="2" />
