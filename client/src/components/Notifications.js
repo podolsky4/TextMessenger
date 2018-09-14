@@ -58,6 +58,7 @@ class Notifications extends Component {
     } else if (e.type === 'NEW_DIALOG' || e.type === 'NEW_MESSAGE' || e.type === 'ADD_TO_DIALOG') {
       this.setState({toDialog: true, dialogId: e.dialog.id})
     } else if (e.type === 'NEW_LIKE' || e.type === 'NEW_COMMENT' || e.type === 'NEW_RETWEET') {
+      alert('WTF')
       this.setState({toPost: true, postId: e.post.id})
     }
   }
@@ -70,24 +71,6 @@ class Notifications extends Component {
          className={classes.card}
          onClick = {e => this.redirecting(item)}
        >
-            <CardContent>
-                <Typography className={classes.title} color="textSecondary">
-                    {item.type}
-                </Typography>
-                <Typography variant="headline" component="h2">
-                    {item.fromUser.login}
-                    <span className={classes.bullet}>•</span>
-                    {text}
-                </Typography>
-            </CardContent>
-    </Card>
-      </Grid>
-  }
-
-  notificationCard = (item, text) => {
-    const {classes} = this.props
-    return <Grid fullWidht item>
-       <Card fullWidth className={classes.card}>
             <CardContent>
                 <Typography className={classes.title} color="textSecondary">
                     {item.type}
