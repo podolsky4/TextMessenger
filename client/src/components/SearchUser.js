@@ -68,9 +68,9 @@ class SearchUser extends Component {
   createChatWithUser (e) {
     const {user, createDialog, exist, dialog, existDialod} = this.props
     if (exist) {
-      existDialod(dialog, user.id, e.target.value)
+      existDialod(dialog, user.id, e)
     } else {
-      createDialog(user, e.target.value)
+      createDialog(user, e)
     }
   }
 
@@ -105,7 +105,7 @@ class SearchUser extends Component {
           <a>
             {user.email}
           </a>
-          <Button variant="flat" className={classes.buttonAdd} value={user.id} onClick={e => this.createChatWithUser(e)}>Add</Button>
+          <Button variant="flat" className={classes.buttonAdd} value={user.id} onClick={e => this.createChatWithUser(user.id)}>Add</Button>
         </div>)}
       </div>
     )
