@@ -324,3 +324,4 @@ yarn.lock
 /debugger.xml
 /ui.lnf.xml
 src/main/resources/amazon.properties
+/baseRefactoring.xml
