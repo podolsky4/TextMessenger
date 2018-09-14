@@ -10,19 +10,19 @@ import java.util.List;
 
 public interface PostService {
 
-    void updatePost(Post post);
+  void updatePost(Post post);
 
-    void deletePost(Post post);
+  void deletePost(Post post);
 
-    List<PostToFront> getAll();
+  List<PostToFront> getAll();
 
-    List<PostToFront> getPage(int page, int size);
+  List<PostToFront> getPage(int page, int size);
 
-    List<Post> getUserPost(User user);
+  List<Post> getUserPost(User user);
 
-    void retwitPost(User user, Long postId);
+  void retwitPost(User user, Long postId);
 
-    void createPost(String content, MultipartFile file) throws IOException;
+  void createPost(String content, MultipartFile file) throws IOException;
 
-    Post getPostById(long id);
+  Post getPostById(long id);
 }

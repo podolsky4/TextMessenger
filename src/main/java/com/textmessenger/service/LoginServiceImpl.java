@@ -13,26 +13,26 @@ import org.springframework.stereotype.Service;
 @Service
 
 public class LoginServiceImpl implements LoginService {
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
+  private final AuthenticationManager authenticationManager;
+  private final JwtTokenProvider jwtTokenProvider;
 
-    public LoginServiceImpl(AuthenticationManager authenticationManager,
-                            JwtTokenProvider jwtTokenProvider) {
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+  public LoginServiceImpl(AuthenticationManager authenticationManager,
+                          JwtTokenProvider jwtTokenProvider) {
+    this.authenticationManager = authenticationManager;
+    this.jwtTokenProvider = jwtTokenProvider;
+  }
 
-    @Override
-    public ResponseEntity authenticateUser(LoginRq user) {
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getLoginOrEmail(),
-                        user.getPassword()
-                )
-        );
+  @Override
+  public ResponseEntity authenticateUser(LoginRq user) {
+    Authentication authenticate = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                    user.getLoginOrEmail(),
+                    user.getPassword()
+            )
+    );
 
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-        String jwt = jwtTokenProvider.generateToken(authenticate);
-        return ResponseEntity.ok(new Token(jwt));
-    }
+    SecurityContextHolder.getContext().setAuthentication(authenticate);
+    String jwt = jwtTokenProvider.generateToken(authenticate);
+    return ResponseEntity.ok(new Token(jwt));
+  }
 }

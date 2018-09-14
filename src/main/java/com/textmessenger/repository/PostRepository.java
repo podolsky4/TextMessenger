@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> findPostsByUser(User user);
+  List<Post> findPostsByUser(User user);
 
-    Page<Post> findAllByOrderByCreatedDateDesc(Pageable pageable);
+  Page<Post> findAllByOrderByCreatedDateDesc(Pageable pageable);
 }

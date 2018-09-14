@@ -4,5 +4,5 @@ import com.textmessenger.model.entity.dto.LoginRq;
 import org.springframework.http.ResponseEntity;
 
 public interface LoginService {
-    ResponseEntity authenticateUser(LoginRq user);
+  ResponseEntity authenticateUser(LoginRq user);
 }

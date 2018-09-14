@@ -5,7 +5,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,27 +25,27 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Post extends BaseEntity {
 
-    @Column(name = "content")
-    private String content;
+  @Column(name = "content")
+  private String content;
 
-    @Column(name = "img_url")
-    private String imgUrl;
+  @Column(name = "img_url")
+  private String imgUrl;
 
-    @Column(name = "img_key")
-    private String imgKey;
+  @Column(name = "img_key")
+  private String imgKey;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    private Post parent;
+  @ManyToOne
+  @JoinColumn(name = "parent_id")
+  private Post parent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties(value = "posts", allowSetters = true)
-    private User user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  @JsonIgnoreProperties(value = "posts", allowSetters = true)
+  private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
-    @ManyToMany(mappedBy = "favorites")
-    private List<User> likers = new ArrayList<>();
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Comment> comments = new ArrayList<>();
+  @ManyToMany(mappedBy = "favorites")
+  private List<User> likers = new ArrayList<>();
 
 }

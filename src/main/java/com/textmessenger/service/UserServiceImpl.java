@@ -154,7 +154,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public Optional<List<User>> findUserByEmailOrLogin(User user) {
     return Optional.of(userRepository
-        .findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(user.getLogin(), user.getEmail()));
+            .findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(user.getLogin(), user.getEmail()));
   }
 
   @Override
@@ -175,9 +175,9 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserToFrontShort getCurrentUser() {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-        .getContext()
-        .getAuthentication()
-        .getPrincipal();
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
     Optional<User> user = userRepository.findById(userPrincipal.getId());
     if (user.isPresent()) {
       return userToFront.convertUserForFront(user.get());
@@ -207,9 +207,9 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<NotificationToFront> getAllNotificationByUser() {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-        .getContext()
-        .getAuthentication()
-        .getPrincipal();
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
     User one = userRepository.getOne(userPrincipal.getId());
     List<Notification> notifications = one.getNotifications();
     notifications.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));

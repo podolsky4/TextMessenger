@@ -25,9 +25,9 @@ public class CommentToFront {
     return commentToFront;
   }
 
-    public static List<CommentToFront> convertListCommentsToResponse(List<Comment> comments) {
-        List<CommentToFront> res = new ArrayList<>();
-        comments.stream().forEach(comment -> res.add(convertCommentToFront(comment)));
-        return res;
-    }
+  public static List<CommentToFront> convertListCommentsToResponse(List<Comment> comments) {
+    List<CommentToFront> res = new ArrayList<>();
+    comments.stream().forEach(comment -> res.add(convertCommentToFront(comment)));
+    return res;
+  }
 }

@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface DialogRepository extends JpaRepository<Dialog, Long> {
 
-    List<Dialog> findDialogsByUsers(User user);
+  List<Dialog> findDialogsByUsers(User user);
 }

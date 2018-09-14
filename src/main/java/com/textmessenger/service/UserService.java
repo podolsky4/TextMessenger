@@ -12,45 +12,45 @@ import java.util.Optional;
 
 public interface UserService {
 
-    String setUserIsEnabled(String token);
+  String setUserIsEnabled(String token);
 
-    User createUser(User user);
+  User createUser(User user);
 
-    User readUser(long id);
+  User readUser(long id);
 
-    void updateUser(User user);
+  void updateUser(User user);
 
-    void deleteUser(long id);
+  void deleteUser(long id);
 
-    User getUserByLogin(String login);
+  User getUserByLogin(String login);
 
-    void addLikers(Post post, User user);
+  void addLikers(Post post, User user);
 
-    void deleteFromFavorites(Post post, User user);
+  void deleteFromFavorites(Post post, User user);
 
-    List<Post> getFavoritesById(Long id);
+  List<Post> getFavoritesById(Long id);
 
-    List<Post> getFavoritesByLogin(String login);
+  List<Post> getFavoritesByLogin(String login);
 
-    List<User> findUsersBySearch(String str);
+  List<User> findUsersBySearch(String str);
 
-    List<User> getFollowings(Long id);
+  List<User> getFollowings(Long id);
 
-    void addToFollowing(Long user, Long newUser);
+  void addToFollowing(Long user, Long newUser);
 
-    void deleteFromFollowing(Long user, Long newUser);
+  void deleteFromFollowing(Long user, Long newUser);
 
-    User logIn(String email, String password);
+  User logIn(String email, String password);
 
-    List<Notification> getAllNotificationByUserId(Long id);
+  List<Notification> getAllNotificationByUserId(Long id);
 
-    UserToFrontShort getCurrentUser();
+  UserToFrontShort getCurrentUser();
 
-    Optional<List<User>> findUserByEmailOrLogin(User user);
+  Optional<List<User>> findUserByEmailOrLogin(User user);
 
-    User getUserByEmail(String email);
+  User getUserByEmail(String email);
 
-    void sendEmailToResetPassword(User userByEmail);
+  void sendEmailToResetPassword(User userByEmail);
 
   List<NotificationToFront> getAllNotificationByUser();
 

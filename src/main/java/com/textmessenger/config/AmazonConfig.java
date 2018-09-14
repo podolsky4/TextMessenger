@@ -13,20 +13,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class AmazonConfig {
 
-    @Value("${Access_key}")
-    private String accessKey;
+  @Value("${Access_key}")
+  private String accessKey;
 
-    @Value("${Secret_key}")
-    private String secretKey;
+  @Value("${Secret_key}")
+  private String secretKey;
 
-    public static final String BUCKET_NAME = "my-text-messages";
+  public static final String BUCKET_NAME = "my-text-messages";
 
-    public AmazonS3 getConnection() {
-        return AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(
-                        new BasicAWSCredentials(
-                                accessKey,    // put your key from aws console
-                                secretKey))) // put your key from aws console
-                .withRegion(Regions.US_EAST_2).build(); // put your region from aws Region
-    }
+  public AmazonS3 getConnection() {
+    return AmazonS3ClientBuilder.standard()
+            .withCredentials(new AWSStaticCredentialsProvider(
+                    new BasicAWSCredentials(
+                            accessKey,    // put your key from aws console
+                            secretKey))) // put your key from aws console
+            .withRegion(Regions.US_EAST_2).build(); // put your region from aws Region
+  }
 }

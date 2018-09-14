@@ -6,7 +6,13 @@ import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -16,16 +22,16 @@ import javax.persistence.*;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Message extends BaseEntity {
 
-    @Column(name = "content")
-    private String content;
+  @Column(name = "content")
+  private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dialog_id")
-    @JsonIgnoreProperties(value = "messages", allowSetters = true)
-    private Dialog dialog;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "dialog_id")
+  @JsonIgnoreProperties(value = "messages", allowSetters = true)
+  private Dialog dialog;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @CreatedBy
-    private User user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  @CreatedBy
+  private User user;
 }

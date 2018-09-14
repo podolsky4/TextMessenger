@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class ResponseToFront {
-    String message;
+  String message;
 
-    public static ResponseToFront convertResponseToFront(String msg) {
-        ResponseToFront responseToFront = new ResponseToFront();
-        responseToFront.setMessage(msg);
-        return responseToFront;
-    }
+  public static ResponseToFront convertResponseToFront(String msg) {
+    ResponseToFront responseToFront = new ResponseToFront();
+    responseToFront.setMessage(msg);
+    return responseToFront;
+  }
 }
