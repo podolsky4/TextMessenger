@@ -2,11 +2,62 @@ import React, {Component} from 'react'
 import {Redirect} from 'react-router-dom'
 import connect from 'react-redux/es/connect/connect'
 import {loadUserNotification} from '../actions/userActions'
+import {
+    Card,
+    CardContent,
+    Grid,
+    Typography
+} from '@material-ui/core/umd/material-ui.production.min'
+import {withStyles} from '@material-ui/core/styles'
+
+const styles = theme => ({
+  root: {
+    background: theme.palette.background.main,
+    flexGrow: 1,
+    margin: '32px auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  card: {
+    // width: '80%',
+    minWidth: 275,
+    cursor: 'pointer'
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)'
+  },
+  title: {
+    marginBottom: 16,
+    fontSize: 14
+  }
+}
+)
 
 class Notifications extends Component {
   componentWillMount () {
     const {loadNotification} = this.props
     loadNotification()
+  }
+
+  notificationCard = (item, text) => {
+    const {classes} = this.props
+    return <Grid fullWidht item>
+       <Card fullWidth className={classes.card}>
+            <CardContent>
+                <Typography className={classes.title} color="textSecondary">
+                    {item.type}
+                </Typography>
+                <Typography variant="headline" component="h2">
+                    {item.fromUser.login}
+                    <span className={classes.bullet}>•</span>
+                    {text}
+                </Typography>
+            </CardContent>
+    </Card>
+      </Grid>
   }
 
   read = item => {
@@ -26,20 +77,37 @@ class Notifications extends Component {
     } else if (item.type === 'ADD_TO_DIALOG') {
       return <h3>Юзер {item.fromUser.login} join you to chat</h3>
     } else if (item.type === 'NEW_MESSAGE') {
-      return <h3>{item.fromUser.login} write you new message</h3>
+      const text = 'wrote you new message'
+      return this.notificationCard(item, text)
     }
   }
 
   render () {
-    const {user, notification} = this.props
+    const {user, notification, classes} = this.props
+
     if (!user) {
       return <Redirect to={`/`}/>
     }
     return (
-      <React.Fragment>
-        {notification.length === 0 && <h3>Nothing to show</h3>}
-        {notification.length !== 0 && notification.map(u => this.read(u))}
-      </React.Fragment>
+        <Grid fullWidht className={classes.root}>
+
+                {notification.length === 0 &&
+                    <Grid item xs={12}>
+                        <Typography component={'h6'}>Nothing to show</Typography>
+                    </Grid>
+                }
+                <Grid containter
+                      zeroMinWidth
+                      direction="column"
+                      justify="center"
+                      alignItems="stretch">
+                    <Typography wrap component={'h6'}>Your Notifications</Typography>
+                    {notification.length !== 0 &&
+                    notification.map(u => this.read(u))
+                    }
+                </Grid>
+
+        </Grid>
     )
   }
 }
@@ -55,4 +123,4 @@ const mapDispatchToProps = dispatch => {
     loadNotification: () => dispatch(loadUserNotification())
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Notifications))

@@ -96,11 +96,11 @@ class CommentList extends Component {
                            helperText={'Enter more that 3 symbols long comment, please'}
                            inputProps={{
                              maxLength: 120,
-                             minLenght: 1,
+                             minLength: 1,
+                             required: true,
                              padding: '3.7% 0 7px',
                              style:
                                    {borderRadius: '2px'}
-
                            }}
                            minLenght={3}
                            onKeyUp={event => this.myFunction(event)}
