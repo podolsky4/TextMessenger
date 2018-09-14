@@ -6,7 +6,6 @@ import './Dialogs.css'
 import Chat from './Chat'
 import SearchUser from '../SearchUser'
 import {Redirect} from 'react-router-dom'
-import cyan from '@material-ui/core/colors/cyan'
 
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper/Paper'
@@ -22,7 +21,7 @@ const styles = theme => ({
     display: 'flex'
   },
   avatar: {
-    backgroundColor: cyan[500]
+    backgroundColor: theme.palette.background.main
   },
   wrap: {
     display: 'flex',

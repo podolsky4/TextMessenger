@@ -66,14 +66,14 @@ const styles = (theme) => ({
     display: 'flex',
     width: 130,
     border: '1px solid #fff3e00d',
-    background: '#fafafa21',
+    background: theme.palette.background.main,
     marginLeft: '10px',
 
     '&:hover': {
-      background: '#fafafa',
-      color: 'black',
+      background: theme.palette.background.main,
+      color: theme.palette.background.dark,
       '& $pos': {
-        color: 'black',
+        color: theme.palette.background.dark,
         fontWeight: '700'
       }
     }

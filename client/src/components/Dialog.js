@@ -22,7 +22,7 @@ const styles = theme => ({
     justifyContent: 'space-between',
     '&:hover': {
       '& $button': {
-        backgroundColor: '#fafafa',
+        backgroundColor: theme.palette.background.dark,
         opacity: 1
       },
       backgroundColor: theme.palette.primary.main,
@@ -33,7 +33,7 @@ const styles = theme => ({
     backgroundColor: cyan[500],
     margin: '0 -6px',
     transition: 'margin .3s',
-    border: '2px solid #ffffff',
+    border: '2px solid' + theme.palette.background.dark,
     '&:hover': {
       margin: '0 -6px',
       zIndex: '10'

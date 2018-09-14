@@ -33,7 +33,7 @@ const styles = theme => ({
     transform: 'rotate(180deg)'
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: theme.palette.background.dark,
     cursor: 'pointer'
   },
   nopadding: {

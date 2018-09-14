@@ -9,18 +9,20 @@ import Loader from '../../components/Loader/Loader'
 import UnsecureRouter from '../Router/UnsecureRouter'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import blueGrey from '@material-ui/core/colors/blueGrey'
+
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#00796b'
+      main: '#00796b',
+      dark: '#00453d',
+      accent: '#00bcd4'
     },
     secondary: {
       main: '#c62828'
     },
     background: {
-      main: blueGrey,
+      main: '#00796B',
       grey: '#fafafa'
     }
   },

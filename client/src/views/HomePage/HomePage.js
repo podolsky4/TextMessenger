@@ -7,6 +7,7 @@ import {withStyles} from '@material-ui/core/styles'
 import connect from 'react-redux/es/connect/connect'
 import classNames from 'classnames'
 import {Redirect} from 'react-router-dom'
+import blueGrey from '@material-ui/core/colors/blueGrey'
 
 const styles = theme => ({
   root: {
@@ -17,10 +18,11 @@ const styles = theme => ({
     height: '100vh'
   },
   cont: {
-    background: 'red'
+    background: blueGrey
   },
   homepage: {
-    background: 'linear-gradient(to top, #9eb1ba, #8ea4ae, #7f97a2, #6f8a96, #607d8b), grey',
+    // background: 'linear-gradient(to top, #9eb1ba, #8ea4ae, #7f97a2, #6f8a96, #607d8b), grey',
+      background: toString.blueGrey,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'true',
