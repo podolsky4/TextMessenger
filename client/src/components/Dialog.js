@@ -115,8 +115,8 @@ class Dialog extends Component {
       <div className={classes.paper} onClick={e => handleMessages(dialog)}>
         <div className={classes.userAvatarContainer}>
           {users.map(
-            member => member.id !== user.id
-              ? <div className={classnames(classes.userAvatar)}>
+            (member, index) => member.id !== user.id
+              ? <div key={index} className={classnames(classes.userAvatar)}>
                 <Avatar alt="avatar"
                   src={member.profilePhoto === null ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png' : member.profilePhoto}
                   className={classnames(classes.avatar, 'logo')}
@@ -131,10 +131,8 @@ class Dialog extends Component {
             users.length <= 4
               ? users.map(
                 member => member.id !== user.id
-                  ? <div className={classes.userNameContainer}>
-                    <a key={member.id}
-                      className={classnames(classes.userName, 'capitalize')}
-                    >
+                  ? <div key={member.id} className={classes.userNameContainer}>
+                    <a className={classnames(classes.userName, 'capitalize')}>
                       {member.login}
                     </a>
                   </div>
@@ -146,7 +144,7 @@ class Dialog extends Component {
         <Button value={dialog.id}
                 onClick={e => addUserToDialog(e)}
                 variant="outlined"
-                color='background'
+                color='primary'
                 type="submit" className={classes.button}>
           Add user
         </Button>
