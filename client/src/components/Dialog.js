@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import cyan from '@material-ui/core/colors/cyan'
-
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import Avatar from '@material-ui/core/Avatar'
@@ -15,7 +14,6 @@ const styles = theme => ({
   },
   paper: {
     flexDirection: 'row',
-    margin: 1,
     width: '100%',
     display: 'flex',
     padding: theme.spacing.unit,
@@ -24,10 +22,11 @@ const styles = theme => ({
     justifyContent: 'space-between',
     '&:hover': {
       '& $button': {
-        background: '#fafafa',
+        backgroundColor: '#fafafa',
         opacity: 1
       },
-      background: theme.palette.primary.main
+      backgroundColor: theme.palette.primary.main,
+      borderRadius: 4
     }
   },
   avatar: {
@@ -74,7 +73,11 @@ const styles = theme => ({
     '&:hover': {}
   },
   userNames: {
-    display: 'flex'
+    display: 'flex',
+    maxWidth: '30%',
+    flexWrap: 'wrap',
+    alignItems: 'start',
+    justifyContent: 'space-between'
   },
   button: {
     padding: theme.spacing.unit / 1,

@@ -8,6 +8,27 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import UnsecureRouter from '../Router/UnsecureRouter'
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import blueGrey from '@material-ui/core/colors/blueGrey'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#00796b'
+    },
+    secondary: {
+      main: '#c62828'
+    },
+    background: {
+      main: blueGrey,
+      grey: '#fafafa'
+    }
+  },
+  status: {
+    danger: 'orange'
+  }
+})
+
 class App extends Component {
   componentWillMount () {
     const {user, getCurrentUserPoint} = this.props
@@ -32,11 +53,13 @@ class App extends Component {
     }
 
     return (
-      <CssBaseline>
-        <SecureRouter wsHandler={true}/>
-        <Header/>
-        <SecureRouter/>
-      </CssBaseline>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline>
+            <SecureRouter wsHandler={true}/>
+            <Header/>
+            <SecureRouter/>
+          </CssBaseline>
+        </MuiThemeProvider>
     )
   }
 }

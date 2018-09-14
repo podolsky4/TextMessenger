@@ -14,20 +14,27 @@ const styles = theme => ({
     paddingBottom: '.5em',
     paddingTop: '32px',
     background: 'rgba(0, 0, 0, 0.29)',
-    borderRadius: 2
+    borderRadius: 2,
+    maxHeight: '85vh',
+    overflow: 'scroll'
   }
 })
 
 class MessagesList extends Component {
+  componentDidMount () {
+    const msgWrap = document.getElementById('msgWrap')
+    msgWrap.scrollIntoView(false)  // TODO: make it scroll to the last one
+  }
   render () {
     const {messages, user, classes} = this.props
-    return (
-      <div className={classes.massageList}>
-        {messages.map(function (message) {
+    const massageList = (
+      <div id={'msgWrap'} className={classes.massageList}>
+        {messages.map((message) => {
           return <Message key={message.id} message={message} user={user}/>
         })}
       </div>
     )
+    return (massageList)
   }
 }
 

@@ -77,30 +77,26 @@ class Chat extends Component {
     return (
       <div className={classes.chat}>
         {fetching && <Loader classes={{progress: 'root'}}/>}
-        {!fetching && <MessagesList messages={messages} user={user}/>}
-
-          <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
-            <TextField
-              defaultValue={null}
-              placeholder=" Write message"
-              maxLength={280}
-              type="text"
-              inputRef={(el) => this.messageInput = el}
-              onKeyUp={event => this.myFunction(event)}
-              className={classnames(classes.margin, classes.text, 'messageInput')}
-              label="Your Message"
-              id="messageInput"
-              backgroundColor="white"
-              multiline
-              autoFocus
-              white
-            >
-            </TextField>
-            <SubmitButton/>
-          </form>
-
+        <MessagesList messages={messages} user={user}/>
+        <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
+          <TextField
+            defaultValue={null}
+            placeholder=" Write message"
+            maxLength={280}
+            type="text"
+            inputRef={(el) => this.messageInput = el}
+            onKeyUp={event => this.myFunction(event)}
+            className={classnames(classes.margin, classes.text, 'messageInput')}
+            label="Your Message"
+            id="messageInput"
+            backgroundColor="white"
+            multiline
+            autoFocus
+            white >
+          </TextField>
+          <SubmitButton/>
+        </form>
       </div>
-
     )
   }
 }

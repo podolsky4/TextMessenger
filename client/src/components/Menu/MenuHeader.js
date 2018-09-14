@@ -43,7 +43,8 @@ const styles = (theme) => ({
     margin: theme.spacing.unit
   },
   menuItem: {
-    justifyContent: 'space-between',
+    display: 'flex',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   pos: {
