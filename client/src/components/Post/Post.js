@@ -96,7 +96,7 @@ class Post extends Component {
   };
 
   render () {
-    const {post, owner, user, classes, favorites, whoo} = this.props
+    const {post, owner, user, classes, favorites, whoo, postId} = this.props
 
     return (
       <Grid className={classes.grid}
@@ -125,6 +125,7 @@ class Post extends Component {
                        disableActionSpacing>
             <PostFooter whoo={whoo}
               post={post}
+              postId ={postId}
               user={user}
               favorites={favorites}
               handleComments={this.handleComments.bind(this)}
