@@ -24,8 +24,6 @@ class Profile extends React.Component {
   render () {
     // loadPosts()
     const {user, match, classes, posts} = this.props
-
-    console.log('Posts: \n', posts)
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
@@ -46,7 +44,6 @@ class Profile extends React.Component {
       )
     }
 
-    console.log('userPosts: \n', userPosts)
     return (
       <React.Fragment>
         {flag && <CurrentUserProfile userPosts={userPosts}/>}

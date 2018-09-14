@@ -67,16 +67,13 @@ class Chat extends Component {
     e.preventDefault()
     addMessage(currentDialog.id, user, this.state.text)
     this.messageInput.value = ''
-    console.log('onSubmit', e.target)
-    console.log('onSubmit inner', e.target)
-    // this.value = ''
   };
 
   render () {
     const {user, fetching, messages, classes} = this.props
     return (
       <div className={classes.chat}>
-        {fetching && <Loader classes={{progress: 'root'}}/>}
+        {fetching && <Loader />}
         <MessagesList messages={messages} user={user}/>
         <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
           <TextField
@@ -89,10 +86,10 @@ class Chat extends Component {
             className={classnames(classes.margin, classes.text, 'messageInput')}
             label="Your Message"
             id="messageInput"
-            backgroundColor="white"
+            backgroundcolor="white"
             multiline
             autoFocus
-            white >
+          >
           </TextField>
           <SubmitButton/>
         </form>

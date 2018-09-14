@@ -68,8 +68,6 @@ const styles = theme => ({
 
 function Message (props) {
   const {message, classes, user} = props
-  console.log('user in message :', user)
-  console.log('message in message :', message)
 
   // to check dynamically if the message is from current user:
   // --------- 1. create a new obj with 1.classes from props

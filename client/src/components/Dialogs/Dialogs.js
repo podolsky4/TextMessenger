@@ -160,7 +160,7 @@ class Dialogs extends Component {
           </Button>
           {newDialog &&
           <Button onClick={() => this.setState({newDialog: false})}
-                  variant="outlined" type="close" color="error" style={{marginLeft: '6px'}}>
+                  variant="outlined" type="close" color="primary" style={{marginLeft: '6px'}}>
             close
           </Button>
           }

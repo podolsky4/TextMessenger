@@ -55,7 +55,6 @@ const styles = (theme) => ({
 class UserProfileInfoCard extends React.Component {
   render () {
     const {user, classes} = this.props
-    console.log(user)
     return (
       <React.Fragment>
 
