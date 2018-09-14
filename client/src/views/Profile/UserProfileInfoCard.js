@@ -1,5 +1,4 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import PersonAdd from '@material-ui/icons/PersonAdd'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
@@ -89,10 +88,4 @@ class UserProfileInfoCard extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  }
-}
-
-export default withStyles(styles)(connect(mapStateToProps)(UserProfileInfoCard))
+export default withStyles(styles)(UserProfileInfoCard)

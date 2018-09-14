@@ -104,7 +104,7 @@ class MenuHeader extends React.Component {
     const {classes, user} = this.props
 
     return (
-      <div className={classes.root}>
+      <div Min className={classes.root}>
         <div>
           <Button
             buttonRef={node => {

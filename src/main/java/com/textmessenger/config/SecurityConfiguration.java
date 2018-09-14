@@ -41,41 +41,44 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .headers()
-                .frameOptions()
-                .disable()
-                .and()
-                .csrf()
-                .disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/users/login")
-                .permitAll()
-                .antMatchers("/console")
-                .permitAll()
-                .antMatchers("http://localhost:9000/healthcheck")
-                .permitAll()
-                .antMatchers("/api/users/user")
-                .permitAll()
-                .antMatchers("/api/users/registered/**")
-                .permitAll()
-                .antMatchers("/api/users/resetPassword /**")
-                .permitAll()
-                .antMatchers("/api/users//forgotpassword")
-                .permitAll()
-                .antMatchers("/console/*")
-                .permitAll()
-                .anyRequest()
-                .authenticated();
-
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http
+            .headers()
+            .frameOptions()
+            .disable()
+            .and()
+            .csrf()
+            .disable()
+            .exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/api/users/login")
+            .permitAll()
+            .antMatchers("/console")
+            .permitAll()
+            .antMatchers("http://localhost:9000/healthcheck")
+            .permitAll()
+            .antMatchers("/api/users/user")
+            .permitAll()
+            .antMatchers("/api/users/registered/**")
+            .permitAll()
+            .antMatchers("/api/users/resetPassword/**")
+            .permitAll()
+            .antMatchers("/api/users/forgotpassword", "/api/users/changePassword")
+            .permitAll()
+            .antMatchers("/api/users/changePassword")
+            .permitAll()
+            .antMatchers("/console/*")
+            .permitAll()
+            .antMatchers("/static/**")
+            .permitAll()
+            .anyRequest()
+            .authenticated();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
