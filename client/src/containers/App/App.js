@@ -10,16 +10,20 @@ import UnsecureRouter from '../Router/UnsecureRouter'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
-
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#00796b',
-      dark: '#00453d',
-      accent: '#00bcd4'
+      main: '#00695c',
+      light: '#439889',
+      dark: '#003d33',
+      accent: '#00bcd4',
+      contrastText: '#fff'
     },
     secondary: {
-      main: '#c62828'
+      main: '#e65100',
+      light: '#ff833a',
+      dark: '#ac1900',
+      contrastText: '#000'
     },
     background: {
       main: '#00796B',
@@ -48,9 +52,11 @@ class App extends Component {
 
     if (!user.id) {
       return (
-        <CssBaseline>
-          <UnsecureRouter/>
-        </CssBaseline>
+          <MuiThemeProvider theme={theme}>
+            <CssBaseline>
+              <UnsecureRouter/>
+            </CssBaseline>
+          </MuiThemeProvider>
       )
     }
 

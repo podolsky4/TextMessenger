@@ -22,10 +22,10 @@ const styles = theme => ({
     justifyContent: 'space-between',
     '&:hover': {
       '& $button': {
-        backgroundColor: theme.palette.background.dark,
+        backgroundColor: theme.palette.secondary.main,
         opacity: 1
       },
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.primary.accent,
       borderRadius: 4
     }
   },

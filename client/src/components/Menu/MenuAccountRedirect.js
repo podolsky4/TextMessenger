@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
-import red from '@material-ui/core/colors/red'
 
 import {Redirect} from 'react-router'
 

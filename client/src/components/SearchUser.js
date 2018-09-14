@@ -12,7 +12,7 @@ const styles = theme => ({
   search_input: {
     width: '78.2%',
     '&:after': {
-      borderBottom: '1px solid' + theme.palette.primary.main,
+      borderBottom: '1px solid' + theme.palette.primary.main
     }
   },
   button: {
@@ -35,7 +35,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 10,
-    borderBottom: '1px solid' + theme.palette.background.dark,
+    borderBottom: '1px solid' + theme.palette.background.dark
   },
   search_form: {
     alignItems: 'baseline',

@@ -53,10 +53,13 @@ const styles = theme => ({
     marginTop: theme.spacing.unit
   },
   submit: {
-    background: theme.palette.primary.dark,
-    marginTop: theme.spacing.unit * 3,
+    background: theme.palette.primary.dark * 0.1,
+    marginTop: theme.spacing.unit * 3
   },
   signIn: {
+    color: '#00796B',
+    borderColor: '#00796B',
+    fontWeight: '700',
     marginBottom: 10,
     marginTop: theme.spacing.unit,
     opacity: '0.6',
