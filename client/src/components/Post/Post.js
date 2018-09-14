@@ -131,6 +131,7 @@ class Post extends Component {
               className={classes.footer}
               classes={classes}
               flag = {this.state.flag}
+              commentsAmount = {post.comments.length}
             />
           </CardActions>
 
@@ -138,6 +139,7 @@ class Post extends Component {
             <Comments comments={post.comments}
               post={post}
               user={user}
+              postUser={post.user}
               flag={this.state.flag}/>
           }
 

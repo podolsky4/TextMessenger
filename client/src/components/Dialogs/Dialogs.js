@@ -11,6 +11,7 @@ import cyan from '@material-ui/core/colors/cyan'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper/Paper'
 import Button from '@material-ui/core/Button/Button'
+import * as primary from '@material-ui/core/styles/createPalette'
 
 const styles = theme => ({
   root: {
@@ -38,12 +39,12 @@ const styles = theme => ({
     flexBasis: 1,
     flexGrow: 1,
     margin: '0 auto',
-    maxWidth: 320,
+    maxWidth: 520,
     padding: '0 1%'
   },
   paper: {
     width: '100%',
-    margin: '0 auto 0 0'
+    margin: '1px 0'
   },
   button: {
     padding: theme.spacing.unit / 2,
@@ -51,13 +52,22 @@ const styles = theme => ({
     marginLeft: 0,
     lineHeight: 1,
     background: theme.palette.secondary.main,
-    fontSize: 12,
+    fontSize: 12
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
   },
   chat: {
-    maxWidth: 620,
+    maxWidth: 620
+  },
+  searchUser: {
+    flexShrink: 1,
+    flexBasis: 1,
+    flexGrow: 1,
+    margin: '0 auto',
+    maxWidth: 520,
+    padding: '0 1%',
+    background: theme.palette.background.main
   }
 })
 
@@ -137,17 +147,26 @@ class Dialogs extends Component {
               />
             </Paper>
           )}
+          {newDialog &&
+          <Paper color={primary.dark}>
+            <SearchUser exist={exist}
+                        dialog={dialogId}
+                        className={classes.searchUser}
+            />
+          </Paper>
+          }
           <Button onClick={e => this.handleCreateDialog(e)}
                   variant="contained" type="submit" color="primary" className={classes.button}>
             new Dialog
           </Button>
+          {newDialog &&
+          <Button onClick={() => this.setState({newDialog: false})}
+                  variant="outlined" type="close" color="error" style={{marginLeft: '6px'}}>
+            close
+          </Button>
+          }
         </div>
         {dialog && <Chat className={classes.chat} user={user.id} currentDialog={dialog}/>}
-        {newDialog &&
-        <SearchUser
-          exist={exist}
-          dialog={dialogId}
-        />}
       </div>
     )
   }

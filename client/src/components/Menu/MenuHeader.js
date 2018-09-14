@@ -43,7 +43,8 @@ const styles = (theme) => ({
     margin: theme.spacing.unit
   },
   menuItem: {
-    justifyContent: 'space-between',
+    display: 'flex',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   pos: {
@@ -103,7 +104,7 @@ class MenuHeader extends React.Component {
     const {classes, user} = this.props
 
     return (
-      <div className={classes.root}>
+      <div Min className={classes.root}>
         <div>
           <Button
             buttonRef={node => {

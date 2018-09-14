@@ -5,6 +5,7 @@ import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.TemporaryTokenRepository;
@@ -80,7 +81,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public User createUser(User user) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
-
     return userRepository.save(user);
   }
 
@@ -200,7 +200,7 @@ public class UserServiceImpl implements UserService {
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(userByEmail.getEmail());
     email.setSubject("Follow the link to reset you password in the Text Messenger");
-    email.setText("http://localhost:3000/api/users/resetPassword/" + tempToken.getToken());
+    email.setText("http://localhost:3000/resetPassword/" + tempToken.getToken());
     emailService.sendEmail(email);
   }
 
@@ -214,5 +214,24 @@ public class UserServiceImpl implements UserService {
     List<Notification> notifications = one.getNotifications();
     notifications.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return NotificationToFront.convertListNotificationToFront(notifications);
+  }
+
+  @Override
+  public String changePasswordForgot(CredentialsPassword credentialsPassword) {
+    Optional<TemporaryToken> byToken = temporaryTokenRepository.findByToken(credentialsPassword.getToken());
+    if (byToken.isPresent()) {
+      if (byToken.get().getExpiryDate().before(new Date())) {
+        User user = userRepository.findById(byToken.get().getUser().getId()).get();
+        user.setPassword(passwordEncoder.encode(credentialsPassword.getPassword()));
+        userRepository.save(user);
+        temporaryTokenRepository.delete(byToken.get());
+        return "Password successfully change";
+      } else {
+        temporaryTokenRepository.delete(byToken.get());
+        sendEmailToResetPassword(byToken.get().getUser());
+        return "Oops. Your request is denied, you token is old. We have send you a new token.Please, check you email";
+      }
+    }
+    return "Sorry. This token in invalid.";
   }
 }

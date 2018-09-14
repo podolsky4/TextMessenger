@@ -1,13 +1,33 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import './App.css'
-import Router from '../Router/Router'
+import SecureRouter from '../Router/SecureRouter'
 import Header from '../../views/Header/Header'
-import {getCurrentUser} from '../../actions/userActions'
-import {connect} from 'react-redux'
+import { getCurrentUser } from '../../actions/userActions'
+import { connect } from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
-import HomePage from '../../views/HomePage/HomePage'
-import { Redirect } from 'react-router-dom'
+import UnsecureRouter from '../Router/UnsecureRouter'
+
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import blueGrey from '@material-ui/core/colors/blueGrey'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#00796b'
+    },
+    secondary: {
+      main: '#c62828'
+    },
+    background: {
+      main: blueGrey,
+      grey: '#fafafa'
+    }
+  },
+  status: {
+    danger: 'orange'
+  }
+})
 
 class App extends Component {
   componentWillMount () {
@@ -18,22 +38,28 @@ class App extends Component {
   }
 
   render () {
-    const {user, location} = this.props
+    const {user} = this.props
 
     if (!user) {
-      return <Loader />
+      return <Loader/>
     }
 
     if (!user.id) {
-      return location.pathname === '/' ? <HomePage/> : <Redirect to='/'/>
+      return (
+        <CssBaseline>
+          <UnsecureRouter/>
+        </CssBaseline>
+      )
     }
 
     return (
-        <CssBaseline>
-          <Router wsHandler={true}/>
-          <Header/>
-          <Router/>
-        </CssBaseline>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline>
+            <SecureRouter wsHandler={true}/>
+            <Header/>
+            <SecureRouter/>
+          </CssBaseline>
+        </MuiThemeProvider>
     )
   }
 }
