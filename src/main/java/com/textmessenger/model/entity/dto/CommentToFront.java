@@ -11,7 +11,7 @@ import java.util.List;
 public class CommentToFront {
   private long id;//NOSONAR
   private String content;//NOSONAR
-  private long user;//NOSONAR
+  private UserToFrontShort user;//NOSONAR
   private long post;//NOSONAR
   private LocalDateTime createdDate;//NOSONAR
 
@@ -19,7 +19,7 @@ public class CommentToFront {
     CommentToFront commentToFront = new CommentToFront();
     commentToFront.setId(comment.getId());
     commentToFront.setContent(comment.getContent());
-    commentToFront.setUser(comment.getCommentator().getId());
+    commentToFront.setUser(UserToFrontShort.convertUserForFront(comment.getCommentator()));
     commentToFront.setPost(comment.getPost().getId());
     commentToFront.setCreatedDate(comment.getCreatedDate());
     return commentToFront;
