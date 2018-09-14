@@ -81,7 +81,7 @@ class Header extends React.Component {
           </IconButton>
           {/* TODO fix */}
           {!noUser &&
-          <MenuHeader classes user={user}/>
+          <MenuHeader user={user}/>
           }
         </Toolbar>
       </AppBar>

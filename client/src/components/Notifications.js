@@ -131,19 +131,18 @@ class Notifications extends Component {
       return <Redirect to={`/post/${this.state.postId}`}/>
     }
     return (
-        <Grid fullWidht className={classes.root}>
+        <Grid className={classes.root}>
 
                 {notification.length === 0 &&
                     <Grid item xs={12}>
                         <Typography component={'h6'}>Nothing to show</Typography>
                     </Grid>
                 }
-                <Grid containter
-                      zeroMinWidth
+                <Grid zeroMinWidth
                       direction="column"
                       justify="center"
                       alignItems="stretch">
-                    <Typography wrap component={'h6'}>Your Notifications</Typography>
+                    <Typography component={'h6'}>Your Notifications</Typography>
                     {notification.length !== 0 &&
                     notification.map(u => this.read(u))
                     }

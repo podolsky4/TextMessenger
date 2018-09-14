@@ -79,7 +79,6 @@ const styles = (theme) => ({
     border: '1px solid #fff3e00d',
     background: theme.palette.background.dark,
     marginLeft: 32,
-
     '&:hover': {
       background: theme.palette.background.main,
       color: theme.palette.background.dark,
@@ -115,7 +114,7 @@ class MenuHeader extends React.Component {
     const {classes, user} = this.props
 
     return (
-      <div Min className={classes.root}>
+      <div className={classes.root}>
         <div className={classes.vrDividerCont}>
            <div className={classes.vrDivider}></div>
           <Button

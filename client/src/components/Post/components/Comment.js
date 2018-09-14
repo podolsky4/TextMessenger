@@ -8,8 +8,6 @@ export default class Comments extends Component {
   };
   render () {
     const {comment} = this.props
-    console.log('comment :', comment)
-    console.log('comment.user. :', comment.user)
 
     return (
         <React.Fragment>

@@ -49,7 +49,6 @@ export const getCurrentUser = () => dispatch => {
       }
     })
     .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
-    .catch(error => console.log(error))
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
 export const loadUser = (login) => dispatch => {

@@ -141,7 +141,7 @@ class CurrentUserProfile extends Component {
         <PostList user={user}
                   posts={userPosts}
                   className={classes.userPostList}
-                  classes />
+                  />
 
       </div>
     )
