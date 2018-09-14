@@ -107,7 +107,7 @@ class CommentList extends Component {
                 />
             </div>
           <Button variant='flat'
-                  onClick={event => this.myFunction(event)}
+                  onClick={event => this.onSubmit(event)}
                   className={classes.btnCreatePost}>Comment</Button>
         </form>
       </div>
