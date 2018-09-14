@@ -22,7 +22,7 @@ const styles = theme => ({
   },
   homepage: {
     // background: 'linear-gradient(to top, #9eb1ba, #8ea4ae, #7f97a2, #6f8a96, #607d8b), grey',
-      background: toString.blueGrey,
+    background: '#00796B',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'true',
