@@ -124,4 +124,8 @@ public class PostServiceImpl implements PostService {
     return postRepository.getOne(id);
   }
 
+  @Override
+  public PostToFront getPostToFrontById(long id) {
+    return PostToFront.convertPostToFront(postRepository.findById(id).get());
+  }
 }

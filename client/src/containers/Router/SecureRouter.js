@@ -10,6 +10,7 @@ import Profile from '../../views/Profile/Profile'
 import Page404 from '../../views/404/Page404'
 import ConfirmRegistration from '../../views/Confirm/ConfirmRegistration'
 import WebSocketHandler from '../../components/WebSocketHandler'
+import SinglePost from '../../SinglePost'
 
 class SecureRouter extends Component {
   render () {
@@ -21,6 +22,7 @@ class SecureRouter extends Component {
         <Route exact path='/feed' component={wsHandler ? WebSocketHandler : Feed}/>
         <Route exact path='/favorites' component={wsHandler ? WebSocketHandler : Favorites}/>
         <Route exact path='/dialogs/:dialogId' component={wsHandler ? WebSocketHandler : Dialogs}/>
+        <Route exact path='/post/:postId' component={wsHandler ? WebSocketHandler : SinglePost}/>
         <Route exact path='/dialogs' component={wsHandler ? WebSocketHandler : Dialogs}/>
         <Route exact path='/notifications' component={wsHandler ? WebSocketHandler : Notifications}/>
         <Route exact path='/login' component={wsHandler ? WebSocketHandler : Login}/>

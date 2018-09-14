@@ -25,4 +25,6 @@ public interface PostService {
   void createPost(String content, MultipartFile file) throws IOException;
 
   Post getPostById(long id);
+
+  PostToFront getPostToFrontById(long id);
 }
