@@ -35,7 +35,6 @@ class PostRetwite extends Component {
 
   handleRetwite = e => {
     const {post, user, retweets, unRetweets, postId, whoo} = this.props
-    debugger
     if (!whoo && !this.state.retweet) {
       retweets(user.id, post.id)
       this.setState({retweet: true})
@@ -63,6 +62,9 @@ class PostRetwite extends Component {
 }
 
 const mapStateToProps = (state) => {
+  return{
+    favorites: state.favorites
+  }
 }
 const mapDispatchToProps = dispatch => {
   return {

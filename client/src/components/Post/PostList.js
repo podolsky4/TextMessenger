@@ -39,9 +39,7 @@ class PostList extends Component {
             xs={12}
             lg={10}
             md={10}
-            spacing={24}
-            justify="center"
-            alignItems="stretch">
+            >
             <React.Fragment>
               {posts.map(content => current(content))}
             </React.Fragment>

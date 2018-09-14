@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import CommentIcon from '@material-ui/icons/Comment'
 import Typography from '@material-ui/core/Typography'
@@ -37,7 +36,7 @@ class PostComment extends Component {
   }
 
   render () {
-    const { handleComments, commentsAmount, classes} = this.props
+    const {handleComments, commentsAmount, classes} = this.props
     return (
         <div className={classes.diva}>
             <IconButton
@@ -54,13 +53,8 @@ class PostComment extends Component {
   }
 }
 
-const mapStateToProps = state => {
-}
-const mapDispatchToProps = dispatch => {
-}
-
 PostComment.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(PostComment))
+export default withStyles(styles)(PostComment)

@@ -161,10 +161,9 @@ class Feed extends Component {
           <Grid container
             justify="center"
             alignItems="stretch"
-            lg={8} sm={12} md={10}>
+            >
             <Paper className={classes.paper}>
               <form className={classes.form}
-                alignItems="flex-end"
                 onSubmit={e => this.onSubmit(e)}>
                 <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
                 <Input
@@ -198,7 +197,7 @@ class Feed extends Component {
                         style={{display: 'none'}}
                       />
                       <label htmlFor="file">
-                        <Button raised component="span" className={classes.button}>Upload</Button>
+                        <Button raised='true' component="span" className={classes.button}>Upload</Button>
                       </label>
 
                     </InputAdornment>

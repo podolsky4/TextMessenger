@@ -102,7 +102,6 @@ class Post extends Component {
       <Grid className={classes.grid}
         item
         key={`${post.id} ${post.parentId}`}
-        spacing={24}
       >
 
         <Card>
@@ -113,7 +112,6 @@ class Post extends Component {
           }
 
           <UserHeaderInfo user={post.user}
-            classes
             post={post}
             currentUser={user}/>
           {post.imgUrl && <img className={classes.img} alt="Здесь должно быть изображение" src={post.imgUrl}/>}
