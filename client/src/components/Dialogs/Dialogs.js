@@ -85,7 +85,7 @@ class Dialogs extends Component {
 
   componentWillMount () {
     const {user, dialogs, loadDialog} = this.props
-    if (dialogs.length === 0) {
+    if (dialogs === null) {
       loadDialog(user.id)
     }
   }
@@ -125,7 +125,7 @@ class Dialogs extends Component {
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
-    if (dialogs.length === 0) {
+    if (dialogs === null) {
       loadDialog(user.id)
     }
 
@@ -136,7 +136,7 @@ class Dialogs extends Component {
     return (
       <div className={classes.wrap}>
         <div className={classes.dialogs}>
-          {dialogs.map((dialog, index) =>
+          {dialogs != null && dialogs.map((dialog, index) =>
             <Paper key = {index} className={classes.paper} elevation={0}>
               <Dialog
                 key = {dialog.id}

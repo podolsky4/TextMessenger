@@ -5,7 +5,13 @@ import FetchData from './serviceAction'
 export const loadDialog = id => dispatch => {
   FetchData.get(`/api/dialogs/user/${id}`)
     .then(res => res.json())
-    .then(data => dispatch({type: LOAD_DIALOGS, payload: data}))
+    .then(data => {
+      if (data.length === 0) {
+        dispatch({type: LOAD_DIALOGS, payload: []})
+      } else {
+        dispatch({type: LOAD_DIALOGS, payload: data})
+      }
+    })
 }
 
 export const createDialog = (user, secondUser) => dispatch => {
