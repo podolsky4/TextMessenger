@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailServiceImpl implements EmailService {
 
-  private JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;
 
-  public EmailServiceImpl(JavaMailSender javaMailSender) {
-    this.javaMailSender = javaMailSender;
-  }
+    public EmailServiceImpl(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
 
-  @Override
-  public void sendEmail(SimpleMailMessage email) {
-    javaMailSender.send(email);
-  }
+    @Override
+    public void sendEmail(SimpleMailMessage email) {
+        javaMailSender.send(email);
+    }
 }

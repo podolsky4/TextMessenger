@@ -43,7 +43,9 @@ const styles = theme => ({
     alignItems: 'center'
 
   },
-
+  LogIN: {
+    background: theme.palette.secondary.dark
+  },
   avatar: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main
@@ -52,9 +54,11 @@ const styles = theme => ({
     marginTop: theme.spacing.unit
   },
   submit: {
+    background: theme.palette.primary.main,
     marginTop: theme.spacing.unit * 3
   },
   signIn: {
+    background: theme.palette.background.main,
     marginTop: theme.spacing.unit,
     opacity: '0.6',
     '&:hover': {
@@ -197,7 +201,7 @@ class LogIn extends Component {
                 type="submit"
                 variant="raised"
                 color="primary"
-                className={classes.submit}
+                className={classes.LogIN}
               >
                       Sign in
               </Button>
@@ -302,7 +306,6 @@ class LogIn extends Component {
                 <Button
                   fullWidth
                   variant="flat"
-                  color="primary"
                   className={classes.signIn}
                   onClick={this.SignInToggle.bind(this)}
                 >

@@ -77,7 +77,7 @@ const styles = theme => ({
     maxWidth: '30%',
     flexWrap: 'wrap',
     alignItems: 'start',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   button: {
     padding: theme.spacing.unit / 1,

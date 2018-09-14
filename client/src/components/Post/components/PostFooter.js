@@ -8,8 +8,8 @@ export default class PostFooter extends Component {
     const {post, user, favorites, whoo, handleComments, classes, flag, commentsAmount} = this.props
     return (<React.Fragment>
       <Like post={post} user={user} favorites={favorites}/>
+      <PostComment classes={classes} handleComments={handleComments} flag={flag} commentsAmount={commentsAmount} user={user}/>
       <PostRetwite whoo={whoo} post={post} user={user} postId={post.id} />
-      <PostComment classes={classes} handleComments={handleComments} flag={flag} commentsAmount={commentsAmount}/>
     </React.Fragment>
     )
   }

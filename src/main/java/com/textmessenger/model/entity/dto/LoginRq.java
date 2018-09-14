@@ -7,9 +7,9 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class LoginRq {
-  @NotBlank
-  private String loginOrEmail;
+    @NotBlank
+    private String loginOrEmail;
 
-  @NotBlank
-  private String password;
+    @NotBlank
+    private String password;
 }

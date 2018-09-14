@@ -18,45 +18,45 @@ import java.util.List;
 @Transactional
 public class CommentServiceImpl implements CommentService {
 
-  private final CommentRepository commentRepository;
-  private final NotificationService notificationService;
-  private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final NotificationService notificationService;
+    private final UserRepository userRepository;
 
-  CommentServiceImpl(CommentRepository commentRepository,
-                     NotificationService notificationService,
-                     UserRepository userRepository) {
-    this.commentRepository = commentRepository;
-    this.notificationService = notificationService;
+    CommentServiceImpl(CommentRepository commentRepository,
+                       NotificationService notificationService,
+                       UserRepository userRepository) {
+        this.commentRepository = commentRepository;
+        this.notificationService = notificationService;
 
-    this.userRepository = userRepository;
-  }
+        this.userRepository = userRepository;
+    }
 
-  @Override
-  public void createComment(Post post, User user, Comment comment) {
-    comment.setPost(post);
-    comment.setCommentator(user);
-    commentRepository.save(comment);
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    User mainUser = userRepository.getOne(userPrincipal.getId());
-    notificationService.createSome(WebSocketType.NEW_COMMENT.toString(), post.getUser(), mainUser, post);
-  }
+    @Override
+    public void createComment(Post post, User user, Comment comment) {
+        comment.setPost(post);
+        comment.setCommentator(user);
+        commentRepository.save(comment);
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        User mainUser = userRepository.getOne(userPrincipal.getId());
+        notificationService.createSome(WebSocketType.NEW_COMMENT.toString(), post.getUser(), mainUser, post);
+    }
 
-  @Override
-  public List<CommentToFront> findAllPostFromPost(Post post) {
-    return CommentToFront.convertListCommentsToResponse(commentRepository.findCommentsByPost(post));
-  }
+    @Override
+    public List<CommentToFront> findAllPostFromPost(Post post) {
+        return CommentToFront.convertListCommentsToResponse(commentRepository.findCommentsByPost(post));
+    }
 
-  @Override
-  public void updateComment(Comment comment) {
-    commentRepository.save(comment);
-  }
+    @Override
+    public void updateComment(Comment comment) {
+        commentRepository.save(comment);
+    }
 
-  @Override
-  public void deleteComment(Comment comment) {
-    commentRepository.delete(comment);
-  }
+    @Override
+    public void deleteComment(Comment comment) {
+        commentRepository.delete(comment);
+    }
 
 }

@@ -52,13 +52,13 @@ const styles = theme => ({
     marginLeft: 0,
     lineHeight: 1,
     background: theme.palette.secondary.main,
-    fontSize: 12,
+    fontSize: 12
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
   },
   chat: {
-    maxWidth: 620,
+    maxWidth: 620
   },
   searchUser: {
     flexShrink: 1,
@@ -68,7 +68,7 @@ const styles = theme => ({
     maxWidth: 520,
     padding: '0 1%',
     background: theme.palette.background.main
-  },
+  }
 })
 
 class Dialogs extends Component {

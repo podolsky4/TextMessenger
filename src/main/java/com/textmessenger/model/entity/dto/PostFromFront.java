@@ -7,12 +7,12 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class PostFromFront {
-  @NotBlank
-  private String content;
+    @NotBlank
+    private String content;
 
-  public static Post convertPostFromFrontToPost(PostFromFront postFromFront) {
-    Post post = new Post();
-    post.setContent(postFromFront.getContent());
-    return post;
-  }
+    public static Post convertPostFromFrontToPost(PostFromFront postFromFront) {
+        Post post = new Post();
+        post.setContent(postFromFront.getContent());
+        return post;
+    }
 }

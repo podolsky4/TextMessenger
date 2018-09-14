@@ -13,14 +13,14 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api")
 public class LoginController {
-  private LoginService loginService;
+    private LoginService loginService;
 
-  public LoginController(LoginService loginService) {
-    this.loginService = loginService;
-  }
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
 
-  @PostMapping("/login")
-  public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user) {
-    return loginService.authenticateUser(user);
-  }
+    @PostMapping("/login")
+    public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user) {
+        return loginService.authenticateUser(user);
+    }
 }

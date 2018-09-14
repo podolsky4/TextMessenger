@@ -10,21 +10,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class RuntimeAddToDataBase {
-  @Autowired
-  PasswordEncoder passwordEncoder;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
-  @Bean
-  public CommandLineRunner createPassword(UserRepository userRepository) {
-    return new CommandLineRunner() {
-      @Override
-      public void run(String... args) {
-        User user = new User();
-        user.setEmail("admin@gmail.com");
-        user.setLogin("admin");
-        user.setEnabled(true);
-        user.setPassword(passwordEncoder.encode("admin"));
-        userRepository.save(user);
-      }
-    };
-  }
+    @Bean
+    public CommandLineRunner createPassword(UserRepository userRepository) {
+        return new CommandLineRunner() {
+            @Override
+            public void run(String... args) {
+                User user = new User();
+                user.setEmail("admin@gmail.com");
+                user.setLogin("admin");
+                user.setEnabled(true);
+                user.setPassword(passwordEncoder.encode("admin"));
+                userRepository.save(user);
+            }
+        };
+    }
 }

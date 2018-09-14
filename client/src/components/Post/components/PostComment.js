@@ -8,33 +8,33 @@ import {withStyles} from '@material-ui/core/styles'
 import classNames from 'classnames'
 
 const styles = theme => ({
-    root: {
-        transition: theme.transitions.create(['color'], {
-            duration: theme.transitions.duration.short
-        }),
-        '&$selected': {
-            color: theme.palette.primary.main
-        }
-    },
-    diva: {
-        display: 'flex',
-        alignItems: 'center'
-    },
+  root: {
+    transition: theme.transitions.create(['color'], {
+      duration: theme.transitions.duration.short
+    }),
+    '&$selected': {
+      color: theme.palette.primary.main
+    }
+  },
+  diva: {
+    display: 'flex',
+    alignItems: 'center'
+  }
 })
 
 class PostComment extends Component {
-    constructor (props) {
-        super(props)
-        this.state = {
-            hasComments: false,
-        }
+  constructor (props) {
+    super(props)
+    this.state = {
+      hasComments: false
     }
-    componentDidMount () {
-        const { commentsAmount } = this.props
-        if(commentsAmount > 0){
-            this.setState({hasComments: true})
-        }
+  }
+  componentDidMount () {
+    const { commentsAmount } = this.props
+    if (commentsAmount > 0) {
+      this.setState({hasComments: true})
     }
+  }
 
   render () {
     const { handleComments, commentsAmount, classes} = this.props
@@ -42,7 +42,7 @@ class PostComment extends Component {
         <div className={classes.diva}>
             <IconButton
                 onClick={handleComments}
-                className={classNames(classes.root,'comment', {[classes.selected]: this.state.hasComments})}
+                className={classNames(classes.root, 'comment', {[classes.selected]: this.state.hasComments})}
                 aria-live={this.state.hasComments}
                 aria-label="Show Comments"
             >

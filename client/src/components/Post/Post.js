@@ -139,6 +139,7 @@ class Post extends Component {
             <Comments comments={post.comments}
               post={post}
               user={user}
+              postUser={post.user}
               flag={this.state.flag}/>
           }
 

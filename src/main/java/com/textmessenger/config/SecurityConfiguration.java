@@ -19,70 +19,70 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-  private CustomUserDetailsService customUserDetailsService;
-  private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-  private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private CustomUserDetailsService customUserDetailsService;
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-  public SecurityConfiguration(CustomUserDetailsService customUserDetailsService,
-                               JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-                               JwtAuthenticationFilter jwtAuthenticationFilter) {
-    this.customUserDetailsService = customUserDetailsService;
-    this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-    this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-  }
+    public SecurityConfiguration(CustomUserDetailsService customUserDetailsService,
+                                 JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+                                 JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-  }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+    }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-            .headers()
-            .frameOptions()
-            .disable()
-            .and()
-            .csrf()
-            .disable()
-            .exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeRequests()
-            .antMatchers("/api/users/login")
-            .permitAll()
-            .antMatchers("/console")
-            .permitAll()
-            .antMatchers("http://localhost:9000/healthcheck")
-            .permitAll()
-            .antMatchers("/api/users/user")
-            .permitAll()
-            .antMatchers("/api/users/registered/**")
-            .permitAll()
-            .antMatchers("/api/users/resetPassword /**")
-            .permitAll()
-            .antMatchers("/api/users//forgotpassword")
-            .permitAll()
-            .antMatchers("/console/*")
-            .permitAll()
-            .anyRequest()
-            .authenticated();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .headers()
+                .frameOptions()
+                .disable()
+                .and()
+                .csrf()
+                .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/users/login")
+                .permitAll()
+                .antMatchers("/console")
+                .permitAll()
+                .antMatchers("http://localhost:9000/healthcheck")
+                .permitAll()
+                .antMatchers("/api/users/user")
+                .permitAll()
+                .antMatchers("/api/users/registered/**")
+                .permitAll()
+                .antMatchers("/api/users/resetPassword /**")
+                .permitAll()
+                .antMatchers("/api/users//forgotpassword")
+                .permitAll()
+                .antMatchers("/console/*")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
 
-    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-  }
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    }
 
-  @Bean(BeanIds.AUTHENTICATION_MANAGER)
-  @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
-  }
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
 }

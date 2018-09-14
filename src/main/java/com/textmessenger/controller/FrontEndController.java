@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/twitter")
 public class FrontEndController {
-  @GetMapping
-  public String trueIndex() {
-    return "forward:/twitter/index.html";
-  }
+    @GetMapping
+    public String trueIndex() {
+        return "forward:/twitter/index.html";
+    }
 
-  @GetMapping("**/{subpath:[^\\.]+}")
-  public String fakeIndex() {
-    return "forward:/twitter/index.html";
-  }
+    @GetMapping("**/{subpath:[^\\.]+}")
+    public String fakeIndex() {
+        return "forward:/twitter/index.html";
+    }
 }
 

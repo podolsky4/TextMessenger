@@ -9,6 +9,27 @@ import Loader from '../../components/Loader/Loader'
 import HomePage from '../../views/HomePage/HomePage'
 import { Redirect } from 'react-router-dom'
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import blueGrey from '@material-ui/core/colors/blueGrey'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#00796b'
+    },
+    secondary: {
+      main: '#c62828'
+    },
+    background: {
+      main: blueGrey,
+      grey: '#fafafa'
+    }
+  },
+  status: {
+    danger: 'orange'
+  }
+})
+
 class App extends Component {
   componentWillMount () {
     const {user, getCurrentUserPoint} = this.props
@@ -29,11 +50,13 @@ class App extends Component {
     }
 
     return (
-        <CssBaseline>
-          <Router wsHandler={true}/>
-          <Header/>
-          <Router/>
-        </CssBaseline>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline>
+            <Router wsHandler={true}/>
+            <Header/>
+            <Router/>
+          </CssBaseline>
+        </MuiThemeProvider>
     )
   }
 }

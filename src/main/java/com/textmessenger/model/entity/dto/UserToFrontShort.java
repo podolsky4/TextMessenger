@@ -8,26 +8,26 @@ import java.util.List;
 
 @Data
 public class UserToFrontShort {
-  private long id;//NOSONAR
-  private String login;//NOSONAR
-  private String email;//NOSONAR
-  private String profilePhoto;//NOSONAR
+    private long id;//NOSONAR
+    private String login;//NOSONAR
+    private String email;//NOSONAR
+    private String profilePhoto;//NOSONAR
 
 
-  public static UserToFrontShort convertUserForFront(User user) {
-    UserToFrontShort userToFrontShort = new UserToFrontShort();
-    userToFrontShort.setEmail(user.getEmail());
-    userToFrontShort.setId(user.getId());
-    userToFrontShort.setLogin(user.getLogin());
-    if (user.getProfilePhoto() != null) {
-      userToFrontShort.setProfilePhoto(user.getProfilePhoto());
+    public static UserToFrontShort convertUserForFront(User user) {
+        UserToFrontShort userToFrontShort = new UserToFrontShort();
+        userToFrontShort.setEmail(user.getEmail());
+        userToFrontShort.setId(user.getId());
+        userToFrontShort.setLogin(user.getLogin());
+        if (user.getProfilePhoto() != null) {
+            userToFrontShort.setProfilePhoto(user.getProfilePhoto());
+        }
+        return userToFrontShort;
     }
-    return userToFrontShort;
-  }
 
-  public static List<UserToFrontShort> convertListUsersForFront(List<User> users) {
-    List<UserToFrontShort> res = new ArrayList<>();
-    users.stream().forEach(user -> res.add(convertUserForFront(user)));
-    return res;
-  }
+    public static List<UserToFrontShort> convertListUsersForFront(List<User> users) {
+        List<UserToFrontShort> res = new ArrayList<>();
+        users.stream().forEach(user -> res.add(convertUserForFront(user)));
+        return res;
+    }
 }

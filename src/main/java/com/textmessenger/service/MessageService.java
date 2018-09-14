@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface MessageService {
 
-  void updateMessage(Message message);
+    void updateMessage(Message message);
 
-  void deleteMessage(Message message);
+    void deleteMessage(Message message);
 
-  List<MessageToFront> getMessagesFromDialog(Dialog dialog);
+    List<MessageToFront> getMessagesFromDialog(Dialog dialog);
 
-  void createMessageWithUserIdDialogId(Long user, Long dialog, String msg);
+    void createMessageWithUserIdDialogId(Long user, Long dialog, String msg);
 }

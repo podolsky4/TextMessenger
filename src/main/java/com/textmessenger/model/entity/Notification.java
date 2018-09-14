@@ -7,13 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -25,29 +19,29 @@ import javax.persistence.Table;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Notification extends BaseEntity {
 
-  @Column(name = "is_checked")
-  private boolean isChecked;
+    @Column(name = "is_checked")
+    private boolean isChecked;
 
-  @Column(name = "content_id")
-  private long contentId;
+    @Column(name = "content_id")
+    private long contentId;
 
-  @Column(name = "type")
-  private String type;
+    @Column(name = "type")
+    private String type;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_to")
-  @JsonIgnoreProperties(allowSetters = true)
-  private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_to")
+    @JsonIgnoreProperties(allowSetters = true)
+    private User user;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_from")
-  @JsonIgnoreProperties(allowSetters = true)
-  private User from;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_from")
+    @JsonIgnoreProperties(allowSetters = true)
+    private User from;
 
-  public Notification(boolean isChecked, String type, User user, User from) {
-    this.isChecked = isChecked;
-    this.type = type;
-    this.user = user;
-    this.from = from;
-  }
+    public Notification(boolean isChecked, String type, User user, User from) {
+        this.isChecked = isChecked;
+        this.type = type;
+        this.user = user;
+        this.from = from;
+    }
 }
