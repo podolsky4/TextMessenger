@@ -62,7 +62,7 @@ class PostRetwite extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return{
+  return {
     favorites: state.favorites
   }
 }
