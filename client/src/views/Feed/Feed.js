@@ -12,10 +12,10 @@ import {withStyles} from '@material-ui/core/styles'
 import ButtonPost from '../../components/buttons/ButtonPost/ButtonPost'
 import ButtonUploadFloating from '../../components/buttons/ButtonUploadFloating'
 import InputAdornment from '@material-ui/core/InputAdornment/InputAdornment'
-import IconButton from '@material-ui/core/IconButton/IconButton'
 import FormControl from '@material-ui/core/FormControl/FormControl'
 import Input from '@material-ui/core/Input/Input'
 import classNames from 'classnames'
+import Button from '../../../node_modules/@material-ui/core/Button/Button'
 
 const styles = theme => ({
   root: {
@@ -55,7 +55,8 @@ class Feed extends Component {
     this.state = {
       text: '',
       page: 0,
-      size: 3
+      size: 3,
+      changenameeed: ''
     }
   }
 
@@ -135,6 +136,9 @@ class Feed extends Component {
     }
   }
 
+  changeName = e => {
+    this.setState({changenameeed: this.refs.inputFile.files[0].name})
+  }
   render () {
     const {able, posts, user, classes} = this.props
     const {reloadLoader} = this.props
@@ -177,25 +181,31 @@ class Feed extends Component {
                   }}
                   id="content"
                   name="text"
+                  required
                   multiline
                   className={classes.textfield}
                   onKeyUp={event => this.handleInput(event)}
                   endAdornment={
-
                     <InputAdornment position="end">
-                      <Input type="file" name="file" ref="inputFile"/>
-                      <IconButton
+                      <input
+                        accept="image/*"
+                        className={classes.input}
+                        type="file"
+                        name="file"
+                        id="file"
+                        ref="inputFile"
+                        onChange={e => this.changeName(e)}
+                        style={{display: 'none'}}
+                      />
+                      <label htmlFor="file">
+                        <Button raised component="span" className={classes.button}>Upload</Button>
+                      </label>
 
-                        aria-label="upload"
-                      >
-                        <ButtonUploadFloating classes>
-                        </ButtonUploadFloating>
-                      </IconButton>
                     </InputAdornment>
-
                   }
                 >
                 </Input>
+                  {<a>{this.state.changenameeed}</a>}
                 </FormControl>
                 {/* <form> */}
                   {/* <input type="file" name="file" ref="inputFile"/> */}
