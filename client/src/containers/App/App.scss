@@ -1,9 +1,5 @@
-$primary: #e9967a;
-$secondary: #eee;
-
 body {
   padding: 10% 15%;
-  background: $secondary;
 }
 
 .header {
@@ -30,14 +26,6 @@ textarea {
   border: 0;
   border-radius: 15px;
   resize: none;
-}
-
-.btn-create-post {
-  padding: 15px;
-  border-radius: 15px;
-  background-color: #1f446a;
-  color: #f9fffd;
-  font-size: 18px;
 }
 
 .posts {

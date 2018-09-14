@@ -84,6 +84,24 @@ class Notifications extends Component {
       </Grid>
   }
 
+  notificationCard = (item, text) => {
+    const {classes} = this.props
+    return <Grid fullWidht item>
+       <Card fullWidth className={classes.card}>
+            <CardContent>
+                <Typography className={classes.title} color="textSecondary">
+                    {item.type}
+                </Typography>
+                <Typography variant="headline" component="h2">
+                    {item.fromUser.login}
+                    <span className={classes.bullet}>•</span>
+                    {text}
+                </Typography>
+            </CardContent>
+    </Card>
+      </Grid>
+  }
+
   read = item => {
     // TODO replace switch
     if (item.type === 'NEW_POST') {

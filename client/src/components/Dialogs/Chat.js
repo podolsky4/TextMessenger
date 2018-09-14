@@ -12,7 +12,7 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    alignItems: 'strech',
+    alignItems: 'stretch',
     justifyContent: 'space-between',
     background: '#fafafaf7',
     borderRadius: '1px 1px 2px 2px'

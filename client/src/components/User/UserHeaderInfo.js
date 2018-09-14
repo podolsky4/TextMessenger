@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import CardHeader from '@material-ui/core/CardHeader'
-import red from '@material-ui/core/colors/red'
 
 import {Redirect} from 'react-router'
 import Avatar from '@material-ui/core/Avatar'
@@ -33,7 +32,7 @@ const styles = theme => ({
     transform: 'rotate(180deg)'
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: theme.palette.background.dark,
     cursor: 'pointer'
   },
   nopadding: {
