@@ -256,13 +256,13 @@ public class UserServiceImpl implements UserService {
             .getAuthentication()
             .getPrincipal();
     User one = userRepository.getOne(userPrincipal.getId());
-    if (firstName != "undefined") {
+    if (firstName != "undefined") {//NOSONAR
       one.setFirstName(firstName);
     }
-    if (lastName != "undefined") {
+    if (lastName != "undefined") {//NOSONAR
       one.setLastName(lastName);
     }
-    if (address != "undefined") {
+    if (address != "undefined") {//NOSONAR
       one.setAddress(address);
     }
     if (file != null) {
@@ -278,7 +278,7 @@ public class UserServiceImpl implements UserService {
               new ObjectMetadata());
       String userHeader = amazonS3.getUrl(BUCKET, key).toString();
       if (one.getProfilePhoto() != null) {
-        //TODO logic of remove and set new photo
+        //TODO
       } else {
         one.setProfilePhoto(userHeader);
       }
