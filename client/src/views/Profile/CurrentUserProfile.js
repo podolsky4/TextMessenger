@@ -8,6 +8,7 @@ import PostList from '../../components/Post/PostList'
 import Button from '@material-ui/core/Button'
 
 import CurrentUserProfileWrapper from './CurrentUserProfileWrapper'
+import InputAdornment from '../../../node_modules/@material-ui/core/InputAdornment/InputAdornment'
 
 const styles = (theme) => ({
   ChangeUserProfileInfoCard: {
@@ -64,12 +65,11 @@ class CurrentUserProfile extends Component {
     this.state = {
       login: this.props.user.login,
       email: this.props.user.email,
-      firstName: this.props.user.firstName === null ? '' : this.props.user.firstName,
-      lastName: this.props.user.lastName === null ? '' : this.props.user.lastName,
-      address: this.props.user.address === null ? '' : this.props.user.address,
-      profileHeader: this.props.user.profileHeader === null ? '' : this.props.user.profileHeader,
-      profilePhoto: this.props.user.profilePhoto === null ? '' : this.props.user.profilePhoto,
-      dateBirthday: this.props.user.dateBirthday === null ? '' : this.props.user.dateBirthday,
+      firstName: this.props.user.firstName === null ? null : this.props.user.firstName,
+      lastName: this.props.user.lastName === null ? null : this.props.user.lastName,
+      address: this.props.user.address === null ? null : this.props.user.address,
+      profileHeader: this.props.user.profileHeader === null ? null : this.props.user.profileHeader,
+      dateBirthday: this.props.user.dateBirthday === null ? null : this.props.user.dateBirthday,
       viewMode: true
     }
   }
@@ -92,7 +92,9 @@ class CurrentUserProfile extends Component {
     updateUser(up, user.login)
     this.editableField()
   };
-
+  changeNameProfileHeader= e => {
+    this.setState({profileHeader: this.refs.profileHeader.files[0].name})
+  }
   render () {
     const {user, classes, userPosts} = this.props
 
@@ -102,16 +104,28 @@ class CurrentUserProfile extends Component {
         {this.state.viewMode &&
           <div className={classes.UserInfoCnt}>
             <CurrentUserProfileWrapper editableField={this.editableField.bind(this)} user={user}/>
-            {/* <Button variant="contained" */}
-                    {/* color="primary" */}
-                    {/* onClick={this.editableField} */}
-            {/* > */}
-              {/* <EditIcon /> */}
-            {/* </Button> */}
           </div>
         }
         {!this.state.viewMode &&
           <form className={classnames(classes.ChangeUserProfileInfoCard)}>
+            <InputAdornment position="end">
+              <input
+                accept="image/*"
+                className={classes.input}
+                type="file"
+                name="profileHeader-change"
+                id="profileHeader-change"
+                ref="profileHeader"
+                onChange={e => this.changeNameProfileHeader(e)}
+                style={{display: 'none'}}
+              />
+              <label> Avatar image
+                <label htmlFor="profileHeader-change">
+                  <Button raised='true' component="span" className={classes.button}>Upload</Button>
+                </label>
+              </label>
+            </InputAdornment>
+            {<a>{this.state.profileHeader}</a>}
             <label>
               name:
               <input id='firstName-change' name='firstName' type='text' value={this.state.firstName}
@@ -125,16 +139,6 @@ class CurrentUserProfile extends Component {
             <label>
               address:
               <input id='address-change' name='address' type='text' value={this.state.address}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              url to avatar:
-              <input id='profileHeader-change' name='profileHeader' type='url' value={this.state.profileHeader}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              url to photo:
-              <input id='profilePhoto-change' name='profilePhoto' type='url' value={this.state.profilePhoto}
                 onChange={e => this.change(e)} />
             </label>
             <label>
