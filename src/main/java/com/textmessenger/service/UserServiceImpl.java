@@ -278,7 +278,7 @@ public class UserServiceImpl implements UserService {
               new ObjectMetadata());
       String userHeader = amazonS3.getUrl(BUCKET, key).toString();
       if (one.getProfilePhoto() != null) {
-        //TODO
+
       } else {
         one.setProfilePhoto(userHeader);
       }
