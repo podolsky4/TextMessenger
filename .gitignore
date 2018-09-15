@@ -2,6 +2,11 @@
 .idea
 *.iml
 
+# Some builds file and mac
+src/main/resources/static
+_mac
+client/build/
+
 #excluded properties
 #application.yml
 src/main/resources/config.properties

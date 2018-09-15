@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ResponseToFront {
-  String message;
+  private String message;
 
   public static ResponseToFront convertResponseToFront(String msg) {
     ResponseToFront responseToFront = new ResponseToFront();
