@@ -76,7 +76,7 @@ const styles = (theme) => ({
     display: 'flex',
     minWidth: 130,
     width: 'min-content',
-    border: '1px solid #fff3e00d',
+    border: '1px solid #fff3e003',
     background: theme.palette.background.dark,
     marginLeft: 32,
     '&:hover': {

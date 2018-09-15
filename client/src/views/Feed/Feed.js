@@ -20,7 +20,8 @@ import Button from '../../../node_modules/@material-ui/core/Button/Button'
 const styles = theme => ({
   root: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+      justifyContent: 'center',
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -44,7 +45,8 @@ const styles = theme => ({
     width: '100%',
     // maxWidth: '700px',
     justifyItems: 'stretch',
-    borderRadius: 3
+    borderRadius: 3,
+      maxWidth: 862
   },
   gridItem: {
       padding: 4
@@ -68,7 +70,7 @@ class Feed extends Component {
     }
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const {user, favorites, loadFavorites, pageAble} = this.props
     const {size, page} = this.state
     if (favorites.length === 0) {
@@ -167,18 +169,17 @@ class Feed extends Component {
           alignItems="center"
         >
           <Grid container
-
             justify="center"
             alignItems="center"
-            >
+          >
               <Grid item
                     direction="column"
                     justify="center"
                     alignItems="center"
-                    xs={12} sm={10} lg={6} md={8}
+                    xs={12} sm={10} lg={6} md={7}
                     className={classes.gridItem}
               >
-            <Paper className={classes.paper}>
+                 <Paper className={classes.paper}>
               <form className={classes.form}
                 onSubmit={e => this.onSubmit(e)}>
                 <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
@@ -226,8 +227,8 @@ class Feed extends Component {
               </form>
               {reloadLoader && <Loader/>}
             </Paper>
-          </Grid>
-        <PostList posts={posts} user={user}/>
+              </Grid>
+              <PostList posts={posts} user={user}/>
           </Grid>
         </Grid>
       </div>
