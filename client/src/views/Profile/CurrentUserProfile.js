@@ -131,7 +131,6 @@ class CurrentUserProfile extends Component {
                 </label>
               </label>
             </InputAdornment>
-            {<a>{this.state.profilePhoto}</a>}
             <label>
               name:
               <input id='firstName-change' name='firstName' type='text' placeholder={this.props.user.firstName} value={this.state.firstName}
