@@ -18,8 +18,6 @@ const styles = (theme) => ({
     Width: '100%'
   },
   avatar: {
-    // minWidth: 75,
-    // maxWidth: 100,
     position: 'relative',
     top: 24,
     height: 'auto',
@@ -69,11 +67,9 @@ class CurrentUserProfileWrapper extends React.Component {
     const {user, classes, editableField} = this.props
     return (
       <React.Fragment>
-
         <div className={classes.userInfoCnt}>
           <Avatar alt="user avatar"
             // src={user.profilePhoto}
-
                   className={classnames(classes.avatar, classes.bigAvatar)}>
             <PersonAdd/>
 
@@ -87,17 +83,14 @@ class CurrentUserProfileWrapper extends React.Component {
             <EditIcon />
           </Button>
           <div className={classes.userInfo}>
-
             <Card className={classes.card}>
               <CardContent>
-
                 <Typography className={classes.pos} color="textPrimary">
                   @{user.login}
                 </Typography>
                 <Typography component={'h6'} color="textSecondary">
                   {user.email}
                 </Typography>
-
               </CardContent>
             </Card>
           </div>

@@ -41,13 +41,7 @@ export const getCurrentUser = () => dispatch => {
       'Content-Type': 'application/json'
     }
   })
-    .then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        dispatch({type: CREATE_USER_IN_REDUX, payload: {}})
-      }
-    })
+    .then(response => response.json())
     .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
