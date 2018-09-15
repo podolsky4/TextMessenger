@@ -60,8 +60,10 @@ class UserProfileInfoCard extends React.Component {
 
         <div className={classes.userInfoCnt}>
           <Avatar alt="user avatar"
-            // src={user.profilePhoto}
-
+                  src={ user.profilePhoto === null ?
+                    'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'
+                    : user.profilePhoto
+                  }
                   className={classnames(classes.avatar, classes.bigAvatar)}>
             <PersonAdd/>
             {/* TODO: bug. user is not getting to here, so default icon now. */}
