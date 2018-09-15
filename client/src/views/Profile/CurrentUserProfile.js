@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import CurrentUserProfileWrapper from './CurrentUserProfileWrapper'
 import ChangePassword from './ChangePassword'
 import InputAdornment from '../../../node_modules/@material-ui/core/InputAdornment/InputAdornment'
+import TextField from '../../../node_modules/@material-ui/core/TextField/TextField'
 
 const styles = (theme) => ({
   ChangeUserProfileInfoCard: {
@@ -63,6 +64,13 @@ class CurrentUserProfile extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      FirstNameerrorText: '',
+      LastNamerrorText: '',
+      AddresserrorText: '',
+      birthdayerrorText: '',
+      value: props.value,
+      errorText: '',
+      lastNameErrorText: '',
       login: this.props.user.login,
       email: this.props.user.email,
       firstName: this.props.user.firstName,
@@ -102,8 +110,34 @@ class CurrentUserProfile extends Component {
   changeNameProfilePhoto = e => {
     this.setState({profilePhoto: this.refs.profilePhoto.files[0].name})
   }
+
+  change = e => {
+    const pattern = '([A-Z])\\w+'
+    if (e.target.value.match(pattern)) {
+      switch (e.target.name) {
+
+        case'firstName': this.setState({ errorText: '' })
+          break;
+        case'lastName': this.setState({ lastNameErrorText: '' })
+          break;
+
+      }
+    } else {
+      switch (e.target.name) {
+        case'firstName': this.setState({ errorText: 'Name should start with a capital letter'})
+          break;
+        case'lastName': this.setState({ lastNameErrorText: 'Last Name should start with a capital letter'})
+          break;
+
+      }
+    }
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  };
   render () {
     const {user, classes, userPosts} = this.props
+
     return (
       <div className={classes.ProfileCnt}>
         {this.state.viewMode &&
@@ -130,41 +164,56 @@ class CurrentUserProfile extends Component {
                 </label>
               </label>
             </InputAdornment>
-            <label>
-              name:
-              <input id='firstName-change' name='firstName' type='text' placeholder={this.props.user.firstName} value={this.state.firstName}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              surname:
-              <input id='lastName-change' name='lastName' type='text' placeholder={this.props.user.lastName} value={this.state.lastName}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              address:
-              <input id='address-change' name='address' type='text' placeholder={this.props.user.address} value={this.state.address}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              birthday:
-              <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday}
-                onChange={e => this.change(e)} />
-            </label>
+            {<a>{this.state.profileHeader}</a>}
+
+              <TextField id='firstName-change'
+                         name='firstName'
+                         type='text'
+                         hintText="Name"
+                         label="First Name"
+                         value={this.state.firstName}
+                         error ={this.state.errorText.length === 0 ? false : true }
+                         helperText={this.state.errorText}
+                         onChange={e => this.change(e)} />
+
+
+              <TextField id='lastName-change'
+                         name='lastName'
+                         type='text'
+                         value={this.state.lastName}
+                         label="Last Name"
+                         error ={this.state.lastNameErrorText.length === 0 ? false : true }
+                         helperText={this.state.lastNameErrorText}
+                         onChange={e => this.change(e)} />
+
+
+              <TextField id='address-change' name='address' type='text' value={this.state.address}
+                         label="Address"
+                         error ={this.state.LastNameerrorText = undefined || this.state.FirstNameerrorText.length == 0 ? false : true }
+                         helperText={this.state.AddresserrorText}
+                         errorTag='AddresserrorText'
+                         onChange={e => this.change(e)} />
+
+
+              <TextField id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday}
+                         label="Birthday"
+                         error ={this.state.birthdayerrorText.length == 0 || undefined ? false : true }
+                         helperText={this.state.birthdayerrorText}
+                         errorTag='birthdayerrorText'
+                         onChange={e => this.change(e)} />
             <Button variant="contained"
                     color="primary"
                     onClick={e => this.updateUser(e)}
                     className={classes.profileButton}
             >
             Apply
-          </Button>
-            <Button
-                    variant="contained"
+            </Button>
+            <Button variant="contained"
                     color="secondary"
-                    onClick={this.editableField}
-            >
+                    onClick={this.editableField}>
               Cancel
             </Button>
-              <ChangePassword />
+            <ChangePassword />
           </form>
         }
         <PostList

@@ -35,11 +35,7 @@ class PostList extends Component {
           justify="center"
           alignItems="center"
         >
-          <Grid item
-            xs={12}
-            lg={10}
-            md={10}
-            >
+          <Grid item xs={12} lg={10} md={10} sm={12}>
             <React.Fragment>
               {posts.map((content, index) => current(content, index))}
             </React.Fragment>
