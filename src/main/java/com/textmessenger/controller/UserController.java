@@ -127,11 +127,6 @@ public class UserController {
                                    @RequestPart("dateBirthday") String dateBirthday,
                                    @RequestPart(value = "file", required = false) MultipartFile file)
           throws IOException {
-    System.out.println(file);
-    System.out.println(firstName);
-    System.out.println(lastName);
-    System.out.println(address);
-    System.out.println(dateBirthday);
     userService.updateUserWithStringsAndFile(firstName, lastName, address, dateBirthday, file);
     return ResponseEntity.ok().build();
   }
