@@ -256,13 +256,13 @@ public class UserServiceImpl implements UserService {
             .getAuthentication()
             .getPrincipal();
     User one = userRepository.getOne(userPrincipal.getId());
-    if (firstName != "undefined") {//NOSONAR
+    if (firstName != "undefined") { //NOSONAR
       one.setFirstName(firstName);
     }
-    if (lastName != "undefined") {//NOSONAR
+    if (lastName != "undefined") { //NOSONAR
       one.setLastName(lastName);
     }
-    if (address != "undefined") {//NOSONAR
+    if (address != "undefined") { //NOSONAR
       one.setAddress(address);
     }
     if (file != null) {
