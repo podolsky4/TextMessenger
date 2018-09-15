@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadUser, updateUser} from '../../actions/userActions'
-import CurrentUserInfo from './CurrentUserInfo'
+
 import classnames from 'classnames'
 import {withStyles} from '@material-ui/core/styles'
 import PostList from '../../components/Post/PostList'
+import Button from '@material-ui/core/Button'
+
+import CurrentUserProfileWrapper from './CurrentUserProfileWrapper'
 
 const styles = (theme) => ({
   ChangeUserProfileInfoCard: {
@@ -45,6 +48,13 @@ const styles = (theme) => ({
     borderRadius: 6,
     padding: '1em',
     background: '#00897B'
+  },
+  button: {
+    margin: '2px 0',
+    right: -1
+  },
+  profileButton: {
+    background: theme.palette.primary.accent
   }
 })
 
@@ -54,7 +64,6 @@ class CurrentUserProfile extends Component {
     this.state = {
       login: this.props.user.login,
       email: this.props.user.email,
-      password: this.props.user.password === null ? '' : this.props.user.password,
       firstName: this.props.user.firstName === null ? '' : this.props.user.firstName,
       lastName: this.props.user.lastName === null ? '' : this.props.user.lastName,
       address: this.props.user.address === null ? '' : this.props.user.address,
@@ -89,19 +98,20 @@ class CurrentUserProfile extends Component {
 
     return (
       <div className={classes.ProfileCnt}>
+
         {this.state.viewMode &&
           <div className={classes.UserInfoCnt}>
-            <CurrentUserInfo user={user}/>
-            <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
+            <CurrentUserProfileWrapper editableField={this.editableField.bind(this)} user={user}/>
+            {/* <Button variant="contained" */}
+                    {/* color="primary" */}
+                    {/* onClick={this.editableField} */}
+            {/* > */}
+              {/* <EditIcon /> */}
+            {/* </Button> */}
           </div>
         }
         {!this.state.viewMode &&
-          <form className={classnames(classes.ChangeUserProfileInfoCard)}>     display: flex;
-
-            <label>
-              password:
-              <input id='password-change' name='password' type='password' onChange={e => this.change(e)}/>
-            </label>
+          <form className={classnames(classes.ChangeUserProfileInfoCard)}>
             <label>
               name:
               <input id='firstName-change' name='firstName' type='text' value={this.state.firstName}
@@ -132,16 +142,28 @@ class CurrentUserProfile extends Component {
               <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday}
                 onChange={e => this.change(e)} />
             </label>
-
-            <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)}/>
-            <input type='button' name='Cancel' value='Cancel' onClick={this.editableField}/>
+            <Button variant="contained"
+                    color="primary"
+                    onClick={e => this.updateUser(e)}
+                    className={classes.profileButton}
+            >
+            Apply
+          </Button>
+            <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={this.editableField}
+            >
+              Cancel
+            </Button>
           </form>
         }
 
-        <PostList user={user}
-                  posts={userPosts}
-                  className={classes.userPostList}
-                  classes />
+        <PostList
+          user={user}
+          posts={userPosts}
+          className={classes.userPostList}
+        />
 
       </div>
     )

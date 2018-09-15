@@ -8,13 +8,6 @@ import withStyles from '@material-ui/core/styles/withStyles'
 const styles = theme => ({
   layout: {
     width: 'auto'
-    // marginLeft: theme.spacing.unit * 3,
-    // marginRight: theme.spacing.unit * 3,
-    // [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-    //   width: 400,
-    //   marginLeft: 'auto',
-    //   marginRight: 'auto'
-    // }
   },
   paper: {
     marginTop: theme.spacing.unit * 1,
@@ -35,11 +28,6 @@ const styles = theme => ({
   },
   lockIcon: {
     marginRight: '1em'
-  },
-
-  submit: {
-    // marginTop: theme.spacing.unit * 3
-    // background:  "#e7f6f9",
   }
 })
 
@@ -60,7 +48,7 @@ class LogOut extends Component {
   render () {
     const {classes} = this.props
     return (
-      <React.Fragment className={classes.logout}>
+      <React.Fragment>
         <LockIcon className={classes.lockIcon}/>
         <Button
           type="submit"

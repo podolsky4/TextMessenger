@@ -13,14 +13,14 @@ const styles = theme => ({
 class PostList extends Component {
   render () {
     const {posts, user, classes} = this.props
-    let current = post => {
+    let current = (post, index) => {
       if (post.parent) {
         let who = user.id === post.user.id
-        return <Post key={post.id} post={post.parent} owner={post.user} whoo={who} postId={post.id}/>
+        return <Post key={index + '' + post.id} post={post.parent} owner={post.user} whoo={who} postId={post.id}/>
       } else {
         return (
           <Post
-            key={post.id}
+            key={index + '' + post.id}
             post={post}
           />
         )
@@ -39,11 +39,9 @@ class PostList extends Component {
             xs={12}
             lg={10}
             md={10}
-            spacing={24}
-            justify="center"
-            alignItems="stretch">
+            >
             <React.Fragment>
-              {posts.map(content => current(content))}
+              {posts.map((content, index) => current(content, index))}
             </React.Fragment>
           </Grid>
         </Grid>

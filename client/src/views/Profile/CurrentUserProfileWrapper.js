@@ -1,11 +1,13 @@
 import React from 'react'
-import PersonAdd from '@material-ui/icons/PersonAdd'
-import {withStyles} from '@material-ui/core/styles'
+import Avatar from '@material-ui/core/Avatar'
 import classnames from 'classnames'
-import CardContent from '@material-ui/core/CardContent/CardContent'
-import Card from '@material-ui/core/Card/Card'
-import Avatar from '@material-ui/core/Avatar/'
-import Typography from '@material-ui/core/Typography/Typography'
+import PersonAdd from '../../../node_modules/@material-ui/icons/PersonAdd'
+import Card from '../../../node_modules/@material-ui/core/Card/Card'
+import CardContent from '../../../node_modules/@material-ui/core/CardContent/CardContent'
+import Typography from '../../../node_modules/@material-ui/core/Typography/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import EditIcon from '../../../node_modules/@material-ui/icons/EditTwoTone'
+import Button from '@material-ui/core/Button'
 
 const styles = (theme) => ({
   media: {
@@ -34,7 +36,7 @@ const styles = (theme) => ({
     flexDirection: 'column',
     minWidth: 275,
     maxWidth: 400,
-    padding: 40
+    padding: 0
   },
   userInfoCnt: {
     display: 'flex',
@@ -49,12 +51,22 @@ const styles = (theme) => ({
   bigAvatar: {
     width: 160,
     height: 160
+  },
+  editButton: {
+    // margin: theme.spacing.unit,
+    background: theme.palette.primary.accentOpacity,
+    alignSelf: 'flex-end',
+    bottom: 14,
+    // borderRadius: '50%',
+    '&::hover': {
+      background: theme.palette.secondary.main
+    }
   }
 })
 
-class UserProfileInfoCard extends React.Component {
+class CurrentUserProfileWrapper extends React.Component {
   render () {
-    const {user, classes} = this.props
+    const {user, classes, editableField} = this.props
     return (
       <React.Fragment>
 
@@ -64,15 +76,23 @@ class UserProfileInfoCard extends React.Component {
 
                   className={classnames(classes.avatar, classes.bigAvatar)}>
             <PersonAdd/>
+
             {/* TODO: bug. user is not getting to here, so default icon now. */}
           </Avatar>
+          <Button className={classes.editButton}
+                  onClick={editableField}
+                  size="small"
+                  variant="flat" aria-label="Edit"
+          >
+            <EditIcon />
+          </Button>
           <div className={classes.userInfo}>
 
             <Card className={classes.card}>
               <CardContent>
 
                 <Typography className={classes.pos} color="textPrimary">
-                                  @{user.login}
+                  @{user.login}
                 </Typography>
                 <Typography component={'h6'} color="textSecondary">
                   {user.email}
@@ -86,5 +106,4 @@ class UserProfileInfoCard extends React.Component {
     )
   }
 }
-
-export default withStyles(styles)(UserProfileInfoCard)
+export default withStyles(styles)(CurrentUserProfileWrapper)

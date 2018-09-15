@@ -89,7 +89,6 @@ class OtherUserProfile extends Component {
   render () {
     const {userFromPost} = this.state
     const {following, currentUser, classes, userPosts} = this.props
-    console.log('OTHER userPosts :/n', userPosts)
     if (this.state.userFromPost.length === 0) {
       return <Loader fullscreen={true}/>
     }

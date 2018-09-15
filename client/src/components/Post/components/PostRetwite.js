@@ -34,8 +34,8 @@ class PostRetwite extends Component {
   }
 
   handleRetwite = e => {
-    const {post, user, retweets, unRetweets, postId} = this.props
-    if (!this.state.retweet) {
+    const {post, user, retweets, unRetweets, postId, whoo} = this.props
+    if (!whoo && !this.state.retweet) {
       retweets(user.id, post.id)
       this.setState({retweet: true})
     } else {
@@ -45,7 +45,6 @@ class PostRetwite extends Component {
 
   render () {
     const {classes} = this.props
-    // const text = whoo ? 'Remove retweet' : 'Retweet'
     return (
       <div className={classes.diva}>
         <IconButton className={classNames(classes.root,
@@ -57,13 +56,15 @@ class PostRetwite extends Component {
                     aria-label="ReTweet">
           <RepeateIcon/>
         </IconButton>
-        {/* <Typography>{text}</Typography> */}
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
+  return {
+    favorites: state.favorites
+  }
 }
 const mapDispatchToProps = dispatch => {
   return {
