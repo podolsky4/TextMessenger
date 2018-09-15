@@ -7,6 +7,7 @@ import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
+import com.textmessenger.model.entity.dto.UserToFrontFull;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.service.EmailService;
 import com.textmessenger.service.LoginService;
@@ -47,6 +48,11 @@ public class UserController {
     this.loginService = loginService;
     this.emailService = emailService;
     this.temporaryTokenRepository = temporaryTokenRepository;
+  }
+
+  @GetMapping
+  public ResponseEntity getFullUser() {
+    return ResponseEntity.ok().body(UserToFrontFull.convertUserForFront(userService.getCurrentUserFull()));
   }
 
   @PostMapping("/forgotpassword")

@@ -285,27 +285,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void updateUserWithNullFileds(User user) {
+  public User getCurrentUserFull() {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
-    User one = userRepository.getOne(userPrincipal.getId());
-    if (user.getFirstName() != null) {
-      one.setFirstName(user.getFirstName());
-    }
-    if (user.getLastName() != null) {
-      one.setLastName(user.getLastName());
-    }
-    if (user.getAddress() != null) {
-      one.setAddress(user.getAddress());
-    }
-    if (user.getDateBirthday() != null) {
-      one.setDateBirthday(user.getDateBirthday());
-    }
-    if (user.getProfileHeader() != null) {
-      one.setProfileHeader(user.getProfileHeader());
-    }
-    userRepository.save(user);
+    return userRepository.getOne(userPrincipal.getId());
   }
 }

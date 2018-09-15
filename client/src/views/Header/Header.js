@@ -56,9 +56,6 @@ class Header extends React.Component {
     return <div className={classes.root}>
       <AppBar position='static' className={classes.appBar}>
         <Toolbar>
-          {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"> */}
-            {/* <MenuIcon/> */}
-          {/* </IconButton> */}
           <Typography variant="title" color="inherit" className={classes.root}>
             Feed
           </Typography>
@@ -75,11 +72,10 @@ class Header extends React.Component {
             <MessageIcon className={classes.icon}/>
           </IconButton>
           <IconButton aria-label="4 pending messages" color="inherit" component={Link} to='/notifications'>
-            <Badge badgeContent={notification.length} color='secondary' classes={{badge: classes.badge}}>
+           <Badge badgeContent={notification.length} color='secondary' classes={{badge: classes.badge}}>
               <NotificationsIcon className={classes.icon}/>
             </Badge>
           </IconButton>
-          {/* TODO fix */}
           {!noUser &&
           <MenuHeader user={user}/>
           }

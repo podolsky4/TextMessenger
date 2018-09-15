@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadUser, updateUser} from '../../actions/userActions'
+import { loadUser, loadUserFull, updateUser } from '../../actions/userActions'
 import classnames from 'classnames'
 import {withStyles} from '@material-ui/core/styles'
 import PostList from '../../components/Post/PostList'
@@ -65,15 +65,18 @@ class CurrentUserProfile extends Component {
     this.state = {
       login: this.props.user.login,
       email: this.props.user.email,
-      firstName: this.props.user.firstName === null ? null : this.props.user.firstName,
-      lastName: this.props.user.lastName === null ? null : this.props.user.lastName,
-      address: this.props.user.address === null ? null : this.props.user.address,
-      profileHeader: this.props.user.profileHeader === null ? null : this.props.user.profileHeader,
-      dateBirthday: this.props.user.dateBirthday === null ? null : this.props.user.dateBirthday,
+      firstName: this.props.user.firstName,
+      lastName: this.props.user.lastName,
+      address: this.props.user.address,
+      profilePhoto: this.props.user.profilePhoto,
+      dateBirthday: this.props.user.dateBirthday,
       viewMode: true
     }
   }
-
+  componentWillMount(){
+    const {loadProfileUser} = this.props
+    loadProfileUser()
+  }
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -88,7 +91,7 @@ class CurrentUserProfile extends Component {
     const {user, updateUser} = this.props
     e.preventDefault()
     let formData = new FormData()
-    formData.append('file', this.refs.profileHeader.files[0])
+    formData.append('file', this.refs.profilePhoto.files[0])
     formData.append('firstName', this.state.firstName)
     formData.append('lastName', this.state.lastName)
     formData.append('address', this.state.address)
@@ -96,8 +99,8 @@ class CurrentUserProfile extends Component {
     updateUser(formData, user.login)
     this.editableField()
   };
-  changeNameProfileHeader= e => {
-    this.setState({profileHeader: this.refs.profileHeader.files[0].name})
+  changeNameProfilePhoto = e => {
+    this.setState({profilePhoto: this.refs.profilePhoto.files[0].name})
   }
   render () {
     const {user, classes, userPosts} = this.props
@@ -116,32 +119,31 @@ class CurrentUserProfile extends Component {
                 accept="image/*"
                 className={classes.input}
                 type="file"
-                name="profileHeader-change"
-                id="profileHeader-change"
-                ref="profileHeader"
-                onChange={e => this.changeNameProfileHeader(e)}
+                name="profilePhoto-change"
+                id="profilePhoto-change"
+                ref="profilePhoto"
+                onChange={e => this.changeNameProfilePhoto(e)}
                 style={{display: 'none'}}
               />
               <label> Avatar image
-                <label htmlFor="profileHeader-change">
+                <label htmlFor="profilePhoto-change">
                   <Button raised='true' component="span" className={classes.button}>Upload</Button>
                 </label>
               </label>
             </InputAdornment>
-            {<a>{this.state.profileHeader}</a>}
             <label>
               name:
-              <input id='firstName-change' name='firstName' type='text' value={this.state.firstName}
+              <input id='firstName-change' name='firstName' type='text' placeholder={this.props.user.firstName} value={this.state.firstName}
                 onChange={e => this.change(e)} />
             </label>
             <label>
               surname:
-              <input id='lastName-change' name='lastName' type='text' value={this.state.lastName}
+              <input id='lastName-change' name='lastName' type='text' placeholder={this.props.user.lastName} value={this.state.lastName}
                 onChange={e => this.change(e)} />
             </label>
             <label>
               address:
-              <input id='address-change' name='address' type='text' value={this.state.address}
+              <input id='address-change' name='address' type='text' placeholder={this.props.user.address} value={this.state.address}
                 onChange={e => this.change(e)} />
             </label>
             <label>
@@ -188,6 +190,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadUser: (login) => dispatch(loadUser(login)),
+    loadProfileUser: () => dispatch(loadUserFull()),
     updateUser: (data, login) => dispatch(updateUser(data, login))
   }
 }
