@@ -102,12 +102,12 @@ class CurrentUserProfile extends Component {
         {this.state.viewMode &&
           <div className={classes.UserInfoCnt}>
             <CurrentUserProfileWrapper editableField={this.editableField.bind(this)} user={user}/>
-            {/*<Button variant="contained"*/}
-                    {/*color="primary"*/}
-                    {/*onClick={this.editableField}*/}
-            {/*>*/}
-              {/*<EditIcon />*/}
-            {/*</Button>*/}
+            {/* <Button variant="contained" */}
+                    {/* color="primary" */}
+                    {/* onClick={this.editableField} */}
+            {/* > */}
+              {/* <EditIcon /> */}
+            {/* </Button> */}
           </div>
         }
         {!this.state.viewMode &&
