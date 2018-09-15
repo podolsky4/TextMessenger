@@ -1,6 +1,10 @@
 function user (state = null, action) {
   if (action.type === 'CREATE_USER_IN_REDUX') {
-    return action.payload
+    if (action.payload === undefined){
+      return []
+    } else{
+      return action.payload
+    }
   }
   return state
 }

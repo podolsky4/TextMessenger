@@ -8,6 +8,7 @@ import Typography from '../../../node_modules/@material-ui/core/Typography/Typog
 import { withStyles } from '@material-ui/core/styles'
 import EditIcon from '../../../node_modules/@material-ui/icons/EditTwoTone'
 import Button from '@material-ui/core/Button'
+import ChangePassword from './ChangePassword'
 
 const styles = (theme) => ({
   media: {
