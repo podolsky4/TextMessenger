@@ -41,13 +41,7 @@ export const getCurrentUser = () => dispatch => {
       'Content-Type': 'application/json'
     }
   })
-    .then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        dispatch({type: CREATE_USER_IN_REDUX, payload: {}})
-      }
-    })
+    .then(response => response.json())
     .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
@@ -83,7 +77,13 @@ export const logOut = () => dispatch => {
 
 // sub action for user
 export const updateUser = (data, login) => dispatch => {
-  FetchData.put('/api/users/', data)
+  fetch(`/api/users/`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    },
+    body: data
+  })
     .then(() => dispatch(loadUser(login)))
 }
 export const getFollowing = (id) => dispatch => {

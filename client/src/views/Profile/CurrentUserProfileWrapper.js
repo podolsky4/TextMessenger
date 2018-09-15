@@ -18,8 +18,6 @@ const styles = (theme) => ({
     Width: '100%'
   },
   avatar: {
-    // minWidth: 75,
-    // maxWidth: 100,
     position: 'relative',
     top: 24,
     height: 'auto',
@@ -53,11 +51,9 @@ const styles = (theme) => ({
     height: 160
   },
   editButton: {
-    // margin: theme.spacing.unit,
     background: theme.palette.primary.accentOpacity,
     alignSelf: 'flex-end',
     bottom: 14,
-    // borderRadius: '50%',
     '&::hover': {
       background: theme.palette.secondary.main
     }
@@ -69,15 +65,14 @@ class CurrentUserProfileWrapper extends React.Component {
     const {user, classes, editableField} = this.props
     return (
       <React.Fragment>
-
         <div className={classes.userInfoCnt}>
           <Avatar alt="user avatar"
-            // src={user.profilePhoto}
-
+                  src={ user.profilePhoto === null ?
+                    'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'
+                    : user.profilePhoto
+                  }
                   className={classnames(classes.avatar, classes.bigAvatar)}>
             <PersonAdd/>
-
-            {/* TODO: bug. user is not getting to here, so default icon now. */}
           </Avatar>
           <Button className={classes.editButton}
                   onClick={editableField}
@@ -87,17 +82,14 @@ class CurrentUserProfileWrapper extends React.Component {
             <EditIcon />
           </Button>
           <div className={classes.userInfo}>
-
             <Card className={classes.card}>
               <CardContent>
-
                 <Typography className={classes.pos} color="textPrimary">
                   @{user.login}
                 </Typography>
                 <Typography component={'h6'} color="textSecondary">
                   {user.email}
                 </Typography>
-
               </CardContent>
             </Card>
           </div>
