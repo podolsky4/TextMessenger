@@ -9,13 +9,14 @@ import PublishIcon from '@material-ui/icons/Publish'
 const styles = theme => ({
   button: {
     alignSelf: 'flex-end',
-    marginBottom: theme.spacing.unit * 2,
+    marginBottom: 14,
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
-    paddingTop: 11,
-    paddingBottom: 11,
+    paddingTop: 13,
+    paddingBottom: 13.5,
     marginLeft: '2vw',
-    marginRight: '2vw'
+    marginRight: '2vw',
+    fontWeight: 700
   },
   rightIcon: {
     marginLeft: theme.spacing.unit

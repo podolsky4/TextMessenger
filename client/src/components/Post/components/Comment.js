@@ -6,14 +6,15 @@ import {withStyles} from "@material-ui/core/styles/index";
 const styles = theme => ({
     comment: {
         display: 'flex',
-        padding: '16px 0px',
+        padding: '16px 16px',
         alignItems: 'center',
         justifyContent: 'flex-start',
         width: '100%',
-        borderTop:'1px solid' + theme.palette.background.grey
+        borderTop:'1px solid' + theme.palette.background.grey,
+        marginLeft: theme.spacing.unit * 2,
     },
     commentContent: {
-        marginLeft: 32,
+        marginLeft: theme.spacing.unit * 2,
     }
 })
 

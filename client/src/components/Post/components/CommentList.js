@@ -70,12 +70,10 @@ class CommentList extends Component {
 
     let maped = post => {
       return (
-          <ListItem>
             <Comment
                 key={post.id}
                 comment={post}
             />
-          </ListItem>
       )
     }
 
