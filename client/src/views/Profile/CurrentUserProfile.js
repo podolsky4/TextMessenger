@@ -8,6 +8,7 @@ import PostList from '../../components/Post/PostList'
 import Button from '@material-ui/core/Button'
 
 import CurrentUserProfileWrapper from './CurrentUserProfileWrapper'
+import ChangePassword from './ChangePassword'
 import InputAdornment from '../../../node_modules/@material-ui/core/InputAdornment/InputAdornment'
 
 const styles = (theme) => ({
@@ -100,7 +101,6 @@ class CurrentUserProfile extends Component {
 
     return (
       <div className={classes.ProfileCnt}>
-
         {this.state.viewMode &&
           <div className={classes.UserInfoCnt}>
             <CurrentUserProfileWrapper editableField={this.editableField.bind(this)} user={user}/>
@@ -160,6 +160,7 @@ class CurrentUserProfile extends Component {
             >
               Cancel
             </Button>
+              <ChangePassword />
           </form>
         }
 
