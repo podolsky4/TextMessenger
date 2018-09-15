@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 
@@ -14,6 +15,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Loader from '../../components/Loader/Loader'
 
 import { ValidatorForm } from 'react-material-ui-form-validator'
+import TextField from '../../../node_modules/@material-ui/core/TextField/TextField'
 
 
 const styles = theme => ({
