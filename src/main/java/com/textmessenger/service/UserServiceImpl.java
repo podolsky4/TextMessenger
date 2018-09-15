@@ -273,7 +273,11 @@ public class UserServiceImpl implements UserService {
               fileFromFront,
               new ObjectMetadata());
       String userHeader = amazonS3.getUrl(BUCKET, key).toString();
-      one.setProfilePhoto(userHeader);
+      if (one.getProfilePhoto() != null) {
+        //TODO logic of remove and set new photo
+      } else {
+        one.setProfilePhoto(userHeader);
+      }
     }
     userRepository.save(one);
   }
