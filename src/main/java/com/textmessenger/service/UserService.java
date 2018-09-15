@@ -6,7 +6,9 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,5 +57,9 @@ public interface UserService {
   List<NotificationToFront> getAllNotificationByUser();
 
   String changePasswordForgot(CredentialsPassword credentialsPassword);
+
+  void updateUserWithStringsAndFile(String firstName, String lastName, String address, String date, MultipartFile file) throws IOException;
+
+  void updateUserWithNullFileds(User user);
 }
 

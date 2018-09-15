@@ -1,5 +1,8 @@
 package com.textmessenger.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.textmessenger.config.AmazonConfig;
 import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
@@ -18,7 +21,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +35,8 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
+  private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
+  private AmazonConfig s3;
   private final UserRepository userRepository;
   private final TemporaryTokenRepository temporaryTokenRepository;
   private UserToFrontShort userToFront;
@@ -38,11 +46,13 @@ public class UserServiceImpl implements UserService {
 
   public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
                          EmailService emailService,
-                         NotificationService notificationService) {
+                         NotificationService notificationService,
+                         AmazonConfig s3) {
     this.userRepository = userRepository;
     this.temporaryTokenRepository = temporaryTokenRepository;
     this.emailService = emailService;
     this.notificationService = notificationService;
+    this.s3 = s3;
   }
 
   @Override
@@ -233,5 +243,63 @@ public class UserServiceImpl implements UserService {
       }
     }
     return "Sorry. This token in invalid.";
+  }
+
+  @Override
+  public void updateUserWithStringsAndFile(String firstName, String lastName, String address, String date, MultipartFile file) throws IOException {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    User one = userRepository.getOne(userPrincipal.getId());
+    if (firstName != "undefined") {
+      one.setFirstName(firstName);
+    }
+    if (lastName != "undefined") {
+      one.setLastName(lastName);
+    }
+    if (address != "undefined") {
+      one.setAddress(address);
+    }
+    if (file != null) {
+      String typeFile = file.getContentType();
+      String type = "." + typeFile.substring(6);
+      String key = "userAvatar/" + UUID.randomUUID() + type;
+      InputStream fileFromFront = file.getInputStream();
+      AmazonS3 amazonS3 = s3.getConnection();
+      amazonS3.putObject(
+              BUCKET,
+              key,
+              fileFromFront,
+              new ObjectMetadata());
+      String userHeader = amazonS3.getUrl(BUCKET, key).toString();
+      one.setProfilePhoto(userHeader);
+    }
+    userRepository.save(one);
+  }
+
+  @Override
+  public void updateUserWithNullFileds(User user) {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    User one = userRepository.getOne(userPrincipal.getId());
+    if (user.getFirstName() != null) {
+      one.setFirstName(user.getFirstName());
+    }
+    if (user.getLastName() != null) {
+      one.setLastName(user.getLastName());
+    }
+    if (user.getAddress() != null) {
+      one.setAddress(user.getAddress());
+    }
+    if (user.getDateBirthday() != null) {
+      one.setDateBirthday(user.getDateBirthday());
+    }
+    if (user.getProfileHeader() != null) {
+      one.setProfileHeader(user.getProfileHeader());
+    }
+    userRepository.save(user);
   }
 }

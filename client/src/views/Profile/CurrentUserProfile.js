@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadUser, updateUser} from '../../actions/userActions'
-
 import classnames from 'classnames'
 import {withStyles} from '@material-ui/core/styles'
 import PostList from '../../components/Post/PostList'
@@ -88,9 +87,13 @@ class CurrentUserProfile extends Component {
   updateUser = e => {
     const {user, updateUser} = this.props
     e.preventDefault()
-    let data = this.state
-    const up = {...data, id: user.id}
-    updateUser(up, user.login)
+    let formData = new FormData()
+    formData.append('file', this.refs.profileHeader.files[0])
+    formData.append('firstName', this.state.firstName)
+    formData.append('lastName', this.state.lastName)
+    formData.append('address', this.state.address)
+    formData.append('dateBirthday', this.state.dateBirthday)
+    updateUser(formData, user.login)
     this.editableField()
   };
   changeNameProfileHeader= e => {
