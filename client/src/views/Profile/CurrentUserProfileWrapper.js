@@ -18,8 +18,6 @@ const styles = (theme) => ({
     Width: '100%'
   },
   avatar: {
-    // minWidth: 75,
-    // maxWidth: 100,
     position: 'relative',
     top: 24,
     height: 'auto',
