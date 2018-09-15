@@ -80,7 +80,7 @@ class Post extends Component {
     }
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const {favorites, user, loadFavorites} = this.props
     if (favorites.length === 0) {
       loadFavorites(user.id)

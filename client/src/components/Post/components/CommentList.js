@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createComment} from '../../../actions/postsActions'
 import Comment from './Comment'
 import Loader from '../../Loader/Loader'
-import {Button, List, TextField} from '@material-ui/core/umd/material-ui.production.min'
+import {Button, List, ListItem, TextField} from '@material-ui/core/umd/material-ui.production.min'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 
@@ -70,10 +70,13 @@ class CommentList extends Component {
 
     let maped = post => {
       return (
-        <Comment
-            key={post.id}
-            comment={post}
-        />)
+          <ListItem>
+            <Comment
+                key={post.id}
+                comment={post}
+            />
+          </ListItem>
+      )
     }
 
     return (
