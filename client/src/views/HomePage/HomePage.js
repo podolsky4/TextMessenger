@@ -18,7 +18,7 @@ const styles = theme => ({
     height: '100vh'
   },
   cont: {
-    background: blueGrey
+    background: 'rgba(61, 33, 67, 0.28)'
   },
   homepage: {
     background: '#00796B',

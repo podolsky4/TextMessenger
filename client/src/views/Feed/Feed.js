@@ -37,16 +37,24 @@ const styles = theme => ({
   textField: {
     padding: '30px 8px 16px 16px',
     alignSelf: 'flex-end',
-    width: '73%'
+    width: '73%',
+    alignItems: 'flex-end'
   },
   paper: {
     width: '100%',
-    maxWidth: '700px',
-    justifyItems: 'stretch'
-  }
-  // textField: {
-  //   flexBasis: 200,
-  // },
+    // maxWidth: '700px',
+    justifyItems: 'stretch',
+    borderRadius: 3
+  },
+  gridItem: {
+      padding: 4
+  },
+  textfield: {
+    alignItems: 'flex-end'
+  },
+    button: {
+        alignItems: 'flex-end'
+    }
 })
 
 class Feed extends Component {
@@ -159,9 +167,17 @@ class Feed extends Component {
           alignItems="center"
         >
           <Grid container
+
             justify="center"
-            alignItems="stretch"
+            alignItems="center"
             >
+              <Grid item
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                    xs={12} sm={10} lg={6} md={8}
+                    className={classes.gridItem}
+              >
             <Paper className={classes.paper}>
               <form className={classes.form}
                 onSubmit={e => this.onSubmit(e)}>
@@ -175,8 +191,8 @@ class Feed extends Component {
                     maxLength: 280,
                     padding: '3.7% 0 7px',
                     style:
-                      {borderRadius: '2px'}
-
+                      {borderRadius: '2px',
+                      }
                   }}
                   id="content"
                   name="text"
@@ -206,14 +222,12 @@ class Feed extends Component {
                 </Input>
                   {<a>{this.state.changenameeed}</a>}
                 </FormControl>
-                {/* <form> */}
-                  {/* <input type="file" name="file" ref="inputFile"/> */}
-                {/* </form> */}
                 <ButtonPost flowRight/>
               </form>
               {reloadLoader && <Loader/>}
             </Paper>
-            <PostList posts={posts} user={user}/>
+          </Grid>
+        <PostList posts={posts} user={user}/>
           </Grid>
         </Grid>
       </div>

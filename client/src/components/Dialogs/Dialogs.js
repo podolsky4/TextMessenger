@@ -10,6 +10,7 @@ import {Redirect} from 'react-router-dom'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper/Paper'
 import Button from '@material-ui/core/Button/Button'
+import PlusIcon from '@material-ui/icons/AddCircleOutlineOutlined'
 import * as primary from '@material-ui/core/styles/createPalette'
 
 const styles = theme => ({
@@ -46,12 +47,13 @@ const styles = theme => ({
     margin: '1px 0'
   },
   button: {
-    padding: theme.spacing.unit / 2,
+    padding: 8,
     margin: theme.spacing.unit,
     marginLeft: 0,
     lineHeight: 1,
     background: theme.palette.secondary.main,
-    fontSize: 12
+    fontSize: 12,
+      alignItems:'center',
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
@@ -156,6 +158,7 @@ class Dialogs extends Component {
           }
           <Button onClick={e => this.handleCreateDialog(e)}
                   variant="contained" type="submit" color="primary" className={classes.button}>
+              <PlusIcon style={{marginRight: 4}}/>
             new Dialog
           </Button>
           {newDialog &&

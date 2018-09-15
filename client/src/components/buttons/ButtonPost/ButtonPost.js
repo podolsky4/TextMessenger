@@ -8,9 +8,14 @@ import PublishIcon from '@material-ui/icons/Publish'
 
 const styles = theme => ({
   button: {
-    alignSelf: 'stretch',
-    margin: '8% 4.5% 3% 4.5%',
-    marginBottom: 2.1 * theme.spacing.unit
+    alignSelf: 'flex-end',
+    marginBottom: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
+    paddingTop: 11,
+    paddingBottom: 11,
+    marginLeft: '2vw',
+    marginRight: '2vw'
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
@@ -21,7 +26,7 @@ function ButtonPost (props) {
   const {classes} = props
   return (
     <Button variant="contained" type="submit" color="primary" className={classes.button}>
-        Send
+        Share
       <PublishIcon className={classes.rightIcon}></PublishIcon>
     </Button>
   )
