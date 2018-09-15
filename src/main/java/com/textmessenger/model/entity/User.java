@@ -115,7 +115,7 @@ public class User extends BaseEntity {
             + ", lastName='" + lastName + '\''
             + ", address='" + address + '\''
             + ", profilePhoto='" + profilePhoto + '\''
-            + ", profileHeader='" + profileHeader + '\''
+            + ", profilePhoto='" + profileHeader + '\''
             + ", dateBirthday=" + dateBirthday
             + '}';
   }

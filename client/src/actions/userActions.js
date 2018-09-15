@@ -51,6 +51,11 @@ export const loadUser = (login) => dispatch => {
     .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
 }
 
+export const loadUserFull = () => dispatch => {
+  FetchData.get(`/api/users/`)
+    .then(res => res.json())
+    .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
+}
 // logIn & logOut action
 export const loginIn = (email, password) => dispatch => {
   dispatch(startLoader('LOADING_USER'))

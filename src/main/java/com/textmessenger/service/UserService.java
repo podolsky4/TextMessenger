@@ -64,6 +64,6 @@ public interface UserService {
                                     String date,
                                     MultipartFile file) throws IOException;
 
-  void updateUserWithNullFileds(User user);
+  User getCurrentUserFull();
 }
 
