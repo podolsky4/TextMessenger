@@ -246,7 +246,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void updateUserWithStringsAndFile(String firstName, String lastName, String address, String date, MultipartFile file) throws IOException {
+  public void updateUserWithStringsAndFile(String firstName,
+                                           String lastName,
+                                           String address,
+                                           String date,
+                                           MultipartFile file) throws IOException {
     UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
             .getContext()
             .getAuthentication()

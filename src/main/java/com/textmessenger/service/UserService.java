@@ -58,7 +58,11 @@ public interface UserService {
 
   String changePasswordForgot(CredentialsPassword credentialsPassword);
 
-  void updateUserWithStringsAndFile(String firstName, String lastName, String address, String date, MultipartFile file) throws IOException;
+  void updateUserWithStringsAndFile(String firstName,
+                                    String lastName,
+                                    String address,
+                                    String date,
+                                    MultipartFile file) throws IOException;
 
   void updateUserWithNullFileds(User user);
 }
