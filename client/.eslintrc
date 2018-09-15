@@ -4,6 +4,9 @@
     "standard",
     "react-app"
   ],
+  "env": {
+    "es6": true
+  },
   "rules": {
     "no-trailing-spaces": [
       "error",
