@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Loader from '../../components/Loader/Loader'
 
-import {ValidatorForm} from 'react-material-ui-form-validator'
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const styles = theme => ({
   layout: {
@@ -87,20 +87,29 @@ class LogIn extends Component {
       forgotPassword: false,
       createemail: '',
       createfirstName: '',
-      createpassword: ''
+      createpassword: '',
+      repeatPassword: ''
     }
   }
-  change = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  };
-  onSubmit = e => {
-    const {loginInUser} = this.props
-    e.preventDefault()
-    loginInUser(this.state.email, this.state.password)
-  };
-  create = e => {
+  componentDidMount() {
+    // custom rule will have name 'isPasswordMatch'
+    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+      if (value !== this.state.createpassword) {
+        return false;
+      }
+      return true;
+    });
+
+    ValidatorForm.addValidationRule('isGreatedThen', (value) => {
+      if (value.length < 5) {
+        return false;
+      }
+      return true;
+    });
+
+  }
+
+  registrateNewUser = e => {
     const {createUser} = this.props
     e.preventDefault()
     let data = {login: this.state.createfirstName, email: this.state.createemail, password: this.state.createpassword}
@@ -154,7 +163,6 @@ class LogIn extends Component {
                   <Avatar className={classes.avatar}>
                     <LockIcon/>
                   </Avatar>
-                  <ValidatorForm className={classes.center}>
                     <Typography variant="headline">Sign in</Typography>
                     <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
                       <FormControl margin="normal" fullWidth >
@@ -185,8 +193,7 @@ class LogIn extends Component {
                         variant="flat"
                         color="primary"
                         className={classes.signIn}
-                        onClick={this.SignUpToggle.bind(this)}
-                      >
+                        onClick={this.SignUpToggle.bind(this)}>
                         Registration
                       </Button>
                              <Button
@@ -194,8 +201,7 @@ class LogIn extends Component {
                         variant="flat"
                         color="primary"
                         className={classes.signIn}
-                        onClick={this.SignUpForgotPassword.bind(this)}
-                      >
+                        onClick={this.SignUpForgotPassword.bind(this)}>
                         Forgot Password
                       </Button>
                        <Button
@@ -207,7 +213,6 @@ class LogIn extends Component {
                        </Button>
 
                     </form>
-                  </ValidatorForm>
                 </Paper>
             }
           </React.Fragment>
@@ -218,7 +223,6 @@ class LogIn extends Component {
               <PersonAdd/>
             </Avatar>
             <Typography variant="headline">Forgot Password</Typography>
-
               {messageFromForgotPasswordFrom.message !== undefined &&
                 <a>{messageFromForgotPasswordFrom.message}</a>
               }
@@ -264,39 +268,48 @@ class LogIn extends Component {
               </Avatar>
               <Typography variant="headline">Registration</Typography>
               {messageFromCreateForm.message !== undefined && <a>{messageFromCreateForm.message}</a>}
-              <form onSubmit={e => this.create(e)} className={classes.form}>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="createemail">Email Address</InputLabel>
-                  <Input
-                    id="email"
+              <form onSubmit={e => this.registrateNewUser(e)} className={classes.form}>
+                <ValidatorForm ref="form">
+                  <TextValidator
+                    label="Email Address"
                     name="createemail"
-                    autoComplete="email"
                     autoFocus
-                    onChange={e => this.change(e)}
+                    fullWidth
                     value={this.state.createemail}
+                    onChange={e => this.change(e)}
+                    validators={['required', 'isEmail']}
+                    errorMessages={['this field is required', 'email is not valid']}
                   />
-                </FormControl>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Your Username</InputLabel>
-                  <Input
-                    id="name"
+                  <TextValidator
+                    label="Your Username"
                     name="createfirstName"
-                    autoComplete="name"
+                    fullWidth
+                    validators={['isGreatedThen']}
+                    errorMessages={['this field is required ,lenngth must by less than 4 char']}
                     onChange={e => this.change(e)}
                     value={this.state.createfirstName}
                   />
-                </FormControl>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="password">Password</InputLabel>
-                  <Input
+                  <TextValidator
+                    label="Password"
                     name="createpassword"
                     type="password"
-                    id="password"
-                    autoComplete="current-password"
+                    fullWidth
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                     onChange={e => this.change(e)}
                     value={this.state.createpassword}
                   />
-                </FormControl>
+                  <TextValidator
+                    label="Repeat password"
+                    onChange={e => this.change(e)}
+                    name="repeatPassword"
+                    type="password"
+                    fullWidth
+                    validators={['isPasswordMatch', 'required']}
+                    errorMessages={['password mismatch', 'this field is required']}
+                    value={this.state.repeatPassword}
+                  />
+                </ValidatorForm>
                 {fetching && <Loader/>}
                 <Button
                   type="submit"
