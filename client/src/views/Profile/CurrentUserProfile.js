@@ -104,7 +104,6 @@ class CurrentUserProfile extends Component {
   }
   render () {
     const {user, classes, userPosts} = this.props
-
     return (
       <div className={classes.ProfileCnt}>
         {this.state.viewMode &&
@@ -168,13 +167,11 @@ class CurrentUserProfile extends Component {
               <ChangePassword />
           </form>
         }
-
         <PostList
           user={user}
           posts={userPosts}
           className={classes.userPostList}
         />
-
       </div>
     )
   }
