@@ -21,7 +21,6 @@ const styles = theme => ({
     background: blueGrey
   },
   homepage: {
-    // background: 'linear-gradient(to top, #9eb1ba, #8ea4ae, #7f97a2, #6f8a96, #607d8b), grey',
     background: '#00796B',
     display: 'flex',
     flexDirection: 'row',
@@ -49,9 +48,8 @@ class HomePage extends Component {
     return (
       <div className={classNames(classes.homepage, classes.root, classes.cont)}>
         <TextCard
-          text="TextMessenger проект предполагает создание приложения с использованием всех знаний, которые мы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS."
-          classes={'TextCard'}/>
-        {!user.id && <SignIn classes={'SignIn'}/>}
+          text="TextMessenger проект предполагает создание приложения с использованием всех знаний, которые мы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS."/>
+        {!user.id && <SignIn />}
       </div>
     )
   }
