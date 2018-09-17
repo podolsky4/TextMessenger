@@ -164,7 +164,7 @@ class LogIn extends Component {
                     <LockIcon/>
                   </Avatar>
                     <Typography variant="headline">Sign in</Typography>
-                    <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
+                    <form aria-required onSubmit={e => this.onSubmit(e)} className={classes.form}>
                       <FormControl margin="normal" fullWidth >
                         <InputLabel htmlFor="email">Email Address</InputLabel>
                         <Input
