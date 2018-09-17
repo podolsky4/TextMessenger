@@ -30,16 +30,12 @@ class PostList extends Component {
     return (
       <div className={classes.root}>
         <Grid container
-          spacing={24}
+          spacing={12}
           direction="column"
           justify="center"
           alignItems="center"
         >
-          <Grid item
-            xs={12}
-            lg={10}
-            md={10}
-            >
+          <Grid item xs={12} sm={12} lg={10} md={10}>
             <React.Fragment>
               {posts.map((content, index) => current(content, index))}
             </React.Fragment>

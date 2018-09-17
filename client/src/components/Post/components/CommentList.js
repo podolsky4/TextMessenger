@@ -14,16 +14,18 @@ const styles = theme => ({
   },
   CommentTextField: {
     display: 'flex',
-    minWidth: '85%',
-    marginRight: 48
+    width: '100%',
+    marginRight: 32
   },
   postCreator: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-even'
+    alignItems: 'start',
+    margin: 16,
+    width: '94%',
+    justifyContent: 'space-between',
   },
   btnCreatePost: {
-    width: 125
+
   }
 })
 

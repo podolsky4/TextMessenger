@@ -27,7 +27,8 @@ const styles = (theme) => ({
   },
   pos: {
     marginBottom: 12,
-    color: 'orange'
+    color: 'orange',
+    fontSize: 40
   },
   userInfo: {
     display: 'flex',

@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import UnsecureRouter from '../Router/UnsecureRouter'
+import {withStyles} from '@material-ui/core/styles'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
@@ -28,12 +29,23 @@ const theme = createMuiTheme({
     },
     background: {
       main: '#00796B',
-      grey: '#fafafa'
+      grey: '#fafafa',
+      darkgrey: "#929292"
     }
   },
   status: {
     danger: 'orange'
   }
+})
+
+const styles = () => ({
+    loaderApp: {
+       display: 'flex',
+       alignItems: 'center',
+       justifyContent: 'center',
+       height: '100vh',
+       background: '#00796B'
+    }
 })
 
 class App extends Component {
@@ -45,11 +57,13 @@ class App extends Component {
   }
 
   render () {
-    const {user} = this.props
+    const {user, classes} = this.props
 
-    if (!user) {
-      return <Loader/>
-    }
+      if (!user) {
+          return <div className={classes.loaderApp}>
+              <Loader />
+          </div>
+      }
 
     if (!user.id) {
       return (
@@ -84,4 +98,4 @@ const mapDispatchToProps = dispatch => {
     getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(App))
