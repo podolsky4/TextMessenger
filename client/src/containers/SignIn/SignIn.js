@@ -270,8 +270,7 @@ class LogIn extends Component {
               </Avatar>
               <Typography variant="headline">Registration</Typography>
               {messageFromCreateForm.message !== undefined && <a>{messageFromCreateForm.message}</a>}
-              <form onSubmit={e => this.registrateNewUser(e)} className={classes.form}>
-                <ValidatorForm ref="form">
+                <ValidatorForm onSubmit={e => this.registrateNewUser(e)} className={classes.form}>
                   <TextValidator
                     label="Email Address"
                     name="createemail"
@@ -311,27 +310,26 @@ class LogIn extends Component {
                     errorMessages={['password mismatch', 'this field is required']}
                     value={this.state.repeatPassword}
                   />
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="raised"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Sign Up
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="flat"
+                    className={classes.signIn}
+                    onClick={this.SignInToggle.bind(this)}
+                    label={{visibility: '0'}}
+                  >
+                    Sign In
+                  </Button>
                 </ValidatorForm>
-                {fetching && <Loader/>}
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="raised"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Sign Up
-                </Button>
-                <Button
-                  fullWidth
-                  variant="flat"
-                  className={classes.signIn}
-                  onClick={this.SignInToggle.bind(this)}
-                  label={{visibility: '0'}}
-                >
-                  Sign In
-                </Button>
-              </form>
+              {fetching && <Loader/>}
             </Paper>
           }
         </main>
