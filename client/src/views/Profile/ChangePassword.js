@@ -79,7 +79,7 @@ class ChangePassword extends Component {
                     <Avatar className={classes.avatar}>
                         <LockIcon/>
                     </Avatar>
-                    <ValidatorForm  ref="form" onSubmit={e => this.onSubmit(e) }className={classes.center}>
+                    <ValidatorForm  ref="form" onSubmit={e => this.onSubmit(e) } className={classes.center}>
                         <Typography variant="headline">Change Password</Typography>
                         <TextValidator
                           label="Current Password"
@@ -103,6 +103,7 @@ class ChangePassword extends Component {
                           onChange={e => this.change(e)}
                           value={this.state.createPassword}
                         />
+
                         <TextValidator
                           label="Repeat password"
                           onChange={e => this.change(e)}
@@ -113,6 +114,7 @@ class ChangePassword extends Component {
                           errorMessages={['password mismatch', 'this field is required']}
                           value={this.state.repeatPassword}
                         />
+
                         {fetching && <Loader/>}
                         <Button
                           type="submit"
