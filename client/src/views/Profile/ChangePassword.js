@@ -18,10 +18,12 @@ import { ValidatorForm } from 'react-material-ui-form-validator'
 
 const styles = theme => ({
   paper: {
-    marginTop: theme.spacing.unit * 1,
+
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    background: 'none',
+    marginTop: theme.spacing.unit * 2,
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
   },
   center: {
@@ -31,11 +33,14 @@ const styles = theme => ({
   },
   avatar: {
     margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.primary.main
   },
   form: {
     marginTop: theme.spacing.unit
   },
+  LogINy: {
+    marginTop: theme.spacing.unit * 3
+  }
 })
 
 class ChangePassword extends Component {
@@ -132,7 +137,7 @@ class ChangePassword extends Component {
               fullWidth
               type='submit'
               variant='raised'
-              className={classes.LogIN}>
+              className={classes.LogINy}>
               Change
             </Button>
           </form>

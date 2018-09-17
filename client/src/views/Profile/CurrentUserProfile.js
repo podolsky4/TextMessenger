@@ -56,7 +56,19 @@ const styles = (theme) => ({
     right: -1
   },
   profileButton: {
-    background: theme.palette.primary.accent
+    background: theme.palette.primary.accent,
+    margin: theme.spacing.unit * 1,
+    '&#save': {
+      '&:hover, &:focus': {
+        background: theme.palette.secondary.main
+      }
+    },
+    '&#cancel': {
+      background: theme.palette.secondary.light,
+      '&:hover, &:focus': {
+        background: theme.palette.secondary.dark
+      }
+    }
   }
 })
 
@@ -208,12 +220,15 @@ class CurrentUserProfile extends Component {
                     color="primary"
                     onClick={e => this.updateUser(e)}
                     className={classes.profileButton}
+                    id="save"
             >
                 Save
             </Button>
             <Button variant="contained"
                     color="secondary"
-                    onClick={this.editableField}>
+                    onClick={this.editableField}
+                    className={classes.profileButton}
+                    id="cancel">
               Cancel
             </Button>
             <ChangePassword />
