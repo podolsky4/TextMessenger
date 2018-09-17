@@ -44,7 +44,6 @@ const styles = theme => ({
 class MessagesList extends Component {
   componentDidUpdate () {
     const msgWrap = document.getElementById('msgWrap')
-    let content = msgWrap.offsetHeight
     msgWrap.scrollTop = msgWrap.scrollHeight-msgWrap.clientHeight
     msgWrap.style.overflowX='hidden'
   }
