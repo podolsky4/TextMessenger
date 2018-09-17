@@ -65,9 +65,8 @@ class Notifications extends Component {
 
   notificationCard = (item, text) => {
     const {classes} = this.props
-    return <Grid fullWidht item>
+    return <Grid key={item.id} item>
        <Card
-         fullWidth
          className={classes.card}
          onClick = {e => this.redirecting(item)}
        >
