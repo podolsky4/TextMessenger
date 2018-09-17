@@ -72,13 +72,16 @@ class Feed extends Component {
     }
   }
 
-  componentDidMount () {
-    const {user, favorites, loadFavorites, pageAble} = this.props
+
+  componentWillMount () {
+    const {user, posts, favorites, loadFavorites, pageAble} = this.props
     const {size, page} = this.state
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
-    pageAble(page, size, this.setState.bind(this, {page: page + 1}))
+    if (posts.length === 0){
+      pageAble(page, size, this.setState.bind(this, {page: page + 1}))
+    }
   }
 
   change = e => {
