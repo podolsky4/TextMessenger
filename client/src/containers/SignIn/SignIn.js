@@ -98,7 +98,13 @@ class LogIn extends Component {
         return false;
       }
       return true;
-    });
+    })
+    ValidatorForm.addValidationRule('isGreatedThen', (value) => {
+      if (value.length < 5) {
+        return false;
+      }
+      return true;
+    })
   }
 
   registrateNewUser = e => {
