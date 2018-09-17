@@ -44,9 +44,7 @@ class ResetPassword extends React.Component {
         return false;
       }
       return true;
-    });
-
-    ValidatorForm.addValidationRule('required', (value) => {
+    }).addValidationRule('required', (value) => {
       if (value.length === 0) {
         return false;
       }
