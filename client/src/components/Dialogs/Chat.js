@@ -38,7 +38,7 @@ const styles = theme => ({
     padding: '14px 2px',
     background: '#00897B',
     marginTop: -15,
-    marginRight: 'auto'
+    marginRight: 'auto',
   }
 })
 

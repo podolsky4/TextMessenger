@@ -16,7 +16,7 @@ const styles = theme => ({
     paddingTop: '32px',
     background: 'rgba(0, 0, 0, 0.29)',
     borderRadius: 2,
-    maxHeight: '85vh',
+    maxHeight: '50vh',
     overflow: 'scroll',
     minHeight: 200
   },
@@ -42,10 +42,12 @@ const styles = theme => ({
 })
 
 class MessagesList extends Component {
-  componentDidMount () {
+  componentDidUpdate () {
     const msgWrap = document.getElementById('msgWrap')
-    msgWrap.scrollIntoView(false)  // TODO: make it scroll to the last one
+    msgWrap.scrollTop = msgWrap.scrollHeight-msgWrap.clientHeight
+    msgWrap.style.overflowX='hidden'
   }
+
   render () {
     const {messages, user, classes} = this.props
     const massageList = messages.length > 0 ?  (
