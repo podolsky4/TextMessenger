@@ -15,6 +15,9 @@ const styles = theme => ({
     alignItems: 'center'
 
   },
+  wrap: {
+    margin: 'auto'
+  },
   paper: {
     padding: theme.spacing.unit * 1,
     textAlign: 'center',
@@ -45,12 +48,12 @@ class Favorites extends Component {
     return (
 
       <Grid container className={classes.root}>
-        <Grid item xs={12} md={10} lg={10}>
+        <Grid className={classes.wrap} item xs={12} md={10} lg={10}>
           <Grid
             container
             spacing={16}
             direction="column"
-            justify="center"
+            justifyContent="center"
             alignItems="stretch"
           >
             <Paper className={classes.paper} elevation={0}>
