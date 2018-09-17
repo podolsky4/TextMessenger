@@ -49,9 +49,12 @@ class CommentList extends Component {
   };
 
   onSubmit = e => {
-    const {user, createComments, post} = this.props
+    const {user, createComments, post} = this.props,
+      {text} = this.state
     e.preventDefault()
-    createComments(post.id, user.id, this.state.text)
+    if (text.length > 0){
+      createComments(post.id, user.id, text)
+    }
     this.reset()
   };
 
@@ -67,7 +70,6 @@ class CommentList extends Component {
 
   render () {
     const {comments, flag, commentReload, classes} = this.props
-
     let maped = post => {
       return (
             <Comment
@@ -105,7 +107,7 @@ class CommentList extends Component {
                              style:
                                    {borderRadius: '2px'}
                            }}
-                           minLenght={3}
+                           minlenght={3}
                            onKeyUp={event => this.myFunction(event)}
                 />
             </div>
