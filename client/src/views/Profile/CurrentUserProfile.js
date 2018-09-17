@@ -65,7 +65,7 @@ class CurrentUserProfile extends Component {
     super(props)
     this.state = {
       FirstNameerrorText: '',
-      LastNamerrorText: '',
+      LastNameerrorText: '',
       AddresserrorText: '',
       birthdayerrorText: '',
       value: props.value,
@@ -120,7 +120,7 @@ class CurrentUserProfile extends Component {
           break;
         case'lastName': this.setState({ lastNameErrorText: '' })
           break;
-
+        default: this.setState({ errorText: '' })
       }
     } else {
       switch (e.target.name) {
@@ -128,7 +128,7 @@ class CurrentUserProfile extends Component {
           break;
         case'lastName': this.setState({ lastNameErrorText: 'Last Name should start with a capital letter'})
           break;
-
+          default: this.setState({ errorText: '' })
       }
     }
     this.setState({
@@ -137,7 +137,12 @@ class CurrentUserProfile extends Component {
   };
   render () {
     const {user, classes, userPosts} = this.props
-
+    const { lastNameErrorText,
+            FirstNameerrorText,
+            AddresserrorText,
+            errorText,
+            firstName,
+            lastName } = this.state
     return (
       <div className={classes.ProfileCnt}>
         {this.state.viewMode &&
@@ -171,33 +176,31 @@ class CurrentUserProfile extends Component {
                          type='text'
                          hintText="Name"
                          label="First Name"
-                         value={this.state.firstName}
-                         error ={this.state.errorText.length === 0 ? false : true }
+                         value={firstName}
+                         error ={errorText.length !== 0 }
                          helperText={this.state.errorText}
                          onChange={e => this.change(e)} />
-
 
               <TextField id='lastName-change'
                          name='lastName'
                          type='text'
-                         value={this.state.lastName}
+                         value={lastName}
                          label="Last Name"
-                         error ={this.state.lastNameErrorText.length === 0 ? false : true }
-                         helperText={this.state.lastNameErrorText}
+                         error ={lastNameErrorText.length !== 0 }
+                         helperText={lastNameErrorText}
                          onChange={e => this.change(e)} />
-
 
               <TextField id='address-change' name='address' type='text' value={this.state.address}
                          label="Address"
-                         error ={this.state.LastNameerrorText = undefined || this.state.FirstNameerrorText.length == 0 ? false : true }
-                         helperText={this.state.AddresserrorText}
+                         error ={(AddresserrorText !== undefined || FirstNameerrorText.length === 0) }
+                         helperText={AddresserrorText}
                          errorTag='AddresserrorText'
                          onChange={e => this.change(e)} />
 
 
               <TextField id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday}
-                         label="Birthday"
-                         error ={this.state.birthdayerrorText.length == 0 || undefined ? false : true }
+                         // label="Birthday"
+                         error ={(this.state.birthdayerrorText.length !== 0 || undefined) }
                          helperText={this.state.birthdayerrorText}
                          errorTag='birthdayerrorText'
                          onChange={e => this.change(e)} />
@@ -206,7 +209,7 @@ class CurrentUserProfile extends Component {
                     onClick={e => this.updateUser(e)}
                     className={classes.profileButton}
             >
-            Apply
+                Save
             </Button>
             <Button variant="contained"
                     color="secondary"

@@ -14,7 +14,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import Loader from '../../components/Loader/Loader'
 
 import { ValidatorForm } from 'react-material-ui-form-validator'
-import TextField from '../../../node_modules/@material-ui/core/TextField/TextField'
+
 
 const styles = theme => ({
   paper: {
@@ -58,12 +58,14 @@ class ChangePassword extends Component {
         case'passwordCheck':
           this.setState({passwordCheckErrorText: ''})
           break
+        default: this.setState({passwordCheckErrorText: ''})
       }
     } else {
       switch (e.target.name) {
         case'passwordCheck':
           this.setState({passwordCheckErrorText: 'Passwords should match'})
           break
+        default: this.setState({passwordCheckErrorText: 'Passwords should match'})
       }
     }
     this.setState({
@@ -119,8 +121,9 @@ class ChangePassword extends Component {
                 autoComplete="current-password"
                 onChange={e => this.change(e)}
                 value={this.state.passwordCheck}
-                error ={this.state.passwordCheck.length === 0 ? false : true }
+                error ={this.state.passwordCheck.length !== 0 }
                 helperText={this.state.passwordCheck}
+                label={this.state.passwordCheck}
               />
             </FormControl>
 

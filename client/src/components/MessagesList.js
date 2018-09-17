@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import Message from './Message'
-
 import {withStyles} from '@material-ui/core/styles/index'
 import PropTypes from 'prop-types'
-import {Card, Paper, Typography} from "@material-ui/core/umd/material-ui.production.min";
-// import classNames from 'classnames'
+import { Typography} from "@material-ui/core/umd/material-ui.production.min";
+
 
 const styles = theme => ({
   massageList: {
