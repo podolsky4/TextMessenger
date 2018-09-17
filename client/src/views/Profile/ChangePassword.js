@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 
 import Avatar from '@material-ui/core/Avatar'
@@ -15,11 +15,12 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 
 const styles = theme => ({
     paper: {
-        marginTop: theme.spacing.unit * 1,
+        marginTop: theme.spacing.unit * 2,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+        background: theme.palette.primary.accentOpacity
     },
     center: {
         display: 'flex',
@@ -33,8 +34,7 @@ const styles = theme => ({
     form: {
         marginTop: theme.spacing.unit
     },
-  submit: {
-    background: theme.palette.primary.dark * 0.1,
+  LogINy: {
     marginTop: theme.spacing.unit * 3
   }
 })
@@ -44,31 +44,33 @@ class ChangePassword extends Component {
         super(props)
         this.state = {
             currentPassword: '',
-          createPassword: '',
-          repeatPassword: ''
+            createPassword: '',
+            repeatPassword: ''
         }
     }
 
-    change = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+  componentDidMount() {
+// custom rule will have name 'isPasswordMatch'
+  ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+    if (value !== this.state.createPassword) {
+      return false;
     }
+    return true;
+  });
+}
 
-    onSubmit = e => {
+
+  change = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  onSubmit = e => {
         e.preventDefault()
         // (this.state.password === this.state.passwordCheck) ?
             // toChangePassword(this.state.password) : e.target.value = "not matched"
     }
-  componentDidMount() {
-    // custom rule will have name 'isPasswordMatch'
-    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-      if (value !== this.state.createPassword) {
-        return false;
-      }
-      return true;
-    });
-  }
 
     render () {
         const {classes, fetching} = this.props
@@ -117,7 +119,7 @@ class ChangePassword extends Component {
                           fullWidth
                           variant="raised"
                           color="primary"
-                          className={classes.submit}
+                          className={classes.LogINy}
                         >
                           Sign Up
                         </Button>
@@ -128,14 +130,14 @@ class ChangePassword extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-    return {
-        // toChangePassword: (password) => dispatch(changePassword(password))
-    }
+  return {
+    // toChangePassword: (password) => dispatch(changePassword(password))
+  }
 }
 const mapStateToProps = state => {
-    return {
-        user: state.user,
-    }
+  return {
+    user: state.user,
+  }
 }
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ChangePassword))
