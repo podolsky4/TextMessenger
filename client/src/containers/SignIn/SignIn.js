@@ -172,6 +172,7 @@ class LogIn extends Component {
                           name="email"
                           autoComplete="email"
                           autoFocus
+                          required
                           onChange={e => this.change(e)}
                           value={this.state.email}
                         />
@@ -182,6 +183,7 @@ class LogIn extends Component {
                           name="password"
                           type="password"
                           id="password"
+                          required
                           autoComplete="current-password"
                           onChange={e => this.change(e)}
                           value={this.state.password}
