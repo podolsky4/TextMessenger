@@ -90,8 +90,19 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User createUser(User user) {
+    TemporaryToken tempToken = new TemporaryToken();
+    tempToken.setToken(UUID.randomUUID().toString());
+    tempToken.setExpiryDate(new Date());
+    User user1 = userRepository.save(user);
+    tempToken.setUser(user1);
+    temporaryTokenRepository.save(tempToken);
+    SimpleMailMessage email = new SimpleMailMessage();
+    email.setTo(user1.getEmail());
+    email.setSubject("confirmation link to create account at Text Messenger application");
+    email.setText("http://localhost:3000/registered/" + tempToken.getToken());
+    emailService.sendEmail(email);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
-    return userRepository.save(user);
+    return userRepository.getOne(user.getId());
   }
 
   @Override

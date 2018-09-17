@@ -92,17 +92,7 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
               .body(ResponseToFront.convertResponseToFront("this email is busy"));
     }
-    TemporaryToken tempToken = new TemporaryToken();
-    tempToken.setToken(UUID.randomUUID().toString());
-    tempToken.setExpiryDate(new Date());
-    User user1 = userService.createUser(user);
-    tempToken.setUser(user1);
-    temporaryTokenRepository.save(tempToken);
-    SimpleMailMessage email = new SimpleMailMessage();
-    email.setTo(user1.getEmail());
-    email.setSubject("confirmation link to create account at Text Messenger application");
-    email.setText("http://localhost:3000/registered/" + tempToken.getToken());
-    emailService.sendEmail(email);
+    userService.createUser(user);
     return ResponseEntity.ok()
             .body(ResponseToFront.convertResponseToFront("Check you email we send you registration link"));
 
@@ -112,7 +102,6 @@ public class UserController {
   public ResponseEntity enableUser(@PathVariable("token") String token) {
     return ResponseEntity.ok().body(ResponseToFront.convertResponseToFront(userService.setUserIsEnabled(token)));
   }
-
 
   @GetMapping("/{id}")
   public ResponseEntity readUser(@PathVariable("id") long id) {
@@ -134,12 +123,6 @@ public class UserController {
                                    @RequestPart(value = "file", required = false) MultipartFile file)
           throws IOException {
     userService.updateUserWithStringsAndFile(firstName, lastName, address, dateBirthday, file);
-    return ResponseEntity.ok().build();
-  }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity deleteUser(@PathVariable("id") long id) {
-    userService.deleteUser(id);
     return ResponseEntity.ok().build();
   }
 
