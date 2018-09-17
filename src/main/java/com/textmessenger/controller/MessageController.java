@@ -39,7 +39,7 @@ public class MessageController {
     messageService.createMessageWithUserIdDialogId(user, dialog, msg.getMessage());
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
-
+/*
   @PutMapping
   public ResponseEntity updateMessageById(@RequestBody Message message) {
     messageService.updateMessage(message);
@@ -51,5 +51,5 @@ public class MessageController {
   public ResponseEntity deleteMessageById(@RequestBody Message message) {
     messageService.deleteMessage(message);
     return ResponseEntity.ok().build();
-  }
+  }*/
 }

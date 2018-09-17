@@ -41,6 +41,7 @@ public class CommentController {
     return Optional.of(ResponseEntity.ok().body(commentService.findAllPostFromPost(post)))
             .orElse(ResponseEntity.noContent().build());
   }
+/*
 
   @PutMapping
   ResponseEntity updateComment(@RequestBody Comment comment) {
@@ -53,6 +54,7 @@ public class CommentController {
     commentService.deleteComment(comment);
     return ResponseEntity.ok().build();
   }
+*/
 
 
 }

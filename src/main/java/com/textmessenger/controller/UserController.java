@@ -66,12 +66,12 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(ResponseToFront.convertResponseToFront("This email is not registration on our Application"));
   }
-
+/*
   @PostMapping("/changePassword")
   public ResponseEntity changePasswordFromForgotPage(@Valid @RequestBody CredentialsPassword credentialsPassword) {
     return ResponseEntity.status(200)
             .body(ResponseToFront.convertResponseToFront(userService.changePasswordForgot(credentialsPassword)));
-  }
+  }*/
 
   @PostMapping("/login")
   public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user) {
@@ -92,33 +92,23 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
               .body(ResponseToFront.convertResponseToFront("this email is busy"));
     }
-    TemporaryToken tempToken = new TemporaryToken();
-    tempToken.setToken(UUID.randomUUID().toString());
-    tempToken.setExpiryDate(new Date());
-    User user1 = userService.createUser(user);
-    tempToken.setUser(user1);
-    temporaryTokenRepository.save(tempToken);
-    SimpleMailMessage email = new SimpleMailMessage();
-    email.setTo(user1.getEmail());
-    email.setSubject("confirmation link to create account at Text Messenger application");
-    email.setText("http://localhost:3000/registered/" + tempToken.getToken());
-    emailService.sendEmail(email);
+    userService.createUser(user);
     return ResponseEntity.ok()
             .body(ResponseToFront.convertResponseToFront("Check you email we send you registration link"));
 
   }
-
+/*
   @GetMapping("/registered/{token}")
   public ResponseEntity enableUser(@PathVariable("token") String token) {
     return ResponseEntity.ok().body(ResponseToFront.convertResponseToFront(userService.setUserIsEnabled(token)));
-  }
+  }*/
 
-
+/*
   @GetMapping("/{id}")
   public ResponseEntity readUser(@PathVariable("id") long id) {
     return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
             .orElse(ResponseEntity.notFound().build());
-  }
+  }*/
 
   @PostMapping("/find")
   public ResponseEntity findAllUsers(@Valid @RequestBody SearchValue str) {
@@ -136,12 +126,12 @@ public class UserController {
     userService.updateUserWithStringsAndFile(firstName, lastName, address, dateBirthday, file);
     return ResponseEntity.ok().build();
   }
-
+/*
   @DeleteMapping("/{id}")
   public ResponseEntity deleteUser(@PathVariable("id") long id) {
     userService.deleteUser(id);
     return ResponseEntity.ok().build();
-  }
+  }*/
 
   @GetMapping("/bylogin/{login}")
   public ResponseEntity getUserByLogin(@PathVariable("login") String login) {

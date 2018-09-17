@@ -65,5 +65,6 @@ public interface UserService {
                                     MultipartFile file) throws IOException;
 
   User getCurrentUserFull();
+
 }
 
