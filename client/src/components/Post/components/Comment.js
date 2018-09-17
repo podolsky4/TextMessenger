@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ListItem} from '@material-ui/core/umd/material-ui.production.min'
+import {Typography, withStyles} from '@material-ui/core/umd/material-ui.production.min'
 import Avatar from '../../../../node_modules/@material-ui/core/Avatar/Avatar'
 
 const styles = theme => ({
