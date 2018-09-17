@@ -66,12 +66,12 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(ResponseToFront.convertResponseToFront("This email is not registration on our Application"));
   }
-/*
+
   @PostMapping("/changePassword")
   public ResponseEntity changePasswordFromForgotPage(@Valid @RequestBody CredentialsPassword credentialsPassword) {
     return ResponseEntity.status(200)
             .body(ResponseToFront.convertResponseToFront(userService.changePasswordForgot(credentialsPassword)));
-  }*/
+  }
 
   @PostMapping("/login")
   public ResponseEntity authenticateUser(@Valid @RequestBody LoginRq user) {
@@ -97,18 +97,17 @@ public class UserController {
             .body(ResponseToFront.convertResponseToFront("Check you email we send you registration link"));
 
   }
-/*
+
   @GetMapping("/registered/{token}")
   public ResponseEntity enableUser(@PathVariable("token") String token) {
     return ResponseEntity.ok().body(ResponseToFront.convertResponseToFront(userService.setUserIsEnabled(token)));
-  }*/
+  }
 
-/*
   @GetMapping("/{id}")
   public ResponseEntity readUser(@PathVariable("id") long id) {
     return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
             .orElse(ResponseEntity.notFound().build());
-  }*/
+  }
 
   @PostMapping("/find")
   public ResponseEntity findAllUsers(@Valid @RequestBody SearchValue str) {
@@ -126,12 +125,6 @@ public class UserController {
     userService.updateUserWithStringsAndFile(firstName, lastName, address, dateBirthday, file);
     return ResponseEntity.ok().build();
   }
-/*
-  @DeleteMapping("/{id}")
-  public ResponseEntity deleteUser(@PathVariable("id") long id) {
-    userService.deleteUser(id);
-    return ResponseEntity.ok().build();
-  }*/
 
   @GetMapping("/bylogin/{login}")
   public ResponseEntity getUserByLogin(@PathVariable("login") String login) {

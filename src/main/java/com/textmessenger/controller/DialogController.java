@@ -41,11 +41,4 @@ public class DialogController {
   public void addDilogToNewUser(@PathVariable("newUser") Long user, @PathVariable("dialogId") Long dialog) {
     dialogService.addToDialogNewUser(dialog, user);
   }
-/*
-  @PutMapping
-  public ResponseEntity updateDialog(@Valid @RequestBody Dialog dialog) {
-    dialogService.updateDialog(dialog);
-    return Optional.of(ResponseEntity.status(200)).orElse(ResponseEntity.unprocessableEntity()).build();
-  }*/
-
 }
