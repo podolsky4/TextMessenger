@@ -104,7 +104,7 @@ class CommentList extends Component {
                              style:
                                    {borderRadius: '2px'}
                            }}
-                           minLenght={3}
+                           minlenght={3}
                            onKeyUp={event => this.myFunction(event)}
                 />
             </div>
