@@ -53,7 +53,7 @@ class Favorites extends Component {
             container
             spacing={16}
             direction="column"
-            justifyContent="center"
+            justifycontent="center"
             alignItems="stretch"
           >
             <Paper className={classes.paper} elevation={0}>

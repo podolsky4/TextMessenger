@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import Loader from '../Loader/Loader'
 import MessagesList from '../MessagesList'
 import {createMessage} from '../../actions/dialogActions'
 import TextField from '@material-ui/core/TextField'
@@ -73,11 +72,10 @@ class Chat extends Component {
   };
 
   render () {
-    const {user, fetching, messages, classes} = this.props
+    const {user, messages, classes} = this.props
     return (
       <div className={classes.chat}>
         {messages.length !==0 && <MessagesList messages={messages} user={user}/>}
-        {fetching && <Loader />}
         <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
           <TextField
             defaultValue={null}

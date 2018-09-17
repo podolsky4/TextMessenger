@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import {connect} from 'react-redux'
 import { loadUser, loadUserFull, updateUser } from '../../actions/userActions'
 import classnames from 'classnames'
@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button'
 
 import CurrentUserProfileWrapper from './CurrentUserProfileWrapper'
 import ChangePassword from './ChangePassword'
-import InputAdornment from '../../../node_modules/@material-ui/core/InputAdornment/InputAdornment'
 import TextField from '../../../node_modules/@material-ui/core/TextField/TextField'
 
 const styles = (theme) => ({
@@ -75,8 +74,6 @@ const styles = (theme) => ({
     marginBottom: theme.spacing.unit * 2,
   },
   profilePhotoChangeSquare: {
-    // width: 150,
-    // height: 150,
     background: theme.palette.background.dark
   }
 })
@@ -117,53 +114,31 @@ class CurrentUserProfile extends Component {
     })
   };
   updateUser = e => {
-    const {user, updateUser} = this.props
+    const {user, updateUser, firstName, lastName} = this.props
     e.preventDefault()
-    let formData = new FormData()
-    formData.append('file', this.refs.profilePhoto.files[0])
-    formData.append('firstName', this.state.firstName)
-    formData.append('lastName', this.state.lastName)
-    formData.append('address', this.state.address)
-    formData.append('dateBirthday', this.state.dateBirthday)
-    updateUser(formData, user.login)
-    this.editableField()
+    if (firstName !== this.state.firstName || lastName !== this.state.lastName){
+      let formData = new FormData()
+      formData.append('file', this.refs.profilePhoto.files[0])
+      formData.append('firstName', this.state.firstName)
+      formData.append('lastName', this.state.lastName)
+      formData.append('address', this.state.address)
+      formData.append('dateBirthday', this.refs.dateBirthday.value)
+      updateUser(formData, user.login)
+      this.editableField()
+    }
   };
   changeNameProfilePhoto = e => {
     this.setState({profilePhoto: this.refs.profilePhoto.files[0].name})
   }
 
   change = e => {
-    const pattern = '([A-Z])\\w+'
-    if (e.target.value.match(pattern)) {
-      switch (e.target.name) {
-
-        case'firstName': this.setState({ errorText: '' })
-          break;
-        case'lastName': this.setState({ lastNameErrorText: '' })
-          break;
-        default: this.setState({ errorText: '' })
-      }
-    } else {
-      switch (e.target.name) {
-        case'firstName': this.setState({ errorText: 'Name should start with a capital letter'})
-          break;
-        case'lastName': this.setState({ lastNameErrorText: 'Last Name should start with a capital letter'})
-          break;
-          default: this.setState({ errorText: '' })
-      }
-    }
     this.setState({
       [e.target.name]: e.target.value
     })
   };
   render () {
-    const {user, classes, userPosts} = this.props
-    const { lastNameErrorText,
-            FirstNameerrorText,
-            AddresserrorText,
-            errorText,
-            firstName,
-            lastName } = this.state
+    const {user, classes, userPosts} = this.props,
+     { firstName, lastName } = this.state
     return (
       <div className={classes.ProfileCnt}>
         {this.state.viewMode &&
@@ -172,10 +147,9 @@ class CurrentUserProfile extends Component {
           </div>
         }
         {!this.state.viewMode &&
+          <Fragment>
           <form className={classnames(classes.ChangeUserProfileInfoCard)}>
-            <InputAdornment
-              // position="end"
-                            className={classes.profilePhotoChange} position={'top'}>
+            <div className={classes.profilePhotoChange}>
               <input
                 accept="image/*"
                 className={classes.input}
@@ -191,42 +165,34 @@ class CurrentUserProfile extends Component {
                   <Button raised='true' component="span" className={classes.button}>Upload</Button>
                 </label>
               </div>
-            </InputAdornment>
+            </div>
             {<a>{this.state.profileHeader}</a>}
 
               <TextField id='firstName-change'
                          name='firstName'
                          type='text'
-                         hintText="Name"
+                         hinttext="Name"
                          label="First Name"
                          value={firstName}
-                         error ={FirstNameerrorText.length !== 0 }
-                         helperText={errorText}
                          onChange={e => this.change(e)} />
-
               <TextField id='lastName-change'
                          name='lastName'
                          type='text'
                          value={lastName}
                          label="Last Name"
-                         error ={lastNameErrorText.length !== 0 }
-                         helperText={lastNameErrorText}
                          onChange={e => this.change(e)} />
-
-              <TextField id='address-change' name='address' type='text' value={this.state.address}
+              <TextField id='address-change'
+                         name='address'
+                         type='text'
+                         value={this.state.address}
                          label="Address"
-                         error ={(AddresserrorText !== undefined) }
-                         helperText={AddresserrorText}
-                         errorTag='AddresserrorText'
                          onChange={e => this.change(e)} />
-
-
-              <TextField id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday}
-                         // label="Birthday"
-                         error ={(this.state.birthdayerrorText.length !== 0 || undefined) }
-                         helperText={this.state.birthdayerrorText}
-                         errorTag='birthdayerrorText'
-                         onChange={e => this.change(e)} />
+              <input id='dateBirth-change'
+                     name='dateBirth'
+                     type='date'
+                     value={this.state.dateBirthday}
+                     ref='dateBirthday'
+                     onChange={e => this.change(e)} />
             <Button variant="contained"
                     color="primary"
                     onClick={e => this.updateUser(e)}
@@ -241,8 +207,9 @@ class CurrentUserProfile extends Component {
                     id="cancel">
               Cancel
             </Button>
-            <ChangePassword />
           </form>
+            <ChangePassword />
+          </Fragment>
         }
         <PostList
           user={user}
