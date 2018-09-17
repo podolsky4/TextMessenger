@@ -171,11 +171,9 @@ class Feed extends Component {
           <Grid container
             justify="center"
             alignItems="center"
+            direction="column"
           >
               <Grid item
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
                     xs={12} sm={10} lg={6} md={7}
                     className={classes.gridItem}
               >
