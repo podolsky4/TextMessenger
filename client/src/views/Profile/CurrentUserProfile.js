@@ -72,7 +72,7 @@ const styles = (theme) => ({
     }
   },
   profilePhotoChange: {
-    marginBottom: theme.spacing.unit * 10,
+    marginBottom: theme.spacing.unit * 2,
   },
   profilePhotoChangeSquare: {
     // width: 150,
@@ -175,7 +175,7 @@ class CurrentUserProfile extends Component {
           <form className={classnames(classes.ChangeUserProfileInfoCard)}>
             <InputAdornment
               // position="end"
-                            className={classes.profilePhotoChange}>
+                            className={classes.profilePhotoChange} position={'top'}>
               <input
                 accept="image/*"
                 className={classes.input}
@@ -200,7 +200,7 @@ class CurrentUserProfile extends Component {
                          hintText="Name"
                          label="First Name"
                          value={firstName}
-                         error ={errorText.length !== 0 }
+                         error ={FirstNameerrorText.length !== 0 }
                          helperText={this.state.errorText}
                          onChange={e => this.change(e)} />
 
@@ -215,7 +215,7 @@ class CurrentUserProfile extends Component {
 
               <TextField id='address-change' name='address' type='text' value={this.state.address}
                          label="Address"
-                         error ={(AddresserrorText !== undefined || FirstNameerrorText.length === 0) }
+                         error ={(AddresserrorText !== undefined) }
                          helperText={AddresserrorText}
                          errorTag='AddresserrorText'
                          onChange={e => this.change(e)} />
