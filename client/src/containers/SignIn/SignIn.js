@@ -270,8 +270,7 @@ class LogIn extends Component {
               </Avatar>
               <Typography variant="headline">Registration</Typography>
               {messageFromCreateForm.message !== undefined && <a>{messageFromCreateForm.message}</a>}
-              <form onSubmit={e => this.registrateNewUser(e)} className={classes.form}>
-                <ValidatorForm ref="form">
+                <ValidatorForm ref="form" onSubmit={e => this.registrateNewUser(e)} className={classes.form}>
                   <TextValidator
                     label="Email Address"
                     name="createemail"
@@ -286,8 +285,8 @@ class LogIn extends Component {
                     label="Your Username"
                     name="createfirstName"
                     fullWidth
-                    validators={['isGreatedThen']}
-                    errorMessages={['this field is required ,lenngth must by less than 4 char']}
+                    validators={['required','isGreatedThen']}
+                    errorMessages={['this field is required','length must by less than 4 char']}
                     onChange={e => this.change(e)}
                     value={this.state.createfirstName}
                   />
@@ -311,27 +310,28 @@ class LogIn extends Component {
                     errorMessages={['password mismatch', 'this field is required']}
                     value={this.state.repeatPassword}
                   />
+                  {fetching && <Loader/>}
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="raised"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Sign Up
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="flat"
+                    className={classes.signIn}
+                    onClick={this.SignInToggle.bind(this)}
+                    label={{visibility: '0'}}
+                  >
+                    Sign In
+                  </Button>
                 </ValidatorForm>
-                {fetching && <Loader/>}
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="raised"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Sign Up
-                </Button>
-                <Button
-                  fullWidth
-                  variant="flat"
-                  className={classes.signIn}
-                  onClick={this.SignInToggle.bind(this)}
-                  label={{visibility: '0'}}
-                >
-                  Sign In
-                </Button>
-              </form>
+
+
             </Paper>
           }
         </main>
