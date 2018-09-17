@@ -59,6 +59,7 @@ class ChangePassword extends Component {
     }
 
     onSubmit = e => {
+      const {currentPassword, createPassword, repeatPassword} = this.state
         e.preventDefault()
         // (this.state.password === this.state.passwordCheck) ?
             // toChangePassword(this.state.password) : e.target.value = "not matched"
@@ -87,6 +88,7 @@ class ChangePassword extends Component {
                           name="currentPassword"
                           autoFocus
                           fullWidth
+                          type="password"
                           value={this.state.currentPassword}
                           onChange={e => this.change(e)}
                           validators={['required']}
