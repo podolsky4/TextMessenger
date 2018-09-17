@@ -30,7 +30,7 @@ class PostList extends Component {
     return (
       <div className={classes.root}>
         <Grid container
-          spacing={12}
+          spacing={16}
           direction="column"
           justify="center"
           alignItems="center"

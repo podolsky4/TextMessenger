@@ -43,8 +43,7 @@ const styles = theme => ({
   },
   LogIN: {
     // backgroundColor: theme.palette.primary.dark,
-    backgroundColor: '#00bcd4',
-    padding: theme.spacing.unit * 2
+    backgroundColor: '#00bcd4'
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -100,30 +99,19 @@ class LogIn extends Component {
       }
       return true;
     })
-    ValidatorForm.addValidationRule('isRequired', value => {
-      if (value.lengt < 5){
-        return false;
-      }
-      return true;
-    })
-
     ValidatorForm.addValidationRule('isGreatedThen', (value) => {
       if (value.length < 5) {
         return false;
       }
       return true;
     })
-
   }
 
   registrateNewUser = e => {
-    const {createUser} = this.props,
-      {createfirstName,createemail, createpassword} = this.state
+    const {createUser} = this.props
     e.preventDefault()
-    if (createfirstName.length >= 5 && createemail.length >5 && createpassword.length > 3) {
-      let data = {login: createfirstName, email: createemail, password: createpassword}
-      createUser(data)
-    }
+    let data = {login: this.state.createfirstName, email: this.state.createemail, password: this.state.createpassword}
+    createUser(data)
   };
 
   SignUpToggle = e => {
@@ -174,7 +162,7 @@ class LogIn extends Component {
                     <LockIcon/>
                   </Avatar>
                     <Typography variant="headline">Sign in</Typography>
-                    <form aria-required onSubmit={e => this.onSubmit(e)} className={classes.form}>
+                    <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
                       <FormControl margin="normal" fullWidth >
                         <InputLabel htmlFor="email">Email Address</InputLabel>
                         <Input
@@ -288,7 +276,7 @@ class LogIn extends Component {
                     fullWidth
                     value={this.state.createemail}
                     onChange={e => this.change(e)}
-                    validators={['isRequired', 'isEmail']}
+                    validators={['required', 'isEmail']}
                     errorMessages={['this field is required', 'email is not valid']}
                   />
                   <TextValidator
@@ -307,7 +295,6 @@ class LogIn extends Component {
                     fullWidth
                     validators={['required']}
                     errorMessages={['this field is required']}
-                    error = {'this field is required'}
                     onChange={e => this.change(e)}
                     value={this.state.createpassword}
                   />

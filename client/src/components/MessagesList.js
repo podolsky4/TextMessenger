@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Message from './Message'
+
 import {withStyles} from '@material-ui/core/styles/index'
 import PropTypes from 'prop-types'
 import { Typography} from "@material-ui/core/umd/material-ui.production.min";
@@ -55,7 +56,7 @@ class MessagesList extends Component {
       </div>
     ) : <div id={'msgWrap'} className={classes.emptyMassageList}>
             <Typography component={"h3"}>This chat is still empty.</Typography>
-            <Typography component={"h3"}>Don't wait. Start typing!</Typography>
+            <Typography component={"h3"}>Don/'t wait. Start typing!</Typography>
         </div>
     return (massageList)
   }

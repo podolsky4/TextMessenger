@@ -49,7 +49,9 @@ const styles = theme => ({
       maxWidth: 862
   },
   gridItem: {
-      padding: 4
+      padding: 16,
+      alignItems: 'stretch',
+      justifyContent: 'center',
   },
   textfield: {
     alignItems: 'flex-end'
@@ -70,13 +72,16 @@ class Feed extends Component {
     }
   }
 
-  componentDidMount () {
-    const {user, favorites, loadFavorites, pageAble} = this.props
+
+  componentWillMount () {
+    const {user, posts, favorites, loadFavorites, pageAble} = this.props
     const {size, page} = this.state
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
-    pageAble(page, size, this.setState.bind(this, {page: page + 1}))
+    if (posts.length === 0){
+      pageAble(page, size, this.setState.bind(this, {page: page + 1}))
+    }
   }
 
   change = e => {
@@ -170,13 +175,16 @@ class Feed extends Component {
         >
           <Grid container
             justify="center"
-            alignItems="center"
+            alignItems="stretch"
+            direction="column"
           >
-              <Grid item
-                    direction="column"
+              <Grid container
                     justify="center"
                     alignItems="center"
-                    xs={12} sm={10} lg={6} md={7}
+                    direction="column"
+              >
+              <Grid item
+                    xs={12} sm={10} lg={10} md={8}
                     className={classes.gridItem}
               >
                  <Paper className={classes.paper}>
@@ -230,6 +238,7 @@ class Feed extends Component {
               </Grid>
               <PostList posts={posts} user={user}/>
           </Grid>
+        </Grid>
         </Grid>
       </div>
     )

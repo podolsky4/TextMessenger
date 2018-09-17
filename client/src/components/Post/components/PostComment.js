@@ -11,8 +11,9 @@ const styles = theme => ({
     transition: theme.transitions.create(['color'], {
       duration: theme.transitions.duration.short
     }),
-    '& $selected': {
-      color: theme.palette.primary.main
+    selected: {
+      color: theme.palette.primary.main,
+      background: theme.palette.primary.main
     }
   },
   diva: {

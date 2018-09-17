@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
-import Typography from '@material-ui/core/Typography/Typography'
+import {Typography, withStyles} from '@material-ui/core/umd/material-ui.production.min'
 import Avatar from '../../../../node_modules/@material-ui/core/Avatar/Avatar'
-import {withStyles} from "@material-ui/core/styles/index";
 
 const styles = theme => ({
     comment: {
