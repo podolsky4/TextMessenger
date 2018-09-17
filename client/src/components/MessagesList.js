@@ -56,7 +56,7 @@ class MessagesList extends Component {
       </div>
     ) : <div id={'msgWrap'} className={classes.emptyMassageList}>
             <Typography component={"h3"}>This chat is still empty.</Typography>
-            <Typography component={"h3"}>Don't wait. Start typing!</Typography>
+            <Typography component={"h3"}>Don/'t wait. Start typing!</Typography>
         </div>
     return (massageList)
   }
