@@ -56,19 +56,28 @@ const styles = (theme) => ({
     right: -1
   },
   profileButton: {
-    background: theme.palette.primary.accent,
     margin: theme.spacing.unit * 1,
     '&#save': {
+      background: theme.palette.primary.accent,
+      marginTop: theme.spacing.unit * 2,
       '&:hover, &:focus': {
-        background: theme.palette.secondary.main
+        background: theme.palette.secondary.main,
       }
     },
     '&#cancel': {
-      background: theme.palette.secondary.light,
+      marginBottom: theme.spacing.unit * 5,
       '&:hover, &:focus': {
         background: theme.palette.secondary.dark
       }
     }
+  },
+  profilePhotoChange: {
+    marginBottom: theme.spacing.unit * 10,
+  },
+  profilePhotoChangeSquare: {
+    // width: 150,
+    // height: 150,
+    background: theme.palette.background.dark
   }
 })
 
@@ -164,7 +173,9 @@ class CurrentUserProfile extends Component {
         }
         {!this.state.viewMode &&
           <form className={classnames(classes.ChangeUserProfileInfoCard)}>
-            <InputAdornment position="end">
+            <InputAdornment
+              // position="end"
+                            className={classes.profilePhotoChange}>
               <input
                 accept="image/*"
                 className={classes.input}
@@ -175,11 +186,11 @@ class CurrentUserProfile extends Component {
                 onChange={e => this.changeNameProfilePhoto(e)}
                 style={{display: 'none'}}
               />
-              <label> Avatar image
+              <div className={classes.profilePhotoChangeSquare}> Avatar image
                 <label htmlFor="profilePhoto-change">
                   <Button raised='true' component="span" className={classes.button}>Upload</Button>
                 </label>
-              </label>
+              </div>
             </InputAdornment>
             {<a>{this.state.profileHeader}</a>}
 
@@ -224,8 +235,7 @@ class CurrentUserProfile extends Component {
             >
                 Save
             </Button>
-            <Button variant="contained"
-                    color="secondary"
+            <Button variant="outlined"
                     onClick={this.editableField}
                     className={classes.profileButton}
                     id="cancel">
