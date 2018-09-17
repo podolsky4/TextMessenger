@@ -44,28 +44,28 @@ class ChangePassword extends Component {
         super(props)
         this.state = {
             currentPassword: '',
-          createPassword: '',
-          repeatPassword: ''
+            createPassword: '',
+            repeatPassword: ''
         }
     }
-  }
 
   componentDidMount() {
-    // custom rule will have name 'isPasswordMatch'
-    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-      if (value !== this.state.createPassword) {
-        return false;
-      }
-      return true;
-    });
-  }
+// custom rule will have name 'isPasswordMatch'
+  ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+    if (value !== this.state.createPassword) {
+      return false;
+    }
+    return true;
+  });
+}
+
 
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
     })
   }
-  
+
   onSubmit = e => {
         e.preventDefault()
         // (this.state.password === this.state.passwordCheck) ?
