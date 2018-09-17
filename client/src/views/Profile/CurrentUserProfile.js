@@ -201,7 +201,7 @@ class CurrentUserProfile extends Component {
                          label="First Name"
                          value={firstName}
                          error ={FirstNameerrorText.length !== 0 }
-                         helperText={this.state.errorText}
+                         helperText={errorText}
                          onChange={e => this.change(e)} />
 
               <TextField id='lastName-change'

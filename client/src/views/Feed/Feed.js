@@ -49,7 +49,9 @@ const styles = theme => ({
       maxWidth: 862
   },
   gridItem: {
-      padding: 4
+      padding: 16,
+      alignItems: 'stretch',
+      justifyContent: 'center',
   },
   textfield: {
     alignItems: 'flex-end'
@@ -170,11 +172,16 @@ class Feed extends Component {
         >
           <Grid container
             justify="center"
-            alignItems="center"
+            alignItems="stretch"
             direction="column"
           >
+              <Grid container
+                    justify="center"
+                    alignItems="center"
+                    direction="column"
+              >
               <Grid item
-                    xs={12} sm={10} lg={6} md={7}
+                    xs={12} sm={10} lg={10} md={8}
                     className={classes.gridItem}
               >
                  <Paper className={classes.paper}>
@@ -228,6 +235,7 @@ class Feed extends Component {
               </Grid>
               <PostList posts={posts} user={user}/>
           </Grid>
+        </Grid>
         </Grid>
       </div>
     )
