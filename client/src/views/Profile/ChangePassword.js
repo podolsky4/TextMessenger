@@ -15,12 +15,13 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 
 const styles = theme => ({
     paper: {
-        marginTop: theme.spacing.unit * 2,
+        marginTop: theme.spacing.unit * 5,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-        background: theme.palette.primary.accentOpacity
+        background: theme.palette.primary.accentOpacity,
+        marginLeft: '35%',
     },
     center: {
         display: 'flex',
@@ -34,9 +35,16 @@ const styles = theme => ({
     form: {
         marginTop: theme.spacing.unit
     },
-  LogINy: {
-    marginTop: theme.spacing.unit * 3
-  }
+  headingPassword: {
+      marginBottom: 36
+  },
+  changeB: {
+    marginTop: theme.spacing.unit * 2,
+    marginBototm: theme.spacing.unit * 2,
+    '&#change': {
+      marginTop: theme.spacing.unit * 4
+      }
+  },
 })
 
 class ChangePassword extends Component {
@@ -45,7 +53,8 @@ class ChangePassword extends Component {
         this.state = {
             currentPassword: '',
             createPassword: '',
-            repeatPassword: ''
+            repeatPassword: '',
+          message:''
         }
     }
 
@@ -57,6 +66,12 @@ class ChangePassword extends Component {
     }
     return true;
   });
+    ValidatorForm.addValidationRule('isPasswordSame', (value) => {
+      if (value === this.state.currentPassword) {
+        return false;
+      }
+      return true;
+    });
 }
 
 
@@ -68,19 +83,32 @@ class ChangePassword extends Component {
 
   onSubmit = e => {
         e.preventDefault()
-        // (this.state.password === this.state.passwordCheck) ?
-            // toChangePassword(this.state.password) : e.target.value = "not matched"
+    fetch(`/api/users/updatePassword`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        oldPassword: this.state.currentPassword,
+        newPassword: this.state.createPassword
+      })
+    })
+      .then(res => res.json())
+      .then(data => this.setState({message: data.message}))
+
     }
 
     render () {
-        const {classes, fetching} = this.props
+        const {classes, fetching, changeUser} = this.props
         return <React.Fragment>
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockIcon/>
                     </Avatar>
                     <ValidatorForm  ref="form" onSubmit={e => this.onSubmit(e) } className={classes.center}>
-                        <Typography variant="headline">Change Password</Typography>
+                        <Typography className={classes.headingPassword} variant="headline">Change Password</Typography>
+                      <a>{this.state.message}</a>
                         <TextValidator
                           label="Current Password"
                           name="currentPassword"
@@ -98,8 +126,8 @@ class ChangePassword extends Component {
                           name="createPassword"
                           type="password"
                           fullWidth
-                          validators={['required']}
-                          errorMessages={['this field is required']}
+                          validators={['required', 'isPasswordSame']}
+                          errorMessages={['this field is required', 'the same is current']}
                           onChange={e => this.change(e)}
                           value={this.state.createPassword}
                         />
@@ -121,10 +149,20 @@ class ChangePassword extends Component {
                           fullWidth
                           variant="raised"
                           color="primary"
-                          className={classes.LogINy}
+                          className={classes.changeB}
+                          id={'change'}
                         >
-                          Sign Up
+                          Change Password
                         </Button>
+                      <Button
+                        variant="raised"
+                        color="secondary"
+                        fullWidth
+                        onClick={changeUser}
+                        className={classes.changeB}
+                      >
+                        Cancel
+                      </Button>
                     </ValidatorForm>
                 </Paper>
             </React.Fragment>

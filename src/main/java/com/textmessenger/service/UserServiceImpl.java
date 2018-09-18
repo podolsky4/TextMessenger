@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -276,6 +277,9 @@ public class UserServiceImpl implements UserService {
     if (address != "undefined") { //NOSONAR
       one.setAddress(address);
     }
+    if (date != "undefined") { //NOSONAR
+      one.setDateBirthday(LocalDate.parse(date));
+    }
     if (file != null) {
       String typeFile = file.getContentType();
       String type = "." + typeFile.substring(6);
@@ -302,5 +306,25 @@ public class UserServiceImpl implements UserService {
             .getAuthentication()
             .getPrincipal();
     return userRepository.getOne(userPrincipal.getId());
+  }
+
+  @Override
+  public String updatePasswordInitByUser(String oldPassword, String newPassword) {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    Optional<User> user = userRepository.findById(userPrincipal.getId());
+    if (user.isPresent()) {
+      User temp = user.get();
+      if (passwordEncoder.matches(oldPassword, userPrincipal.getPassword())) {
+        temp.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(temp);
+        return "Password changed successfully";
+      } else {
+        return "Current password is not valid";
+      }
+    }
+    return "Current password is not valid";
   }
 }

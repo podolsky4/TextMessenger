@@ -1,9 +1,9 @@
 package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.Post;
-import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CredentialsPassword;
+import com.textmessenger.model.entity.dto.FieldFromFront;
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
@@ -14,7 +14,6 @@ import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,9 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -60,7 +57,7 @@ public class UserController {
     User userByEmail = userService.getUserByEmail(email);
     if (userByEmail != null) {
       userService.sendEmailToResetPassword(userByEmail);
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+      return ResponseEntity.ok()
               .body(ResponseToFront.convertResponseToFront("We send you mail please check you email"));
     }
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -174,5 +171,15 @@ public class UserController {
   @GetMapping("/notification")
   public ResponseEntity getNotification() {
     return ResponseEntity.status(200).body(userService.getAllNotificationByUser());
+  }
+
+  @PostMapping("/updatePassword")
+  public ResponseEntity updatePasswordFromUpdatePasswordForm(@Valid @RequestBody FieldFromFront field) {
+    return ResponseEntity.accepted()
+            .body(ResponseToFront
+                    .convertResponseToFront(
+                            userService.updatePasswordInitByUser(
+                                    field.getOldPassword(),
+                                    field.getNewPassword())));
   }
 }
