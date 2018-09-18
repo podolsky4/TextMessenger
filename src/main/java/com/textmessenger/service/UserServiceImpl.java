@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -275,6 +276,9 @@ public class UserServiceImpl implements UserService {
     }
     if (address != "undefined") { //NOSONAR
       one.setAddress(address);
+    }
+    if (date != "undefined") { //NOSONAR
+      one.setDateBirthday(LocalDate.parse(date));
     }
     if (file != null) {
       String typeFile = file.getContentType();
