@@ -317,6 +317,7 @@ public class UserServiceImpl implements UserService {
         temp.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(temp);
       }
+      return "password changed succesfully";
     }
     return "Current password is not valid";
   }
