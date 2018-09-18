@@ -10,6 +10,7 @@ import UnsecureRouter from '../Router/UnsecureRouter'
 import {withStyles} from '@material-ui/core/styles'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import HeaderRouter from "../Router/HeaderRouter";
 
 const theme = createMuiTheme({
   palette: {
@@ -79,7 +80,7 @@ class App extends Component {
         <MuiThemeProvider theme={theme}>
           <CssBaseline>
             <SecureRouter wsHandler={true}/>
-            <Header/>
+              <HeaderRouter/>
             <SecureRouter/>
           </CssBaseline>
         </MuiThemeProvider>

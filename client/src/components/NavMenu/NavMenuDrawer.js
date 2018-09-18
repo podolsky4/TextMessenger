@@ -4,16 +4,17 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import {Badge, IconButton, Typography} from "@material-ui/core/umd/material-ui.production.min";
-import {Link} from "react-router-dom";
+import {Badge, Button, IconButton, Typography} from "@material-ui/core/";
+import {Link, NavLink} from "react-router-dom";
 import HomeIcon from '@material-ui/icons/Home'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import MessageIcon from '@material-ui/icons/ChatBubble'
 import PublicIcon from '@material-ui/icons/Public'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import connect from 'react-redux/es/connect/connect'
+import {Redirect} from 'react-router'
 
-const styles = {
+const styles = (theme) => ({
     list: {
         width: 250,
     },
@@ -23,17 +24,39 @@ const styles = {
     NavItem: {
         display: 'flex',
         alignItems: 'center',
-        jusifyContent: 'flex-start',
+        justifyContent: 'flex-start',
+    },
+    buttonList: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingLeft: theme.spacing.unit * 2
     }
-};
+})
 
 class NavMenuDrawer extends React.Component {
-
-
-
-
+    constructor (props) {
+        super(props)
+        this.state = {
+            toredirect: false,
+            redirect: null,
+        }
+    }
     render() {
         const { classes, notification} = this.props;
+
+        function redirect(path) {
+            this.setState({toredirect: true})
+            alert(this.state.toredirect)
+            this.setState({redirect: path})
+        }
+        if (this.state.toredirect) {
+            let url = this.state.redirect
+            alert(url)
+            this.setState({toredirect: false})
+            return <Redirect to={`/${url}`}/>
+        }
 
         const sideList = (
             <div className={classes.list}>
@@ -51,19 +74,20 @@ class NavMenuDrawer extends React.Component {
                      <Typography component={'p'}>  Feed</Typography>
                 </List>
                 <Divider />
-                <List component={Link} to='/favorites' className={classes.NavItem}>
+                <NavLink to='/favorites' className={classes.NavItem}>
                     <IconButton color="primary" >
                         <FavoriteIcon className={classes.icon}/>
                     </IconButton>
                     <Typography component={'p'}> Likes</Typography>
-                </List>
+                </NavLink>
                 <Divider />
-                <List component={Link} to='/dialogs' className={classes.NavItem}>
-                    <IconButton color="primary" >
+                <Button className={classes.buttonList}
+                        onClick={() => redirect('dialogs')} >
+                    <IconButton color="primary" to='/dialogs' className={classes.NavItem}>
                         <MessageIcon className={classes.icon}/>
                     </IconButton>
-                    <Typography component={'p'}> Messeages</Typography>
-                </List>
+                    <Typography component={'p'}> Messages</Typography>
+                </Button>
                 <Divider />
                 <List component={Link} to='/notifications' className={classes.NavItem}>
                     <IconButton  color="primary" >

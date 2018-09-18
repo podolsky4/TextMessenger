@@ -81,7 +81,7 @@ class Header extends React.Component {
         });
     };
   render () {
-    const {classes, user, notification} = this.props
+    const {classes, user, notification, location} = this.props
     let {noUser, openDrawer} = this.state
     if (!user) {
       noUser = true
@@ -101,7 +101,7 @@ class Header extends React.Component {
             {openDrawer && (<NavMenuDrawer />)}
             </ClickAwayListener>
           <Typography variant="title" color="inherit" className={classes.root}>
-            Feed
+              {location}
           </Typography>
             <div className={classes.menuIcons}>
               <IconButton color="inherit" component={Link} to='/'>
