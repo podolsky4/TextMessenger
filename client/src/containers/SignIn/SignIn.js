@@ -145,7 +145,6 @@ class LogIn extends Component {
   forgotPassword = e => {
     const {forgotPasswordForm} = this.props
     e.preventDefault()
-    alert('You press forgot button' + this.state.createemail)
     forgotPasswordForm(this.state.createemail)
   }
   render () {
