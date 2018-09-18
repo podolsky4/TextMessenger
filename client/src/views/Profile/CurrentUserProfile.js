@@ -114,15 +114,21 @@ class CurrentUserProfile extends Component {
     })
   };
   updateUser = e => {
-    const {user, updateUser, firstName, lastName} = this.props
+    const {user, updateUser} = this.props,
+      {address, firstName, lastName} = this.state
     e.preventDefault()
-    if (firstName !== this.state.firstName || lastName !== this.state.lastName){
+    if ((address !== undefined && address !== user.address)
+      ||(firstName!== undefined && firstName !== user.firstName)
+      ||(lastName!== undefined && lastName !== user.lastName)
+      ||this.refs.dateBirthday.value.length > 0
+      || (this.refs.profilePhoto.files[0] !== undefined
+        && this.refs.profilePhoto.files[0].name !== user.profilePhoto)    ){
       let formData = new FormData()
       formData.append('file', this.refs.profilePhoto.files[0])
       formData.append('firstName', this.state.firstName)
       formData.append('lastName', this.state.lastName)
       formData.append('address', this.state.address)
-      formData.append('dateBirthday', this.refs.dateBirthday.value)
+      formData.append('dateBirthday', this.refs.dateBirthday.value ? this.refs.dateBirthday.value : user.dateBirthday )
       updateUser(formData, user.login)
       this.editableField()
     }
@@ -172,6 +178,7 @@ class CurrentUserProfile extends Component {
                          name='firstName'
                          type='text'
                          hinttext="Name"
+                         placeholder={user.firstName}
                          label="First Name"
                          value={firstName}
                          onChange={e => this.change(e)} />
@@ -179,6 +186,7 @@ class CurrentUserProfile extends Component {
                          name='lastName'
                          type='text'
                          value={lastName}
+                         placeholder={user.lastName}
                          label="Last Name"
                          onChange={e => this.change(e)} />
               <TextField id='address-change'
