@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import {Badge, IconButton} from "@material-ui/core/umd/material-ui.production.min";
+import {Badge, IconButton, Typography} from "@material-ui/core/umd/material-ui.production.min";
 import {Link} from "react-router-dom";
 import HomeIcon from '@material-ui/icons/Home'
 import FavoriteIcon from '@material-ui/icons/Favorite'
@@ -20,6 +20,11 @@ const styles = {
     fullList: {
         width: 'auto',
     },
+    NavItem: {
+        display: 'flex',
+        alignItems: 'center',
+        jusifyContent: 'flex-start',
+    }
 };
 
 class NavMenuDrawer extends React.Component {
@@ -32,41 +37,41 @@ class NavMenuDrawer extends React.Component {
 
         const sideList = (
             <div className={classes.list}>
-                <List>
-                    <IconButton color="inherit" component={Link} to='/'>
+                <List component={Link} to='/' className={classes.NavItem}>
+                    <IconButton color="primary" >
                     <HomeIcon className={classes.icon}/>
                     </IconButton>
-                    Home
+                    <Typography component={'p'}>  Home</Typography>
                 </List>
                 <Divider />
-                <List>
-                    <IconButton color="inherit" component={Link} to='/feed'>
+                <List component={Link} to='/feed' className={classes.NavItem}>
+                    <IconButton color="primary" >
                         <PublicIcon className={classes.icon}/>
                     </IconButton>
-                    Feed
+                     <Typography component={'p'}>  Feed</Typography>
                 </List>
                 <Divider />
-                <List>
-                    <IconButton color="inherit" component={Link} to='/favorites'>
+                <List component={Link} to='/favorites' className={classes.NavItem}>
+                    <IconButton color="primary" >
                         <FavoriteIcon className={classes.icon}/>
                     </IconButton>
-                    Likes
+                    <Typography component={'p'}> Likes</Typography>
                 </List>
                 <Divider />
-                <List>
-                    <IconButton color="inherit" component={Link} to='/dialogs'>
+                <List component={Link} to='/dialogs' className={classes.NavItem}>
+                    <IconButton color="primary" >
                         <MessageIcon className={classes.icon}/>
                     </IconButton>
-                    Messeages
+                    <Typography component={'p'}> Messeages</Typography>
                 </List>
                 <Divider />
-                <List>
-                    <IconButton  color="inherit" component={Link} to='/notifications'>
+                <List component={Link} to='/notifications' className={classes.NavItem}>
+                    <IconButton  color="primary" >
                         <Badge badgeContent={notification.length} color='secondary' classes={{badge: classes.badge}}>
                             <NotificationsIcon className={classes.icon}/>
                         </Badge>
                     </IconButton>
-                    Notifications
+                    <Typography component={'p'}>  Notifications</Typography>
                 </List>
                 <Divider />
             </div>
