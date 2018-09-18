@@ -144,7 +144,6 @@ class Dialog extends Component {
         <Button value={dialog.id}
                 onClick={e => addUserToDialog(e)}
                 variant="outlined"
-                color='primary'
                 type="submit" className={classes.button}>
           Add user
         </Button>

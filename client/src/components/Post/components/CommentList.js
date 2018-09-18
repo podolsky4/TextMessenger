@@ -72,10 +72,11 @@ class CommentList extends Component {
     const {comments, flag, commentReload, classes} = this.props
     let maped = post => {
       return (
-        <Comment
-            key={post.id}
-            comment={post}
-        />)
+            <Comment
+                key={post.id}
+                comment={post}
+            />
+      )
     }
 
     return (

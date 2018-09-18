@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
 import SecureRouter from '../Router/SecureRouter'
-import Header from '../../views/Header/Header'
 import { getCurrentUser } from '../../actions/userActions'
 import { connect } from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -10,6 +9,7 @@ import UnsecureRouter from '../Router/UnsecureRouter'
 import {withStyles} from '@material-ui/core/styles'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import HeaderRouter from "../Router/HeaderRouter";
 
 const theme = createMuiTheme({
   palette: {
@@ -78,9 +78,11 @@ class App extends Component {
     return (
         <MuiThemeProvider theme={theme}>
           <CssBaseline>
+              <HeaderRouter/>
             <SecureRouter wsHandler={true}/>
-            <Header/>
+
             <SecureRouter/>
+
           </CssBaseline>
         </MuiThemeProvider>
     )
