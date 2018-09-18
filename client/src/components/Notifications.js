@@ -58,7 +58,6 @@ class Notifications extends Component {
     } else if (e.type === 'NEW_DIALOG' || e.type === 'NEW_MESSAGE' || e.type === 'ADD_TO_DIALOG') {
       this.setState({toDialog: true, dialogId: e.dialog.id})
     } else if (e.type === 'NEW_LIKE' || e.type === 'NEW_COMMENT' || e.type === 'NEW_RETWEET') {
-      alert('WTF')
       this.setState({toPost: true, postId: e.post.id})
     }
   }
