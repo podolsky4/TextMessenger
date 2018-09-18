@@ -1,6 +1,5 @@
 import {Link} from 'react-router-dom'
 import React from 'react'
-import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -62,11 +61,11 @@ const styles = (theme,) => ({
 })
 
 class Header extends React.Component {
-  state = {
-    noUser: false,
+    state = {
+        noUser: false,
 
-      openDrawer: false
-  };
+        openDrawer: false
+    };
 
     toggleDrawer = () => {
         this.setState({
@@ -80,61 +79,75 @@ class Header extends React.Component {
             openDrawer: false,
         });
     };
-  render () {
-    const {classes, user, notification, location} = this.props
-    let {noUser, openDrawer} = this.state
-    if (!user) {
-      noUser = true
+
+    // locationRender = () => {
+    //     switch (this.props.location.pathname) {
+    //         case '/feed':
+    //             return 'feed'
+    //         default:
+    //             return
+    //     }
+    // }
+
+
+    render() {
+        const {classes, user, notification, location} = this.props
+        console.log("location :", location)
+        let {noUser, openDrawer} = this.state
+        if (!user) {
+            noUser = true
+        }
+
+        return <div className={classes.root}>
+            <AppBar position='static' className={classes.appBar}>
+                <Toolbar className={classes.toolbar}>
+                    <ClickAwayListener onClickAway={this.handleClickAway}>
+                        <IconButton className={classes.menuButton}
+                                    color="inherit"
+                                    aria-label="Menu"
+                                    onClick={this.toggleDrawer}>
+                            <MenuIcon/>
+                        </IconButton>
+                        {openDrawer && (<NavMenuDrawer/>)}
+                    </ClickAwayListener>
+                    <Typography variant="title"
+                                color="inherit"
+                                className={classes.root}
+                                component={'h3'}
+                                children={location.pathname.substring(1)}
+                    />
+                    <div className={classes.menuIcons}>
+                        <IconButton color="inherit" component={Link} to='/'>
+                            <HomeIcon className={classes.icon}/>
+                        </IconButton>
+                        <IconButton color="inherit" component={Link} to='/feed'>
+                            <PublicIcon className={classes.icon}/>
+                        </IconButton>
+                        <IconButton color="inherit" component={Link} to='/favorites'>
+                            <FavoriteIcon className={classes.icon}/>
+                        </IconButton>
+                        <IconButton color="inherit" component={Link} to='/dialogs'>
+                            <MessageIcon className={classes.icon}/>
+                        </IconButton>
+                        <IconButton aria-label="4 pending messages" color="inherit" component={Link}
+                                    to='/notifications'>
+                            <Badge badgeContent={notification.length} color='secondary'
+                                   classes={{badge: classes.badge}}>
+                                <NotificationsIcon className={classes.icon}/>
+                            </Badge>
+                        </IconButton>
+                    </div>
+                    {!noUser &&
+                    <MenuHeader user={user}/>
+                    }
+                </Toolbar>
+            </AppBar>
+
+        </div>
     }
 
-
-    return <div className={classes.root}>
-      <AppBar position='static' className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-            <ClickAwayListener onClickAway={this.handleClickAway}>
-            <IconButton className={classes.menuButton}
-                        color="inherit"
-                        aria-label="Menu"
-                        onClick={this.toggleDrawer}>
-                <MenuIcon/>
-            </IconButton>
-            {openDrawer && (<NavMenuDrawer />)}
-            </ClickAwayListener>
-          <Typography variant="title" color="inherit" className={classes.root}>
-              {location}
-          </Typography>
-            <div className={classes.menuIcons}>
-              <IconButton color="inherit" component={Link} to='/'>
-                <HomeIcon className={classes.icon}/>
-              </IconButton>
-              <IconButton color="inherit" component={Link} to='/feed'>
-                <PublicIcon className={classes.icon}/>
-              </IconButton>
-              <IconButton color="inherit" component={Link} to='/favorites'>
-                <FavoriteIcon className={classes.icon}/>
-              </IconButton>
-              <IconButton color="inherit" component={Link} to='/dialogs'>
-                <MessageIcon className={classes.icon}/>
-              </IconButton>
-              <IconButton aria-label="4 pending messages" color="inherit" component={Link} to='/notifications'>
-               <Badge badgeContent={notification.length} color='secondary' classes={{badge: classes.badge}}>
-                  <NotificationsIcon className={classes.icon}/>
-                </Badge>
-              </IconButton>
-            </div>
-          {!noUser &&
-          <MenuHeader user={user}/>
-          }
-        </Toolbar>
-      </AppBar>
-
-    </div>
-  }
 }
 
-Header.propTypes = {
-  classes: PropTypes.object.isRequired
-}
 
 const mapStateToProps = state => {
   return {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
 import SecureRouter from '../Router/SecureRouter'
-import Header from '../../views/Header/Header'
 import { getCurrentUser } from '../../actions/userActions'
 import { connect } from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -79,10 +78,11 @@ class App extends Component {
     return (
         <MuiThemeProvider theme={theme}>
           <CssBaseline>
+              <HeaderRouter/>
             <SecureRouter wsHandler={true}/>
 
             <SecureRouter/>
-              {/*<HeaderRouter/>*/}
+
           </CssBaseline>
         </MuiThemeProvider>
     )
