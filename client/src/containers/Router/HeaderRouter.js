@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Route, Switch} from 'react-router-dom'
-import Feed from '../../views/Feed/Feed'
 import Header from "../../views/Header/Header";
 
 class HeaderRouter extends Component {
