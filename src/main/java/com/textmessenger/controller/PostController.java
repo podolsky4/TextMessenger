@@ -2,6 +2,7 @@ package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +29,11 @@ public class PostController {
 
   PostController(PostService postService) {
     this.postService = postService;
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity getPostById(@PathVariable("id") long id) {
+    return ResponseEntity.ok().body(PostToFront.convertPostToFront(postService.getPostById(id)));
   }
 
   @GetMapping("/{page}/{size}")
