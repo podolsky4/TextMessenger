@@ -15,12 +15,13 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 
 const styles = theme => ({
     paper: {
-        marginTop: theme.spacing.unit * 2,
+        marginTop: theme.spacing.unit * 5,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-        background: theme.palette.primary.accentOpacity
+        background: theme.palette.primary.accentOpacity,
+        marginLeft: '35%',
     },
     center: {
         display: 'flex',
@@ -34,9 +35,16 @@ const styles = theme => ({
     form: {
         marginTop: theme.spacing.unit
     },
-  LogINy: {
-    marginTop: theme.spacing.unit * 3
-  }
+  headingPassword: {
+      marginBottom: 36
+  },
+  changeB: {
+    marginTop: theme.spacing.unit * 2,
+    marginBototm: theme.spacing.unit * 2,
+    '&#change': {
+      marginTop: theme.spacing.unit * 4
+      }
+  },
 })
 
 class ChangePassword extends Component {
@@ -92,14 +100,14 @@ class ChangePassword extends Component {
     }
 
     render () {
-        const {classes, fetching} = this.props
+        const {classes, fetching, changeUser} = this.props
         return <React.Fragment>
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockIcon/>
                     </Avatar>
                     <ValidatorForm  ref="form" onSubmit={e => this.onSubmit(e) } className={classes.center}>
-                        <Typography variant="headline">Change Password</Typography>
+                        <Typography className={classes.headingPassword} variant="headline">Change Password</Typography>
                       <a>{this.state.message}</a>
                         <TextValidator
                           label="Current Password"
@@ -141,10 +149,20 @@ class ChangePassword extends Component {
                           fullWidth
                           variant="raised"
                           color="primary"
-                          className={classes.LogINy}
+                          className={classes.changeB}
+                          id={'change'}
                         >
-                          Sign Up
+                          Change Password
                         </Button>
+                      <Button
+                        variant="raised"
+                        color="secondary"
+                        fullWidth
+                        onClick={changeUser}
+                        className={classes.changeB}
+                      >
+                        Cancel
+                      </Button>
                     </ValidatorForm>
                 </Paper>
             </React.Fragment>

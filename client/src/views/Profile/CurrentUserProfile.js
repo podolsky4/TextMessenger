@@ -31,7 +31,10 @@ const styles = (theme) => ({
     alignItems: 'flex-start',
     justifyContent: 'space-evenly',
     padding: '32px',
-    background: '#009688'
+    background: '#009688',
+
+
+
   },
   UserInfoCnt: {
     flexShrink: 1,
@@ -58,13 +61,13 @@ const styles = (theme) => ({
     margin: theme.spacing.unit * 1,
     '&#save': {
       background: theme.palette.primary.accent,
-      marginTop: theme.spacing.unit * 2,
+      marginTop: theme.spacing.unit * 4,
       '&:hover, &:focus': {
         background: theme.palette.secondary.main,
       }
     },
     '&#cancel': {
-      marginBottom: theme.spacing.unit * 5,
+      marginBottom: theme.spacing.unit * 1,
       '&:hover, &:focus': {
         background: theme.palette.secondary.dark
       }
@@ -75,6 +78,10 @@ const styles = (theme) => ({
   },
   profilePhotoChangeSquare: {
     background: theme.palette.background.dark
+  },
+  passwordWrap: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   }
 })
 
@@ -96,7 +103,8 @@ class CurrentUserProfile extends Component {
       address: this.props.user.address,
       profilePhoto: this.props.user.profilePhoto,
       dateBirthday: this.props.user.dateBirthday,
-      viewMode: true
+      viewMode: true,
+      updateUserView: false
     }
   }
   componentWillMount(){
@@ -141,12 +149,16 @@ class CurrentUserProfile extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-  };
+  }
+
+  changeUser = e => {
+    this.setState({updateUserView:!this.state.updateUserView})
+  }
   render () {
     const {user, classes, userPosts} = this.props,
-     { firstName, lastName } = this.state
+     { firstName, lastName, updateUserView } = this.state
     return (
-      <div className={classes.ProfileCnt}>
+      <div className={classnames(classes.ProfileCnt, {[classes.passwordWrap]: this.state.updateUserView})} >
         {this.state.viewMode &&
           <div className={classes.UserInfoCnt}>
             <CurrentUserProfileWrapper editableField={this.editableField.bind(this)} user={user}/>
@@ -215,15 +227,22 @@ class CurrentUserProfile extends Component {
                     id="cancel">
               Cancel
             </Button>
+            <Button
+              variant="outlined"
+              className={classes.profileButton}
+              onClick={this.changeUser}
+            >
+              Change Password
+            </Button>
           </form>
-            <ChangePassword />
           </Fragment>
         }
-        <PostList
+        {!updateUserView && <PostList
           user={user}
           posts={userPosts}
           className={classes.userPostList}
-        />
+        />}
+        {updateUserView && <ChangePassword changeUser = {this.changeUser.bind(this)}/>}
       </div>
     )
   }

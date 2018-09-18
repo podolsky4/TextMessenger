@@ -48,12 +48,6 @@ class Profile extends React.Component {
       <React.Fragment>
         {flag && <CurrentUserProfile userPosts={userPosts}/>}
         {!flag && <OtherUserProfile currentUser={match.params.id} userPosts={userPosts}/>}
-        <CardMedia
-          className={classes.media}
-          component="img"
-          image={'https://picsum.photos/1400/320?gravity=north&blur'}
-          title={user.name}
-        />
       </React.Fragment>
     )
   }
