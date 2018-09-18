@@ -104,7 +104,7 @@ class Dialogs extends Component {
 
   handleMessages = dialog => {
     const {loadMessages} = this.props
-    this.setState({dialog: dialog})
+    this.setState({dialog: dialog, newDialog:false})
     loadMessages(dialog.id)
   };
 
