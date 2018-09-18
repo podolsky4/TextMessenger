@@ -20,6 +20,7 @@ import {ClickAwayListener} from "@material-ui/core/umd/material-ui.production.mi
 const styles = (theme,) => ({
   root: {
     flexGrow: 1
+      textTransform: 'capitalize'
   },
   appBar: {
     background: '#455A64'
