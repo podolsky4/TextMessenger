@@ -97,6 +97,7 @@ class CommentList extends Component {
                            name="text"
                            fullWidth
                            required
+                           autoFocus
                            type="text"
                            helperText={'Enter more that 3 symbols long comment, please'}
                            inputProps={{

@@ -12,12 +12,12 @@ import {withStyles} from '@material-ui/core/styles'
 
 const styles = theme => ({
   root: {
-    background: theme.palette.background.main,
     flexGrow: 1,
     margin: '32px auto',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   card: {
     // width: '80%',
@@ -58,7 +58,6 @@ class Notifications extends Component {
     } else if (e.type === 'NEW_DIALOG' || e.type === 'NEW_MESSAGE' || e.type === 'ADD_TO_DIALOG') {
       this.setState({toDialog: true, dialogId: e.dialog.id})
     } else if (e.type === 'NEW_LIKE' || e.type === 'NEW_COMMENT' || e.type === 'NEW_RETWEET') {
-      alert('WTF')
       this.setState({toPost: true, postId: e.post.id})
     }
   }
@@ -131,12 +130,6 @@ class Notifications extends Component {
     }
     return (
         <Grid className={classes.root}>
-
-                {notification.length === 0 &&
-                    <Grid item xs={12}>
-                        <Typography component={'h6'}>Nothing to show</Typography>
-                    </Grid>
-                }
                 <Grid zeroMinWidth
                       direction="column"
                       justify="center"
@@ -146,6 +139,11 @@ class Notifications extends Component {
                     notification.map(u => this.read(u))
                     }
                 </Grid>
+          {notification.length === 0 &&
+          <Grid item xs={12}>
+            <Typography component={'h6'}>Nothing to show</Typography>
+          </Grid>
+          }
 
         </Grid>
     )

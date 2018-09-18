@@ -5,16 +5,8 @@ import OtherUserProfile from './OtherUserProfile'
 import Loader from '../../components/Loader/Loader'
 import {Redirect} from 'react-router-dom'
 
-import {withStyles} from '@material-ui/core/styles'
-import CardMedia from '@material-ui/core/CardMedia'
 import {loadPosts} from '../../actions/postsActions'
 
-const styles = (theme) => ({
-  media: {
-    height: 320,
-    background: 'grey'
-  }
-})
 
 class Profile extends React.Component {
   componentDidMount () {
@@ -23,7 +15,7 @@ class Profile extends React.Component {
   }
   render () {
     // loadPosts()
-    const {user, match, classes, posts} = this.props
+    const {user, match, posts} = this.props
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
@@ -48,12 +40,6 @@ class Profile extends React.Component {
       <React.Fragment>
         {flag && <CurrentUserProfile userPosts={userPosts}/>}
         {!flag && <OtherUserProfile currentUser={match.params.id} userPosts={userPosts}/>}
-        <CardMedia
-          className={classes.media}
-          component="img"
-          image={'https://picsum.photos/1400/320?gravity=north&blur'}
-          title={user.name}
-        />
       </React.Fragment>
     )
   }
@@ -72,4 +58,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Profile))
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
