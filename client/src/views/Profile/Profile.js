@@ -5,7 +5,6 @@ import OtherUserProfile from './OtherUserProfile'
 import Loader from '../../components/Loader/Loader'
 import {Redirect} from 'react-router-dom'
 
-import {withStyles} from '@material-ui/core/styles'
 import {loadPosts} from '../../actions/postsActions'
 
 
