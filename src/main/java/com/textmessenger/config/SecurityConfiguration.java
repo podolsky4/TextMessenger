@@ -57,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/api/users/login", "/console", "http://localhost:9000/healthcheck" ,
+            .antMatchers("/api/users/login", "/console", "http://localhost:9000/healthcheck",
                     "/api/users/user", "/api/users/registered/**", "/api/users/resetPassword/**",
                     "/api/users/forgotpassword", "/api/users/changePassword", "/api/users/changePassword",
                     "/console/*", "/static/**")
