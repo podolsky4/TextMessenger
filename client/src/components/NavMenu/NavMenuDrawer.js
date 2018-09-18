@@ -83,7 +83,7 @@ class NavMenuDrawer extends React.Component {
                 <Divider />
                 <List className={classes.NavItem}
                         onClick={() => redirect('dialogs')} >
-                    <IconButton color="primary" to='/dialogs' className={classes.NavItem}>
+                    <IconButton color="primary" to='/dialogs'>
                         <MessageIcon className={classes.icon}/>
                     </IconButton>
                     <Typography component={'p'}> Messages</Typography>
