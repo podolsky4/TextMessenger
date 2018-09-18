@@ -15,6 +15,7 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 
 const styles = theme => ({
     paper: {
+        height:'calc(100vh - 168px)',
         marginTop: theme.spacing.unit * 5,
         display: 'flex',
         flexDirection: 'column',
