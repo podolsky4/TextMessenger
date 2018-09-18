@@ -3,6 +3,7 @@ package com.textmessenger.controller;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CredentialsPassword;
+import com.textmessenger.model.entity.dto.FieldFromFront;
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
@@ -170,5 +171,15 @@ public class UserController {
   @GetMapping("/notification")
   public ResponseEntity getNotification() {
     return ResponseEntity.status(200).body(userService.getAllNotificationByUser());
+  }
+
+  @PostMapping("/updatePassword")
+  public ResponseEntity updatePasswordFromUpdatePasswordForm(@Valid @RequestBody FieldFromFront field) {
+    return ResponseEntity.accepted()
+            .body(ResponseToFront
+                    .convertResponseToFront(
+                            userService.updatePasswordInitByUser(
+                                    field.getOldPassword(),
+                                    field.getNewPassword())));
   }
 }

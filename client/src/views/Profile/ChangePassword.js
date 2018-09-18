@@ -45,7 +45,8 @@ class ChangePassword extends Component {
         this.state = {
             currentPassword: '',
             createPassword: '',
-            repeatPassword: ''
+            repeatPassword: '',
+          message:''
         }
     }
 
@@ -57,6 +58,12 @@ class ChangePassword extends Component {
     }
     return true;
   });
+    ValidatorForm.addValidationRule('isPasswordSame', (value) => {
+      if (value === this.state.currentPassword) {
+        return false;
+      }
+      return true;
+    });
 }
 
 
@@ -68,8 +75,20 @@ class ChangePassword extends Component {
 
   onSubmit = e => {
         e.preventDefault()
-        // (this.state.password === this.state.passwordCheck) ?
-            // toChangePassword(this.state.password) : e.target.value = "not matched"
+    fetch(`/api/users/updatePassword`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        oldPassword: this.state.currentPassword,
+        newPassword: this.state.createPassword
+      })
+    })
+      .then(res => res.json())
+      .then(data => this.setState({message: data.message}))
+
     }
 
     render () {
@@ -81,6 +100,7 @@ class ChangePassword extends Component {
                     </Avatar>
                     <ValidatorForm  ref="form" onSubmit={e => this.onSubmit(e) } className={classes.center}>
                         <Typography variant="headline">Change Password</Typography>
+                      <a>{this.state.message}</a>
                         <TextValidator
                           label="Current Password"
                           name="currentPassword"
@@ -98,8 +118,8 @@ class ChangePassword extends Component {
                           name="createPassword"
                           type="password"
                           fullWidth
-                          validators={['required']}
-                          errorMessages={['this field is required']}
+                          validators={['required', 'isPasswordSame']}
+                          errorMessages={['this field is required', 'the same is current']}
                           onChange={e => this.change(e)}
                           value={this.state.createPassword}
                         />
