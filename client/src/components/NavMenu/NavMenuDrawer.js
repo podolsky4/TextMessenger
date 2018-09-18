@@ -4,8 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import {Badge, Button, IconButton, Typography} from "@material-ui/core/";
-import {Link, NavLink} from "react-router-dom";
+import {Badge,  IconButton, Typography} from "@material-ui/core/";
+import {Link } from "react-router-dom";
 import HomeIcon from '@material-ui/icons/Home'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import MessageIcon from '@material-ui/icons/ChatBubble'
@@ -74,20 +74,20 @@ class NavMenuDrawer extends React.Component {
                      <Typography component={'p'}>  Feed</Typography>
                 </List>
                 <Divider />
-                <NavLink to='/favorites' className={classes.NavItem}>
+                <List to='/favorites' className={classes.NavItem}>
                     <IconButton color="primary" >
                         <FavoriteIcon className={classes.icon}/>
                     </IconButton>
                     <Typography component={'p'}> Likes</Typography>
-                </NavLink>
+                </List>
                 <Divider />
-                <Button className={classes.buttonList}
+                <List className={classes.NavItem}
                         onClick={() => redirect('dialogs')} >
                     <IconButton color="primary" to='/dialogs' className={classes.NavItem}>
                         <MessageIcon className={classes.icon}/>
                     </IconButton>
                     <Typography component={'p'}> Messages</Typography>
-                </Button>
+                </List>
                 <Divider />
                 <List component={Link} to='/notifications' className={classes.NavItem}>
                     <IconButton  color="primary" >
