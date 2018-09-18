@@ -80,8 +80,9 @@ class App extends Component {
         <MuiThemeProvider theme={theme}>
           <CssBaseline>
             <SecureRouter wsHandler={true}/>
-              <HeaderRouter/>
+
             <SecureRouter/>
+              {/*<HeaderRouter/>*/}
           </CssBaseline>
         </MuiThemeProvider>
     )
