@@ -66,5 +66,7 @@ public interface UserService {
 
   User getCurrentUserFull();
 
+  String updatePasswordInitByUser(String oldPassword, String newPassword);
+
 }
 

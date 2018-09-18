@@ -303,4 +303,21 @@ public class UserServiceImpl implements UserService {
             .getPrincipal();
     return userRepository.getOne(userPrincipal.getId());
   }
+
+  @Override
+  public String updatePasswordInitByUser(String oldPassword, String newPassword) {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    Optional<User> user = userRepository.findById(userPrincipal.getId());
+    if (user.isPresent()) {
+      User temp = user.get();
+      if (userPrincipal.getPassword().equals(passwordEncoder.encode(oldPassword))) {
+        temp.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(temp);
+      }
+    }
+    return "Current password is not valid";
+  }
 }

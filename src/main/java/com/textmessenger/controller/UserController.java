@@ -67,6 +67,12 @@ public class UserController {
             .body(ResponseToFront.convertResponseToFront("This email is not registration on our Application"));
   }
 
+  @PostMapping("/updatePassword")
+  public ResponseEntity updatePasswordFromUpdatePasswordForm(@Valid @RequestPart String oldPassword,
+                                                             @Valid @RequestPart String newPassword) {
+    return ResponseEntity.accepted().body(userService.updatePasswordInitByUser(oldPassword, newPassword));
+  }
+
   @PostMapping("/changePassword")
   public ResponseEntity changePasswordFromForgotPage(@Valid @RequestBody CredentialsPassword credentialsPassword) {
     return ResponseEntity.status(200)
