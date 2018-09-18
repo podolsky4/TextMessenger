@@ -91,7 +91,7 @@ class Feed extends Component {
   };
 
   reset = () => {
-    this.setState({text: ''})
+    this.setState({text: '', changenameeed : ''})
     document.getElementById('content').value = ''
   };
 

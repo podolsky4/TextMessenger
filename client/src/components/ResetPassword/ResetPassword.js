@@ -44,12 +44,7 @@ class ResetPassword extends React.Component {
         return false;
       }
       return true;
-    }).addValidationRule('required', (value) => {
-      if (value.length === 0) {
-        return false;
-      }
-      return true;
-    });
+    })
 
   }
   change = e => {
@@ -60,7 +55,6 @@ class ResetPassword extends React.Component {
 
   resetPassword = e => {
     e.preventDefault()
-    console.log('this.state.firstPassword',this.state.firstPassword)
     fetch('/api/users/changePassword', {
       method: 'POST',
       headers: {
@@ -79,8 +73,7 @@ class ResetPassword extends React.Component {
         <Paper className={classes.paper}>
           <Typography variant="headline">Enter new password</Typography>
           <Typography variant="headline">{this.state.message}</Typography>
-          <form onSubmit={e => this.resetPassword(e)} className={classes.form}>
-            <ValidatorForm>
+            <ValidatorForm onSubmit={e => this.resetPassword(e)} className={classes.form}>
               <TextValidator
                 label="New Password"
                 name="firstPassword"
@@ -102,7 +95,7 @@ class ResetPassword extends React.Component {
                 onChange={e => this.change(e)}
                 value={this.state.secondPassword}
               />
-            </ValidatorForm>
+
             <Button
               type="submit"
               fullWidth
@@ -121,7 +114,7 @@ class ResetPassword extends React.Component {
             >
               <Link className={classes.button} to='/feed' >to home page</Link>
             </Button>
-          </form>
+            </ValidatorForm>
         </Paper>
 
     )
