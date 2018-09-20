@@ -1,11 +1,10 @@
 import {Link} from 'react-router-dom'
-import React from 'react'
+import React, {Fragment} from 'react'
 import {withStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import HomeIcon from '@material-ui/icons/Home'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import MessageIcon from '@material-ui/icons/ChatBubble'
 import NotificationsIcon from '@material-ui/icons/Notifications'
@@ -18,54 +17,58 @@ import MenuIcon from '@material-ui/icons/Menu'
 import {ClickAwayListener} from "@material-ui/core/umd/material-ui.production.min";
 
 const styles = (theme,) => ({
-  root: {
-    flexGrow: 1,
-      textTransform: 'capitalize'
-  },
-  appBar: {
-    background: '#455A64'
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-      '@media (min-width: 520px)': {
-          display: 'none',
-      }
-  },
-  icon: {
-    margin: theme.spacing.unit
-  },
-  badge: {
-    top: -5,
-    right: -10
-  },
-  typography: {
-    padding: theme.spacing.unit * 2
-  },
-  headerUser: {
-    padding: '1px'
-  },
-  // menuIcons: {
-  //     display: 'flex',
-  //       flexDirection: 'row'
-  //   },
+    root: {
+        flexGrow: 1,
+    },
+    headingContainer: {
+        display:'flex',
+        flexGrow: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        maxWidth: 500,
+        minWidth: 150,
+        justifyContent:'flex-start'
+    },
+    heading: {
+        marginLeft: theme.spacing.unit,
+        textTransform: 'capitalize',
+    },
+    appBar: {
+        background: '#455A64'
+    },
+    menuButton: {
+        marginLeft: -12,
+        marginRight: 20,
+        '@media (min-width: 520px)': {
+            display: 'none',
+        }
+    },
+    icon: {
+        margin: theme.spacing.unit
+    },
+    badge: {
+        top: -5,
+        right: -10
+    },
+    typography: {
+        padding: theme.spacing.unit
+    },
+    headerUser: {
+        padding: '1px'
+    },
     menuIcons: {
-    '@media (max-width: 520px)': {
-        display: 'none',
-
-    }
-  },
-
-    drawer: {
-
-    }
+        '@media (max-width: 520px)': {
+            display: 'none',
+        }
+    },
+    drawer: {}
 })
 
 class Header extends React.Component {
     state = {
         noUser: false,
         openDrawer: false,
-        profileUser: '',
+        profileUser: null,
         profileUserId: null,
     };
 
@@ -82,31 +85,19 @@ class Header extends React.Component {
         });
     };
 
-    locationRender = () => {
-        console.log("locationRender got:",this.props.location.pathname.substring(1, 4))
-        switch (this.props.location.pathname) {
-            case 'feed':
-                return 'Feed'
-            case 'feed':
-                return 'Feed'
-            case 'feed':
-                return 'Feed'
-            case 'feed':
-                return 'Feed'
-            case 'feed':
-                return 'Feed'
 
-            default:
-                return
-        }
-    }
-
-    componentWillMount () {
-        const {match} = this.props
+    componentDidMount() {
+        const {match} = this.props,
+              {profileUser} =this.state
         let currentProfile = match.params.id
-        if (this.state.profileUser === 0) {
+        // console.log('match.params:', match.params)
+        // console.log('headerJS / currentProfile :', currentProfile)
+        // console.log('headerJS / match :', match)
+
+        if (this.state.profileUser === null) {
             fetch(`/api/users/${currentProfile}`,
-                {   method: 'GET',
+                {
+                    method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
                         'Content-Type': 'application/json',
@@ -115,58 +106,54 @@ class Header extends React.Component {
                 }
             )
                 .then(res => res.json())
-                .then(data => this.setState({profileUser: {...data}}))
+                .then(data => this.setState({profileUser: data}))
         }
 
-        console.log('data in header :', this.state.profileUser)
+        // if(profileUser.params.id !== match.params.id){this.setState({profileUser: null})}
     }
 
 
 
+
     render() {
+
         const {classes, user, notification, location, match} = this.props,
               {profileUser} = this.state
-        console.log("location :", location)
+
+        console.log("header_js props_location :", location)
+        console.log('header.js state_profileUser :', profileUser)
+
+
+
+        const locationRender = () => {
+            const headerLocation = this.props.location.pathname.substring(1, 4)
+            // console.log("f locationRender  / c headerLocation /", headerLocation)
+
+            switch (headerLocation) {
+                case 'fee':
+                    return 'Feed';
+                case 'fav':
+                    return 'Your Likes';
+                case 'dia':
+                    return 'Your Dialogs';
+                case 'not':
+                    return 'Notifications';
+                case 'pro':
+                    return 'Profile';
+                default:
+                    return ''
+            }
+        }
 
         let {noUser, openDrawer} = this.state
+
         if (!user) noUser = true
 
+        // let flagOtherUser = user.id !== +match.params.id
 
-
-
-
-        let flagOtherUser = user.id !== +match.params.id
-        let locationName = profileUser
-        console.log('locationName: ', locationName)
-        // if (flagOtherUser) {
-        //     profileUser = posts.filter(function (post) {
-        //             return post.user.id === user.id
-        //         }
-        //     )
-        // } else {
-        //     userPosts = posts.filter(function (post) {
-        //             return post.user.id === +match.params.id
-        //         }
-        //     )
-        // }
-
-
-
-
-
-
+        console.log('profile in render: ', profileUser)
 
         return <div className={classes.root}>
-
-
-
-
-            {/*<React.Fragment>*/}
-                {/*{flag && <CurrentUserProfile userPosts={userPosts}/>}*/}
-                {/*{!flag && <OtherUserProfile currentUser={match.params.id} userPosts={userPosts}/>}*/}
-            {/*</React.Fragment>*/}
-
-
 
             <AppBar position='static' className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
@@ -179,16 +166,35 @@ class Header extends React.Component {
                         </IconButton>
                         {openDrawer && (<NavMenuDrawer/>)}
                     </ClickAwayListener>
+                    {profileUser &&
+                    <div className={classes.headingContainer}>
+                        <Typography variant="title"
+                                    color="inherit"
+                                    className={classes.heading}
+                                    component={'h3'}
+                                    align='justify'
+                                    children={profileUser.firstName}
+                        />
+                        <Typography variant="title"
+                                    color="inherit"
+                                    className={classes.heading}
+                                    component={'h3'}
+                                    children={profileUser.lastName}
+                        />
+                    </div>
+                    }
+                    {!profileUser &&
                     <Typography variant="title"
                                 color="inherit"
-                                className={classes.root}
+                                className={classes.heading}
                                 component={'h3'}
-                                children={this.locationRender()}
+                                children={locationRender()}
                     />
+                    }
                     <div className={classes.menuIcons}>
-                        <IconButton color="inherit" component={Link} to='/'>
-                            <HomeIcon className={classes.icon}/>
-                        </IconButton>
+                        {/*<IconButton color="inherit" component={Link} to='/'>*/}
+                        {/*<HomeIcon className={classes.icon}/>*/}
+                        {/*</IconButton>*/}
                         <IconButton color="inherit" component={Link} to='/feed'>
                             <PublicIcon className={classes.icon}/>
                         </IconButton>
@@ -219,11 +225,11 @@ class Header extends React.Component {
 
 
 const mapStateToProps = state => {
-  return {
-    user: state.user,
-    currentLocation: state.location,
-    notification: state.notification
-  }
+    return {
+        user: state.user,
+        currentLocation: state.location,
+        notification: state.notification
+    }
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(Header))
