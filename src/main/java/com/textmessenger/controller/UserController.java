@@ -112,7 +112,7 @@ public class UserController {
             .orElse(ResponseEntity.notFound().build());
   }
 
-  @PutMapping
+  @PostMapping
   public ResponseEntity updateUser(@Valid @RequestPart("firstName") String firstName,
                                    @RequestPart("lastName") String lastName,
                                    @RequestPart("address") String address,

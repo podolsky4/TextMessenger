@@ -83,7 +83,7 @@ export const logOut = () => dispatch => {
 // sub action for user
 export const updateUser = (data, login) => dispatch => {
   fetch(`/api/users/`, {
-    method: 'PUT',
+    method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
     },
