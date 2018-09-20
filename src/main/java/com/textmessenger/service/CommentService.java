@@ -16,4 +16,6 @@ public interface CommentService {
   void deleteComment(Comment comment);
 
   void createComment(Post post, User user, Comment comment);
+
+  void deleteAllCommentsUnderPost(Post post);
 }
