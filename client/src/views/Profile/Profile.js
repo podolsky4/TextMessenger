@@ -14,7 +14,6 @@ class Profile extends React.Component {
     loadPosts()
   }
   render () {
-    // loadPosts()
     const {user, match, posts} = this.props
     if (!user.id) {
       return <Redirect to={`/`}/>

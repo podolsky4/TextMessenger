@@ -64,8 +64,9 @@ const styles = (theme,) => ({
 class Header extends React.Component {
     state = {
         noUser: false,
-
-        openDrawer: false
+        openDrawer: false,
+        profileUser: '',
+        profileUserId: null,
     };
 
     toggleDrawer = () => {
@@ -81,25 +82,92 @@ class Header extends React.Component {
         });
     };
 
-    // locationRender = () => {
-    //     switch (this.props.location.pathname) {
-    //         case '/feed':
-    //             return 'feed'
-    //         default:
-    //             return
-    //     }
-    // }
+    locationRender = () => {
+        console.log("locationRender got:",this.props.location.pathname.substring(1, 4))
+        switch (this.props.location.pathname) {
+            case 'feed':
+                return 'Feed'
+            case 'feed':
+                return 'Feed'
+            case 'feed':
+                return 'Feed'
+            case 'feed':
+                return 'Feed'
+            case 'feed':
+                return 'Feed'
+
+            default:
+                return
+        }
+    }
+
+    componentWillMount () {
+        const {match} = this.props
+        let currentProfile = match.params.id
+        if (this.state.profileUser === 0) {
+            fetch(`/api/users/${currentProfile}`,
+                {   method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                }
+            )
+                .then(res => res.json())
+                .then(data => this.setState({profileUser: {...data}}))
+        }
+
+        console.log('data in header :', this.state.profileUser)
+    }
+
 
 
     render() {
-        const {classes, user, notification, location} = this.props
+        const {classes, user, notification, location, match} = this.props,
+              {profileUser} = this.state
         console.log("location :", location)
+
         let {noUser, openDrawer} = this.state
-        if (!user) {
-            noUser = true
-        }
+        if (!user) noUser = true
+
+
+
+
+
+        let flagOtherUser = user.id !== +match.params.id
+        let locationName = profileUser
+        console.log('locationName: ', locationName)
+        // if (flagOtherUser) {
+        //     profileUser = posts.filter(function (post) {
+        //             return post.user.id === user.id
+        //         }
+        //     )
+        // } else {
+        //     userPosts = posts.filter(function (post) {
+        //             return post.user.id === +match.params.id
+        //         }
+        //     )
+        // }
+
+
+
+
+
+
 
         return <div className={classes.root}>
+
+
+
+
+            {/*<React.Fragment>*/}
+                {/*{flag && <CurrentUserProfile userPosts={userPosts}/>}*/}
+                {/*{!flag && <OtherUserProfile currentUser={match.params.id} userPosts={userPosts}/>}*/}
+            {/*</React.Fragment>*/}
+
+
+
             <AppBar position='static' className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
                     <ClickAwayListener onClickAway={this.handleClickAway}>
@@ -115,7 +183,7 @@ class Header extends React.Component {
                                 color="inherit"
                                 className={classes.root}
                                 component={'h3'}
-                                children={location.pathname.substring(1)}
+                                children={this.locationRender()}
                     />
                     <div className={classes.menuIcons}>
                         <IconButton color="inherit" component={Link} to='/'>

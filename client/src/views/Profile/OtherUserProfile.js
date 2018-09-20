@@ -72,7 +72,6 @@ class OtherUserProfile extends Component {
         })
         .then(res => res.json())
         .then(data => this.setState({userFromPost: data}))
-        .then(loadFollowing(user.id))
     }
   }
 
