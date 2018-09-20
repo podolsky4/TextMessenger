@@ -127,7 +127,7 @@
             <phase>generate-resources</phase>
             <configuration>
               <target>
-                <copy todir="${project.build.directory}\classes\public">
+                <copy todir="${project.basedir}\src\main\resources\public">
                   <fileset dir="${project.basedir}\client\build"/>
                 </copy>
               </target>
