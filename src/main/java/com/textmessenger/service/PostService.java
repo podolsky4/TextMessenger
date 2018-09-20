@@ -27,4 +27,7 @@ public interface PostService {
   Post getPostById(long id);
 
   PostToFront getPostToFrontById(long id);
+
+
+  void deleteRetweetsByParentId(long parentId);
 }

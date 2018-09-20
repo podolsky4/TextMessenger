@@ -127,4 +127,9 @@ public class PostServiceImpl implements PostService {
   public PostToFront getPostToFrontById(long id) {
     return PostToFront.convertPostToFront(postRepository.findById(id).get());
   }
+
+  @Override
+  public void deleteRetweetsByParentId(long parentId) {
+    postRepository.deletePostsByParentId(parentId);
+  }
 }

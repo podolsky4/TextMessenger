@@ -77,8 +77,9 @@ public class PostController {
 
   @DeleteMapping("/post/{id}")
   public ResponseEntity deletePostAndAllItComments(@PathVariable("id") Post post) {
-    postService.deletePost(post);
     commentService.deleteAllCommentsUnderPost(post);
+    postService.deleteRetweetsByParentId(post.getId());
+    postService.deletePost(post);
     return ResponseEntity.accepted().build();
   }
 }
