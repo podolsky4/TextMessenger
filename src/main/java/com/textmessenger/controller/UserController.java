@@ -33,9 +33,9 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 public class UserController {
   private final UserService userService;
-  private LoginService loginService;
+  private final LoginService loginService;
   private final EmailService emailService;
-  private TemporaryTokenRepository temporaryTokenRepository;
+  private final TemporaryTokenRepository temporaryTokenRepository;
 
   public UserController(UserService userService,
                         LoginService loginService,
