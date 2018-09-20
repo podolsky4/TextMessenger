@@ -87,8 +87,8 @@ class Header extends React.Component {
 
 
     componentDidMount() {
-        const {match} = this.props,
-              {profileUser} =this.state
+        const {match} = this.props
+              // {profileUser} =this.state
         let currentProfile = match.params.id
         // console.log('match.params:', match.params)
         // console.log('headerJS / currentProfile :', currentProfile)
@@ -166,24 +166,24 @@ class Header extends React.Component {
                         </IconButton>
                         {openDrawer && (<NavMenuDrawer/>)}
                     </ClickAwayListener>
+                    {/*{!profileUser &&*/}
+                    {/*<div className={classes.headingContainer}>*/}
+                        {/*<Typography variant="title"*/}
+                                    {/*color="inherit"*/}
+                                    {/*className={classes.heading}*/}
+                                    {/*component={'h3'}*/}
+                                    {/*align='justify'*/}
+                                    {/*children={profileUser.firstName}*/}
+                        {/*/>*/}
+                        {/*<Typography variant="title"*/}
+                                    {/*color="inherit"*/}
+                                    {/*className={classes.heading}*/}
+                                    {/*component={'h3'}*/}
+                                    {/*children={profileUser.lastName}*/}
+                        {/*/>*/}
+                    {/*</div>*/}
+                    {/*}*/}
                     {profileUser &&
-                    <div className={classes.headingContainer}>
-                        <Typography variant="title"
-                                    color="inherit"
-                                    className={classes.heading}
-                                    component={'h3'}
-                                    align='justify'
-                                    children={profileUser.firstName}
-                        />
-                        <Typography variant="title"
-                                    color="inherit"
-                                    className={classes.heading}
-                                    component={'h3'}
-                                    children={profileUser.lastName}
-                        />
-                    </div>
-                    }
-                    {!profileUser &&
                     <Typography variant="title"
                                 color="inherit"
                                 className={classes.heading}
