@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import Loader from '../Loader/Loader'
 import MessagesList from '../MessagesList'
 import {createMessage} from '../../actions/dialogActions'
 import TextField from '@material-ui/core/TextField'
@@ -12,7 +11,7 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    alignItems: 'strech',
+    alignItems: 'stretch',
     justifyContent: 'space-between',
     background: '#fafafaf7',
     borderRadius: '1px 1px 2px 2px'
@@ -38,8 +37,7 @@ const styles = theme => ({
     padding: '14px 2px',
     background: '#00897B',
     marginTop: -15,
-    marginRight: 'auto'
-    // marginLeft: 64
+    marginRight: 'auto',
   }
 })
 
@@ -63,44 +61,41 @@ class Chat extends Component {
   }
 
   onSubmit = e => {
-    const {user, addMessage, currentDialog} = this.props
+    const {user, addMessage, currentDialog} = this.props,
+      {text} = this.state
     e.preventDefault()
-    addMessage(currentDialog.id, user, this.state.text)
+    addMessage(currentDialog.id, user, text)
     this.messageInput.value = ''
-    console.log("onSubmit", e.target)
-    console.log("onSubmit inner", e.target)
-    // this.value = ''
+    this.setState({
+      text: ''
+    })
   };
 
   render () {
-    const {user, fetching, messages, classes} = this.props
+    const {user, messages, classes} = this.props
     return (
       <div className={classes.chat}>
-        {fetching && <Loader classes={{progress: 'root'}}/>}
-        {!fetching && <MessagesList messages={messages} user={user}/>}
-
-          <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
-            <TextField
-              defaultValue={null}
-              placeholder=" Write message"
-              maxLength={280}
-              type="text"
-              inputRef={(el) => this.messageInput = el}
-              onKeyUp={event => this.myFunction(event)}
-              className={classnames(classes.margin, classes.text, 'messageInput')}
-              label="Your Message"
-              id="messageInput"
-              backgroundColor="white"
-              multiline
-              autoFocus
-              white
-            >
-            </TextField>
-            <SubmitButton/>
-          </form>
-
+        {messages.length !==0 && <MessagesList messages={messages} user={user}/>}
+        <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
+          <TextField
+            defaultValue={null}
+            placeholder=" Write message"
+            maxLength={280}
+            type="text"
+            inputRef={(el) => this.messageInput = el}
+            onKeyUp={event => this.myFunction(event)}
+            className={classnames(classes.margin, classes.text, 'messageInput')}
+            label="Your Message"
+            id="messageInput"
+            backgroundcolor="white"
+            multiline
+            autoFocus
+            required
+          >
+          </TextField>
+          <SubmitButton/>
+        </form>
       </div>
-
     )
   }
 }

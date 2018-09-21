@@ -43,7 +43,8 @@ const styles = (theme) => ({
     margin: theme.spacing.unit
   },
   menuItem: {
-    justifyContent: 'space-between',
+    display: 'flex',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   pos: {
@@ -54,25 +55,35 @@ const styles = (theme) => ({
       color: 'black',
       fontWeight: '700'
     }
-
   },
   lockIcon: {
     marginRight: '1em'
+  },
+  vrDividerCont: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  vrDivider: {
+    border: '1px solid #9e9e9e3d',
+    marginLeft: 45,
+    height: '60%',
+    marginTop: 'auto',
+    marginBottom: 'auto'
   },
   HeaderMenuButton: {
     justifyContent: 'space-between',
     alignItems: 'center',
     display: 'flex',
-    width: 130,
-    border: '1px solid #fff3e00d',
-    background: '#fafafa21',
-    marginLeft: '10px',
-
+    minWidth: 130,
+    width: 'min-content',
+    border: '1px solid #fff3e003',
+    background: theme.palette.background.dark,
+    marginLeft: 32,
     '&:hover': {
-      background: '#fafafa',
-      color: 'black',
+      background: theme.palette.background.main,
+      color: theme.palette.background.dark,
       '& $pos': {
-        color: 'black',
+        color: theme.palette.background.dark,
         fontWeight: '700'
       }
     }
@@ -104,7 +115,8 @@ class MenuHeader extends React.Component {
 
     return (
       <div className={classes.root}>
-        <div>
+        <div className={classes.vrDividerCont}>
+           <div className={classes.vrDivider}></div>
           <Button
             buttonRef={node => {
               this.anchorEl = node

@@ -6,11 +6,12 @@ import './Dialogs.css'
 import Chat from './Chat'
 import SearchUser from '../SearchUser'
 import {Redirect} from 'react-router-dom'
-import cyan from '@material-ui/core/colors/cyan'
 
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper/Paper'
 import Button from '@material-ui/core/Button/Button'
+import PlusIcon from '@material-ui/icons/AddCircleOutlineOutlined'
+import * as primary from '@material-ui/core/styles/createPalette'
 
 const styles = theme => ({
   root: {
@@ -21,7 +22,7 @@ const styles = theme => ({
     display: 'flex'
   },
   avatar: {
-    backgroundColor: cyan[500]
+    backgroundColor: theme.palette.background.main
   },
   wrap: {
     display: 'flex',
@@ -38,26 +39,36 @@ const styles = theme => ({
     flexBasis: 1,
     flexGrow: 1,
     margin: '0 auto',
-    maxWidth: 320,
+    maxWidth: 520,
     padding: '0 1%'
   },
   paper: {
     width: '100%',
-    margin: '0 auto 0 0'
+    margin: '1px 0'
   },
   button: {
-    padding: theme.spacing.unit / 2,
+    padding: 8,
     margin: theme.spacing.unit,
     marginLeft: 0,
     lineHeight: 1,
     background: theme.palette.secondary.main,
     fontSize: 12,
+      alignItems:'center',
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
   },
   chat: {
-    maxWidth: 620,
+    maxWidth: 620
+  },
+  searchUser: {
+    flexShrink: 1,
+    flexBasis: 1,
+    flexGrow: 1,
+    margin: '0 auto',
+    maxWidth: 520,
+    padding: '0 1%',
+    background: theme.palette.background.main
   }
 })
 
@@ -75,7 +86,7 @@ class Dialogs extends Component {
 
   componentWillMount () {
     const {user, dialogs, loadDialog} = this.props
-    if (dialogs.length === 0) {
+    if (dialogs === null) {
       loadDialog(user.id)
     }
   }
@@ -93,7 +104,7 @@ class Dialogs extends Component {
 
   handleMessages = dialog => {
     const {loadMessages} = this.props
-    this.setState({dialog: dialog})
+    this.setState({dialog: dialog, newDialog:false})
     loadMessages(dialog.id)
   };
 
@@ -115,7 +126,7 @@ class Dialogs extends Component {
     if (!user.id) {
       return <Redirect to={`/`}/>
     }
-    if (dialogs.length === 0) {
+    if (dialogs === null) {
       loadDialog(user.id)
     }
 
@@ -126,7 +137,7 @@ class Dialogs extends Component {
     return (
       <div className={classes.wrap}>
         <div className={classes.dialogs}>
-          {dialogs.map((dialog, index) =>
+          {dialogs != null && dialogs.map((dialog, index) =>
             <Paper key = {index} className={classes.paper} elevation={0}>
               <Dialog
                 key = {dialog.id}
@@ -137,17 +148,27 @@ class Dialogs extends Component {
               />
             </Paper>
           )}
+          {newDialog &&
+          <Paper color={primary.dark}>
+            <SearchUser exist={exist}
+                        dialog={dialogId}
+                        className={classes.searchUser}
+            />
+          </Paper>
+          }
           <Button onClick={e => this.handleCreateDialog(e)}
                   variant="contained" type="submit" color="primary" className={classes.button}>
+              <PlusIcon style={{marginRight: 4}}/>
             new Dialog
           </Button>
+          {newDialog &&
+          <Button onClick={() => this.setState({newDialog: false})}
+                  variant="outlined" type="close" color="primary" style={{marginLeft: '6px'}}>
+            close
+          </Button>
+          }
         </div>
         {dialog && <Chat className={classes.chat} user={user.id} currentDialog={dialog}/>}
-        {newDialog &&
-        <SearchUser
-          exist={exist}
-          dialog={dialogId}
-        />}
       </div>
     )
   }

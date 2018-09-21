@@ -1,18 +1,19 @@
 package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.Post;
-import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.CredentialsPassword;
+import com.textmessenger.model.entity.dto.FieldFromFront;
 import com.textmessenger.model.entity.dto.LoginRq;
 import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
+import com.textmessenger.model.entity.dto.UserToFrontFull;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.service.EmailService;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.Date;
+import java.io.IOException;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -45,16 +47,27 @@ public class UserController {
     this.temporaryTokenRepository = temporaryTokenRepository;
   }
 
+  @GetMapping
+  public ResponseEntity getFullUser() {
+    return ResponseEntity.ok().body(UserToFrontFull.convertUserForFront(userService.getCurrentUserFull()));
+  }
+
   @PostMapping("/forgotpassword")
   public ResponseEntity forgotPassword(@RequestBody String email) {
     User userByEmail = userService.getUserByEmail(email);
     if (userByEmail != null) {
       userService.sendEmailToResetPassword(userByEmail);
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+      return ResponseEntity.ok()
               .body(ResponseToFront.convertResponseToFront("We send you mail please check you email"));
     }
     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(ResponseToFront.convertResponseToFront("This email is not registration on our Application"));
+  }
+
+  @PostMapping("/changePassword")
+  public ResponseEntity changePasswordFromForgotPage(@Valid @RequestBody CredentialsPassword credentialsPassword) {
+    return ResponseEntity.status(200)
+            .body(ResponseToFront.convertResponseToFront(userService.changePasswordForgot(credentialsPassword)));
   }
 
   @PostMapping("/login")
@@ -76,17 +89,7 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
               .body(ResponseToFront.convertResponseToFront("this email is busy"));
     }
-    TemporaryToken tempToken = new TemporaryToken();
-    tempToken.setToken(UUID.randomUUID().toString());
-    tempToken.setExpiryDate(new Date());
-    User user1 = userService.createUser(user);
-    tempToken.setUser(user1);
-    temporaryTokenRepository.save(tempToken);
-    SimpleMailMessage email = new SimpleMailMessage();
-    email.setTo(user1.getEmail());
-    email.setSubject("confirmation link to create account at Text Messenger application");
-    email.setText("http://localhost:3000/api/users/registered/" + tempToken.getToken());
-    emailService.sendEmail(email);
+    userService.createUser(user);
     return ResponseEntity.ok()
             .body(ResponseToFront.convertResponseToFront("Check you email we send you registration link"));
 
@@ -94,9 +97,8 @@ public class UserController {
 
   @GetMapping("/registered/{token}")
   public ResponseEntity enableUser(@PathVariable("token") String token) {
-    return ResponseEntity.ok().body(userService.setUserIsEnabled(token));
+    return ResponseEntity.ok().body(ResponseToFront.convertResponseToFront(userService.setUserIsEnabled(token)));
   }
-
 
   @GetMapping("/{id}")
   public ResponseEntity readUser(@PathVariable("id") long id) {
@@ -111,14 +113,13 @@ public class UserController {
   }
 
   @PutMapping
-  public ResponseEntity updateUser(@Valid @RequestBody User user) {
-    userService.updateUser(user);
-    return ResponseEntity.ok().build();
-  }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity deleteUser(@PathVariable("id") long id) {
-    userService.deleteUser(id);
+  public ResponseEntity updateUser(@Valid @RequestPart("firstName") String firstName,
+                                   @RequestPart("lastName") String lastName,
+                                   @RequestPart("address") String address,
+                                   @RequestPart("dateBirthday") String dateBirthday,
+                                   @RequestPart(value = "file", required = false) MultipartFile file)
+          throws IOException {
+    userService.updateUserWithStringsAndFile(firstName, lastName, address, dateBirthday, file);
     return ResponseEntity.ok().build();
   }
 
@@ -170,5 +171,15 @@ public class UserController {
   @GetMapping("/notification")
   public ResponseEntity getNotification() {
     return ResponseEntity.status(200).body(userService.getAllNotificationByUser());
+  }
+
+  @PostMapping("/updatePassword")
+  public ResponseEntity updatePasswordFromUpdatePasswordForm(@Valid @RequestBody FieldFromFront field) {
+    return ResponseEntity.accepted()
+            .body(ResponseToFront
+                    .convertResponseToFront(
+                            userService.updatePasswordInitByUser(
+                                    field.getOldPassword(),
+                                    field.getNewPassword())));
   }
 }

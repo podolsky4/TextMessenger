@@ -3,6 +3,31 @@ import {connect} from 'react-redux'
 import {createComment} from '../../../actions/postsActions'
 import Comment from './Comment'
 import Loader from '../../Loader/Loader'
+import {Button, List, TextField} from '@material-ui/core/umd/material-ui.production.min'
+import {withStyles} from '@material-ui/core/styles'
+import classnames from 'classnames'
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  CommentTextField: {
+    display: 'flex',
+    width: '100%',
+    marginRight: 32
+  },
+  postCreator: {
+    display: 'flex',
+    alignItems: 'start',
+    margin: 16,
+    width: '94%',
+    justifyContent: 'space-between',
+  },
+  btnCreatePost: {
+
+  }
+})
 
 class CommentList extends Component {
   constructor (props) {
@@ -24,9 +49,12 @@ class CommentList extends Component {
   };
 
   onSubmit = e => {
-    const {user, createComments, post} = this.props
+    const {user, createComments, post} = this.props,
+      {text} = this.state
     e.preventDefault()
-    createComments(post.id, user.id, this.state.text)
+    if (text.length > 0){
+      createComments(post.id, user.id, text)
+    }
     this.reset()
   };
 
@@ -41,29 +69,52 @@ class CommentList extends Component {
   }
 
   render () {
-    const {comments, flag, commentReload} = this.props
+    const {comments, flag, commentReload, classes} = this.props
     let maped = post => {
       return (
-        <Comment
-          key={post.id}
-          comment={post}
-
-        />)
+            <Comment
+                key={post.id}
+                comment={post}
+            />
+      )
     }
+
     return (
       <div>
-        {flag && comments.map(i => maped(i))}
+        {flag &&
+        <List dense>
+            {comments.map(i => maped(i))}
+        </List>
+        }
         {commentReload && <Loader/>}
-        <form className="postCreator" onSubmit={e => this.onSubmit(e)}>
-          <textarea defaultValue=""
-            placeholder="Текст комментария"
-            maxLength={120}
-            id="comment"
-            name="text"
-            type="text"
-            onKeyUp={event => this.myFunction(event)}
-          />
-          <button className="btn-create-post">Добавить коментарий</button>
+
+        <form className={classnames(classes.postCreator, 'postCreator')} onSubmit={e => this.onSubmit(e)}>
+            <div className={classes.CommentTextField}>
+                <TextField defaultValue=""
+                           placeholder="Comment..."
+                           maxLength={120}
+                           id="comment"
+                           name="text"
+                           fullWidth
+                           required
+                           autoFocus
+                           type="text"
+                           helperText={'Enter more that 3 symbols long comment, please'}
+                           inputProps={{
+                             maxLength: 120,
+                             minLength: 1,
+                             required: true,
+                             padding: '3.7% 0 7px',
+                             style:
+                                   {borderRadius: '2px'}
+                           }}
+                           minlenght={3}
+                           onKeyUp={event => this.myFunction(event)}
+                />
+            </div>
+          <Button variant='flat'
+                  onClick={event => this.onSubmit(event)}
+                  className={classes.btnCreatePost}>Comment</Button>
         </form>
       </div>
     )
@@ -83,4 +134,4 @@ const mapDispatchToProps = dispatch => {
     createComments: (id, userId, content) => dispatch(createComment(id, userId, content))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CommentList)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CommentList))

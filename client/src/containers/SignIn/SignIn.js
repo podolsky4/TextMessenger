@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Loader from '../../components/Loader/Loader'
 
-import {ValidatorForm} from 'react-material-ui-form-validator'
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const styles = theme => ({
   layout: {
@@ -37,13 +37,14 @@ const styles = theme => ({
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
   },
   center: {
-
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
-
   },
-
+  LogIN: {
+    // backgroundColor: theme.palette.primary.dark,
+    backgroundColor: '#00bcd4'
+  },
   avatar: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main
@@ -52,9 +53,14 @@ const styles = theme => ({
     marginTop: theme.spacing.unit
   },
   submit: {
+    background: theme.palette.primary.dark * 0.1,
     marginTop: theme.spacing.unit * 3
   },
   signIn: {
+    color: '#00796B',
+    borderColor: '#00796B',
+    fontWeight: '700',
+    marginBottom: 10,
     marginTop: theme.spacing.unit,
     opacity: '0.6',
     '&:hover': {
@@ -81,20 +87,27 @@ class LogIn extends Component {
       forgotPassword: false,
       createemail: '',
       createfirstName: '',
-      createpassword: ''
+      createpassword: '',
+      repeatPassword: ''
     }
   }
-  change = e => {
-    this.setState({
-      [e.target.name]: e.target.value
+  componentDidMount() {
+    // custom rule will have name 'isPasswordMatch'
+    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+      if (value !== this.state.createpassword) {
+        return false;
+      }
+      return true;
     })
-  };
-  onSubmit = e => {
-    const {loginInUser} = this.props
-    e.preventDefault()
-    loginInUser(this.state.email, this.state.password)
-  };
-  create = e => {
+    ValidatorForm.addValidationRule('isGreatedThen', (value) => {
+      if (value.length < 5) {
+        return false;
+      }
+      return true;
+    })
+  }
+
+  registrateNewUser = e => {
     const {createUser} = this.props
     e.preventDefault()
     let data = {login: this.state.createfirstName, email: this.state.createemail, password: this.state.createpassword}
@@ -132,7 +145,6 @@ class LogIn extends Component {
   forgotPassword = e => {
     const {forgotPasswordForm} = this.props
     e.preventDefault()
-    alert('You press forgot button' + this.state.createemail)
     forgotPasswordForm(this.state.createemail)
   }
   render () {
@@ -144,76 +156,75 @@ class LogIn extends Component {
         <main className={classes.layout}>
           <React.Fragment>
             {signIn && !signUp && !forgotPassword &&
-        <Paper className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockIcon/>
-          </Avatar>
-          <ValidatorForm className={classes.center}>
-            <Typography variant="headline">Sign in</Typography>
-            <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
-              <FormControl margin="normal" fullWidth >
-                <InputLabel htmlFor="email">Email Address</InputLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={e => this.change(e)}
-                  value={this.state.email}
-                />
-              </FormControl>
-              <FormControl margin="normal" fullWidth>
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
-                  name="password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={e => this.change(e)}
-                  value={this.state.password}
-                />
-              </FormControl>
-              {fetching && <Loader/>}
-              <Button
-                height = "300%"
-                variant="flat"
-                color="primary"
-                className={classes.signIn}
-                onClick={this.SignUpToggle.bind(this)}
-              >
-                Registration
-              </Button>
-              <Button
-                height = "300%"
-                variant="flat"
-                color="primary"
-                className={classes.signIn}
-                onClick={this.SignUpForgotPassword.bind(this)}
-              >
-                Forgot Password
-              </Button>
-              <Button
-                fullWidth
-                type="submit"
-                variant="raised"
-                color="primary"
-                className={classes.submit}
-              >
-                      Sign in
-              </Button>
+              <Paper className={classes.paper}>
+                  <Avatar className={classes.avatar}>
+                    <LockIcon/>
+                  </Avatar>
+                    <Typography variant="headline">Sign in</Typography>
+                    <form onSubmit={e => this.onSubmit(e)} className={classes.form}>
+                      <FormControl margin="normal" fullWidth >
+                        <InputLabel htmlFor="email">Email Address</InputLabel>
+                        <Input
+                          id="email"
+                          name="email"
+                          autoComplete="email"
+                          autoFocus
+                          required
+                          onChange={e => this.change(e)}
+                          value={this.state.email}
+                        />
+                      </FormControl>
+                      <FormControl margin="normal" fullWidth>
+                        <InputLabel htmlFor="password">Password</InputLabel>
+                        <Input
+                          name="password"
+                          type="password"
+                          id="password"
+                          required
+                          autoComplete="current-password"
+                          onChange={e => this.change(e)}
+                          value={this.state.password}
+                        />
+                      </FormControl>
+                      {fetching && <Loader/>}
+                      <Button
+                        height = "300%"
+                        variant="flat"
+                        color="primary"
+                        className={classes.signIn}
+                        onClick={this.SignUpToggle.bind(this)}>
+                        Registration
+                      </Button>
+                             <Button
+                        height = "300%"
+                        variant="flat"
+                        color="primary"
+                        className={classes.signIn}
+                        onClick={this.SignUpForgotPassword.bind(this)}>
+                        Forgot Password
+                      </Button>
+                       <Button
+                            fullWidth
+                            type='submit'
+                            variant='raised'
+                            className={classes.LogIN}>
+                        Sign in
+                       </Button>
 
-            </form>
-          </ValidatorForm>
-        </Paper>
+                    </form>
+                </Paper>
             }
           </React.Fragment>
+
           {forgotPassword &&
           <Paper className={classes.paper}>
             <Avatar className={classes.avatar}>
               <PersonAdd/>
             </Avatar>
             <Typography variant="headline">Forgot Password</Typography>
-            {messageFromForgotPasswordFrom.message !== undefined && <a>{messageFromForgotPasswordFrom.message}</a>}
+              {messageFromForgotPasswordFrom.message !== undefined &&
+                <a>{messageFromForgotPasswordFrom.message}</a>
+              }
             <form onSubmit={e => this.forgotPassword(e)} className={classes.form}>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="createemail">Email Address</InputLabel>
@@ -240,7 +251,6 @@ class LogIn extends Component {
               <Button
                 fullWidth
                 variant="flat"
-                color="primary"
                 className={classes.signIn}
                 onClick={this.SignInToggle.bind(this)}
               >
@@ -249,6 +259,7 @@ class LogIn extends Component {
             </form>
           </Paper>
           }
+
           {signUp &&
             <Paper className={classes.paper}>
               <Avatar className={classes.avatar}>
@@ -256,59 +267,68 @@ class LogIn extends Component {
               </Avatar>
               <Typography variant="headline">Registration</Typography>
               {messageFromCreateForm.message !== undefined && <a>{messageFromCreateForm.message}</a>}
-              <form onSubmit={e => this.create(e)} className={classes.form}>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="createemail">Email Address</InputLabel>
-                  <Input
-                    id="email"
+                <ValidatorForm ref="form" onSubmit={e => this.registrateNewUser(e)} className={classes.form}>
+                  <TextValidator
+                    label="Email Address"
                     name="createemail"
-                    autoComplete="email"
                     autoFocus
-                    onChange={e => this.change(e)}
+                    fullWidth
                     value={this.state.createemail}
+                    onChange={e => this.change(e)}
+                    validators={['required', 'isEmail']}
+                    errorMessages={['this field is required', 'email is not valid']}
                   />
-                </FormControl>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="name">Your Username</InputLabel>
-                  <Input
-                    id="name"
+                  <TextValidator
+                    label="Your Username"
                     name="createfirstName"
-                    autoComplete="name"
+                    fullWidth
+                    validators={['required','isGreatedThen']}
+                    errorMessages={['this field is required','length must by less than 4 char']}
                     onChange={e => this.change(e)}
                     value={this.state.createfirstName}
                   />
-                </FormControl>
-                <FormControl margin="normal" required fullWidth>
-                  <InputLabel htmlFor="password">Password</InputLabel>
-                  <Input
+                  <TextValidator
+                    label="Password"
                     name="createpassword"
                     type="password"
-                    id="password"
-                    autoComplete="current-password"
+                    fullWidth
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                     onChange={e => this.change(e)}
                     value={this.state.createpassword}
                   />
-                </FormControl>
-                {fetching && <Loader/>}
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="raised"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Sign Up
-                </Button>
-                <Button
-                  fullWidth
-                  variant="flat"
-                  color="primary"
-                  className={classes.signIn}
-                  onClick={this.SignInToggle.bind(this)}
-                >
-                  Sign In
-                </Button>
-              </form>
+                  <TextValidator
+                    label="Repeat password"
+                    onChange={e => this.change(e)}
+                    name="repeatPassword"
+                    type="password"
+                    fullWidth
+                    validators={['isPasswordMatch', 'required']}
+                    errorMessages={['password mismatch', 'this field is required']}
+                    value={this.state.repeatPassword}
+                  />
+                  {fetching && <Loader/>}
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="raised"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Sign Up
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="flat"
+                    className={classes.signIn}
+                    onClick={this.SignInToggle.bind(this)}
+                    label={{visibility: '0'}}
+                  >
+                    Sign In
+                  </Button>
+                </ValidatorForm>
+
+
             </Paper>
           }
         </main>

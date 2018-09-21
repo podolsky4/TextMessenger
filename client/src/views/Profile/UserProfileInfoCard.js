@@ -1,5 +1,4 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import PersonAdd from '@material-ui/icons/PersonAdd'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
@@ -28,7 +27,8 @@ const styles = (theme) => ({
   },
   pos: {
     marginBottom: 12,
-    color: 'orange'
+    color: 'orange',
+    fontSize: 40
   },
   userInfo: {
     display: 'flex',
@@ -56,14 +56,15 @@ const styles = (theme) => ({
 class UserProfileInfoCard extends React.Component {
   render () {
     const {user, classes} = this.props
-    console.log(user)
     return (
       <React.Fragment>
 
         <div className={classes.userInfoCnt}>
           <Avatar alt="user avatar"
-            // src={user.profilePhoto}
-
+                  src={ user.profilePhoto === null ?
+                    'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'
+                    : user.profilePhoto
+                  }
                   className={classnames(classes.avatar, classes.bigAvatar)}>
             <PersonAdd/>
             {/* TODO: bug. user is not getting to here, so default icon now. */}
@@ -89,10 +90,4 @@ class UserProfileInfoCard extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  }
-}
-
-export default withStyles(styles)(connect(mapStateToProps)(UserProfileInfoCard))
+export default withStyles(styles)(UserProfileInfoCard)

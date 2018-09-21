@@ -11,7 +11,6 @@ class WebSocketHandler extends React.Component {
       const {dialogId} = this.props.match.params
       switch (message.type) {
         case 'NEW_MESSAGE':
-          console.log('dialogId', dialogId)
           if (dialogId) {
             addMessage(message.messageToFront)
           } else {

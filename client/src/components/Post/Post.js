@@ -80,7 +80,7 @@ class Post extends Component {
     }
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const {favorites, user, loadFavorites} = this.props
     if (favorites.length === 0) {
       loadFavorites(user.id)
@@ -96,13 +96,12 @@ class Post extends Component {
   };
 
   render () {
-    const {post, owner, user, classes, favorites, whoo} = this.props
+    const {post, owner, user, classes, favorites, whoo, postId} = this.props
 
     return (
       <Grid className={classes.grid}
         item
         key={`${post.id} ${post.parentId}`}
-        spacing={24}
       >
 
         <Card>
@@ -113,7 +112,6 @@ class Post extends Component {
           }
 
           <UserHeaderInfo user={post.user}
-            classes
             post={post}
             currentUser={user}/>
           {post.imgUrl && <img className={classes.img} alt="Здесь должно быть изображение" src={post.imgUrl}/>}
@@ -125,12 +123,14 @@ class Post extends Component {
                        disableActionSpacing>
             <PostFooter whoo={whoo}
               post={post}
+              postId ={postId}
               user={user}
               favorites={favorites}
               handleComments={this.handleComments.bind(this)}
               className={classes.footer}
               classes={classes}
               flag = {this.state.flag}
+              commentsAmount = {post.comments.length}
             />
           </CardActions>
 
@@ -138,6 +138,7 @@ class Post extends Component {
             <Comments comments={post.comments}
               post={post}
               user={user}
+              postUser={post.user}
               flag={this.state.flag}/>
           }
 

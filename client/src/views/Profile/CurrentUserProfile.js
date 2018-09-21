@@ -1,10 +1,14 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import {connect} from 'react-redux'
-import {loadUser, updateUser} from '../../actions/userActions'
-import CurrentUserInfo from './CurrentUserInfo'
+import { loadUser, loadUserFull, updateUser } from '../../actions/userActions'
 import classnames from 'classnames'
 import {withStyles} from '@material-ui/core/styles'
 import PostList from '../../components/Post/PostList'
+import Button from '@material-ui/core/Button'
+
+import CurrentUserProfileWrapper from './CurrentUserProfileWrapper'
+import ChangePassword from './ChangePassword'
+import TextField from '../../../node_modules/@material-ui/core/TextField/TextField'
 
 const styles = (theme) => ({
   ChangeUserProfileInfoCard: {
@@ -27,7 +31,10 @@ const styles = (theme) => ({
     alignItems: 'flex-start',
     justifyContent: 'space-evenly',
     padding: '32px',
-    background: '#009688'
+    background: '#009688',
+
+
+
   },
   UserInfoCnt: {
     flexShrink: 1,
@@ -45,6 +52,36 @@ const styles = (theme) => ({
     borderRadius: 6,
     padding: '1em',
     background: '#00897B'
+  },
+  button: {
+    margin: '2px 0',
+    right: -1
+  },
+  profileButton: {
+    margin: theme.spacing.unit * 1,
+    '&#save': {
+      background: theme.palette.primary.accent,
+      marginTop: theme.spacing.unit * 4,
+      '&:hover, &:focus': {
+        background: theme.palette.secondary.main,
+      }
+    },
+    '&#cancel': {
+      marginBottom: theme.spacing.unit * 1,
+      '&:hover, &:focus': {
+        background: theme.palette.secondary.dark
+      }
+    }
+  },
+  profilePhotoChange: {
+    marginBottom: theme.spacing.unit * 2,
+  },
+  profilePhotoChangeSquare: {
+    background: theme.palette.background.dark
+  },
+  passwordWrap: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   }
 })
 
@@ -52,19 +89,28 @@ class CurrentUserProfile extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      FirstNameerrorText: '',
+      LastNameerrorText: '',
+      AddresserrorText: '',
+      birthdayerrorText: '',
+      value: props.value,
+      errorText: '',
+      lastNameErrorText: '',
       login: this.props.user.login,
       email: this.props.user.email,
-      password: this.props.user.password === null ? '' : this.props.user.password,
-      firstName: this.props.user.firstName === null ? '' : this.props.user.firstName,
-      lastName: this.props.user.lastName === null ? '' : this.props.user.lastName,
-      address: this.props.user.address === null ? '' : this.props.user.address,
-      profileHeader: this.props.user.profileHeader === null ? '' : this.props.user.profileHeader,
-      profilePhoto: this.props.user.profilePhoto === null ? '' : this.props.user.profilePhoto,
-      dateBirthday: this.props.user.dateBirthday === null ? '' : this.props.user.dateBirthday,
-      viewMode: true
+      firstName: this.props.user.firstName,
+      lastName: this.props.user.lastName,
+      address: this.props.user.address,
+      profilePhoto: this.props.user.profilePhoto,
+      dateBirthday: this.props.user.dateBirthday,
+      viewMode: true,
+      updateUserView: false
     }
   }
-
+  componentWillMount(){
+    const {loadProfileUser} = this.props
+    loadProfileUser()
+  }
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -76,73 +122,127 @@ class CurrentUserProfile extends Component {
     })
   };
   updateUser = e => {
-    const {user, updateUser} = this.props
+    const {user, updateUser} = this.props,
+      {address, firstName, lastName} = this.state
     e.preventDefault()
-    let data = this.state
-    const up = {...data, id: user.id}
-    updateUser(up, user.login)
-    this.editableField()
+    if ((address !== undefined && address !== user.address)
+      ||(firstName!== undefined && firstName !== user.firstName)
+      ||(lastName!== undefined && lastName !== user.lastName)
+      ||this.refs.dateBirthday.value.length > 0
+      || (this.refs.profilePhoto.files[0] !== undefined
+        && this.refs.profilePhoto.files[0].name !== user.profilePhoto)    ){
+      let formData = new FormData()
+      formData.append('file', this.refs.profilePhoto.files[0])
+      formData.append('firstName', this.state.firstName)
+      formData.append('lastName', this.state.lastName)
+      formData.append('address', this.state.address)
+      formData.append('dateBirthday', this.refs.dateBirthday.value ? this.refs.dateBirthday.value : user.dateBirthday )
+      updateUser(formData, user.login)
+      this.editableField()
+    }
   };
+  changeNameProfilePhoto = e => {
+    this.setState({profilePhoto: this.refs.profilePhoto.files[0].name})
+  }
 
+  change = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  changeUser = e => {
+    this.setState({updateUserView:!this.state.updateUserView})
+  }
   render () {
-    const {user, classes, userPosts} = this.props
-
+    const {user, classes, userPosts} = this.props,
+     { firstName, lastName, updateUserView } = this.state
     return (
-      <div className={classes.ProfileCnt}>
+      <div className={classnames(classes.ProfileCnt, {[classes.passwordWrap]: this.state.updateUserView})} >
         {this.state.viewMode &&
           <div className={classes.UserInfoCnt}>
-            <CurrentUserInfo user={user}/>
-            <input type='button' name='Edit' value='Edit' onClick={this.editableField}/>
+            <CurrentUserProfileWrapper editableField={this.editableField.bind(this)} user={user}/>
           </div>
         }
         {!this.state.viewMode &&
-          <form className={classnames(classes.ChangeUserProfileInfoCard)}>     display: flex;
+          <Fragment>
+          <form className={classnames(classes.ChangeUserProfileInfoCard)}>
+            <div className={classes.profilePhotoChange}>
+              <input
+                accept="image/*"
+                className={classes.input}
+                type="file"
+                name="profilePhoto-change"
+                id="profilePhoto-change"
+                ref="profilePhoto"
+                onChange={e => this.changeNameProfilePhoto(e)}
+                style={{display: 'none'}}
+              />
+              <div className={classes.profilePhotoChangeSquare}> Avatar image
+                <label htmlFor="profilePhoto-change">
+                  <Button raised='true' component="span" className={classes.button}>Upload</Button>
+                </label>
+              </div>
+            </div>
+            {<a>{this.state.profileHeader}</a>}
 
-            <label>
-              password:
-              <input id='password-change' name='password' type='password' onChange={e => this.change(e)}/>
-            </label>
-            <label>
-              name:
-              <input id='firstName-change' name='firstName' type='text' value={this.state.firstName}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              surname:
-              <input id='lastName-change' name='lastName' type='text' value={this.state.lastName}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              address:
-              <input id='address-change' name='address' type='text' value={this.state.address}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              url to avatar:
-              <input id='profileHeader-change' name='profileHeader' type='url' value={this.state.profileHeader}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              url to photo:
-              <input id='profilePhoto-change' name='profilePhoto' type='url' value={this.state.profilePhoto}
-                onChange={e => this.change(e)} />
-            </label>
-            <label>
-              birthday:
-              <input id='dateBirth-change' name='dateBirth' type='date' value={this.state.dateBirthday}
-                onChange={e => this.change(e)} />
-            </label>
-
-            <input type='button' name='Apply' value='Apply' onClick={e => this.updateUser(e)}/>
-            <input type='button' name='Cancel' value='Cancel' onClick={this.editableField}/>
+              <TextField id='firstName-change'
+                         name='firstName'
+                         type='text'
+                         hinttext="Name"
+                         placeholder={user.firstName}
+                         label="First Name"
+                         value={firstName}
+                         onChange={e => this.change(e)} />
+              <TextField id='lastName-change'
+                         name='lastName'
+                         type='text'
+                         value={lastName}
+                         placeholder={user.lastName}
+                         label="Last Name"
+                         onChange={e => this.change(e)} />
+              <TextField id='address-change'
+                         name='address'
+                         type='text'
+                         value={this.state.address}
+                         label="Address"
+                         onChange={e => this.change(e)} />
+              <input id='dateBirth-change'
+                     name='dateBirth'
+                     type='date'
+                     value={this.state.dateBirthday}
+                     ref='dateBirthday'
+                     onChange={e => this.change(e)} />
+            <Button variant="contained"
+                    color="primary"
+                    onClick={e => this.updateUser(e)}
+                    className={classes.profileButton}
+                    id="save"
+            >
+                Save
+            </Button>
+            <Button variant="outlined"
+                    onClick={this.editableField}
+                    className={classes.profileButton}
+                    id="cancel">
+              Cancel
+            </Button>
+            <Button
+              variant="outlined"
+              className={classes.profileButton}
+              onClick={this.changeUser}
+            >
+              Change Password
+            </Button>
           </form>
+          </Fragment>
         }
-
-        <PostList user={user}
-                  posts={userPosts}
-                  className={classes.userPostList}
-                  classes />
-
+        {!updateUserView && <PostList
+          user={user}
+          posts={userPosts}
+          className={classes.userPostList}
+        />}
+        {updateUserView && <ChangePassword changeUser = {this.changeUser.bind(this)}/>}
       </div>
     )
   }
@@ -158,6 +258,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadUser: (login) => dispatch(loadUser(login)),
+    loadProfileUser: () => dispatch(loadUserFull()),
     updateUser: (data, login) => dispatch(updateUser(data, login))
   }
 }

@@ -22,8 +22,9 @@ export const createUser = (data) => dispatch => {
   ).then(res => res.json())
     .then(data => dispatch({type: CREATE_USER_FORM_MESSAGE, payload: data}))
 }
+
 export const forgotPassword = (email) => dispatch => {
-  fetch('api/users/forgotpassword', {
+  fetch('/api/users/forgotpassword', {
     method: 'POST',
     body: email
   })
@@ -32,7 +33,7 @@ export const forgotPassword = (email) => dispatch => {
 }
 export const getCurrentUser = () => dispatch => {
   dispatch(startLoader('LOADING_USER'))
-  fetch('api/users/current', {
+  fetch('/api/users/current', {
     method: 'GET',
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -40,15 +41,8 @@ export const getCurrentUser = () => dispatch => {
       'Content-Type': 'application/json'
     }
   })
-    .then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        dispatch({type: CREATE_USER_IN_REDUX, payload: {}})
-      }
-    })
+    .then(response => response.json())
     .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
-    .catch(error => console.log(error))
     .then(() => dispatch(stopLoader('LOADING_USER')))
 }
 export const loadUser = (login) => dispatch => {
@@ -57,6 +51,11 @@ export const loadUser = (login) => dispatch => {
     .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
 }
 
+export const loadUserFull = () => dispatch => {
+  FetchData.get(`/api/users/`)
+    .then(res => res.json())
+    .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
+}
 // logIn & logOut action
 export const loginIn = (email, password) => dispatch => {
   dispatch(startLoader('LOADING_USER'))
@@ -83,7 +82,13 @@ export const logOut = () => dispatch => {
 
 // sub action for user
 export const updateUser = (data, login) => dispatch => {
-  FetchData.put('/api/users/', data)
+  fetch(`/api/users/`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    },
+    body: data
+  })
     .then(() => dispatch(loadUser(login)))
 }
 export const getFollowing = (id) => dispatch => {

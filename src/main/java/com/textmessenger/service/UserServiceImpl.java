@@ -1,10 +1,14 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.WebSocketType;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.textmessenger.config.AmazonConfig;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.WebSocketType;
+import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.TemporaryTokenRepository;
@@ -17,7 +21,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +36,8 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
+  private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
+  private AmazonConfig s3;
   private final UserRepository userRepository;
   private final TemporaryTokenRepository temporaryTokenRepository;
   private UserToFrontShort userToFront;
@@ -37,11 +47,13 @@ public class UserServiceImpl implements UserService {
 
   public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
                          EmailService emailService,
-                         NotificationService notificationService) {
+                         NotificationService notificationService,
+                         AmazonConfig s3) {
     this.userRepository = userRepository;
     this.temporaryTokenRepository = temporaryTokenRepository;
     this.emailService = emailService;
     this.notificationService = notificationService;
+    this.s3 = s3;
   }
 
   @Override
@@ -79,9 +91,19 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User createUser(User user) {
+    TemporaryToken tempToken = new TemporaryToken();
+    tempToken.setToken(UUID.randomUUID().toString());
+    tempToken.setExpiryDate(new Date());
+    User user1 = userRepository.save(user);
+    tempToken.setUser(user1);
+    temporaryTokenRepository.save(tempToken);
+    SimpleMailMessage email = new SimpleMailMessage();
+    email.setTo(user1.getEmail());
+    email.setSubject("confirmation link to create account at Text Messenger application");
+    email.setText("http://localhost:3000/registered/" + tempToken.getToken());
+    emailService.sendEmail(email);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-    return userRepository.save(user);
+    return userRepository.getOne(user.getId());
   }
 
   @Override
@@ -200,7 +222,7 @@ public class UserServiceImpl implements UserService {
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(userByEmail.getEmail());
     email.setSubject("Follow the link to reset you password in the Text Messenger");
-    email.setText("http://localhost:3000/api/users/resetPassword/" + tempToken.getToken());
+    email.setText("http://localhost:3000/resetPassword/" + tempToken.getToken());
     emailService.sendEmail(email);
   }
 
@@ -214,5 +236,95 @@ public class UserServiceImpl implements UserService {
     List<Notification> notifications = one.getNotifications();
     notifications.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return NotificationToFront.convertListNotificationToFront(notifications);
+  }
+
+  @Override
+  public String changePasswordForgot(CredentialsPassword credentialsPassword) {
+    Optional<TemporaryToken> byToken = temporaryTokenRepository.findByToken(credentialsPassword.getToken());
+    if (byToken.isPresent()) {
+      if (byToken.get().getExpiryDate().before(new Date())) {
+        User user = userRepository.findById(byToken.get().getUser().getId()).get();
+        user.setPassword(passwordEncoder.encode(credentialsPassword.getPassword()));
+        userRepository.save(user);
+        temporaryTokenRepository.delete(byToken.get());
+        return "Password successfully change";
+      } else {
+        temporaryTokenRepository.delete(byToken.get());
+        sendEmailToResetPassword(byToken.get().getUser());
+        return "Oops. Your request is denied, you token is old. We have send you a new token.Please, check you email";
+      }
+    }
+    return "Sorry. This token in invalid.";
+  }
+
+  @Override
+  public void updateUserWithStringsAndFile(String firstName,
+                                           String lastName,
+                                           String address,
+                                           String date,
+                                           MultipartFile file) throws IOException {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    User one = userRepository.getOne(userPrincipal.getId());
+    if (firstName != "undefined") { //NOSONAR
+      one.setFirstName(firstName);
+    }
+    if (lastName != "undefined") { //NOSONAR
+      one.setLastName(lastName);
+    }
+    if (address != "undefined") { //NOSONAR
+      one.setAddress(address);
+    }
+    if (date != "undefined") { //NOSONAR
+      one.setDateBirthday(LocalDate.parse(date));
+    }
+    if (file != null) {
+      String typeFile = file.getContentType();
+      String type = "." + typeFile.substring(6);
+      String key = "userAvatar/" + UUID.randomUUID() + type;
+      InputStream fileFromFront = file.getInputStream();
+      AmazonS3 amazonS3 = s3.getConnection();
+      amazonS3.putObject(
+              BUCKET,
+              key,
+              fileFromFront,
+              new ObjectMetadata());
+      String userHeader = amazonS3.getUrl(BUCKET, key).toString();
+      if (one.getProfilePhoto() == null) {
+        one.setProfilePhoto(userHeader);
+      }
+    }
+    userRepository.save(one);
+  }
+
+  @Override
+  public User getCurrentUserFull() {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    return userRepository.getOne(userPrincipal.getId());
+  }
+
+  @Override
+  public String updatePasswordInitByUser(String oldPassword, String newPassword) {
+    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    Optional<User> user = userRepository.findById(userPrincipal.getId());
+    if (user.isPresent()) {
+      User temp = user.get();
+      if (passwordEncoder.matches(oldPassword, userPrincipal.getPassword())) {
+        temp.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(temp);
+        return "Password changed successfully";
+      } else {
+        return "Current password is not valid";
+      }
+    }
+    return "Current password is not valid";
   }
 }

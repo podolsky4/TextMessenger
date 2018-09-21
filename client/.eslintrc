@@ -4,6 +4,13 @@
     "standard",
     "react-app"
   ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "script"
+  },
+  "env": {
+    "es6": true
+  },
   "rules": {
     "no-trailing-spaces": [
       "error",

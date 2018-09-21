@@ -68,8 +68,6 @@ const styles = theme => ({
 
 function Message (props) {
   const {message, classes, user} = props
-  console.log('user in message :', user)
-  console.log('message in message :', message)
 
   // to check dynamically if the message is from current user:
   // --------- 1. create a new obj with 1.classes from props
@@ -86,7 +84,11 @@ function Message (props) {
       {right &&
       <div className={classes.messageHeader}>
         <div className={classes.row}>
-          <Avatar alt={message.user.login} src={message.user.profilePhoto} className={classes.avatar}/>
+          <Avatar alt={message.user.login}
+                  src={message.user.profilePhoto === null
+                    ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'
+                    : message.user.profilePhoto}
+                  className={classes.avatar}/>
           <Typography variant='caption' children={message.user.login}/>
         </div>
       </div>
@@ -94,7 +96,12 @@ function Message (props) {
     <div className={classes.messageHeader}>
       <div className={classes.row}>
         <Typography variant="caption" children={message.user.login}/>
-        <Avatar alt={message.user.login} src={message.user.profilePhoto} className={classes.avatar}/>
+        <Avatar
+          alt={message.user.login}
+          src={message.user.profilePhoto === null
+            ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'
+            : message.user.profilePhoto}
+          className={classes.avatar}/>
       </div>
     </div>
     }

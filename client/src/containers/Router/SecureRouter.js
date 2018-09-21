@@ -10,8 +10,10 @@ import Profile from '../../views/Profile/Profile'
 import Page404 from '../../views/404/Page404'
 import ConfirmRegistration from '../../views/Confirm/ConfirmRegistration'
 import WebSocketHandler from '../../components/WebSocketHandler'
+import SinglePost from '../../SinglePost'
+import Header from "../../views/Header/Header";
 
-class Router extends Component {
+class SecureRouter extends Component {
   render () {
     const {wsHandler} = this.props
 
@@ -21,6 +23,7 @@ class Router extends Component {
         <Route exact path='/feed' component={wsHandler ? WebSocketHandler : Feed}/>
         <Route exact path='/favorites' component={wsHandler ? WebSocketHandler : Favorites}/>
         <Route exact path='/dialogs/:dialogId' component={wsHandler ? WebSocketHandler : Dialogs}/>
+        <Route exact path='/post/:postId' component={wsHandler ? WebSocketHandler : SinglePost}/>
         <Route exact path='/dialogs' component={wsHandler ? WebSocketHandler : Dialogs}/>
         <Route exact path='/notifications' component={wsHandler ? WebSocketHandler : Notifications}/>
         <Route exact path='/login' component={wsHandler ? WebSocketHandler : Login}/>
@@ -29,7 +32,25 @@ class Router extends Component {
         <Route path='*' component={wsHandler ? WebSocketHandler : Page404}/>
       </Switch>
     )
+
   }
+    HeaderRoutes () {
+        return (
+            <Switch>
+                <Route exact path='/' render= {(props) => <Header location={'Home'} {...props} />} />
+                <Route exact path='/feed' render= {(props) => <Header location={'Feed'} {...props} />}/>
+                <Route exact path='/favorites' render= {(props) => <Header location={'Home'} {...props} />}/>
+                <Route exact path='/dialogs/:dialogId' render= {(props) => <Header location={'Home'} {...props} />} />
+                <Route exact path='/post/:postId' render= {(props) => <Header location={'Home'} {...props} />}/>
+                <Route exact path='/dialogs' render= {(props) => <Header location={'Home'} {...props} />}/>
+                <Route exact path='/notifications' render= {(props) => <Header location={'Home'} {...props} />} />
+                <Route exact path='/login' render= {(props) => <Header location={'Home'} {...props} />} />
+                <Route exact path='/profile/:id' render= {(props) => <Header location={'Home'} {...props} />} />
+                <Route exact path='/confirm/registration/:id' render= {(props) => <Header location={'Home'} {...props} />} />
+                <Route path='*' component={Header} />
+            </Switch>
+        )
+    }
 }
 
-export default Router
+export default SecureRouter

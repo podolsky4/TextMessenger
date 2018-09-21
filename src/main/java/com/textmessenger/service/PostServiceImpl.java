@@ -3,9 +3,9 @@ package com.textmessenger.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.textmessenger.config.AmazonConfig;
-import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.repository.PostRepository;
 import com.textmessenger.repository.UserRepository;
@@ -124,4 +124,8 @@ public class PostServiceImpl implements PostService {
     return postRepository.getOne(id);
   }
 
+  @Override
+  public PostToFront getPostToFrontById(long id) {
+    return PostToFront.convertPostToFront(postRepository.findById(id).get());
+  }
 }
