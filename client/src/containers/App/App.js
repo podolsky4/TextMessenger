@@ -6,10 +6,10 @@ import { connect } from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import UnsecureRouter from '../Router/UnsecureRouter'
-import {withStyles} from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import HeaderRouter from "../Router/HeaderRouter";
+import HeaderRouter from '../Router/HeaderRouter'
 
 const theme = createMuiTheme({
   palette: {
@@ -30,7 +30,7 @@ const theme = createMuiTheme({
     background: {
       main: '#00796B',
       grey: '#fafafa',
-      darkgrey: "#929292"
+      darkgrey: '#929292'
     }
   },
   status: {
@@ -39,13 +39,13 @@ const theme = createMuiTheme({
 })
 
 const styles = () => ({
-    loaderApp: {
-       display: 'flex',
-       alignItems: 'center',
-       justifyContent: 'center',
-       height: '100vh',
-       background: '#00796B'
-    }
+  loaderApp: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+    background: '#00796B'
+  }
 })
 
 class App extends Component {
@@ -59,32 +59,30 @@ class App extends Component {
   render () {
     const {user, classes} = this.props
 
-      if (!user) {
-          return <div className={classes.loaderApp}>
-              <Loader />
-          </div>
-      }
+    if (!user) {
+      return <div className={classes.loaderApp}>
+        <Loader/>
+      </div>
+    }
 
     if (!user.id) {
       return (
-          <MuiThemeProvider theme={theme}>
-            <CssBaseline>
-              <UnsecureRouter/>
-            </CssBaseline>
-          </MuiThemeProvider>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline>
+            <UnsecureRouter/>
+          </CssBaseline>
+        </MuiThemeProvider>
       )
     }
 
     return (
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline>
-              <HeaderRouter/>
-            <SecureRouter wsHandler={true}/>
-
-            <SecureRouter/>
-
-          </CssBaseline>
-        </MuiThemeProvider>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline>
+          <HeaderRouter/>
+          <SecureRouter wsHandler={true}/>
+          <SecureRouter/>
+        </CssBaseline>
+      </MuiThemeProvider>
     )
   }
 }
