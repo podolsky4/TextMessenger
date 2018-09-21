@@ -7,8 +7,6 @@ import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.SessionAware;
-import com.textmessenger.security.UserPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,16 +34,6 @@ public class DialogServiceImpl extends SessionAware implements DialogService {
 
   public List<DialogToFront> getDialogsByUser(User user) {
     return DialogToFront.convertDialogsListToResponse(dialogRepository.findDialogsByUsers(user));
-  }
-
-  @Override
-  public void updateDialog(Dialog dialog) {
-    dialogRepository.save(dialog);
-  }
-
-  @Override
-  public void deleteDialog(long id) {
-    dialogRepository.delete(dialogRepository.getOne(id));
   }
 
   @Override

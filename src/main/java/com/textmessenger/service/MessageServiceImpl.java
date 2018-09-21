@@ -7,7 +7,6 @@ import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.MessageRepository;
-import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.SessionAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,16 +28,6 @@ public class MessageServiceImpl extends SessionAware implements MessageService {
     this.messageRepository = messageRepository;
     this.dialogRepository = dialogRepository;
     this.notificationService = notificationService;
-  }
-
-  @Override
-  public void updateMessage(Message message) {
-    messageRepository.save(message);
-  }
-
-  @Override
-  public void deleteMessage(Message message) {
-    messageRepository.deleteById(message);
   }
 
   @Override

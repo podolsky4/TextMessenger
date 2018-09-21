@@ -16,6 +16,7 @@ import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,6 @@ public class UserServiceImpl extends SessionAware implements UserService {
   private AmazonConfig s3;
   private final UserRepository userRepository;
   private final TemporaryTokenRepository temporaryTokenRepository;
-  private UserToFrontShort userToFront;
   private final EmailService emailService;
   private final NotificationService notificationService;
 
@@ -116,11 +116,6 @@ public class UserServiceImpl extends SessionAware implements UserService {
   }
 
   @Override
-  public void deleteUser(long id) {
-    userRepository.delete(userRepository.getOne(id));
-  }
-
-  @Override
   public User getUserByLogin(String login) {
     return userRepository.findUserByLogin(login);
   }
@@ -173,34 +168,20 @@ public class UserServiceImpl extends SessionAware implements UserService {
   }
 
   @Override
-  public Optional<List<User>> findUserByEmailOrLogin(User user) {
-    return Optional.of(userRepository
-            .findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(user.getLogin(), user.getEmail()));
-  }
-
-  @Override
   public void deleteFromFollowing(Long user, Long newUser) {
     userRepository.getOne(user).getFollowing().remove(userRepository.getOne(newUser));
   }
 
   @Override
-  public User logIn(String email, String password) {
-    return userRepository.findUserByEmail(email);
-  }
-
-  @Override
-  public List<Notification> getAllNotificationByUserId(Long id) {
-    return userRepository.getOne(id).getNotifications();
-  }
-
-  @Override
   public UserToFrontShort getCurrentUser() {
-    User loggedInUser = getLoggedInUser();
-    Optional<User> user = userRepository.findById(loggedInUser.getId());
-    if (user.isPresent()) {
-      return userToFront.convertUserForFront(user.get());
+    Object principal = SecurityContextHolder
+            .getContext()
+            .getAuthentication()
+            .getPrincipal();
+    if (!"anonymousUser".equals(principal.toString())) {
+      return UserToFrontShort.convertUserForFront(getLoggedInUser());
     }
-    throw new UsernameNotFoundException("User not found!");
+    throw new UsernameNotFoundException(" User not found!");
   }
 
   @Override
@@ -294,18 +275,14 @@ public class UserServiceImpl extends SessionAware implements UserService {
 
   @Override
   public String updatePasswordInitByUser(String oldPassword, String newPassword) {
-    User user1 = getLoggedInUser();
-    Optional<User> user = userRepository.findById(user1.getId());
-    if (user.isPresent()) {
-      User temp = user.get();
-      if (passwordEncoder.matches(oldPassword, user1.getPassword())) {
-        temp.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(temp);
-        return "Password changed successfully";
-      } else {
-        return "Current password is not valid";
-      }
+
+    User temp = getLoggedInUser();
+    if (passwordEncoder.matches(oldPassword, temp.getPassword())) {
+      temp.setPassword(passwordEncoder.encode(newPassword));
+      userRepository.save(temp);
+      return "Password changed successfully";
+    } else {
+      return "Current password is not valid";
     }
-    return "Current password is not valid";
   }
 }

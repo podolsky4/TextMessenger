@@ -6,10 +6,7 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.CommentToFront;
 import com.textmessenger.repository.CommentRepository;
-import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.SessionAware;
-import com.textmessenger.security.UserPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,16 +38,6 @@ public class CommentServiceImpl extends SessionAware implements CommentService {
   @Override
   public List<CommentToFront> findAllPostFromPost(Post post) {
     return CommentToFront.convertListCommentsToResponse(commentRepository.findCommentsByPost(post));
-  }
-
-  @Override
-  public void updateComment(Comment comment) {
-    commentRepository.save(comment);
-  }
-
-  @Override
-  public void deleteComment(Comment comment) {
-    commentRepository.delete(comment);
   }
 
 }
