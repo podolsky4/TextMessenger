@@ -1,11 +1,12 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {addFollowing, deleteFollowing, getFollowing} from '../../actions/userActions'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { addFollowing, deleteFollowing, getFollowing } from '../../actions/userActions'
 import Loader from '../../components/Loader/Loader'
 import PropTypes from 'prop-types'
 import CurrentUserInfo from './CurrentUserInfo'
-import {withStyles} from '@material-ui/core/styles/index'
+import { withStyles } from '@material-ui/core/styles/index'
 import PostList from '../../components/Post/PostList'
+import FetchData from '../../actions/serviceAction'
 
 const styles = (theme) => ({
   ChangeUserProfileInfoCard: {
@@ -58,21 +59,12 @@ class OtherUserProfile extends Component {
     }
   }
 
-  componentWillMount () {
-    const {currentUser, loadFollowing, user} = this.props
+  componentDidMount () {
+    const {currentUser} = this.props
     if (this.state.userFromPost.length === 0) {
-      fetch(`/api/users/${currentUser}`,
-        {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        })
+      FetchData.get(`/api/users/${currentUser}`)
         .then(res => res.json())
         .then(data => this.setState({userFromPost: data}))
-        .then(loadFollowing(user.id))
     }
   }
 
@@ -84,7 +76,7 @@ class OtherUserProfile extends Component {
     } else {
       addToFollowing(user.id, this.state.userFromPost.id)
     }
-  };
+  }
 
   render () {
     const {userFromPost} = this.state
@@ -95,10 +87,6 @@ class OtherUserProfile extends Component {
     return (
       <div className={classes.ProfileCnt}>
         <div className={classes.UserInfoCnt}>
-          {/* <h1>{userFromPost.login}</h1> */}
-          {/* <h1>{userFromPost.lastName}</h1> */}
-          {/* <h1>{userFromPost.firstName}</h1> */}
-          {/* <h1>{userFromPost.email}</h1> */}
           <CurrentUserInfo user={userFromPost}/>
           <button
             onClick={e => this.handleFollowing(e)}>{following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}
@@ -111,7 +99,6 @@ class OtherUserProfile extends Component {
                   classes
         />
       </div>
-
     )
   }
 }

@@ -12,10 +12,6 @@ public interface DialogService {
 
   List<DialogToFront> getDialogsByUser(User user);
 
-  void updateDialog(Dialog dialog);
-
-  void deleteDialog(long id);
-
   void createdByUserDialogWithUser(String login, Long user);
 
   void addToDialogNewUser(Long dialog, Long user);
