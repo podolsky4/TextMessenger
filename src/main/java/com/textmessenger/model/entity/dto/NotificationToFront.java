@@ -1,7 +1,7 @@
 package com.textmessenger.model.entity.dto;
 
-import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Notification;
+import com.textmessenger.model.entity.WebSocketType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
