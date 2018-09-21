@@ -1,5 +1,7 @@
 import React from 'react'
 import PersonAdd from '@material-ui/icons/PersonAdd'
+import MailIcon from '@material-ui/icons/Mail'
+import PersonIcon from '@material-ui/icons/Person'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import CardContent from '@material-ui/core/CardContent/CardContent'
@@ -28,8 +30,12 @@ const styles = (theme) => ({
   pos: {
     marginBottom: 12,
     color: 'orange',
-    fontSize: 40
+    fontSize: 30
   },
+	pos2: {
+		marginBottom: 12,
+		fontSize: 20
+	},
   userInfo: {
     display: 'flex',
     flexDirection: 'column',
@@ -75,10 +81,10 @@ class UserProfileInfoCard extends React.Component {
               <CardContent>
 
                 <Typography className={classes.pos} color="textPrimary">
-                                  @{user.login}
+									<PersonIcon/> @{user.login}
                 </Typography>
-                <Typography component={'h6'} color="textSecondary">
-                  {user.email}
+                <Typography component={'h6'} className={classes.pos2} color="textSecondary">
+									<MailIcon/> {user.email}
                 </Typography>
 
               </CardContent>
