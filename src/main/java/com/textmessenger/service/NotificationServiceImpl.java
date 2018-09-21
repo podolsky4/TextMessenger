@@ -27,12 +27,6 @@ public class NotificationServiceImpl implements NotificationService {
     this.simpMessagingTemplate = simpMessagingTemplate;
   }
 
-
-  @Override
-  public Notification createNotification(String type, User toUser, User fromUser, Long contentId) {
-    return notificationRepository.save(new Notification(false, contentId, type, toUser, fromUser));
-  }
-
   @Override
   public void createSome(String type, User toUser, User fromUser, Post post) {
     notificationRepository.save(new Notification(false, post.getId(), type, toUser, fromUser));

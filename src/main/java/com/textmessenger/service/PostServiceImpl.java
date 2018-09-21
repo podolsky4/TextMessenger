@@ -8,12 +8,10 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.repository.PostRepository;
-import com.textmessenger.repository.UserRepository;
-import com.textmessenger.security.UserPrincipal;
+import com.textmessenger.security.SessionAware;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,35 +23,27 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class PostServiceImpl implements PostService {
+public class PostServiceImpl extends SessionAware implements PostService {
   private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
   private AmazonConfig s3;
   private final PostRepository postRepository;
-  private final UserRepository userRepository;
   private final NotificationService notificationService;
 
 
   PostServiceImpl(PostRepository postRepository,
-                  UserRepository userRepository,
                   AmazonConfig s3,
                   NotificationService notificationService) {
     this.postRepository = postRepository;
-    this.userRepository = userRepository;
     this.s3 = s3;
     this.notificationService = notificationService;
   }
 
   @Override
   public void createPost(String content, MultipartFile file) throws IOException {
-    // get user from token
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
     // create post and set content & user
     Post post = new Post();
     post.setContent(content);
-    User one = userRepository.getOne(userPrincipal.getId());
+    User one = getLoggedInUser();
     post.setUser(one);
     // Amazon logic
     if (file != null) {
@@ -98,11 +88,6 @@ public class PostServiceImpl implements PostService {
     return PostToFront.convertListPostsToResponse(posts.getContent());
   }
 
-  @Override
-  public List<Post> getUserPost(User user) {
-    return postRepository.findPostsByUser(user);
-  }
-
   private Sort orderBy() {
     return new Sort(Sort.Direction.DESC, "createdDate");
   }
@@ -124,8 +109,4 @@ public class PostServiceImpl implements PostService {
     return postRepository.getOne(id);
   }
 
-  @Override
-  public PostToFront getPostToFrontById(long id) {
-    return PostToFront.convertPostToFront(postRepository.findById(id).get());
-  }
 }
