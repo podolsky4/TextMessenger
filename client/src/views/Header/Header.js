@@ -12,57 +12,53 @@ import PublicIcon from '@material-ui/icons/Public'
 import Badge from '@material-ui/core/Badge/Badge'
 import connect from 'react-redux/es/connect/connect'
 import MenuHeader from '../../components/Menu/MenuHeader'
-import NavMenuDrawer from '../../components/NavMenu/NavMenuDrawer'
+import NavMenuDrawer from "../../components/NavMenu/NavMenuDrawer"
 import MenuIcon from '@material-ui/icons/Menu'
 import { ClickAwayListener } from '@material-ui/core/umd/material-ui.production.min'
 import FetchData from '../../actions/serviceAction'
 
 const styles = (theme,) => ({
-	root: {
-		flexGrow: 1,
-	},
-	headingContainer: {
-		display: 'flex',
-		flexGrow: 1,
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-		maxWidth: 500,
-		minWidth: 150,
-		justifyContent: 'flex-start'
-	},
-	heading: {
-		marginLeft: theme.spacing.unit,
-		textTransform: 'capitalize',
-	},
-	appBar: {
-		background: '#455A64'
-	},
-	menuButton: {
-		marginLeft: -12,
-		marginRight: 20,
-		'@media (min-width: 520px)': {
-			display: 'none',
-		}
-	},
-	icon: {
-		margin: theme.spacing.unit
-	},
-	badge: {
-		top: -5,
-		right: -10
-	},
-	typography: {
-		padding: theme.spacing.unit
-	},
-	headerUser: {
-		padding: '1px'
-	},
-	menuIcons: {
-		'@media (max-width: 520px)': {
-			display: 'none',
-		}
-	},
-	drawer: {}
+  root: {
+    flexGrow: 1,
+      textTransform: 'capitalize'
+  },
+  appBar: {
+    background: '#455A64'
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+      '@media (min-width: 520px)': {
+          display: 'none',
+      }
+  },
+  icon: {
+    margin: theme.spacing.unit
+  },
+  badge: {
+    top: -5,
+    right: -10
+  },
+  typography: {
+    padding: theme.spacing.unit * 2
+  },
+  headerUser: {
+    padding: '1px'
+  },
+  // menuIcons: {
+  //     display: 'flex',
+  //       flexDirection: 'row'
+  //   },
+    menuIcons: {
+    '@media (max-width: 520px)': {
+        display: 'none',
+
+    }
+  },
+
+    drawer: {
+
+    }
 })
 
 class Header extends React.Component {
@@ -79,11 +75,11 @@ class Header extends React.Component {
 		})
 	}
 
-	handleClickAway = () => {
-		this.setState({
-			openDrawer: false,
-		})
-	}
+    handleClickAway = () => {
+        setTimeout(() => this.setState({
+            openDrawer: false,
+        }));
+    };
 
 	componentDidMount () {
 		const {match} = this.props
