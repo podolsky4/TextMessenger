@@ -1,9 +1,9 @@
 package com.textmessenger.service;
 
-import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.MessageRepository;
