@@ -17,7 +17,6 @@ import com.textmessenger.security.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -181,7 +180,7 @@ public class UserServiceImpl extends SessionAware implements UserService {
     if (!"anonymousUser".equals(principal.toString())) {
       return UserToFrontShort.convertUserForFront(getLoggedInUser());
     }
-    throw new UsernameNotFoundException(" User not found!");
+    return new UserToFrontShort();
   }
 
   @Override
