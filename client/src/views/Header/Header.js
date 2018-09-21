@@ -72,7 +72,7 @@ class Header extends React.Component {
         this.setState({
             openDrawer: true
         });
-        console.log('drawer :', this.state.drawer)
+        console.log('openDrawer :', this.state.openDrawer)
     };
 
     handleClickAway = () => {
@@ -102,11 +102,11 @@ class Header extends React.Component {
         return <div className={classes.root}>
             <AppBar position='static' className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <ClickAwayListener onClickAway={this.handleClickAway}>
+                    <ClickAwayListener onClickAway={()=>this.handleClickAway()}>
                         <IconButton className={classes.menuButton}
                                     color="inherit"
                                     aria-label="Menu"
-                                    onClick={this.toggleDrawer}>
+                                    onClick={() => this.toggleDrawer()}>
                             <MenuIcon/>
                         </IconButton>
                         {openDrawer && (<NavMenuDrawer/>)}
@@ -124,6 +124,7 @@ class Header extends React.Component {
                         <IconButton color="inherit" component={Link} to='/feed'>
                             <PublicIcon className={classes.icon}/>
                         </IconButton>
+
                         <IconButton color="inherit" component={Link} to='/favorites'>
                             <FavoriteIcon className={classes.icon}/>
                         </IconButton>
