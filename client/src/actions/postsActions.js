@@ -4,7 +4,7 @@ import FetchData from './serviceAction'
 
 export const createPostWithOrWithOutImage = (data) => dispatch => {
   dispatch(startReLoader())
-  fetch(`/api/posts/user`, {
+  fetch(`/api/posts`, {
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken')

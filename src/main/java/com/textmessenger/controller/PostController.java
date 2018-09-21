@@ -46,7 +46,7 @@ public class PostController {
     return ResponseEntity.ok().body(postService.getAll());
   }
 
-  @PostMapping("/user")
+  @PostMapping
   public ResponseEntity createPost(@RequestParam("content") String content,
                                    @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
     postService.createPost(content, file);
