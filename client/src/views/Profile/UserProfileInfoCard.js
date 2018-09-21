@@ -30,11 +30,11 @@ const styles = (theme) => ({
   pos: {
     marginBottom: 12,
     color: 'orange',
-    fontSize: 30
+    fontSize: 21
   },
 	pos2: {
 		marginBottom: 12,
-		fontSize: 20
+		fontSize: 18
 	},
   userInfo: {
     display: 'flex',
