@@ -97,7 +97,7 @@ class Chat extends Component {
     return (
       <div className={classes.chat}>
         {messages.length === 0 &&
-            <Paper className={classes.NoMessagesCnt}>
+            <Paper className={classes.NoMessagesCnt} elevation={0}>
                 <Typography className={classes.NoMessages} component={'h3'}>
                     Nothing here yet.
                 </Typography>
