@@ -166,31 +166,34 @@ class Header extends React.Component {
                         </IconButton>
                         {openDrawer && (<NavMenuDrawer/>)}
                     </ClickAwayListener>
-                    {/*{!profileUser &&*/}
-                    {/*<div className={classes.headingContainer}>*/}
-                        {/*<Typography variant="title"*/}
-                                    {/*color="inherit"*/}
-                                    {/*className={classes.heading}*/}
-                                    {/*component={'h3'}*/}
-                                    {/*align='justify'*/}
-                                    {/*children={profileUser.firstName}*/}
-                        {/*/>*/}
-                        {/*<Typography variant="title"*/}
-                                    {/*color="inherit"*/}
-                                    {/*className={classes.heading}*/}
-                                    {/*component={'h3'}*/}
-                                    {/*children={profileUser.lastName}*/}
-                        {/*/>*/}
-                    {/*</div>*/}
-                    {/*}*/}
-                    {profileUser &&
-                    <Typography variant="title"
-                                color="inherit"
-                                className={classes.heading}
-                                component={'h3'}
-                                children={locationRender()}
-                    />
-                    }
+
+                    <div className={classes.headingContainer}>
+                        {/*{profileUser &&*/}
+                            {/*<Fragment>*/}
+                                    {/*<Typography variant="title"*/}
+                                                {/*color="inherit"*/}
+                                                {/*className={classes.heading}*/}
+                                                {/*component={'h3'}*/}
+                                                {/*align='justify'*/}
+                                                {/*children={profileUser.firstName}*/}
+                                    {/*/>*/}
+                                    {/*<Typography variant="title"*/}
+                                                {/*color="inherit"*/}
+                                                {/*className={classes.heading}*/}
+                                                {/*component={'h3'}*/}
+                                                {/*children={profileUser.lastName}*/}
+                                    {/*/>*/}
+                                {/*</Fragment>*/}
+                         {/*}*/}
+                        {/*{!profileUser &&*/}
+                            <Typography variant="title"
+                                        color="inherit"
+                                        className={classes.heading}
+                                        component={'h3'}
+                                        children={locationRender()}
+                            />
+                        {/*}*/}
+                    </div>
                     <div className={classes.menuIcons}>
                         {/*<IconButton color="inherit" component={Link} to='/'>*/}
                         {/*<HomeIcon className={classes.icon}/>*/}
