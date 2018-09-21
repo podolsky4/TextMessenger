@@ -19,14 +19,17 @@ const styles = theme => ({
     },
     paper: {
         background: theme.palette.background.grey,
-        padding: theme.spacing.unit * 2,
+        padding:[theme.spacing.unit * 2, theme.spacing.unit * 2, theme.spacing.unit * 0.5, theme.spacing.unit * 2],
         textAlign: 'center',
         color: theme.palette.text.primary,
-        width: "calc(100vw - " + theme.spacing.unit * 3 + "px)",
+        // width: "calc(100vw - " + theme.spacing.unit * 3 + "px)",
         justifySelf: 'flex-start',
         alignSelf: 'center',
         margin: ['auto', theme.spacing.unit * 3, theme.spacing.unit * 3, 'auto'],
-        marginTop: theme.spacing.unit * 2.5
+        marginTop: theme.spacing.unit * 2.5,
+        '&:after':{
+            borderBottom: theme.palette.primary.dark + ' 6px solid'
+        }
     },
     badge: {
         top: 3,
