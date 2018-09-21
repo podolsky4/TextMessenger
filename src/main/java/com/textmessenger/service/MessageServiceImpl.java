@@ -8,6 +8,7 @@ import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.MessageRepository;
 import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.SessionAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,21 +16,18 @@ import java.util.List;
 
 @Service
 @Transactional
-public class MessageServiceImpl implements MessageService {
+public class MessageServiceImpl extends SessionAware implements MessageService {
 
   private final MessageRepository messageRepository;
-  private final UserRepository userRepository;
   private final DialogRepository dialogRepository;
   private final NotificationService notificationService;
 
   public MessageServiceImpl(MessageRepository messageRepository,
                             DialogRepository dialogRepository,
-                            UserRepository userRepository,
                             NotificationService notificationService) {
 
     this.messageRepository = messageRepository;
     this.dialogRepository = dialogRepository;
-    this.userRepository = userRepository;
     this.notificationService = notificationService;
   }
 
@@ -50,7 +48,7 @@ public class MessageServiceImpl implements MessageService {
 
   @Override
   public void createMessageWithUserIdDialogId(Long user, Long dialog, String msg) {
-    User fromUser = userRepository.getOne(user);
+    User fromUser = getLoggedInUser();
     Dialog userD = dialogRepository.getOne(dialog);
     Message message = new Message();
     message.setContent(msg);

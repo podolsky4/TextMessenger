@@ -6,6 +6,7 @@ import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.repository.DialogRepository;
 import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.SessionAware;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class DialogServiceImpl implements DialogService {
+public class DialogServiceImpl extends SessionAware implements DialogService {
 
   private final DialogRepository dialogRepository;
   private final UserRepository userRepository;
@@ -68,11 +69,7 @@ public class DialogServiceImpl implements DialogService {
 
   @Override
   public void addToDialogNewUser(Long dialog, Long user) {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    User mainUser = userRepository.getOne(userPrincipal.getId());
+    User mainUser = getLoggedInUser();
     User one = userRepository.getOne(user);
     Dialog save = dialogRepository.getOne(dialog);
     one.getDialogs().add(save);

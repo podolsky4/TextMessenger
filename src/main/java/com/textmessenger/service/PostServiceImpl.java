@@ -9,6 +9,7 @@ import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.repository.PostRepository;
 import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.SessionAware;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +26,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class PostServiceImpl implements PostService {
+public class PostServiceImpl extends SessionAware implements PostService {
   private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
   private AmazonConfig s3;
   private final PostRepository postRepository;
@@ -45,15 +46,10 @@ public class PostServiceImpl implements PostService {
 
   @Override
   public void createPost(String content, MultipartFile file) throws IOException {
-    // get user from token
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
     // create post and set content & user
     Post post = new Post();
     post.setContent(content);
-    User one = userRepository.getOne(userPrincipal.getId());
+    User one = getLoggedInUser();
     post.setUser(one);
     // Amazon logic
     if (file != null) {

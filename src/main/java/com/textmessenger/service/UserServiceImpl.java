@@ -13,10 +13,9 @@ import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
-import com.textmessenger.security.UserPrincipal;
+import com.textmessenger.security.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends SessionAware implements UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
   private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
@@ -196,11 +195,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserToFrontShort getCurrentUser() {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    Optional<User> user = userRepository.findById(userPrincipal.getId());
+    User loggedInUser = getLoggedInUser();
+    Optional<User> user = userRepository.findById(loggedInUser.getId());
     if (user.isPresent()) {
       return userToFront.convertUserForFront(user.get());
     }
@@ -228,11 +224,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<NotificationToFront> getAllNotificationByUser() {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    User one = userRepository.getOne(userPrincipal.getId());
+    User one = getLoggedInUser();
     List<Notification> notifications = one.getNotifications();
     notifications.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return NotificationToFront.convertListNotificationToFront(notifications);
@@ -263,11 +255,7 @@ public class UserServiceImpl implements UserService {
                                            String address,
                                            String date,
                                            MultipartFile file) throws IOException {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    User one = userRepository.getOne(userPrincipal.getId());
+    User one = getLoggedInUser();
     if (firstName != "undefined") { //NOSONAR
       one.setFirstName(firstName);
     }
@@ -301,23 +289,16 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User getCurrentUserFull() {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    return userRepository.getOne(userPrincipal.getId());
+    return getLoggedInUser();
   }
 
   @Override
   public String updatePasswordInitByUser(String oldPassword, String newPassword) {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    Optional<User> user = userRepository.findById(userPrincipal.getId());
+    User user1 = getLoggedInUser();
+    Optional<User> user = userRepository.findById(user1.getId());
     if (user.isPresent()) {
       User temp = user.get();
-      if (passwordEncoder.matches(oldPassword, userPrincipal.getPassword())) {
+      if (passwordEncoder.matches(oldPassword, user1.getPassword())) {
         temp.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(temp);
         return "Password changed successfully";

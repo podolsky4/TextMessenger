@@ -7,6 +7,7 @@ import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.CommentToFront;
 import com.textmessenger.repository.CommentRepository;
 import com.textmessenger.repository.UserRepository;
+import com.textmessenger.security.SessionAware;
 import com.textmessenger.security.UserPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,19 +17,16 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl extends SessionAware implements CommentService {
 
   private final CommentRepository commentRepository;
   private final NotificationService notificationService;
-  private final UserRepository userRepository;
+
 
   CommentServiceImpl(CommentRepository commentRepository,
-                     NotificationService notificationService,
-                     UserRepository userRepository) {
+                     NotificationService notificationService) {
     this.commentRepository = commentRepository;
     this.notificationService = notificationService;
-
-    this.userRepository = userRepository;
   }
 
   @Override
@@ -36,11 +34,7 @@ public class CommentServiceImpl implements CommentService {
     comment.setPost(post);
     comment.setCommentator(user);
     commentRepository.save(comment);
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    User mainUser = userRepository.getOne(userPrincipal.getId());
+    User mainUser = getLoggedInUser();
     notificationService.createSome(WebSocketType.NEW_COMMENT.toString(), post.getUser(), mainUser, post);
   }
 
