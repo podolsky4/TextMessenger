@@ -23,4 +23,4 @@ Loader.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Loader)
+export default  withStyles(styles)(Loader)
