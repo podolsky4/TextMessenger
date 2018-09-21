@@ -1,6 +1,6 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.WebSocketType;
+import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Message;
 import com.textmessenger.model.entity.User;
