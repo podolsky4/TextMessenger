@@ -64,6 +64,7 @@ class UserHeaderInfo extends React.Component {
     const {toredirect, id} = this.state
 
     if (toredirect) {
+      this.setState({toredirect: false})
       return <Redirect to={`/profile/${id}`}/>
     }
 

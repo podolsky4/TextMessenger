@@ -6,10 +6,10 @@ import { connect } from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import UnsecureRouter from '../Router/UnsecureRouter'
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import HeaderRouter from '../Router/HeaderRouter'
+import HeaderRouter from "../Router/HeaderRouter";
 
 const theme = createMuiTheme({
   palette: {
@@ -30,7 +30,7 @@ const theme = createMuiTheme({
     background: {
       main: '#00796B',
       grey: '#fafafa',
-      darkgrey: '#929292'
+      darkgrey: "#929292"
     }
   },
   status: {

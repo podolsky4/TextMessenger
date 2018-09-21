@@ -12,6 +12,7 @@ import ConfirmRegistration from '../../views/Confirm/ConfirmRegistration'
 import WebSocketHandler from '../../components/WebSocketHandler'
 import SinglePost from '../../SinglePost'
 
+
 class SecureRouter extends Component {
   render () {
     const {wsHandler} = this.props
