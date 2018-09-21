@@ -66,7 +66,7 @@ public class PostController {
   }
 
   @PostMapping("/user/{id}/post/{postId}")
-  public ResponseEntity retwitePost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
+  public ResponseEntity retweetPost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
     postService.retwitPost(user, postId);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
