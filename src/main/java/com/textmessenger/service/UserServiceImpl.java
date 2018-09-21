@@ -181,7 +181,7 @@ public class UserServiceImpl extends SessionAware implements UserService {
     if (!"anonymousUser".equals(principal.toString())) {
       return UserToFrontShort.convertUserForFront(getLoggedInUser());
     }
-    throw new UsernameNotFoundException(" User not found!");
+    return new UserToFrontShort();
   }
 
   @Override
