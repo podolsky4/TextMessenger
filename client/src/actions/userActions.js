@@ -42,7 +42,7 @@ export const getCurrentUser = () => dispatch => {
     }
   })
     .then(response => {
-      if (response.status === 200){
+      if (response.status >= 200 && response.status < 300){
         return response.json()
       } else{
         return []
