@@ -76,9 +76,9 @@ class Header extends React.Component {
     };
 
     handleClickAway = () => {
-        this.setState({
+        setTimeout(() => this.setState({
             openDrawer: false,
-        });
+        }));
     };
 
     // locationRender = () => {
