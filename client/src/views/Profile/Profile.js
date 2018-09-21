@@ -1,20 +1,19 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import CurrentUserProfile from './CurrentUserProfile'
 import OtherUserProfile from './OtherUserProfile'
 import Loader from '../../components/Loader/Loader'
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
-import {loadPosts} from '../../actions/postsActions'
-
+import { loadPosts } from '../../actions/postsActions'
 
 class Profile extends React.Component {
   componentDidMount () {
     const {loadPosts} = this.props
     loadPosts()
   }
+
   render () {
-    // loadPosts()
     const {user, match, posts} = this.props
     if (!user.id) {
       return <Redirect to={`/`}/>
@@ -26,13 +25,13 @@ class Profile extends React.Component {
     let userPosts
     if (flag) {
       userPosts = posts.filter(function (post) {
-        return post.user.id === user.id
-      }
+          return post.user.id === user.id
+        }
       )
     } else {
       userPosts = posts.filter(function (post) {
-        return post.user.id === +match.params.id
-      }
+          return post.user.id === +match.params.id
+        }
       )
     }
 
