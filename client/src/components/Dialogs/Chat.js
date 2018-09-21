@@ -6,6 +6,8 @@ import TextField from '@material-ui/core/TextField'
 import {withStyles} from '@material-ui/core/styles'
 import SubmitButton from '../../components/buttons/ButtonSubmit/ButtonSubmit'
 import classnames from 'classnames'
+import Typography from "@material-ui/core/Typography";
+import {Paper} from "@material-ui/core/umd/material-ui.production.min";
 
 const styles = theme => ({
   container: {
@@ -33,11 +35,30 @@ const styles = theme => ({
     width: 500,
     maxWidth: 720,
     minWidth: 400,
+    minHeight: 200,
     borderRadius: 6,
     padding: '14px 2px',
     background: '#00897B',
     marginTop: -15,
     marginRight: 'auto',
+  },
+    NoMessagesCnt:{
+      width: '40%',
+        margin: '20px auto',
+        background: theme.palette.background.main,
+        height: "auto",
+        minHeight: 160,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+  NoMessages: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+
   }
 })
 
@@ -75,7 +96,20 @@ class Chat extends Component {
     const {user, messages, classes} = this.props
     return (
       <div className={classes.chat}>
-        {messages.length !==0 && <MessagesList messages={messages} user={user}/>}
+        {messages.length === 0 &&
+            <Paper className={classes.NoMessagesCnt}>
+                <Typography className={classes.NoMessages} component={'h3'}>
+                    Nothing here yet.
+                </Typography>
+                <Typography className={classes.NoMessages} component={'h3'}>
+                    Start typing now!
+                </Typography>
+            </Paper>
+        }
+        {messages.length !== 0 &&
+         <MessagesList messages={messages}
+                       user={user}/>
+        }
         <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
           <TextField
             defaultValue={null}
@@ -91,8 +125,7 @@ class Chat extends Component {
             multiline
             autoFocus
             required
-          >
-          </TextField>
+          />
           <SubmitButton/>
         </form>
       </div>
@@ -111,4 +144,5 @@ const mapDispatchToProps = dispatch => {
     addMessage: (dialogId, userId, text) => dispatch(createMessage(dialogId, userId, text))
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Chat))
