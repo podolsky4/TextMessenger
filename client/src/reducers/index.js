@@ -13,6 +13,7 @@ import location from './location'
 import comments from './comments'
 import registration from './registration'
 import able from './able'
+import currentPost from './currentPost'
 
 export default combineReducers({
   user,
@@ -28,5 +29,6 @@ export default combineReducers({
   location,
   comments,
   registration,
-  able
+  able,
+  currentPost
 })

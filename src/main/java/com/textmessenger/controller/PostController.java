@@ -50,7 +50,7 @@ public class PostController {
     return ResponseEntity.ok().body(postService.getAll());
   }
 
-  @PostMapping("/user")
+  @PostMapping
   public ResponseEntity createPost(@RequestParam("content") String content,
                                    @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
     postService.createPost(content, file);
@@ -70,7 +70,7 @@ public class PostController {
   }
 
   @PostMapping("/user/{id}/post/{postId}")
-  public ResponseEntity retwitePost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
+  public ResponseEntity retweetPost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
     postService.retwitPost(user, postId);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
   }
