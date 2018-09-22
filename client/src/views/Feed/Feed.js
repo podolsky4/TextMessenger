@@ -20,7 +20,8 @@ import Button from '../../../node_modules/@material-ui/core/Button/Button'
 const styles = theme => ({
   root: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+      justifyContent: 'center',
   },
   icon: {
     paddingRight: theme.spacing.unit,
@@ -37,16 +38,27 @@ const styles = theme => ({
   textField: {
     padding: '30px 8px 16px 16px',
     alignSelf: 'flex-end',
-    width: '73%'
+    width: '73%',
+    alignItems: 'flex-end'
   },
   paper: {
     width: '100%',
-    maxWidth: '700px',
-    justifyItems: 'stretch'
-  }
-  // textField: {
-  //   flexBasis: 200,
-  // },
+    // maxWidth: '700px',
+    justifyItems: 'stretch',
+    borderRadius: 3,
+      maxWidth: 862
+  },
+  gridItem: {
+      padding: 16,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+  },
+  textfield: {
+    alignItems: 'flex-end'
+  },
+    button: {
+        alignItems: 'flex-end'
+    }
 })
 
 class Feed extends Component {
@@ -60,13 +72,16 @@ class Feed extends Component {
     }
   }
 
+
   componentWillMount () {
-    const {user, favorites, loadFavorites, pageAble} = this.props
+    const {user, posts, favorites, loadFavorites, pageAble} = this.props
     const {size, page} = this.state
     if (favorites.length === 0) {
       loadFavorites(user.id)
     }
-    pageAble(page, size, this.setState.bind(this, {page: page + 1}))
+    if (posts.length === 0){
+      pageAble(page, size, this.setState.bind(this, {page: page + 1}))
+    }
   }
 
   change = e => {
@@ -76,7 +91,7 @@ class Feed extends Component {
   };
 
   reset = () => {
-    this.setState({text: ''})
+    this.setState({text: '', changenameeed : ''})
     document.getElementById('content').value = ''
   };
 
@@ -161,8 +176,18 @@ class Feed extends Component {
           <Grid container
             justify="center"
             alignItems="stretch"
-            >
-            <Paper className={classes.paper}>
+            direction="column"
+          >
+              <Grid container
+                    justify="center"
+                    alignItems="center"
+                    direction="column"
+              >
+              <Grid item
+                    xs={12} sm={10} lg={10} md={8}
+                    className={classes.gridItem}
+              >
+                 <Paper className={classes.paper}>
               <form className={classes.form}
                 onSubmit={e => this.onSubmit(e)}>
                 <FormControl className={classNames(classes.margin, classes.textField)} fullWidth>
@@ -175,8 +200,8 @@ class Feed extends Component {
                     maxLength: 280,
                     padding: '3.7% 0 7px',
                     style:
-                      {borderRadius: '2px'}
-
+                      {borderRadius: '2px',
+                      }
                   }}
                   id="content"
                   name="text"
@@ -206,15 +231,14 @@ class Feed extends Component {
                 </Input>
                   {<a>{this.state.changenameeed}</a>}
                 </FormControl>
-                {/* <form> */}
-                  {/* <input type="file" name="file" ref="inputFile"/> */}
-                {/* </form> */}
                 <ButtonPost flowRight/>
               </form>
               {reloadLoader && <Loader/>}
             </Paper>
-            <PostList posts={posts} user={user}/>
+              </Grid>
+              <PostList posts={posts} user={user}/>
           </Grid>
+        </Grid>
         </Grid>
       </div>
     )

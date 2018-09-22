@@ -42,10 +42,10 @@ export const getCurrentUser = () => dispatch => {
     }
   })
     .then(response => {
-      if (response.ok) {
+      if (response.status >= 200 && response.status < 300){
         return response.json()
-      } else {
-        dispatch({type: CREATE_USER_IN_REDUX, payload: {}})
+      } else{
+        return []
       }
     })
     .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
@@ -57,6 +57,11 @@ export const loadUser = (login) => dispatch => {
     .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
 }
 
+export const loadUserFull = () => dispatch => {
+  FetchData.get(`/api/users/`)
+    .then(res => res.json())
+    .then(data => dispatch({type: CREATE_USER_IN_REDUX, payload: data}))
+}
 // logIn & logOut action
 export const loginIn = (email, password) => dispatch => {
   dispatch(startLoader('LOADING_USER'))
@@ -83,7 +88,13 @@ export const logOut = () => dispatch => {
 
 // sub action for user
 export const updateUser = (data, login) => dispatch => {
-  FetchData.put('/api/users/', data)
+  fetch(`/api/users/`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    },
+    body: data
+  })
     .then(() => dispatch(loadUser(login)))
 }
 export const getFollowing = (id) => dispatch => {

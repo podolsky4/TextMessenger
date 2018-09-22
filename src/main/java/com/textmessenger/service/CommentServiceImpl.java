@@ -1,14 +1,12 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Comment;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.CommentToFront;
 import com.textmessenger.repository.CommentRepository;
-import com.textmessenger.repository.UserRepository;
-import com.textmessenger.security.UserPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.textmessenger.security.SessionAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,19 +14,16 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl extends SessionAware implements CommentService {
 
   private final CommentRepository commentRepository;
   private final NotificationService notificationService;
-  private final UserRepository userRepository;
+
 
   CommentServiceImpl(CommentRepository commentRepository,
-                     NotificationService notificationService,
-                     UserRepository userRepository) {
+                     NotificationService notificationService) {
     this.commentRepository = commentRepository;
     this.notificationService = notificationService;
-
-    this.userRepository = userRepository;
   }
 
   @Override
@@ -36,27 +31,13 @@ public class CommentServiceImpl implements CommentService {
     comment.setPost(post);
     comment.setCommentator(user);
     commentRepository.save(comment);
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    User mainUser = userRepository.getOne(userPrincipal.getId());
+    User mainUser = getLoggedInUser();
     notificationService.createSome(WebSocketType.NEW_COMMENT.toString(), post.getUser(), mainUser, post);
   }
 
   @Override
   public List<CommentToFront> findAllPostFromPost(Post post) {
     return CommentToFront.convertListCommentsToResponse(commentRepository.findCommentsByPost(post));
-  }
-
-  @Override
-  public void updateComment(Comment comment) {
-    commentRepository.save(comment);
-  }
-
-  @Override
-  public void deleteComment(Comment comment) {
-    commentRepository.delete(comment);
   }
 
 }

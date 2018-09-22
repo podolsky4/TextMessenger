@@ -1,13 +1,11 @@
 package com.textmessenger.controller;
 
-import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.service.DialogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,11 +39,4 @@ public class DialogController {
   public void addDilogToNewUser(@PathVariable("newUser") Long user, @PathVariable("dialogId") Long dialog) {
     dialogService.addToDialogNewUser(dialog, user);
   }
-
-  @PutMapping
-  public ResponseEntity updateDialog(@Valid @RequestBody Dialog dialog) {
-    dialogService.updateDialog(dialog);
-    return Optional.of(ResponseEntity.status(200)).orElse(ResponseEntity.unprocessableEntity()).build();
-  }
-
 }

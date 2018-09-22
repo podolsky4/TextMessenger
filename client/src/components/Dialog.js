@@ -83,7 +83,7 @@ const styles = theme => ({
     padding: theme.spacing.unit / 1,
     margin: theme.spacing.unit / 4,
     marginRight: 0,
-    background: theme.palette.background.main,
+    background: theme.palette.background.grey,
     '&:hover': {
       background: theme.palette.secondary.main
     }
@@ -144,7 +144,6 @@ class Dialog extends Component {
         <Button value={dialog.id}
                 onClick={e => addUserToDialog(e)}
                 variant="outlined"
-                color='primary'
                 type="submit" className={classes.button}>
           Add user
         </Button>

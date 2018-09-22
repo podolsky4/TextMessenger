@@ -2,6 +2,7 @@ package com.textmessenger.controller;
 
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +31,11 @@ public class PostController {
     this.postService = postService;
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity getPostById(@PathVariable("id") long id) {
+    return ResponseEntity.ok().body(PostToFront.convertPostToFront(postService.getPostById(id)));
+  }
+
   @GetMapping("/{page}/{size}")
   public ResponseEntity getPagePost(@PathVariable("page") int page, @PathVariable("size") int size) {
     return ResponseEntity.ok().body(postService.getPage(page, size));
@@ -40,7 +46,7 @@ public class PostController {
     return ResponseEntity.ok().body(postService.getAll());
   }
 
-  @PostMapping("/user")
+  @PostMapping
   public ResponseEntity createPost(@RequestParam("content") String content,
                                    @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
     postService.createPost(content, file);
@@ -53,12 +59,6 @@ public class PostController {
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.unprocessableEntity()).build();
   }
 
-  @GetMapping("/user/{id}")
-  public ResponseEntity getUserPost(@PathVariable("id") User user) {
-    return Optional.of(ResponseEntity.ok().body(postService.getUserPost(user)))
-            .orElse(ResponseEntity.noContent().build());
-  }
-
   @DeleteMapping("/{id}")
   public ResponseEntity deletePostById(@PathVariable("id") Post post) {
     postService.deletePost(post);
@@ -66,13 +66,8 @@ public class PostController {
   }
 
   @PostMapping("/user/{id}/post/{postId}")
-  public ResponseEntity retwitePost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
+  public ResponseEntity retweetPost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
     postService.retwitPost(user, postId);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
-  }
-
-  @GetMapping("/{id}")
-  public ResponseEntity getPostById(@PathVariable("id") long id) {
-    return ResponseEntity.status(200).body(postService.getPostToFrontById(id));
   }
 }

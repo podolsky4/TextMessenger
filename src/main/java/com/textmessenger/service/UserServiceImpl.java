@@ -1,24 +1,30 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.WebSocketType;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.textmessenger.config.AmazonConfig;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
-import com.textmessenger.security.UserPrincipal;
+import com.textmessenger.security.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,23 +32,26 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends SessionAware implements UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
+  private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
+  private AmazonConfig s3;
   private final UserRepository userRepository;
   private final TemporaryTokenRepository temporaryTokenRepository;
-  private UserToFrontShort userToFront;
   private final EmailService emailService;
   private final NotificationService notificationService;
 
 
   public UserServiceImpl(UserRepository userRepository, TemporaryTokenRepository temporaryTokenRepository,
                          EmailService emailService,
-                         NotificationService notificationService) {
+                         NotificationService notificationService,
+                         AmazonConfig s3) {
     this.userRepository = userRepository;
     this.temporaryTokenRepository = temporaryTokenRepository;
     this.emailService = emailService;
     this.notificationService = notificationService;
+    this.s3 = s3;
   }
 
   @Override
@@ -80,8 +89,19 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User createUser(User user) {
+    TemporaryToken tempToken = new TemporaryToken();
+    tempToken.setToken(UUID.randomUUID().toString());
+    tempToken.setExpiryDate(new Date());
+    User user1 = userRepository.save(user);
+    tempToken.setUser(user1);
+    temporaryTokenRepository.save(tempToken);
+    SimpleMailMessage email = new SimpleMailMessage();
+    email.setTo(user1.getEmail());
+    email.setSubject("confirmation link to create account at Text Messenger application");
+    email.setText("http://localhost:3000/registered/" + tempToken.getToken());
+    emailService.sendEmail(email);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
-    return userRepository.save(user);
+    return userRepository.getOne(user.getId());
   }
 
   @Override
@@ -92,11 +112,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public void updateUser(User user) {
     userRepository.save(user);
-  }
-
-  @Override
-  public void deleteUser(long id) {
-    userRepository.delete(userRepository.getOne(id));
   }
 
   @Override
@@ -152,37 +167,20 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Optional<List<User>> findUserByEmailOrLogin(User user) {
-    return Optional.of(userRepository
-            .findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(user.getLogin(), user.getEmail()));
-  }
-
-  @Override
   public void deleteFromFollowing(Long user, Long newUser) {
     userRepository.getOne(user).getFollowing().remove(userRepository.getOne(newUser));
   }
 
   @Override
-  public User logIn(String email, String password) {
-    return userRepository.findUserByEmail(email);
-  }
-
-  @Override
-  public List<Notification> getAllNotificationByUserId(Long id) {
-    return userRepository.getOne(id).getNotifications();
-  }
-
-  @Override
   public UserToFrontShort getCurrentUser() {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+    Object principal = SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
-    Optional<User> user = userRepository.findById(userPrincipal.getId());
-    if (user.isPresent()) {
-      return userToFront.convertUserForFront(user.get());
+    if (!"anonymousUser".equals(principal.toString())) {
+      return UserToFrontShort.convertUserForFront(getLoggedInUser());
     }
-    throw new UsernameNotFoundException("User not found!");
+    return new UserToFrontShort();
   }
 
   @Override
@@ -206,11 +204,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<NotificationToFront> getAllNotificationByUser() {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    User one = userRepository.getOne(userPrincipal.getId());
+    User one = getLoggedInUser();
     List<Notification> notifications = one.getNotifications();
     notifications.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return NotificationToFront.convertListNotificationToFront(notifications);
@@ -233,5 +227,61 @@ public class UserServiceImpl implements UserService {
       }
     }
     return "Sorry. This token in invalid.";
+  }
+
+  @Override
+  public void updateUserWithStringsAndFile(String firstName,
+                                           String lastName,
+                                           String address,
+                                           String date,
+                                           MultipartFile file) throws IOException {
+    User one = getLoggedInUser();
+    if (firstName != "undefined") { //NOSONAR
+      one.setFirstName(firstName);
+    }
+    if (lastName != "undefined") { //NOSONAR
+      one.setLastName(lastName);
+    }
+    if (address != "undefined") { //NOSONAR
+      one.setAddress(address);
+    }
+    if (date != "undefined") { //NOSONAR
+      one.setDateBirthday(LocalDate.parse(date));
+    }
+    if (file != null) {
+      String typeFile = file.getContentType();
+      String type = "." + typeFile.substring(6);
+      String key = "userAvatar/" + UUID.randomUUID() + type;
+      InputStream fileFromFront = file.getInputStream();
+      AmazonS3 amazonS3 = s3.getConnection();
+      amazonS3.putObject(
+              BUCKET,
+              key,
+              fileFromFront,
+              new ObjectMetadata());
+      String userHeader = amazonS3.getUrl(BUCKET, key).toString();
+      if (one.getProfilePhoto() == null) {
+        one.setProfilePhoto(userHeader);
+      }
+    }
+    userRepository.save(one);
+  }
+
+  @Override
+  public User getCurrentUserFull() {
+    return getLoggedInUser();
+  }
+
+  @Override
+  public String updatePasswordInitByUser(String oldPassword, String newPassword) {
+
+    User temp = getLoggedInUser();
+    if (passwordEncoder.matches(oldPassword, temp.getPassword())) {
+      temp.setPassword(passwordEncoder.encode(newPassword));
+      userRepository.save(temp);
+      return "Password changed successfully";
+    } else {
+      return "Current password is not valid";
+    }
   }
 }

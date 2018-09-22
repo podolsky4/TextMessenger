@@ -1,11 +1,10 @@
 import React from 'react'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
-import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
 import withStyles from '../../../node_modules/@material-ui/core/styles/withStyles'
+import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   paper: {
@@ -22,6 +21,10 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3
+  },
+  button: {
+    textDecoration : 'none',
+    color: 'white'
   }
 })
 
@@ -34,7 +37,16 @@ class ResetPassword extends React.Component {
       message: ''
     }
   }
+  componentDidMount() {
+    // custom rule will have name 'isPasswordMatch'
+    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+      if (value !== this.state.firstPassword) {
+        return false;
+      }
+      return true;
+    })
 
+  }
   change = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -60,29 +72,30 @@ class ResetPassword extends React.Component {
     return (
         <Paper className={classes.paper}>
           <Typography variant="headline">Enter new password</Typography>
-          <h1>{this.state.message}</h1>
-          <form onSubmit={e => this.resetPassword(e)} className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="firstPassword">New Password</InputLabel>
-              <Input
-                id="firstPassword"
+          <Typography variant="headline">{this.state.message}</Typography>
+            <ValidatorForm onSubmit={e => this.resetPassword(e)} className={classes.form}>
+              <TextValidator
+                label="New Password"
                 name="firstPassword"
                 type="password"
+                fullWidth
                 autoFocus
+                validators={['required']}
+                errorMessages={['this field is required']}
                 onChange={e => this.change(e)}
                 value={this.state.firstPassword}
               />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="secondPassword">Repeat Password</InputLabel>
-              <Input
-                id="secondPassword"
+              <TextValidator
+                label="Repeat password"
                 name="secondPassword"
                 type="password"
+                fullWidth
+                validators={['isPasswordMatch', 'required']}
+                errorMessages={['password mismatch', 'this field is required']}
                 onChange={e => this.change(e)}
                 value={this.state.secondPassword}
               />
-            </FormControl>
+
             <Button
               type="submit"
               fullWidth
@@ -92,7 +105,16 @@ class ResetPassword extends React.Component {
             >
               Sign Up
             </Button>
-          </form>
+            <Button
+              type="submit"
+              fullWidth
+              variant="raised"
+              color="primary"
+              className={classes.submit}
+            >
+              <Link className={classes.button} to='/feed' >to home page</Link>
+            </Button>
+            </ValidatorForm>
         </Paper>
 
     )

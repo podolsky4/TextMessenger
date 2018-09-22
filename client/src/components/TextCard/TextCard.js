@@ -47,7 +47,7 @@ const TextCard = (props) => {
         {text}
       </Typography>
       <hr className={classes.hr}/>
-      <Typography className={classes.cardText} component="p">
+      <Typography className={classes.cardText} component="div">
         <b>Contributors</b>
         <ul>
           <li>Andrew Koziulia - <em>mentor</em></li>

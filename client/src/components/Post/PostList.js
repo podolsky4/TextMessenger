@@ -6,7 +6,8 @@ import Grid from '@material-ui/core/Grid'
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    maxWidth: 862
+    maxWidth: 862,
+    margin: 'auto'
   }
 })
 
@@ -30,16 +31,12 @@ class PostList extends Component {
     return (
       <div className={classes.root}>
         <Grid container
-          spacing={24}
+          spacing={16}
           direction="column"
           justify="center"
           alignItems="center"
         >
-          <Grid item
-            xs={12}
-            lg={10}
-            md={10}
-            >
+          <Grid item xs={12} sm={12} lg={10} md={10}>
             <React.Fragment>
               {posts.map((content, index) => current(content, index))}
             </React.Fragment>

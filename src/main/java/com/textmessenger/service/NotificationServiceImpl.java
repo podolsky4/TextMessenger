@@ -1,10 +1,11 @@
 package com.textmessenger.service;
 
-import com.textmessenger.constant.WebSocketType;
+
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.DialogToFront;
 import com.textmessenger.model.entity.dto.MessageToFront;
 import com.textmessenger.model.entity.dto.PostToFront;
@@ -24,12 +25,6 @@ public class NotificationServiceImpl implements NotificationService {
   NotificationServiceImpl(NotificationRepository notificationRepository, SimpMessagingTemplate simpMessagingTemplate) {
     this.notificationRepository = notificationRepository;
     this.simpMessagingTemplate = simpMessagingTemplate;
-  }
-
-
-  @Override
-  public Notification createNotification(String type, User toUser, User fromUser, Long contentId) {
-    return notificationRepository.save(new Notification(false, contentId, type, toUser, fromUser));
   }
 
   @Override

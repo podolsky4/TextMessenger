@@ -1,5 +1,7 @@
 import React from 'react'
 import PersonAdd from '@material-ui/icons/PersonAdd'
+import MailIcon from '@material-ui/icons/Mail'
+import PersonIcon from '@material-ui/icons/Person'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
 import CardContent from '@material-ui/core/CardContent/CardContent'
@@ -27,8 +29,13 @@ const styles = (theme) => ({
   },
   pos: {
     marginBottom: 12,
-    color: 'orange'
+    color: 'orange',
+    fontSize: 21
   },
+	pos2: {
+		marginBottom: 12,
+		fontSize: 18
+	},
   userInfo: {
     display: 'flex',
     flexDirection: 'column',
@@ -60,8 +67,10 @@ class UserProfileInfoCard extends React.Component {
 
         <div className={classes.userInfoCnt}>
           <Avatar alt="user avatar"
-            // src={user.profilePhoto}
-
+                  src={ user.profilePhoto === null ?
+                    'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'
+                    : user.profilePhoto
+                  }
                   className={classnames(classes.avatar, classes.bigAvatar)}>
             <PersonAdd/>
             {/* TODO: bug. user is not getting to here, so default icon now. */}
@@ -72,10 +81,10 @@ class UserProfileInfoCard extends React.Component {
               <CardContent>
 
                 <Typography className={classes.pos} color="textPrimary">
-                                  @{user.login}
+									<PersonIcon/> @{user.login}
                 </Typography>
-                <Typography component={'h6'} color="textSecondary">
-                  {user.email}
+                <Typography component={'h6'} className={classes.pos2} color="textSecondary">
+									<MailIcon/> {user.email}
                 </Typography>
 
               </CardContent>

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import Loader from '../Loader/Loader'
 import MessagesList from '../MessagesList'
 import {createMessage} from '../../actions/dialogActions'
 import TextField from '@material-ui/core/TextField'
@@ -38,8 +37,7 @@ const styles = theme => ({
     padding: '14px 2px',
     background: '#00897B',
     marginTop: -15,
-    marginRight: 'auto'
-    // marginLeft: 64
+    marginRight: 'auto',
   }
 })
 
@@ -63,18 +61,21 @@ class Chat extends Component {
   }
 
   onSubmit = e => {
-    const {user, addMessage, currentDialog} = this.props
+    const {user, addMessage, currentDialog} = this.props,
+      {text} = this.state
     e.preventDefault()
-    addMessage(currentDialog.id, user, this.state.text)
+    addMessage(currentDialog.id, user, text)
     this.messageInput.value = ''
+    this.setState({
+      text: ''
+    })
   };
 
   render () {
-    const {user, fetching, messages, classes} = this.props
+    const {user, messages, classes} = this.props
     return (
       <div className={classes.chat}>
-        {fetching && <Loader />}
-        <MessagesList messages={messages} user={user}/>
+        {messages.length !==0 && <MessagesList messages={messages} user={user}/>}
         <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
           <TextField
             defaultValue={null}
@@ -89,6 +90,7 @@ class Chat extends Component {
             backgroundcolor="white"
             multiline
             autoFocus
+            required
           >
           </TextField>
           <SubmitButton/>

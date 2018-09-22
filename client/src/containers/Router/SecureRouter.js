@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Route, Switch} from 'react-router-dom'
+import React, { Component } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import HomePage from '../../views/HomePage/HomePage'
 import Feed from '../../views/Feed/Feed'
 import Favorites from '../../views/Favorities/Favorites'
@@ -31,6 +31,7 @@ class SecureRouter extends Component {
         <Route path='*' component={wsHandler ? WebSocketHandler : Page404}/>
       </Switch>
     )
+
   }
 }
 
