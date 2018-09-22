@@ -7,6 +7,7 @@ import CurrentUserInfo from './CurrentUserInfo'
 import { withStyles } from '@material-ui/core/styles/index'
 import PostList from '../../components/Post/PostList'
 import FetchData from '../../actions/serviceAction'
+import Button from '@material-ui/core/Button'
 
 const styles = (theme) => ({
   ChangeUserProfileInfoCard: {
@@ -35,7 +36,9 @@ const styles = (theme) => ({
     flexShrink: 1,
     flexBasis: 1,
     flexGrow: 1,
-    maxWidth: 'fit-content'
+    maxWidth: 'fit-content',
+    margin: '0 auto',
+    textAlign: 'center  '
   },
   userPostList: {
     flexBasis: 1,
@@ -88,10 +91,12 @@ class OtherUserProfile extends Component {
       <div className={classes.ProfileCnt}>
         <div className={classes.UserInfoCnt}>
           <CurrentUserInfo user={userFromPost}/>
-          <button
-            onClick={e => this.handleFollowing(e)}>{following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}
-          </button>
-
+          <Button variant="contained"
+                  color="primary"
+                  onClick={e => this.handleFollowing(e)}
+          >
+            {following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}
+          </Button>
         </div>
         <PostList user={userFromPost}
                   posts={userPosts}
