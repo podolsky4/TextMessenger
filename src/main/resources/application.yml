@@ -6,6 +6,18 @@ ws:
 server:
   port: 9000
 
+logging:
+  level:
+    ROOT: ERROR
+    org.springframework: ERROR
+    org.springframework.data: ERROR
+    org.springframework.web: ERROR
+    org.springframework.security: ERROR
+    com.textmessenger.App: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: /target/LOG/application.log
 ###
 #   Mail Settings
 ###
