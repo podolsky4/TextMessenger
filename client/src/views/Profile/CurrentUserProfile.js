@@ -32,9 +32,6 @@ const styles = (theme) => ({
     justifyContent: 'space-evenly',
     padding: '32px',
     background: '#009688',
-
-
-
   },
   UserInfoCnt: {
     flexShrink: 1,
