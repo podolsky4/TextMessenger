@@ -22,13 +22,16 @@ public class ReactResourceResolver implements ResourceResolver {
 
   private Resource resolve(String requestPath, List<? extends Resource> locations) {
 
-    if (requestPath == null) return null;
+    if (requestPath == null) {
+      return null;
+    }
 
     if (rootStaticFiles.contains(requestPath)
             || requestPath.startsWith(REACT_STATIC_DIR)) {
       return new ClassPathResource(REACT_DIR + requestPath);
-    } else
+    } else {
       return index;
+    }
   }
 
   @Override
