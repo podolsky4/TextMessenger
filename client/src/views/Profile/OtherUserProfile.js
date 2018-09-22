@@ -38,7 +38,7 @@ const styles = (theme) => ({
     flexGrow: 1,
     maxWidth: 'fit-content',
     margin: '0 auto',
-    textAlign: 'center  '
+    textAlign: 'center'
   },
   userPostList: {
     flexBasis: 1,
