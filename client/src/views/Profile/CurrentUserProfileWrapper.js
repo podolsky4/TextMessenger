@@ -8,7 +8,6 @@ import Typography from '../../../node_modules/@material-ui/core/Typography/Typog
 import { withStyles } from '@material-ui/core/styles'
 import EditIcon from '../../../node_modules/@material-ui/icons/EditTwoTone'
 import Button from '@material-ui/core/Button'
-import {Icon} from "@material-ui/core/umd/material-ui.production.min";
 import PersonIcon from '../../../node_modules/@material-ui/icons/Person'
 import MailIcon from '../../../node_modules/@material-ui/icons/Mail'
 
