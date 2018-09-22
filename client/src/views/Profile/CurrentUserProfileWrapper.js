@@ -8,7 +8,8 @@ import Typography from '../../../node_modules/@material-ui/core/Typography/Typog
 import { withStyles } from '@material-ui/core/styles'
 import EditIcon from '../../../node_modules/@material-ui/icons/EditTwoTone'
 import Button from '@material-ui/core/Button'
-import {Icon} from "@material-ui/core/umd/material-ui.production.min";
+import PersonIcon from '../../../node_modules/@material-ui/icons/Person'
+import MailIcon from '../../../node_modules/@material-ui/icons/Mail'
 
 const styles = (theme) => ({
   media: {
@@ -29,7 +30,9 @@ const styles = (theme) => ({
   pos: {
     marginBottom: 12,
     color: theme.palette.secondary.main,
-    fontSize: 20
+    fontSize: 20,
+    display: 'flex',
+    alignItems: 'center'
   },
   userInfo: {
     display: 'flex',
@@ -94,11 +97,11 @@ class CurrentUserProfileWrapper extends React.Component {
           <div className={classes.userInfo}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography className={classes.pos} component={'h2'} color="textPrimary">
-                  @{user.login}
+                <Typography className={classes.pos} component={'div'} color="textPrimary">
+                  <PersonIcon style={{marginRight: '10px'}}/> @{user.login}
                 </Typography>
-                <Typography  component={'h6'} color="textSecondary" className={classes.cardLine}>
-                    <Icon className={classes.cardIcon}>mail</Icon>{user.email}
+                <Typography  component={'div'} color="textSecondary" className={classes.cardLine}>
+                  <MailIcon style={{marginRight: '10px'}}/> {user.email}
                 </Typography>
               </CardContent>
             </Card>
