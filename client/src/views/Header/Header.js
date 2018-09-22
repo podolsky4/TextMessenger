@@ -19,7 +19,7 @@ import FetchData from '../../actions/serviceAction'
 
 const styles = (theme,) => ({
 	root: {
-		flexGrow: 1,
+		flexGrow: 1
 	},
 	headingContainer: {
 		display: 'flex',
@@ -116,9 +116,8 @@ class Header extends React.Component {
 		if (!user) noUser = true
 
 		return <div className={classes.root}>
-
 			<AppBar position='static' className={classes.appBar}>
-				<Toolbar className={classes.toolbar}>
+				<Toolbar className={classes.toolbar} style={{justifyContent: 'center'}}>
 					<ClickAwayListener onClickAway={this.handleClickAway}>
 						<IconButton className={classes.menuButton}
 												color="inherit"
@@ -182,7 +181,6 @@ class Header extends React.Component {
 					}
 				</Toolbar>
 			</AppBar>
-
 		</div>
 	}
 
