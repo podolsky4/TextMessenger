@@ -30,11 +30,15 @@ const styles = (theme) => ({
   pos: {
     marginBottom: 12,
     color: 'orange',
-    fontSize: 21
+    fontSize: 21,
+    display: 'flex',
+    alignItems: 'center'
   },
 	pos2: {
 		marginBottom: 12,
-		fontSize: 18
+		fontSize: 18,
+    display: 'flex',
+    alignItems: 'center'
 	},
   userInfo: {
     display: 'flex',
@@ -64,7 +68,6 @@ class UserProfileInfoCard extends React.Component {
     const {user, classes} = this.props
     return (
       <React.Fragment>
-
         <div className={classes.userInfoCnt}>
           <Avatar alt="user avatar"
                   src={ user.profilePhoto === null ?
@@ -79,14 +82,12 @@ class UserProfileInfoCard extends React.Component {
 
             <Card className={classes.card}>
               <CardContent>
-
-                <Typography className={classes.pos} color="textPrimary">
-									<PersonIcon/> @{user.login}
+                <Typography className={classes.pos} color="textPrimary" component={'div'}>
+									<PersonIcon style={{marginRight: '10px'}}/> @{user.login}
                 </Typography>
-                <Typography component={'h6'} className={classes.pos2} color="textSecondary">
-									<MailIcon/> {user.email}
+                <Typography component={'div'} className={classes.pos2} color="textSecondary">
+									<MailIcon style={{marginRight: '10px'}}/> {user.email}
                 </Typography>
-
               </CardContent>
             </Card>
           </div>
