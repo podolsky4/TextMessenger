@@ -35,7 +35,11 @@ const styles = (theme,) => ({
 		textTransform: 'capitalize',
 	},
 	appBar: {
-		background: '#455A64'
+		background: '#455A64',
+		height: 64,
+		'@media (max-width: 520px)': {
+			height: 62,
+		}
 	},
 	menuButton: {
 		marginLeft: -12,
@@ -58,9 +62,17 @@ const styles = (theme,) => ({
 		padding: '1px'
 	},
 	menuIcons: {
-		'@media (max-width: 520px)': {
+		flexWrap: 'nowrap',
+		display: 'flex',
+		'@media (max-width: 590px)': {
 			display: 'none',
 		}
+	},
+	leftHeaderContainer: {
+		display: 'flex',
+		justifyContent: 'flex-end',
+		justifySelf: 'flex-end',
+		alignItems: 'center'
 	},
 	drawer: {}
 })
@@ -79,11 +91,11 @@ class Header extends React.Component {
 		})
 	}
 
-	handleClickAway = () => {
-		this.setState({
-			openDrawer: false,
-		})
-	}
+    handleClickAway = () => {
+        setTimeout(() => this.setState({
+            openDrawer: false,
+        }));
+    };
 
 	componentDidMount () {
 		const {match} = this.props
@@ -107,7 +119,6 @@ class Header extends React.Component {
 		console.log(showProfileUser)
 
 		const locationRender = () => {
-
 			return pageTitle
 		}
 
@@ -117,7 +128,7 @@ class Header extends React.Component {
 
 		return <div className={classes.root}>
 			<AppBar position='static' className={classes.appBar}>
-				<Toolbar className={classes.toolbar} style={{justifyContent: 'center'}}>
+				<Toolbar className={classes.toolbar} style={{justifyContent: 'space-between'}}>
 					<ClickAwayListener onClickAway={this.handleClickAway}>
 						<IconButton className={classes.menuButton}
 												color="inherit"
@@ -155,6 +166,7 @@ class Header extends React.Component {
 						/>
 						}
 					</div>
+					<div className={classes.leftHeaderContainer}>
 					<div className={classes.menuIcons}>
 						{/*<IconButton color="inherit" component={Link} to='/'>*/}
 						{/*<HomeIcon className={classes.icon}/>*/}
@@ -168,7 +180,7 @@ class Header extends React.Component {
 						<IconButton color="inherit" component={Link} to='/dialogs'>
 							<MessageIcon className={classes.icon}/>
 						</IconButton>
-						<IconButton aria-label="4 pending messages" color="inherit" component={Link}
+						<IconButton aria-label={notification.length + "pending messages"} color="inherit" component={Link}
 												to='/notifications'>
 							<Badge badgeContent={notification.length} color='secondary'
 										 classes={{badge: classes.badge}}>
@@ -179,6 +191,7 @@ class Header extends React.Component {
 					{!noUser &&
 					<MenuHeader user={user}/>
 					}
+					</div>
 				</Toolbar>
 			</AppBar>
 		</div>
