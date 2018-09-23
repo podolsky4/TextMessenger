@@ -51,8 +51,8 @@ const TextCard = (props) => {
         <b>Contributors</b>
         <ul>
           <li>Andrew Koziulia - <em>mentor</em></li>
-          <li>Igor Fandorin</li>
-          <li>Illya Fefelov <em>full.iron</em></li>
+          <li>Igor Gavrilyk</li>
+          <li>Illya Fefelov</li>
           <li>Igor Rudenko</li>
           <li>Kostyantyn Matlayev</li>
           <li>Yuri Podolsky</li>

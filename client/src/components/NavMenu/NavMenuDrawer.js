@@ -73,7 +73,7 @@ class NavMenuDrawer extends React.Component {
     }
     render() {
 			const {classes, notification} = this.props;
-
+let badge = notification.filter(e => e.status === false)
     if (this.state.toredirect) {
       let url = this.state.redirect
       alert(url)
@@ -119,7 +119,7 @@ class NavMenuDrawer extends React.Component {
             <NotificationsIcon className={classes.icon}/>
           </IconButton>
 					<Typography className={classes.NavItemText} component={'h3'}> Notifications</Typography>
-					<Badge badgeContent={notification.length} color='secondary' className={classes.badge}>
+					<Badge badgeContent={badge.length} color='secondary' className={classes.badge}>
 				  </Badge>
         </List>
         <Divider className={classes.divider}/>
