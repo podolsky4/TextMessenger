@@ -49,11 +49,13 @@ class Notifications extends Component {
       postId: ''
     }
   }
+
   componentWillMount () {
     const {loadNotification} = this.props
     loadNotification()
   }
   redirecting = e => {
+    this.checkNotification(e)
     if (e.type === 'NEW_FOLLOWER') {
       this.setState({toUser: true, userId: e.fromUser.id})
     } else if (e.type === 'NEW_DIALOG' || e.type === 'NEW_MESSAGE' || e.type === 'ADD_TO_DIALOG') {
@@ -63,12 +65,26 @@ class Notifications extends Component {
     }
   }
 
+  checkNotification = e => {
+    const {loadNotification} = this.props
+    const id = e.id
+    fetch('/api/notification/'+id,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+        }
+      }
+    ).then(loadNotification())
+
+  }
+
   notificationCard = (item, text) => {
     const {classes} = this.props
     return <Grid key={item.id} item>
        <Card
          className={classes.card}
-         onClick = {e => this.redirecting(item)}
+         onClick = {() => {this.redirecting(item)}}
        >
             <CardContent>
                 <Typography className={classes.title} color="textSecondary">
@@ -80,37 +96,41 @@ class Notifications extends Component {
                     {text}
                 </Typography>
             </CardContent>
-    </Card>
+         </Card>
       </Grid>
   }
 
   read = item => {
     // TODO replace switch
-    if (item.type === 'NEW_POST') {
-      const text = 'write a new post'
-      return this.notificationCard(item, text)
-    } else if (item.type === 'NEW_RETWEET') {
-      const text = 'you post have been retweet'
-      return this.notificationCard(item, text)
-    } else if (item.type === 'NEW_COMMENT') {
-      const text = 'in you post have a new comment'
-      return this.notificationCard(item, text)
-    } else if (item.type === 'NEW_LIKE') {
-      const text = 'you post is liked'
-      return this.notificationCard(item, text)
-    } else if (item.type === 'NEW_FOLLOWER') {
-      const text = 'following you'
-      return this.notificationCard(item, text)
-    } else if (item.type === 'NEW_DIALOG') {
-      const text = 'create with you chat'
-      return this.notificationCard(item, text)
-    } else if (item.type === 'ADD_TO_DIALOG') {
-      const text = 'join you to chat'
-      return this.notificationCard(item, text)
-    } else if (item.type === 'NEW_MESSAGE') {
-      const text = 'wrote you new message'
-      return this.notificationCard(item, text)
+    switch (item.type) {
+      case 'NEW_POST':
+        let text = 'write a new post'
+        return this.notificationCard(item, text)
+      case 'NEW_RETWEET':
+        text = 'you post have been retweet'
+        return this.notificationCard(item, text)
+      case 'NEW_COMMENT':
+        text = 'in you post have a new comment'
+        return this.notificationCard(item, text)
+      case 'NEW_LIKE':
+        text = 'you post is liked'
+        return this.notificationCard(item, text)
+      case 'NEW_FOLLOWER':
+        text = 'following you'
+        return this.notificationCard(item, text)
+      case 'NEW_DIALOG':
+        text = 'create with you chat'
+        return this.notificationCard(item, text)
+      case 'ADD_TO_DIALOG':
+        text = 'join you to chat'
+        return this.notificationCard(item, text)
+      case 'NEW_MESSAGE':
+        text = 'wrote you new message'
+        return this.notificationCard(item, text)
+      default:
+        return console.log("new case "+item.type)
     }
+
   }
 
   render () {

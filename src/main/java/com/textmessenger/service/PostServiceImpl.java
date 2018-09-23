@@ -101,7 +101,6 @@ public class PostServiceImpl extends SessionAware implements PostService {
     notificationService.createSome(WebSocketType.NEW_RETWEET.toString(), user1, user, original);
     retweet.setUser(user);
     postRepository.save(retweet);
-
   }
 
   @Override
@@ -109,4 +108,8 @@ public class PostServiceImpl extends SessionAware implements PostService {
     return postRepository.getOne(id);
   }
 
+  @Override
+  public void deleteRetweetsByParentId(long parentId) {
+    postRepository.deletePostsByParentId(parentId);
+  }
 }

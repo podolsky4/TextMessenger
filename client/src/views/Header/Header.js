@@ -113,6 +113,9 @@ class Header extends React.Component {
 	render () {
 		const {classes, user, notification, pageTitle, match} = this.props
 		const {profileUser} = this.state
+	  let badge = notification.filter(e => e.status === false)
+      	/*const numberOfBadges =  || {}
+	  	console.log(numberOfBadges)*/
 		console.log(this.state)
 		console.log(match.params)
 		const showProfileUser = profileUser && match.params.userId && profileUser.id === +match.params.userId
@@ -182,7 +185,7 @@ class Header extends React.Component {
 						</IconButton>
 						<IconButton aria-label={notification.length + "pending messages"} color="inherit" component={Link}
 												to='/notifications'>
-							<Badge badgeContent={notification.length} color='secondary'
+							<Badge badgeContent={badge.length} color='secondary'
 										 classes={{badge: classes.badge}}>
 								<NotificationsIcon className={classes.icon}/>
 							</Badge>

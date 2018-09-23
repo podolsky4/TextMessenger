@@ -36,6 +36,11 @@ public class CommentServiceImpl extends SessionAware implements CommentService {
   }
 
   @Override
+  public void deleteAllCommentsUnderPost(Post post) {
+    commentRepository.deleteAllByPostId(post.getId());
+  }
+
+  @Override
   public List<CommentToFront> findAllPostFromPost(Post post) {
     return CommentToFront.convertListCommentsToResponse(commentRepository.findCommentsByPost(post));
   }

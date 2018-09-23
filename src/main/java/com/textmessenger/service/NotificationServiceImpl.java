@@ -1,6 +1,5 @@
 package com.textmessenger.service;
 
-
 import com.textmessenger.model.entity.Dialog;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
@@ -14,6 +13,8 @@ import com.textmessenger.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -55,6 +56,25 @@ public class NotificationServiceImpl implements NotificationService {
     notificationRepository.save(new Notification(false, type, toUser, fromUser));
     simpMessagingTemplate.convertAndSendToUser(toUser.getLogin(), path, setField(fromUser.getLogin(),
             toUser.getLogin(), type));
+  }
+
+  @Override
+  public void updateNotificationStatus(long id) {
+    Notification one = notificationRepository.getOne(id);
+    one.setChecked(true);
+    notificationRepository.save(one);
+  }
+
+  @Override
+  public void deleteNotificationById(long id) {
+    notificationRepository.deleteById(id);
+  }
+
+  @Override
+  public void updateAllNotification(User user) {
+    List<Notification> allByUserId = notificationRepository.findAllByUserId(user.getId());
+    allByUserId.forEach(n -> n.setChecked(true));
+    notificationRepository.saveAll(allByUserId);
   }
 
   public static WebSocketMessage setField(String senderLogin, String receiverLogin, String type) {
