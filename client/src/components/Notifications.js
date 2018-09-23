@@ -54,6 +54,7 @@ class Notifications extends Component {
     loadNotification()
   }
   redirecting = e => {
+    this.checkNotification(e)
     if (e.type === 'NEW_FOLLOWER') {
       this.setState({toUser: true, userId: e.fromUser.id})
     } else if (e.type === 'NEW_DIALOG' || e.type === 'NEW_MESSAGE' || e.type === 'ADD_TO_DIALOG') {
@@ -65,18 +66,15 @@ class Notifications extends Component {
 
   checkNotification = e => {
     const {loadNotification} = this.props
-    const id = e.target.value;
-    alert(id)
-    /*fetch('/api/notification/'+id,
+    const id = e.id
+    fetch('/api/notification/'+id,
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(e)
+          'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+        }
       }
-    ).then(res => res.json())
-      .then(loadNotification())*/
+    ).then(loadNotification())
 
   }
 
@@ -85,10 +83,7 @@ class Notifications extends Component {
     return <Grid key={item.id} item>
        <Card
          className={classes.card}
-         value={item.id}
-         onClick = {(e) => {/*this.redirecting(item)*/
-                            this.checkNotification(e)
-         alert(item.id)}}
+         onClick = {() => {this.redirecting(item)}}
        >
             <CardContent>
                 <Typography className={classes.title} color="textSecondary">

@@ -46,8 +46,8 @@ class NavMenuDrawer extends React.Component {
     render() {
         const { classes, notification} = this.props;
 
-        let numberOfBadges = notification.find(e => e.isEnabled === false);
-
+        /*let numberOfBadges = notification.find(e => e.isEnabled === false) || {}*/
+      let badge = notification.filter(e => e.status === false)
 
         function redirect(path) {
             this.setState({toredirect: true})
@@ -94,7 +94,7 @@ class NavMenuDrawer extends React.Component {
                 <Divider />
                 <List component={Link} to='/notifications' className={classes.NavItem}>
                     <IconButton  color="primary" >
-                        <Badge badgeContent={numberOfBadges.length} color='secondary' classes={{badge: classes.badge}}>
+                        <Badge badgeContent={badge.length} color='secondary' classes={{badge: classes.badge}}>
                             <NotificationsIcon className={classes.icon}/>
                         </Badge>
                     </IconButton>
