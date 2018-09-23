@@ -87,11 +87,11 @@ class Header extends React.Component {
 		})
 	}
 
-	handleClickAway = () => {
-		this.setState({
-			openDrawer: false,
-		})
-	}
+    handleClickAway = () => {
+        setTimeout(() => this.setState({
+            openDrawer: false,
+        }));
+    };
 
 	componentDidMount () {
 		const {match} = this.props
@@ -176,7 +176,7 @@ class Header extends React.Component {
 						<IconButton color="inherit" component={Link} to='/dialogs'>
 							<MessageIcon className={classes.icon}/>
 						</IconButton>
-						<IconButton aria-label="4 pending messages" color="inherit" component={Link}
+						<IconButton aria-label={notification.length + "pending messages"} color="inherit" component={Link}
 												to='/notifications'>
 							<Badge badgeContent={notification.length} color='secondary'
 										 classes={{badge: classes.badge}}>
