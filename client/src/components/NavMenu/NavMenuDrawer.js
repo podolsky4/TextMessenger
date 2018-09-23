@@ -6,7 +6,6 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import {Badge,  IconButton, Typography} from "@material-ui/core/";
 import {Link } from "react-router-dom";
-import HomeIcon from '@material-ui/icons/Home'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import MessageIcon from '@material-ui/icons/ChatBubble'
 import PublicIcon from '@material-ui/icons/Public'
@@ -73,13 +72,8 @@ class NavMenuDrawer extends React.Component {
         }
     }
     render() {
-        const { classes, notification} = this.props;
+			const {classes, notification} = this.props;
 
-    const redirect = path => {
-      this.setState({toredirect: true})
-      alert(this.state.toredirect)
-      this.setState({redirect: path})
-    }
 
     if (this.state.toredirect) {
       let url = this.state.redirect
