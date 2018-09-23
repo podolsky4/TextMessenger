@@ -21,8 +21,9 @@ const styles = theme => ({
   },
   card: {
     // width: '80%',
-    minWidth: 275,
-    cursor: 'pointer'
+    minWidth: '40%',
+    cursor: 'pointer',
+    margin: theme.spacing.unit * 2
   },
   bullet: {
     display: 'inline-block',
