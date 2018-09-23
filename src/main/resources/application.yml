@@ -4,7 +4,7 @@ ws:
 #   Server port
 ###
 server:
-  port: 9001
+  port: 9000
 
 logging:
   level:
