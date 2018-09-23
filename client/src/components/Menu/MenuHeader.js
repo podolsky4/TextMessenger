@@ -15,6 +15,18 @@ import MenuAccountRedirect from './MenuAccountRedirect'
 import PersonIcon from '@material-ui/icons/Person'
 
 const styles = (theme) => ({
+  avatar: {
+		'@media (max-width: 450px)': {
+		}
+  },
+  headerMenu: {
+		justifySelf: 'flex-end',
+    flexGrow: 0,
+    marginBottom: 2,
+		'@media (max-width: 450px)': {
+			marginRight: -14,
+		}
+  },
   paper: {
     marginRight: theme.spacing.unit * 2,
     top: '10%',
@@ -47,8 +59,12 @@ const styles = (theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'center'
   },
-  pos: {
-    color: '#fafafa' // todo
+  poss: {
+    color: '#fafafa',
+		marginLeft: theme.spacing.unit,
+		'@media (max-width: 450px)': {
+      display: 'none',
+		}
   },
   HeaderMenu: {
     '&:hover': {
@@ -61,21 +77,24 @@ const styles = (theme) => ({
   },
   vrDividerCont: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+
   },
   vrDivider: {
     border: '1px solid #9e9e9e3d',
     marginLeft: 45,
     height: '60%',
     marginTop: 'auto',
-    marginBottom: 'auto'
+    marginBottom: 'auto',
+		'@media (min-width: 520px)': {
+			marginLeft: 'none',
+		}
   },
+
   HeaderMenuButton: {
     justifyContent: 'space-between',
     alignItems: 'center',
     display: 'flex',
-    minWidth: 130,
-    width: 'min-content',
     border: '1px solid #fff3e003',
     background: theme.palette.background.dark,
     marginLeft: 32,
@@ -84,9 +103,9 @@ const styles = (theme) => ({
       color: theme.palette.background.dark,
       '& $pos': {
         color: theme.palette.background.dark,
-        fontWeight: '700'
+        fontWeight: '700',
       }
-    }
+    },
   }})
 
 class MenuHeader extends React.Component {
@@ -114,9 +133,10 @@ class MenuHeader extends React.Component {
     const {classes, user} = this.props
 
     return (
-      <div className={classes.root}>
+      <div className={classes.headerMenu}>
         <div className={classes.vrDividerCont}>
-           <div className={classes.vrDivider}></div>
+          <div className={classes.vrDivider}/>
+        </div>
           <Button
             buttonRef={node => {
               this.anchorEl = node
@@ -130,7 +150,7 @@ class MenuHeader extends React.Component {
               src={user.profilePhoto === null ? 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png' : user.profilePhoto}
               className={classes.avatar}
             />
-            <Typography className={classes.pos} color="textPrimary">
+            <Typography className={classes.poss} color="textPrimary">
               {user.login}
             </Typography>
           </Button>
@@ -160,7 +180,6 @@ class MenuHeader extends React.Component {
               </Grow>
             )}
           </Popper>
-        </div>
       </div>
     )
   }
