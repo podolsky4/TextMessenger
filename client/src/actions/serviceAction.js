@@ -67,16 +67,6 @@ class FetchData {
       return result
     }
   }
-
-  requestFailed (reason) {
-    if (reason.message === 'Failed to fetch') {
-      console.log('Error', 'Network request has failed')
-    } else if (reason.error) {
-      console.log(reason.error, reason.message)
-    } else {
-      console.log('Error', 'An error has occurred')
-    }
-  }
 }
 
 export default new FetchData()
