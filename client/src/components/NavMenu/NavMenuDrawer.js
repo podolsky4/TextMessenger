@@ -74,7 +74,6 @@ class NavMenuDrawer extends React.Component {
     render() {
 			const {classes, notification} = this.props;
 
-
     if (this.state.toredirect) {
       let url = this.state.redirect
       alert(url)
