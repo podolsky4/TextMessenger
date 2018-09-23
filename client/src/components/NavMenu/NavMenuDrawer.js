@@ -46,7 +46,8 @@ class NavMenuDrawer extends React.Component {
     render() {
         const { classes, notification} = this.props;
 
-        let numberOfBadges = notification.forEach(find(e => e.isEnabled === false));
+        let numberOfBadges = notification.find(e => e.isEnabled === false);
+
 
         function redirect(path) {
             this.setState({toredirect: true})

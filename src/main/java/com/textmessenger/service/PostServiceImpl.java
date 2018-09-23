@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.textmessenger.config.AmazonConfig;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.repository.PostRepository;
 import com.textmessenger.security.SessionAware;
@@ -105,11 +106,6 @@ public class PostServiceImpl extends SessionAware implements PostService {
   @Override
   public Post getPostById(long id) {
     return postRepository.getOne(id);
-  }
-
-  @Override
-  public PostToFront getPostToFrontById(long id) {
-    return PostToFront.convertPostToFront(postRepository.findById(id).get());
   }
 
   @Override

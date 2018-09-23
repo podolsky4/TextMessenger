@@ -18,15 +18,11 @@ public interface PostService {
 
   List<PostToFront> getPage(int page, int size);
 
-  List<Post> getUserPost(User user);
-
   void retwitPost(User user, Long postId);
 
   void createPost(String content, MultipartFile file) throws IOException;
 
   Post getPostById(long id);
-
-  PostToFront getPostToFrontById(long id);
 
 
   void deleteRetweetsByParentId(long parentId);
