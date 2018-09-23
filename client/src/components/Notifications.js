@@ -127,6 +127,8 @@ class Notifications extends Component {
       case 'NEW_MESSAGE':
         text = 'wrote you new message'
         return this.notificationCard(item, text)
+      default:
+        return console.log("new case "+item.type)
     }
 
   }
