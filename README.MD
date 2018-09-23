@@ -8,7 +8,7 @@
 
 #### Contributors
   * Andrew Koziulia - mentor	
-  * Igor Fandorin
+  * Igor Gavrilyk
   * full.iron
   * Igor Rudenko
   * Kostyantyn Matlayev
