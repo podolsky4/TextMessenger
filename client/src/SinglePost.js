@@ -20,7 +20,6 @@ class SinglePost extends React.Component {
 
   componentWillMount () {
     const {loadPost} = this.props
-    console.log('this.props.match.params.postId',this.props.match.params.postId)
     loadPost(this.props.match.params.postId)
   }
   render () {

@@ -5,6 +5,7 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.FieldFromFront;
 import com.textmessenger.model.entity.dto.LoginRq;
+import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
 import com.textmessenger.model.entity.dto.UserToFrontFull;
@@ -143,7 +144,7 @@ public class UserController {
 
   @GetMapping("/favorites/{id}")
   public ResponseEntity getFavorites(@PathVariable("id") long id) {
-    return ResponseEntity.status(200).body(userService.getFavoritesById(id));
+    return ResponseEntity.status(200).body(PostToFront.convertListPostsToResponse(userService.getFavoritesById(id)));
   }
 
   @GetMapping("/favorites/login/{login}")
