@@ -22,6 +22,7 @@ const styles = (theme) => ({
   headerMenu: {
 		justifySelf: 'flex-end',
     flexGrow: 0,
+    marginBottom: 2,
 		'@media (max-width: 450px)': {
 			marginRight: -14,
 		}

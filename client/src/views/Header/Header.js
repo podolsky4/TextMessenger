@@ -35,7 +35,11 @@ const styles = (theme,) => ({
 		textTransform: 'capitalize',
 	},
 	appBar: {
-		background: '#455A64'
+		background: '#455A64',
+		height: 64,
+		'@media (max-width: 520px)': {
+			height: 62,
+		}
 	},
 	menuButton: {
 		marginLeft: -12,

@@ -17,7 +17,7 @@ import {Redirect} from 'react-router'
 const styles = (theme) => ({
     list: {
         width: 220,
-			  paddingTop: 60,
+			  paddingTop: 62,
 			  background: theme.palette.background.darkgrey,
     },
     fullList: {
