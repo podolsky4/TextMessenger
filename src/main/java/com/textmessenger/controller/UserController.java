@@ -10,8 +10,6 @@ import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
 import com.textmessenger.model.entity.dto.UserToFrontFull;
-import com.textmessenger.repository.TemporaryTokenRepository;
-import com.textmessenger.service.EmailService;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
 import org.slf4j.Logger;
