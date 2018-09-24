@@ -18,7 +18,6 @@ import com.textmessenger.security.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -68,11 +67,8 @@ public class UserServiceImpl extends SessionAware implements UserService {
       if (byToken.get().getExpiryDate().compareTo(new Date()) <= 0) {
         user.setEnabled(true);
         userRepository.save(user);
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(user.getEmail());
-        email.setSubject("Congratulation your account is activate");
-        email.setText("Enjoy our application");
-        emailService.sendEmail(email);
+        emailService.sendEmailFromMethods(user.getEmail(), "Congratulation your account is activate",
+                "Enjoy our application");
         temporaryTokenRepository.delete(byToken.get());
         return "your user is activate";
       }
@@ -82,11 +78,8 @@ public class UserServiceImpl extends SessionAware implements UserService {
       User save = userRepository.save(user);
       temporaryToken.setUser(save);
       temporaryTokenRepository.save(temporaryToken);
-      SimpleMailMessage email = new SimpleMailMessage();
-      email.setTo(user.getEmail());
-      email.setSubject("repeated link to activate");
-      email.setText("http://localhost:3000/api/users/registered/" + temporaryToken.getToken());
-      emailService.sendEmail(email);
+      emailService.sendEmailFromMethods(user.getEmail(), "repeated link to activate",
+              "http://localhost:3000/api/users/registered/", temporaryToken.getToken());
       return "your link is old, we send new link, please check your registration email";
     } else {
       return "this token is not valid";
@@ -98,15 +91,13 @@ public class UserServiceImpl extends SessionAware implements UserService {
     TemporaryToken tempToken = new TemporaryToken();
     tempToken.setToken(UUID.randomUUID().toString());
     tempToken.setExpiryDate(new Date());
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
     User user1 = userRepository.save(user);
     tempToken.setUser(user1);
     temporaryTokenRepository.save(tempToken);
-    SimpleMailMessage email = new SimpleMailMessage();
-    email.setTo(user1.getEmail());
-    email.setSubject("confirmation link to create account at Text Messenger application");
-    email.setText("http://localhost:3000/registered/" + tempToken.getToken());
-    emailService.sendEmail(email);
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    emailService.sendEmailFromMethods(user1.getEmail(),
+            "confirmation link to create account at Text Messenger application",
+            "http://localhost:3000/registered/", tempToken.getToken());
     return userRepository.getOne(user.getId());
   }
 
@@ -201,11 +192,9 @@ public class UserServiceImpl extends SessionAware implements UserService {
     tempToken.setExpiryDate(new Date());
     tempToken.setUser(userByEmail);
     temporaryTokenRepository.save(tempToken);
-    SimpleMailMessage email = new SimpleMailMessage();
-    email.setTo(userByEmail.getEmail());
-    email.setSubject("Follow the link to reset you password in the Text Messenger");
-    email.setText("http://localhost:3000/resetPassword/" + tempToken.getToken());
-    emailService.sendEmail(email);
+    emailService.sendEmailFromMethods(userByEmail.getEmail(),
+            "Follow the link to reset you password in the Text Messenger",
+            "http://localhost:3000/resetPassword/", tempToken.getToken());
   }
 
   @Override
@@ -304,4 +293,5 @@ public class UserServiceImpl extends SessionAware implements UserService {
             .findOneById(id)
             .thenApply(Optional::ofNullable);
   }
+
 }
