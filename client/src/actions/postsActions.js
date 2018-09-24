@@ -85,6 +85,7 @@ export const loadPagePost = (page, size, callback) => dispatch => {
 export const currentPost = (id) => dispatch =>{
   FetchData.get(`/api/posts/${id}`)
     .then(res => res.json())
+
     .then(data => dispatch({type: ADD_CURRENT , payload: data}))
 }
 export const loadComments = (id) => dispatch => {
