@@ -101,7 +101,7 @@ class Dialogs extends Component {
   }
 
   handleCreateDialog = e => {
-    e.preventDefault()
+        e.preventDefault()
     if (this.state.flag) {
       this.setState({newDialog: true, flag: false})
     } else if (this.state.userList) {
@@ -128,7 +128,11 @@ class Dialogs extends Component {
       dialogId: dialogId
     })
   };
-
+closeable (e){
+    const {cleanUserSearch} = this.props
+    cleanUserSearch()
+    this.setState({newDialog: false})
+}
   render () {
     const {user, dialogs, loadDialog, classes, match} = this.props
     const {newDialog, exist, dialog, dialogId} = this.state
@@ -171,7 +175,7 @@ class Dialogs extends Component {
             new Dialog
           </Button>
           {newDialog &&
-          <Button onClick={() => this.setState({newDialog: false})}
+          <Button onClick={(e) => this.closeable(e)}
                   variant="outlined" type="close" color="primary" style={{marginLeft: '6px'}}>
             close
           </Button>
