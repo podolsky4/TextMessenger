@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import withStyles from '../../../node_modules/@material-ui/core/styles/withStyles'
 const styles = theme => ({
   paper: {
+      marginTop: 80,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

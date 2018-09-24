@@ -13,7 +13,7 @@ import {withStyles} from '@material-ui/core/styles'
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    margin: '32px auto',
+    margin: '0 auto',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

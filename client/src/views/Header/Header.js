@@ -19,7 +19,10 @@ import FetchData from '../../actions/serviceAction'
 
 const styles = (theme,) => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
+        position: ' fixed',
+		width: '100vw',
+		zIndex: 1000,
 	},
 	headingContainer: {
 		display: 'flex',

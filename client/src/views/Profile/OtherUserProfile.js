@@ -30,7 +30,8 @@ const styles = (theme) => ({
     alignItems: 'flex-start',
     justifyContent: 'space-evenly',
     padding: '32px',
-    background: '#009688'
+    background: '#009688',
+      marginTop: 80,
   },
   UserInfoCnt: {
     flexShrink: 1,

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import MessagesList from '../MessagesList'
+import MessagesList from './MessagesList'
 import {createMessage} from '../../actions/dialogActions'
 import TextField from '@material-ui/core/TextField'
 import {withStyles} from '@material-ui/core/styles'

@@ -12,6 +12,7 @@ import TextField from '../../../node_modules/@material-ui/core/TextField/TextFie
 
 const styles = (theme) => ({
   ChangeUserProfileInfoCard: {
+      marginTop: 80,
     MinWidth: '25%',
     maxWidth: '300px',
     display: 'flex',
@@ -38,8 +39,10 @@ const styles = (theme) => ({
     justifyContent: 'space-evenly',
     padding: '32px',
     background: '#009688',
+
   },
   UserInfoCnt: {
+      marginTop: 80,
     flexShrink: 1,
     flexBasis: 1,
     flexGrow: 1,
@@ -52,6 +55,7 @@ const styles = (theme) => ({
       },
   },
   userPostList: {
+      marginTop: 80,
     flexBasis: 1,
     flexGrow: 5,
     flexShrink: 1,
