@@ -87,7 +87,7 @@ class CommentList extends Component {
         </List>
         }
         {commentReload && <Loader/>}
-        {notInput == undefined &&
+        {notInput === undefined &&
         <form className={classnames(classes.postCreator, 'postCreator')} onSubmit={e => this.onSubmit(e)}>
           <div className={classes.CommentTextField}>
             <TextField defaultValue=""

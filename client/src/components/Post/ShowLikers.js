@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {List} from '@material-ui/core/umd/material-ui.production.min'
 import {withStyles} from '@material-ui/core/styles'
-import Like from './components/Like'
 import LikeToSinglePost from './LikeToSinglePost'
 
 const styles = theme => ({

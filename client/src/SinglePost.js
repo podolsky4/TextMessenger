@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import connect from 'react-redux/es/connect/connect'
 import { currentPost } from './actions/postsActions'
 import Typography from '../node_modules/@material-ui/core/Typography/Typography'
-import Paper from '../node_modules/@material-ui/core/Paper/Paper'
 import { withStyles } from '@material-ui/core/styles'
 import CardContent from '../node_modules/@material-ui/core/CardContent/CardContent'
 import Card from '../node_modules/@material-ui/core/Card/Card'
@@ -44,7 +43,6 @@ const styles = theme => ({
 		width: '100%',
 		objectFit: 'cover',
 		maxHeight: '400px',
-		// clip: "rect(0px,100%,400px,0px)",
 		position: 'relative'
 	},
 	wrappppppp: {
@@ -62,23 +60,30 @@ class SinglePost extends React.Component {
       flagLike: false,
       flagComment: false
   }
+
   componentWillMount () {
     const {loadPost} = this.props
     loadPost(this.props.match.params.postId)
   }
+
   coment(){
     this.setState({flagComment:!this.state.flagComment})
   }
+
   likersa(){
     this.setState({flagLike:!this.state.flagLike})
   }
   render () {
     const {currentPost, classes} = this.props
 
-    return<div className={classes.Ter}>
+    return<div>
       <div className={classes.singlePostWrapper}>
         <Card className={classes.paperPost}>
-          {currentPost.imgUrl && <img className={classes.img} alt="Здесь должно быть изображение" src={currentPost.imgUrl}/>}
+          {currentPost.imgUrl &&
+          <img className={classes.img}
+               alt="Здесь должно быть изображение"
+               src={currentPost.imgUrl}
+          />}
           <CardContent>
             <Typography component={"h3"}>
               {currentPost.content}
@@ -90,11 +95,14 @@ class SinglePost extends React.Component {
               aria-label="Likes">
               <ThumbUpIcon/>
             </IconButton>
-            <Typography>{currentPost.likers!==undefined && currentPost.likers.length}</Typography>
+            <Typography>
+              {currentPost.likers!==undefined && currentPost.likers.length}
+            </Typography>
 
             <IconButton
               onClick={() => this.coment()}
-              className={classNames(classes.rt, 'comment', {[classes.selected]: this.state.hasComments})}
+              className={classNames(classes.rt, 'comment',
+                {[classes.selected]: this.state.hasComments})}
               aria-live={this.state.hasComments}
               aria-label="Comments"
             >
@@ -106,23 +114,27 @@ class SinglePost extends React.Component {
                 {[classes.selected]: this.state.retweet},
                 {[classes.retweet]: this.state.retweet},
                 {[classes.tweet]: true}
-              )
-            }
-                        aria-label="ReTweet">
+              )} aria-label="ReTweet">
               <RepeateIcon/>
             </IconButton>
           </div>
-          {this.state.flagLike && currentPost.likers.length === 0 ? <a className={classes.textSome}>"Noting to show"</a> :
-          <ShowLikers likers={currentPost.likers} flag={this.state.flagLike}/>
+
+          {this.state.flagLike && currentPost.likers.length === 0 ?
+            <a className={classes.textSome}>"Noting to show"</a>
+            : <ShowLikers
+              likers={currentPost.likers}
+              flag={this.state.flagLike}/>
           }
-          {this.state.flagComment && currentPost.comments.length === 0 ? <a>Nothing to show</a> :
-          <Comments comments={currentPost.comments}
+
+          {this.state.flagComment &&
+          currentPost.comments.length === 0 ?
+            <a>Nothing to show</a>
+            : <Comments comments={currentPost.comments}
                     post={currentPost}
                     user={currentPost.user}
                     postUser={currentPost.user}
                     flag={this.state.flagComment}
-                    notInput={true}
-          />
+                    notInput={true}/>
           }
         </Card>
       </div>
