@@ -40,7 +40,7 @@ public class EmailServiceImpl implements EmailService {
   }
 
   @Override
-  @Async
+  @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
   public void sendEmailFromMethods(String mail, String subject, String text) {
     CompletableFuture<SimpleMailMessage> email = constructMail(mail, subject, text);
     try {
@@ -51,7 +51,7 @@ public class EmailServiceImpl implements EmailService {
 
   }
 
-  @Async
+  @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
   public CompletableFuture<SimpleMailMessage> constructMail(String mail, String subject, String text){
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(mail);

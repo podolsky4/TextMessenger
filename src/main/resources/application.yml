@@ -10,7 +10,7 @@ application:
 #   Server port
 ###
 server:
-  port: 9000
+  port: 9001
 
 logging:
   level:
