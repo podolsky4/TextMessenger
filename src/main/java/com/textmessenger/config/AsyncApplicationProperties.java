@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = AsyncApplicationProperties.CONFIGURATION_PROPERTY_PREFIX,
         ignoreUnknownFields = false)
 public class AsyncApplicationProperties {
-  static final String CONFIGURATION_PROPERTY_PREFIX = "textMessanger";
+  static final String CONFIGURATION_PROPERTY_PREFIX = "textmessanger";
   private final Async async = new Async();
 
   public Async getAsync() {

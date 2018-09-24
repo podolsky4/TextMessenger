@@ -25,7 +25,7 @@ logging:
 
 spring:
   application:
-    name: textMessanger
+    name: textmessanger
   ###
   #   Database Settings
   ###
