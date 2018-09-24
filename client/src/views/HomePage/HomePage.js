@@ -21,6 +21,7 @@ const styles = theme => ({
     background: 'rgba(61, 33, 67, 0.28)'
   },
   homepage: {
+    marginTop: 80,
     background: '#00796B',
     display: 'flex',
     flexDirection: 'row',

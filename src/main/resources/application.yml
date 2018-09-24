@@ -1,5 +1,11 @@
 ws:
   path: /queue/messages
+
+application:
+  async:
+    core-pool-size: 10
+    max-pool-size: 50
+    queue-capacity: 10000
 ###
 #   Server port
 ###
@@ -21,8 +27,10 @@ logging:
 ###
 #   Mail Settings
 ###
-
+#
 spring:
+  application:
+    name: textmessanger
   ###
   #   Database Settings
   ###
