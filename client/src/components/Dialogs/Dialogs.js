@@ -41,10 +41,18 @@ const styles = theme => ({
     flexShrink: 1,
     flexBasis: 1,
     flexGrow: 1,
-    margin: '0 auto',
     maxWidth: 520,
     minWidth: 340,
-    padding: '0 1%'
+    margin: '0 auto 0 auto',
+      '@media (max-width: 900px)': {
+          flexDirection: 'column',
+          margin: '0 auto 0 3%',
+          maxWidth: 300,
+      },
+      '@media (max-width: 715px)': {
+          flexDirection: 'column',
+          margin: '0 auto 0 auto',
+      }
   },
   paper: {
     width: '100%',

@@ -45,7 +45,10 @@ const styles = theme => ({
     marginLeft: 'auto',
       '@media (max-width: 715px)': {
           marginTop: 26,
-      }
+      },
+      '@media (max-width: 900px)': {
+
+      },
   },
 
 
