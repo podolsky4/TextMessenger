@@ -44,10 +44,10 @@ const styles = theme => ({
     maxWidth: 520,
     minWidth: 340,
     margin: '0 auto 0 auto',
-      '@media (max-width: 900px)': {
+      '@media (max-width: 1000px)': {
           flexDirection: 'column',
-          margin: '0 auto 0 3%',
-          maxWidth: 300,
+          margin: '0 3% 0 auto',
+          width: 300,
       },
       '@media (max-width: 715px)': {
           flexDirection: 'column',
