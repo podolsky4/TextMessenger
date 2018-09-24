@@ -52,7 +52,7 @@ public class EmailServiceImpl implements EmailService {
   }
 
   @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
-  public CompletableFuture<SimpleMailMessage> constructMail(String mail, String subject, String text){
+  public CompletableFuture<SimpleMailMessage> constructMail(String mail, String subject, String text) {
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(mail);
     email.setSubject(subject);
