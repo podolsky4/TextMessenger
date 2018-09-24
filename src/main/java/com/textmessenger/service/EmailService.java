@@ -1,8 +1,6 @@
 package com.textmessenger.service;
 
-import com.textmessenger.config.AsyncConfiguration;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.scheduling.annotation.Async;
 
 public interface EmailService {
 
