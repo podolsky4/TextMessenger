@@ -11,6 +11,9 @@ import {Input} from '@material-ui/core/umd/material-ui.production.min'
 const styles = theme => ({
   search_input: {
     width: '78.2%',
+      '@media (max-width: 1300px)': {
+          maxWidth: '62%',
+      },
     '&:after': {
       borderBottom: '1px solid' + theme.palette.primary.main
     }
@@ -42,7 +45,7 @@ const styles = theme => ({
     justifyContent: 'space-between',
     display: 'flex',
     padding: '4px 4px 13px 4px',
-    margin: 6
+    margin: 6,
   }
 })
 

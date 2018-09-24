@@ -137,10 +137,10 @@ class Feed extends Component {
   }
 
   yHandler () {
-    const {pageAble, able, fetching} = this.props
+    const {pageAble, able, loadingPost} = this.props
     const {page, size} = this.state
     if (window.location.pathname === '/feed') {
-      if (fetching) {
+      if (loadingPost) {
         return
       }
       let wrap = document.getElementById('wrappp')
