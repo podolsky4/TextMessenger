@@ -21,8 +21,11 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center'
   },
-  /* Styles applied to the root element if selected. */
-  selected: {}
+  selected: {
+    color: theme.palette.primary.main,
+    background: theme.palette.primary.main,
+  },
+
 })
 
 class PostRetwite extends Component {
