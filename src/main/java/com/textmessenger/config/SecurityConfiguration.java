@@ -59,7 +59,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/api/users/login", "/console", "/static/**", "/*",
                     "/api/users/user", "/api/users/registered/**", "/api/users/resetPassword/**",
-                    "/api/users/forgotpassword", "/api/users/changePassword", "/console/*")
+                    "/api/users/forgotpassword", "/api/users/changePassword", "/console/*", "/actuator/**",
+                    "/login", "/logout", "/assets/**", "/instances", "/**/*.css", "/img/**", "/third-party/**")
             .permitAll()
             .anyRequest()
             .authenticated();

@@ -5,6 +5,7 @@ import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.FieldFromFront;
 import com.textmessenger.model.entity.dto.LoginRq;
+import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.model.entity.dto.ResponseToFront;
 import com.textmessenger.model.entity.dto.SearchValue;
 import com.textmessenger.model.entity.dto.UserToFrontFull;
@@ -33,9 +34,9 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 public class UserController {
   private final UserService userService;
-  private LoginService loginService;
+  private final LoginService loginService;
   private final EmailService emailService;
-  private TemporaryTokenRepository temporaryTokenRepository;
+  private final TemporaryTokenRepository temporaryTokenRepository;
 
   public UserController(UserService userService,
                         LoginService loginService,
@@ -112,7 +113,7 @@ public class UserController {
             .orElse(ResponseEntity.notFound().build());
   }
 
-  @PutMapping
+  @PostMapping
   public ResponseEntity updateUser(@Valid @RequestPart("firstName") String firstName,
                                    @RequestPart("lastName") String lastName,
                                    @RequestPart("address") String address,
@@ -143,7 +144,7 @@ public class UserController {
 
   @GetMapping("/favorites/{id}")
   public ResponseEntity getFavorites(@PathVariable("id") long id) {
-    return ResponseEntity.status(200).body(userService.getFavoritesById(id));
+    return ResponseEntity.status(200).body(PostToFront.convertListPostsToResponse(userService.getFavoritesById(id)));
   }
 
   @GetMapping("/favorites/login/{login}")

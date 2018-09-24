@@ -12,4 +12,6 @@ public interface CommentService {
   List<CommentToFront> findAllPostFromPost(Post post);
 
   void createComment(Post post, User user, Comment comment);
+
+  void deleteAllCommentsUnderPost(Post post);
 }
