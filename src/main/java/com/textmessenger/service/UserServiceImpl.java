@@ -18,7 +18,6 @@ import com.textmessenger.security.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -68,8 +67,6 @@ public class UserServiceImpl extends SessionAware implements UserService {
       if (byToken.get().getExpiryDate().compareTo(new Date()) <= 0) {
         user.setEnabled(true);
         userRepository.save(user);
-        SimpleMailMessage email = new SimpleMailMessage();
-        emailService.sendEmail(email);
         emailService.sendEmailFromMethods(user.getEmail(), "Congratulation your account is activate",
                 "Enjoy our application");
         temporaryTokenRepository.delete(byToken.get());
@@ -94,13 +91,13 @@ public class UserServiceImpl extends SessionAware implements UserService {
     TemporaryToken tempToken = new TemporaryToken();
     tempToken.setToken(UUID.randomUUID().toString());
     tempToken.setExpiryDate(new Date());
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
     User user1 = userRepository.save(user);
     tempToken.setUser(user1);
     temporaryTokenRepository.save(tempToken);
     emailService.sendEmailFromMethods(user1.getEmail(),
             "confirmation link to create account at Text Messenger application",
             "http://localhost:3000/registered/", tempToken.getToken());
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
     return userRepository.getOne(user.getId());
   }
 
