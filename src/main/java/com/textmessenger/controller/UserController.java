@@ -1,5 +1,6 @@
 package com.textmessenger.controller;
 
+import com.textmessenger.config.AsyncConfiguration;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.CredentialsPassword;
@@ -13,8 +14,12 @@ import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.service.EmailService;
 import com.textmessenger.service.LoginService;
 import com.textmessenger.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,23 +34,22 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(value = UserController.REQUEST_PATH_API_USERS)
 public class UserController {
+
+  static final String REQUEST_PATH_API_USERS = "/api/users";
+  private static final Logger log = LoggerFactory.getLogger(UserController.class);
   private final UserService userService;
   private final LoginService loginService;
-  private final EmailService emailService;
-  private final TemporaryTokenRepository temporaryTokenRepository;
 
   public UserController(UserService userService,
-                        LoginService loginService,
-                        EmailService emailService,
-                        TemporaryTokenRepository temporaryTokenRepository) {
+                        LoginService loginService) {
     this.userService = userService;
     this.loginService = loginService;
-    this.emailService = emailService;
-    this.temporaryTokenRepository = temporaryTokenRepository;
   }
 
   @GetMapping
@@ -101,11 +105,39 @@ public class UserController {
     return ResponseEntity.ok().body(ResponseToFront.convertResponseToFront(userService.setUserIsEnabled(token)));
   }
 
+  @Async(AsyncConfiguration.TASK_EXECUTOR_CONTROLLER)
   @GetMapping("/{id}")
-  public ResponseEntity readUser(@PathVariable("id") long id) {
-    return Optional.of(ResponseEntity.ok().body(userService.readUser(id)))
-            .orElse(ResponseEntity.notFound().build());
+  public CompletableFuture<ResponseEntity> readUser(@PathVariable("id") long id) {
+    return userService
+            .findOneById(id)
+            .thenApply(mapMaybeUserToResponse)
+            .exceptionally(handleGetUserFailure.apply(id));
   }
+
+  @Async(AsyncConfiguration.TASK_EXECUTOR_CONTROLLER)
+  @GetMapping("/all")
+  public CompletableFuture<ResponseEntity> getUsers(final Pageable paging) {
+    return userService
+            .findAll(paging)
+            .<ResponseEntity>thenApply(ResponseEntity::ok)
+            .exceptionally(handleGetUsersFailure);
+  }
+
+  private static Function<Throwable, ResponseEntity> handleGetUsersFailure = throwable -> {
+    log.error("Unable to retrieve users", throwable);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+  };
+
+  private static Function<Optional<User>, ResponseEntity> mapMaybeUserToResponse = maybeUser -> maybeUser
+          .<ResponseEntity>map(ResponseEntity::ok)
+          .orElse(ResponseEntity.notFound().build());
+
+  private static Function<Long, Function<Throwable, ResponseEntity>> handleGetUserFailure = id -> throwable -> {
+    log.error(String.format("Unable to retrieve user for id: %s", id), throwable);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+  };
+
 
   @PostMapping("/find")
   public ResponseEntity findAllUsers(@Valid @RequestBody SearchValue str) {

@@ -1,5 +1,6 @@
 ws:
   path: /queue/messages
+
 ###
 #   Server port
 ###
@@ -23,6 +24,8 @@ logging:
 ###
 
 spring:
+  application:
+    name: textMessanger
   ###
   #   Database Settings
   ###
