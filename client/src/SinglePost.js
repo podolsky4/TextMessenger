@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton'
 import classNames from 'classnames'
 import ThumbUpIcon from '../node_modules/@material-ui/icons/ThumbUp'
 import Comments from './components/Post/components/CommentList'
+import ShowLikers from './components/Post/ShowLikers'
 
 const styles = theme => ({
   // root: {
@@ -45,6 +46,9 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  textSome: {
+    color: 'black'
   }
 })
 
@@ -77,12 +81,8 @@ class SinglePost extends React.Component {
           </IconButton>
           <Typography>{currentPost.likers!==undefined && currentPost.likers.length}</Typography>
           </div>
-          {this.state.flag &&
-          <Comments comments={currentPost.comments}
-                    post={currentPost}
-                    user={currentPost.user}
-                    postUser={currentPost.user}
-                    flag={this.state.flag}/>
+          {this.state.flag && currentPost.likers.length === 0 ? <a className={classes.textSome}>"Noting to show"</a> :
+          <ShowLikers likers={currentPost.likers} flag={this.state.flag}/>
           }
         </Card>
       </div>
