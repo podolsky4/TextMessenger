@@ -3,6 +3,7 @@ package com.textmessenger.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.textmessenger.config.AmazonConfig;
+import com.textmessenger.config.AsyncConfiguration;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
@@ -15,7 +16,10 @@ import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
 import com.textmessenger.security.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,10 +33,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Transactional
 public class UserServiceImpl extends SessionAware implements UserService {
+
   @Autowired
   PasswordEncoder passwordEncoder;
   private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
@@ -283,5 +289,19 @@ public class UserServiceImpl extends SessionAware implements UserService {
     } else {
       return "Current password is not valid";
     }
+  }
+
+  @Override
+  @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
+  public CompletableFuture<Page<User>> findAll(final Pageable pageable) {
+    return userRepository.findAllBy(pageable);
+  }
+
+  @Override
+  @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
+  public CompletableFuture<Optional<User>> findOneById(final long id) {
+    return userRepository
+            .findOneById(id)
+            .thenApply(Optional::ofNullable);
   }
 }

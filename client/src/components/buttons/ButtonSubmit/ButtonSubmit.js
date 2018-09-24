@@ -8,7 +8,12 @@ import SendIcon from '@material-ui/icons/Send'
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+
+          '@media (max-width: 715px)': {
+              width: '100%',
+              margin: 10,
+          }
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
