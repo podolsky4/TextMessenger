@@ -27,7 +27,7 @@ logging:
 ###
 #   Mail Settings
 ###
-
+#
 spring:
   application:
     name: textmessanger
