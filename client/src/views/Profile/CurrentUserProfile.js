@@ -12,17 +12,23 @@ import TextField from '../../../node_modules/@material-ui/core/TextField/TextFie
 
 const styles = (theme) => ({
   ChangeUserProfileInfoCard: {
-    Width: '25%',
+    MinWidth: '25%',
     maxWidth: '300px',
     display: 'flex',
     flexDirection: 'column',
-    justifyItems: 'space-between',
+    justifyItems: 'flex-start',
     alignContent: 'center',
+    marginBottom: theme.spacing.unit * 2,
     '*': {
       borderRadius: '2px',
-      justifyContent: 'space-between',
-      alignItems: 'baseline'
-    }
+      justifyContent: 'flex-start',
+      alignItems: 'center'
+    },
+    '@media (max-width: 700px)': {
+        justifyItems: 'flex-start',
+        flexDirection: 'column'
+    },
+
   },
   ProfileCnt: {
     display: 'flex',
@@ -37,7 +43,13 @@ const styles = (theme) => ({
     flexShrink: 1,
     flexBasis: 1,
     flexGrow: 1,
-    maxWidth: 'fit-content'
+    maxWidth: 'fit-content',
+      '@media (max-width: 700px)': {
+          justifySelf: 'flex-start',
+          margin: 'auto',
+          width: 300,
+          flexDirection: 'column'
+      },
   },
   userPostList: {
     flexBasis: 1,
@@ -77,8 +89,8 @@ const styles = (theme) => ({
     background: theme.palette.background.dark
   },
   passwordWrap: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
+    // flexDirection: 'row',
+    // justifyContent: 'flex-start'
   }
 })
 
