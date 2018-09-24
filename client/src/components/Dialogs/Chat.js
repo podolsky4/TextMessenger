@@ -35,8 +35,8 @@ const styles = theme => ({
     flexBasis: 1,
     flexGrow: 1,
     flexShrink: 1,
-    maxWidth: 720,
-    minWidth: 200,
+    maxWidth: 620,
+    minWidth: 300,
     borderRadius: 6,
     padding: '14px 2px',
     background: '#00897B',
@@ -44,10 +44,16 @@ const styles = theme => ({
     marginRight: 'auto',
     marginLeft: 'auto',
       '@media (max-width: 715px)': {
-          marginTop: 26,
+          marginTop: 16,
       },
-      '@media (max-width: 900px)': {
-
+      '@media (max-width: 1020px)': {
+          maxWidth: 500,
+      },
+      '@media (max-width: 850px)': {
+          maxWidth: 380,
+      },
+      '@media (max-width: 500px)': {
+          maxWidth: 250,
       },
   },
 
