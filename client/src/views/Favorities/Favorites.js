@@ -12,7 +12,8 @@ import Grid from '@material-ui/core/Grid'
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
-		alignItems: 'center'
+		alignItems: 'center',
+		padding: 16,
 	},
 	wrap: {
 		margin: 'auto'
@@ -25,16 +26,22 @@ const styles = theme => ({
 		// width: "calc(100vw - " + theme.spacing.unit * 3 + "px)",
 		justifySelf: 'flex-start',
 		alignSelf: 'center',
-		margin: ['auto', theme.spacing.unit * 3, theme.spacing.unit * 3, 'auto'],
+		margin: [theme.spacing.unit * 3, 'auto', theme.spacing.unit * 4, 'auto'],
 		marginTop: theme.spacing.unit * 2.5,
-		'&:after': {
+        marginBottom: theme.spacing.unit * 2.5,
+		'&::after': {
 			borderBottom: theme.palette.primary.dark + ' 6px solid'
 		}
 	},
 	badge: {
 		top: 3,
-		right: -23
+		right: -29
 	},
+    paperTitle: {
+		paddingLeft: 16,
+		paddingRight: 16,
+
+	}
 })
 
 class Favorites extends Component {
@@ -66,7 +73,7 @@ class Favorites extends Component {
 						<Paper className={classes.paper} elevation={0}>
 							<Badge badgeContent={favorites.length} color='primary'
 										 classes={{badge: classes.badge}}>
-								<h2>Posts you liked</h2>
+								<h2 className={classes.paperTitle}>Posts you liked</h2>
 							</Badge>
 						</Paper>
 						<PostList posts={favorites}/>
