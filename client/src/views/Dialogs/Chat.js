@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import MessagesList from '../MessagesList'
+import MessagesList from './MessagesList'
 import {createMessage} from '../../actions/dialogActions'
 import TextField from '@material-ui/core/TextField'
 import {withStyles} from '@material-ui/core/styles'
@@ -40,7 +40,7 @@ const styles = theme => ({
     borderRadius: 6,
     padding: '14px 2px',
     background: '#00897B',
-    marginTop: -15,
+    marginTop: 65,
     marginRight: 'auto',
     marginLeft: 'auto',
       '@media (max-width: 715px)': {
