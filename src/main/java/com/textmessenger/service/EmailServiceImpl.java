@@ -20,4 +20,23 @@ public class EmailServiceImpl implements EmailService {
   public void sendEmail(SimpleMailMessage email) {
     javaMailSender.send(email);
   }
+
+  @Override
+  @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
+  public void sendEmailFromMethods(String mail, String subject, String setText, String token) {
+    SimpleMailMessage email = new SimpleMailMessage();
+    email.setTo(mail);
+    email.setSubject(subject);
+    email.setText(setText + token);
+    javaMailSender.send(email);
+  }
+
+  @Override
+  public void sendEmailFromMethods(String mail, String subject, String text) {
+    SimpleMailMessage email = new SimpleMailMessage();
+    email.setTo(mail);
+    email.setSubject(subject);
+    email.setText(text);
+    javaMailSender.send(email);
+  }
 }
