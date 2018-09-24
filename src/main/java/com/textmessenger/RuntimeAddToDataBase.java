@@ -23,7 +23,7 @@ public class RuntimeAddToDataBase {
         user.setLogin("admin");
         user.setEnabled(true);
         user.setPassword(passwordEncoder.encode("admin"));
-        userRepository.save(user);
+       // userRepository.save(user);
       }
     };
   }

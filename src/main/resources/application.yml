@@ -21,7 +21,7 @@ logging:
 ###
 #   Mail Settings
 ###
-
+#
 spring:
   ###
   #   Database Settings
