@@ -21,24 +21,43 @@ const styles = theme => ({
   },
   text: {
     width: '73%',
-    padding: '8px'
+    padding: '8px',
+
+      '@media (max-width: 715px)': {
+          width: '100%',
+          margin: 5,
+      }
   },
   textarea: {
     borderRadius: '2px'
   },
   chat: {
     flexBasis: 1,
-    flexGrow: 1.8,
+    flexGrow: 1,
     flexShrink: 1,
-    width: 500,
-    maxWidth: 720,
-    minWidth: 400,
+    maxWidth: 620,
+    minWidth: 300,
     borderRadius: 6,
     padding: '14px 2px',
     background: '#00897B',
     marginTop: -15,
     marginRight: 'auto',
-  }
+    marginLeft: 'auto',
+      '@media (max-width: 715px)': {
+          marginTop: 16,
+      },
+      '@media (max-width: 1020px)': {
+          maxWidth: 500,
+      },
+      '@media (max-width: 850px)': {
+          maxWidth: 380,
+      },
+      '@media (max-width: 500px)': {
+          maxWidth: 250,
+      },
+  },
+
+
 })
 
 class Chat extends Component {
@@ -75,7 +94,7 @@ class Chat extends Component {
     const {user, messages, classes} = this.props
     return (
       <div className={classes.chat}>
-        {messages.length !==0 && <MessagesList messages={messages} user={user}/>}
+         <MessagesList messages={messages} user={user}/>
         <form onSubmit={e => this.onSubmit(e)} className={classes.container}>
           <TextField
             defaultValue={null}
