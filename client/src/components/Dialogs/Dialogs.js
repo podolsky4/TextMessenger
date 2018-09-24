@@ -32,7 +32,10 @@ const styles = theme => ({
     justifyContent: 'space-between',
     padding: '32px',
     background: '#009688',
-    minHeight: '96vh'
+    minHeight: '96vh',
+      '@media (max-width: 715px)': {
+          flexDirection: 'column',
+      }
   },
   dialogs: {
     flexShrink: 1,
@@ -40,6 +43,7 @@ const styles = theme => ({
     flexGrow: 1,
     margin: '0 auto',
     maxWidth: 520,
+    minWidth: 340,
     padding: '0 1%'
   },
   paper: {
