@@ -25,12 +25,6 @@ public class EmailServiceImpl implements EmailService {
 
   @Override
   @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
-  public void sendEmail(SimpleMailMessage email) {
-    javaMailSender.send(email);
-  }
-
-  @Override
-  @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
   public void sendEmailFromMethods(String mail, String subject, String setText, String token) {
     SimpleMailMessage email = new SimpleMailMessage();
     email.setTo(mail);
@@ -45,7 +39,7 @@ public class EmailServiceImpl implements EmailService {
     CompletableFuture<SimpleMailMessage> email = constructMail(mail, subject, text);
     try {
       javaMailSender.send(email.get());
-    } catch (InterruptedException | MailException | ExecutionException e ) {
+    } catch (InterruptedException | MailException | ExecutionException e) {
       log.error(String.valueOf(e));
     }
 
