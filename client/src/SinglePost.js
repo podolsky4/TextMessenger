@@ -81,13 +81,6 @@ class SinglePost extends React.Component {
       this.setState({flagRet:!this.state.flagRet})
   }
 
-  coment(){
-    this.setState({flagComment:!this.state.flagComment})
-  }
-
-  likersa(){
-    this.setState({flagLike:!this.state.flagLike})
-  }
   render () {
     const {currentPost, classes, usersWhoRetweet} = this.props
 
