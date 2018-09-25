@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -111,5 +112,13 @@ public class PostServiceImpl extends SessionAware implements PostService {
   @Override
   public void deleteRetweetsByParentId(long parentId) {
     postRepository.deletePostsByParentId(parentId);
+  }
+
+  @Override
+  public List<User> getAllUsersFromPostsWhereParentId(long id) {
+    List<Post> allByParent = postRepository.findAllByParent(postRepository.getOne(id));
+    List<User> res = new ArrayList<>();
+    allByParent.forEach(post -> res.add(post.getUser()));
+    return res;
   }
 }

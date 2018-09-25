@@ -14,6 +14,7 @@ import comments from './comments'
 import registration from './registration'
 import able from './able'
 import currentPost from './currentPost'
+import usersWhoRetweet from './usersWhoRetweet'
 
 export default combineReducers({
   user,
@@ -30,5 +31,6 @@ export default combineReducers({
   comments,
   registration,
   able,
-  currentPost
+  currentPost,
+  usersWhoRetweet
 })

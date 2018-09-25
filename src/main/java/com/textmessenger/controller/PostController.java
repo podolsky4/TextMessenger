@@ -3,6 +3,7 @@ package com.textmessenger.controller;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.service.CommentService;
 import com.textmessenger.service.PostService;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,14 @@ public class PostController {
   PostController(PostService postService, CommentService commentService) {
     this.postService = postService;
     this.commentService = commentService;
+  }
+
+  @GetMapping("/retweeting/{id}")
+  public ResponseEntity getAllPostWhereParentIdIs(@PathVariable long id) {
+    return ResponseEntity.ok()
+            .body(UserToFrontShort
+                    .convertListUsersForFront(postService
+                            .getAllUsersFromPostsWhereParentId(id)));
   }
 
   @GetMapping("/{id}")

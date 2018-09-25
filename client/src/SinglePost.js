@@ -1,6 +1,6 @@
 import React from 'react'
 import connect from 'react-redux/es/connect/connect'
-import { currentPost } from './actions/postsActions'
+import { currentPost, usersFromPostsWhereParent } from './actions/postsActions'
 import Typography from '../node_modules/@material-ui/core/Typography/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import CardContent from '../node_modules/@material-ui/core/CardContent/CardContent'
@@ -12,6 +12,7 @@ import Comments from './components/Post/components/CommentList'
 import CommentIcon from '@material-ui/icons/Comment'
 import RepeateIcon from '@material-ui/icons/Repeat'
 import ShowLikers from './components/Post/ShowLikers'
+import Retwee from './components/Post/Retwee'
 
 const styles = theme => ({
 	rt: {
@@ -58,12 +59,14 @@ const styles = theme => ({
 class SinglePost extends React.Component {
     state = {
       flagLike: false,
-      flagComment: false
+      flagComment: false,
+      flagRet: false
   }
 
   componentWillMount () {
-    const {loadPost} = this.props
+    const {loadPost,loadAllUserWhoRetweetCurrentPost} = this.props
     loadPost(this.props.match.params.postId)
+    loadAllUserWhoRetweetCurrentPost(this.props.match.params.postId)
   }
 
   coment(){
@@ -73,8 +76,11 @@ class SinglePost extends React.Component {
   likersa(){
     this.setState({flagLike:!this.state.flagLike})
   }
+  retweeti(){
+      this.setState({flagRet:!this.state.flagRet})
+  }
   render () {
-    const {currentPost, classes} = this.props
+    const {currentPost, classes, usersWhoRetweet} = this.props
 
     return<div>
       <div className={classes.singlePostWrapper}>
@@ -108,24 +114,25 @@ class SinglePost extends React.Component {
             >
               <CommentIcon />
             </IconButton>
-            <IconButton className={
-              classNames(
+            <IconButton
+              className={classNames(
                 classes.rt,
                 {[classes.selected]: this.state.retweet},
                 {[classes.retweet]: this.state.retweet},
                 {[classes.tweet]: true}
-              )} aria-label="ReTweet">
+              )} aria-label="ReTweet"
+              onClick={() => this.retweeti()}
+            >
               <RepeateIcon/>
             </IconButton>
           </div>
 
           {this.state.flagLike && currentPost.likers.length === 0 ?
-            <a className={classes.textSome}>"Noting to show"</a>
+            <a className={classes.textSome}>Nothing to show</a>
             : <ShowLikers
               likers={currentPost.likers}
               flag={this.state.flagLike}/>
           }
-
           {this.state.flagComment &&
           currentPost.comments.length === 0 ?
             <a>Nothing to show</a>
@@ -136,6 +143,8 @@ class SinglePost extends React.Component {
                     flag={this.state.flagComment}
                     notInput={true}/>
           }
+          {this.state.flagRet && usersWhoRetweet.length === 0 ? <a>Nothing to show</a> :
+            <Retwee flag={this.state.flagRet} users={usersWhoRetweet}/>}
         </Card>
       </div>
     </div>
@@ -143,12 +152,14 @@ class SinglePost extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    currentPost: state.currentPost
+    currentPost: state.currentPost,
+    usersWhoRetweet: state.usersWhoRetweet
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    loadPost: (id) => dispatch(currentPost(id))
+    loadPost: (id) => dispatch(currentPost(id)),
+    loadAllUserWhoRetweetCurrentPost: (id) => dispatch(usersFromPostsWhereParent(id))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SinglePost))
