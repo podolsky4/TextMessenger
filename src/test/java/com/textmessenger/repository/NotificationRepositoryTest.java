@@ -23,7 +23,6 @@ public class NotificationRepositoryTest {
   @Autowired
   private TestEntityManager entityManager;
 
-
   @Test
   public void findAllNotification() {
     List<Notification> all = notificationRepository.findAll();
@@ -38,6 +37,5 @@ public class NotificationRepositoryTest {
     notification.setType(NotificationStatus.MESSAGE.toString());
     return entityManager.persist(notification);
   }
-
 
 }
