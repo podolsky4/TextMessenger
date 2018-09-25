@@ -54,7 +54,12 @@ const styles = theme => ({
     justifyContent: 'space-evenly',
     width: '100%',
     padding: 0
-	}
+	},
+  likkkk:{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
 })
 
 class SinglePost extends React.Component {
@@ -98,6 +103,7 @@ class SinglePost extends React.Component {
             </Typography>
           </CardContent>
           <div className={classes.wrappppppp}>
+            <div className={classes.likkkk}>
             <IconButton
               onClick={() => this.likersa()}
               aria-label="Likes">
@@ -106,7 +112,8 @@ class SinglePost extends React.Component {
             <Typography>
               {currentPost.likers!==undefined && currentPost.likers.length}
             </Typography>
-
+            </div>
+            <div className={classes.likkkk}>
             <IconButton
               onClick={() => this.coment()}
               className={classNames(classes.rt, 'comment',
@@ -116,6 +123,11 @@ class SinglePost extends React.Component {
             >
               <CommentIcon />
             </IconButton>
+              <Typography>
+                {currentPost.comments!==undefined && currentPost.comments.length}
+              </Typography>
+            </div>
+            <div className={classes.likkkk}>
             <IconButton
               className={classNames(
                 classes.rt,
@@ -127,6 +139,10 @@ class SinglePost extends React.Component {
             >
               <RepeateIcon/>
             </IconButton>
+              <Typography>
+                {usersWhoRetweet!==undefined && usersWhoRetweet.length}
+              </Typography>
+            </div>
           </div>
           {this.state.flagLike && currentPost.likers.length === 0 ?
             <a className={classes.textSome}>Nothing to show</a>
