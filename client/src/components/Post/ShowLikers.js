@@ -1,34 +1,29 @@
-import React, {Component} from 'react'
-import {List} from '@material-ui/core/umd/material-ui.production.min'
+import React, { Component, Fragment } from 'react'
 import {withStyles} from '@material-ui/core/styles'
 import LikeToSinglePost from './LikeToSinglePost'
+import ListItem from '../../../node_modules/@material-ui/core/ListItem/ListItem'
 
 const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center'
   },
-  CommentTextField: {
-    display: 'flex',
-    width: '100%',
-    marginRight: 32
-  },
-  postCreator: {
-    display: 'flex',
-    alignItems: 'start',
-    margin: 16,
-    width: '94%',
-    justifyContent: 'space-between',
-  },
-  btnCreatePost: {
 
+  likedAvaCont: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    marginLeft: 19,
+  '&:first-child': {
+    marginLeft: -3,
+    marginRight: +3,
+  }
   }
 })
 
 class ShowLikers extends Component {
 
   render () {
-    const {likers, flag} = this.props
+    const {likers, flag, classes} = this.props
     let maped = like => {
       return (
         <LikeToSinglePost
@@ -37,15 +32,17 @@ class ShowLikers extends Component {
         />
       )
     }
-    return (
-      <div>
-        {flag &&
-        <List dense>
+    return<Fragment>
+    {flag &&
+          <Fragment>
+          <h3>People how liked you post</h3>
+          <ListItem className={classes.likedAvaCont}>
           {likers.map(i => maped(i))}
-        </List>
+        </ListItem>
+          </Fragment>
         }
-      </div>
-    )
+
+    </Fragment>
   }
 }
 
