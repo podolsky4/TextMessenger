@@ -18,4 +18,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   Page<Post> findAllByOrderByCreatedDateDesc(Pageable pageable);
 
   void deletePostsByParentId(long parentId);
+
+  List<Post> findAllByParent(Post parentId);
 }

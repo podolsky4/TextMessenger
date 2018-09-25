@@ -154,7 +154,9 @@ class Notifications extends Component {
                 <Grid zeroMinWidth
                       direction="column"
                       justify="center"
-                      alignItems="stretch">
+                      alignItems="stretch"
+                      style={{marginTop:'80px'}}
+                >
                     <Typography component={'h6'}>Your Notifications</Typography>
                     {notification.length !== 0 &&
                     notification.map(u => this.read(u))
