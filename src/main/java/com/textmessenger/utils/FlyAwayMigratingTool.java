@@ -9,6 +9,7 @@ public class FlyAwayMigratingTool {
 
     // Point it to the database
     flyway.setDataSource("jdbc:h2:mem:example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;", "sa", null);
+    flyway.baseline();
 
     // Start the migration
     flyway.migrate();
