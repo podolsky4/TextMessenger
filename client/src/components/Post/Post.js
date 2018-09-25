@@ -133,15 +133,16 @@ class Post extends Component {
               commentsAmount = {post.comments.length}
             />
           </CardActions>
-
+<div className="ListComments">
           {this.state.flag &&
             <Comments comments={post.comments}
               post={post}
               user={user}
               postUser={post.user}
-              flag={this.state.flag}/>
+              flag={this.state.flag}
+            />
           }
-
+</div>
         </Card>
 
       </Grid>

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component, Fragment } from 'react'
 import {connect} from 'react-redux'
 import {createComment} from '../../../actions/postsActions'
 import Comment from './Comment'
@@ -6,6 +6,7 @@ import Loader from '../../Loader/Loader'
 import {Button, List, TextField} from '@material-ui/core/umd/material-ui.production.min'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
+import Typography from '../../../../node_modules/@material-ui/core/Typography/Typography'
 
 const styles = theme => ({
   root: {
@@ -26,6 +27,12 @@ const styles = theme => ({
   },
   btnCreatePost: {
 
+  },
+  listik:{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '100%'
   }
 })
 
@@ -80,11 +87,15 @@ class CommentList extends Component {
     }
 
     return (
-      <div>
+      <div className="ListCommentInner">
         {flag &&
-        <List dense>
-            {comments.map(i => maped(i))}
-        </List>
+          <Fragment>
+             <hr />
+            <h3 style={{textAlign:'center'}}>People how comment you post</h3>
+            <List className={classes.listik} dense>
+                {comments.map(i => maped(i))}
+            </List>
+          </Fragment>
         }
         {commentReload && <Loader/>}
         {notInput === undefined &&

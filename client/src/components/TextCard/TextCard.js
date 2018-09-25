@@ -13,7 +13,8 @@ const styles = theme => ({
     width: '60%',
     marginTop: theme.spacing.unit * 1,
     background: 'rgba(0, 0, 0, 0.4)',
-    color: 'white'
+    color: 'white',
+    overflow:'hidden'
   },
   heading: {
     color: 'rgba(255, 255, 255, 0.92)'
@@ -62,10 +63,5 @@ const TextCard = (props) => {
 
   )
 }
-
-// TextCard.propTypes = {
-//     classes: PropTypes.object.isRequired,
-//     text: PropTypes.string,
-// };
 
 export default withStyles(styles)(TextCard)

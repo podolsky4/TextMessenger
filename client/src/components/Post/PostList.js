@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component} from 'react'
 import Post from './Post'
 import {withStyles} from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
@@ -7,7 +7,8 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     maxWidth: 862,
-    margin: 'auto'
+    margin: 'auto',
+    marginTop: 80
   }
 })
 
@@ -37,9 +38,9 @@ class PostList extends Component {
           alignItems="center"
         >
           <Grid item xs={12} sm={12} lg={10} md={10}>
-            <React.Fragment>
+            <div className="listPosts">
               {posts.map((content, index) => current(content, index))}
-            </React.Fragment>
+            </div>
           </Grid>
         </Grid>
       </div>

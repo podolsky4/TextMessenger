@@ -55,7 +55,7 @@ const styles = (theme) => ({
       },
   },
   userPostList: {
-      marginTop: 80,
+    marginTop: 80,
     flexBasis: 1,
     flexGrow: 5,
     flexShrink: 1,
@@ -93,8 +93,6 @@ const styles = (theme) => ({
     background: theme.palette.background.dark
   },
   passwordWrap: {
-    // flexDirection: 'row',
-    // justifyContent: 'flex-start'
   }
 })
 

@@ -6,10 +6,23 @@ import { connect } from 'react-redux'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Loader from '../../components/Loader/Loader'
 import UnsecureRouter from '../Router/UnsecureRouter'
-import { withStyles } from '@material-ui/core/styles'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import HeaderRouter from '../Router/HeaderRouter'
+
+import JssProvider from 'react-jss/lib/JssProvider';
+import { create } from 'jss';
+import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
+
+const styleNode = document.createComment("jss-insertion-point");
+document.head.insertBefore(styleNode, document.head.firstChild);
+
+const generateClassName = createGenerateClassName();
+const jss = create({
+  ...jssPreset(),
+  // We define a custom insertion point that JSS will look for injecting the styles in the DOM.
+  insertionPoint: 'jss-insertion-point',
+});
 
 const theme = createMuiTheme({
   palette: {
@@ -38,15 +51,7 @@ const theme = createMuiTheme({
   }
 })
 
-const styles = () => ({
-  loaderApp: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    background: '#00796B'
-  }
-})
+
 
 class App extends Component {
   componentWillMount () {
@@ -57,25 +62,28 @@ class App extends Component {
   }
 
   render () {
-    const {user, classes} = this.props
+    const {user} = this.props
 
     if (!user) {
-      return <div className={classes.loaderApp}>
-        <Loader/>
+      return <div className="loaderApp">
+        <Loader />
       </div>
     }
 
     if (!user.id) {
       return (
+        <JssProvider jss={jss} generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme}>
           <CssBaseline>
             <UnsecureRouter/>
           </CssBaseline>
         </MuiThemeProvider>
+        </JssProvider>
       )
     }
 
     return (
+      <JssProvider jss={jss} generateClassName={generateClassName}>
       <MuiThemeProvider theme={theme}>
         <CssBaseline>
           <HeaderRouter/>
@@ -83,6 +91,7 @@ class App extends Component {
           <SecureRouter/>
         </CssBaseline>
       </MuiThemeProvider>
+      </JssProvider>
     )
   }
 }
@@ -98,4 +107,4 @@ const mapDispatchToProps = dispatch => {
     getCurrentUserPoint: () => dispatch(getCurrentUser())
   }
 }
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(App))
+export default connect(mapStateToProps, mapDispatchToProps)(App)

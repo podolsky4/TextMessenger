@@ -16,7 +16,7 @@ const styles = theme => ({
 		padding: 16,
 	},
 	wrap: {
-		margin: 'auto',
+		margin: 'auto'
 
 	},
 	paper: {
