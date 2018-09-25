@@ -62,4 +62,7 @@ spring:
       settings:
         trace: true
         web-allow-others: true
+  flyway:
+    baseline-version: 1
+    baseline-on-migrate: true
 
