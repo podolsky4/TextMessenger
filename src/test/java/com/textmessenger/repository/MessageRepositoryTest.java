@@ -1,6 +1,6 @@
 package com.textmessenger.repository;
 
-import com.textmessenger.model.entity.Comment;
+import com.textmessenger.model.entity.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,27 +12,26 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class CommentRepositoryTest {
+public class MessageRepositoryTest {
 
   @Autowired
-  private CommentRepository commentRepository;
+  private MessageRepository messageRepository;
 
   @Autowired
   private TestEntityManager entityManager;
 
   @Test
-  public void findAllComment() {
-    List<Comment> all = commentRepository.findAll();
-    int allComment = all.size();
-    assertThat(all).hasSize(allComment);
+  public void findAllMessages() {
+    List<Message> all = messageRepository.findAll();
+    int allMessages = all.size();
+    assertThat(all).hasSize(allMessages);
   }
 
-  public Comment setComment() {
-    Comment comment = new Comment();
-    comment.setContent("content");
-    return entityManager.persist(comment);
+  public Message setMessage() {
+    Message message = new Message();
+    message.setContent("message");
+    return entityManager.persist(message);
   }
 }
