@@ -13,7 +13,7 @@ import {withStyles} from '@material-ui/core/styles'
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    margin: '32px auto',
+    margin: '0 auto',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -154,7 +154,9 @@ class Notifications extends Component {
                 <Grid zeroMinWidth
                       direction="column"
                       justify="center"
-                      alignItems="stretch">
+                      alignItems="stretch"
+                      style={{marginTop:'80px'}}
+                >
                     <Typography component={'h6'}>Your Notifications</Typography>
                     {notification.length !== 0 &&
                     notification.map(u => this.read(u))

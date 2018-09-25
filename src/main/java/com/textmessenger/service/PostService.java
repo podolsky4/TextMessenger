@@ -26,4 +26,6 @@ public interface PostService {
 
 
   void deleteRetweetsByParentId(long parentId);
+
+  List<User> getAllUsersFromPostsWhereParentId(long id);
 }

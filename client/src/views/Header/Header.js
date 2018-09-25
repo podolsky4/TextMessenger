@@ -19,7 +19,10 @@ import FetchData from '../../actions/serviceAction'
 
 const styles = (theme,) => ({
 	root: {
-		flexGrow: 1
+		flexGrow: 1,
+        position: ' fixed',
+		width: '100vw',
+		zIndex: 1000,
 	},
 	headingContainer: {
 		display: 'flex',
@@ -167,9 +170,6 @@ class Header extends React.Component {
 					</div>
 					<div className={classes.leftHeaderContainer}>
 					<div className={classes.menuIcons}>
-						{/*<IconButton color="inherit" component={Link} to='/'>*/}
-						{/*<HomeIcon className={classes.icon}/>*/}
-						{/*</IconButton>*/}
 						<IconButton color="inherit" component={Link} to='/feed'>
 							<PublicIcon className={classes.icon}/>
 						</IconButton>
@@ -181,10 +181,12 @@ class Header extends React.Component {
 						</IconButton>
 						<IconButton aria-label={notification.length + "pending messages"} color="inherit" component={Link}
 												to='/notifications'>
-							<Badge badgeContent={badge.length} color='secondary'
-										 classes={{badge: classes.badge}}>
-								<NotificationsIcon className={classes.icon}/>
-							</Badge>
+
+              <Badge badgeContent={badge.length} color='secondary'
+                     classes={{badge: classes.badge}}>
+                <NotificationsIcon className={classes.icon}/>
+              </Badge>
+
 						</IconButton>
 					</div>
 					{!noUser &&

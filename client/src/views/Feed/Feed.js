@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {createPostWithOrWithOutImage, loadFavorites, loadPagePost} from '../../actions/postsActions'
 import PostList from '../../components/Post/PostList'
-import Loader from '../../components/Loader/Loader'
+import LoaderLine from '../../components/Loader/LoaderLine'
 
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper/'
@@ -16,6 +16,7 @@ import FormControl from '@material-ui/core/FormControl/FormControl'
 import Input from '@material-ui/core/Input/Input'
 import classNames from 'classnames'
 import Button from '../../../node_modules/@material-ui/core/Button/Button'
+import Loader from "../../components/Loader/Loader";
 
 const styles = theme => ({
   root: {
@@ -33,7 +34,8 @@ const styles = theme => ({
   form: {
     background: '#fafafa',
     display: 'flex',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    marginTop: 80,
   },
   textField: {
     padding: '30px 8px 16px 16px',
@@ -135,19 +137,21 @@ class Feed extends Component {
   }
 
   yHandler () {
-    const {pageAble, able, fetching} = this.props
+    const {pageAble, able, loadingPost} = this.props
     const {page, size} = this.state
     if (window.location.pathname === '/feed') {
-      if (fetching) {
+      if (loadingPost) {
         return
       }
       let wrap = document.getElementById('wrappp')
-      let content = wrap.offsetHeight
+      let content = wrap.offsetHeight - 40
       let yOffset = window.pageYOffset
-      let y = yOffset + window.innerHeight - 10
-      if (able && y >= content) {
+      let y = yOffset + window.innerHeight
+      if (able && y >= (content)) {
         pageAble(page, size, this.setState.bind(this, {page: this.state.page + 1}))
       }
+      console.log("fetching :", this.props.loadingPost)
+      console.log("loaded posts :", this.props.loadingPost)
     }
   }
 
@@ -156,7 +160,7 @@ class Feed extends Component {
   }
   render () {
     const {able, posts, user, classes} = this.props
-    const {reloadLoader} = this.props
+    const {reloadLoader, loadingPost} = this.props
     const upload = <ButtonUploadFloating />
     if (!user.id) {
       return <Redirect to={`/`}/>
@@ -233,10 +237,13 @@ class Feed extends Component {
                 </FormControl>
                 <ButtonPost flowRight/>
               </form>
-              {reloadLoader && <Loader/>}
+              {reloadLoader && <LoaderLine/>}
             </Paper>
               </Grid>
               <PostList posts={posts} user={user}/>
+              {loadingPost &&
+                  <Loader/>
+              }
           </Grid>
         </Grid>
         </Grid>
@@ -251,7 +258,7 @@ const mapStateToProps = state => {
     posts: state.posts,
     favorites: state.favorites,
     reloadLoader: state.reloadLoader,
-    fetching: state.loader.loadingPost,
+    loadingPost: state.loader.loadingPost,
     able: state.able.postAble
   }
 }

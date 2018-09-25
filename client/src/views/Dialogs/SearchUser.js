@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import Loader from './Loader/Loader'
-import {findUsers} from '../actions/userActions'
-import {addUserToExistDialog, createDialog} from '../actions/dialogActions'
+import Loader from '../../components/Loader/Loader'
+import {findUsers} from '../../actions/userActions'
+import {addUserToExistDialog, createDialog} from '../../actions/dialogActions'
 import {withStyles} from '@material-ui/core/styles/index'
 import classnames from 'classnames'
 import Button from '@material-ui/core/Button/Button'
@@ -11,6 +11,9 @@ import {Input} from '@material-ui/core/umd/material-ui.production.min'
 const styles = theme => ({
   search_input: {
     width: '78.2%',
+      '@media (max-width: 1300px)': {
+          maxWidth: '62%',
+      },
     '&:after': {
       borderBottom: '1px solid' + theme.palette.primary.main
     }
@@ -42,7 +45,7 @@ const styles = theme => ({
     justifyContent: 'space-between',
     display: 'flex',
     padding: '4px 4px 13px 4px',
-    margin: 6
+    margin: 6,
   }
 })
 

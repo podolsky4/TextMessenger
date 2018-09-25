@@ -16,7 +16,8 @@ const styles = theme => ({
 		padding: 16,
 	},
 	wrap: {
-		margin: 'auto'
+		margin: 'auto',
+
 	},
 	paper: {
 		background: theme.palette.background.grey,
@@ -27,7 +28,7 @@ const styles = theme => ({
 		justifySelf: 'flex-start',
 		alignSelf: 'center',
 		margin: [theme.spacing.unit * 3, 'auto', theme.spacing.unit * 4, 'auto'],
-		marginTop: theme.spacing.unit * 2.5,
+		marginTop: 80,
         marginBottom: theme.spacing.unit * 2.5,
 		'&::after': {
 			borderBottom: theme.palette.primary.dark + ' 6px solid'
