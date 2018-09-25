@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import {List} from '@material-ui/core/umd/material-ui.production.min'
 import {withStyles} from '@material-ui/core/styles'
 import LikeToSinglePost from './LikeToSinglePost'
 import ListItem from '../../../node_modules/@material-ui/core/ListItem/ListItem'

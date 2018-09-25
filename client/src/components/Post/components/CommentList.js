@@ -6,7 +6,6 @@ import Loader from '../../Loader/Loader'
 import {Button, List, TextField} from '@material-ui/core/umd/material-ui.production.min'
 import {withStyles} from '@material-ui/core/styles'
 import classnames from 'classnames'
-import Typography from '../../../../node_modules/@material-ui/core/Typography/Typography'
 
 const styles = theme => ({
   root: {
