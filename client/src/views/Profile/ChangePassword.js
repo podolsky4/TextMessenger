@@ -15,11 +15,11 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 
 const styles = theme => ({
     paperPassword: {
-        // marginTop: theme.spacing.unit * 5,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         maxWidth: 400,
+      marginTop: 75,
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
         background: theme.palette.primary.accentOpacity,
         margin: '0 10%',
@@ -27,15 +27,9 @@ const styles = theme => ({
             justifyItems: 'center',
             justifySelf: 'flex-start',
             maxWidth: 300,
-            marginLeft: "auto",
-            margin: '0 0%',
+
         },
     },
-    // center: {
-    //     display: 'flex',
-    //     flexDirection: 'column',
-    //     alignItems: 'center'
-    // },
     avatar: {
         margin: theme.spacing.unit,
         backgroundColor: theme.palette.secondary.main
@@ -67,7 +61,6 @@ class ChangePassword extends Component {
     }
 
   componentDidMount() {
-// custom rule will have name 'isPasswordMatch'
   ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
     if (value !== this.state.createPassword) {
       return false;

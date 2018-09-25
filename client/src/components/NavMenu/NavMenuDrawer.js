@@ -52,15 +52,13 @@ const styles = (theme) => ({
 	  NavItemText: {
       textDecoration: 'none',
 	    textDecorationLine: 'none',
-    },
-	  badge:{
-      top: -12,
-      right: -12
+      marginRight:10
     },
 	  divider: {
 			background: theme.palette.background.grey,
 			color:  theme.palette.background.grey,
-    }
+    },
+
 })
 
 class NavMenuDrawer extends React.Component {
@@ -83,13 +81,6 @@ let badge = notification.filter(e => e.status === false)
 
     const sideList = (
       <div className={classes.list}>
-        {/*<List component={Link} to='/' className={classes.NavItem}>*/}
-          {/*<IconButton color="primary">*/}
-            {/*<HomeIcon className={classes.icon}/>*/}
-          {/*</IconButton>*/}
-          {/*<Typography className={classes.NavItemText}  component={'h3'}> Home</Typography>*/}
-        {/*</List>*/}
-        {/*<Divider className={classes.divider}/>*/}
         <List component={Link} to='/feed' className={classes.NavItem}>
           <IconButton color="primary">
             <PublicIcon className={classes.icon}/>
@@ -118,8 +109,9 @@ let badge = notification.filter(e => e.status === false)
           <IconButton color="primary">
             <NotificationsIcon className={classes.icon}/>
           </IconButton>
-					<Typography className={classes.NavItemText} component={'h3'}> Notifications</Typography>
-					<Badge badgeContent={badge.length} color='secondary' className={classes.badge}>
+
+					<Badge badgeContent={badge.length} color='secondary'>
+            <Typography className={classes.NavItemText} component={'h3'}> Notifications</Typography>
 				  </Badge>
         </List>
         <Divider className={classes.divider}/>

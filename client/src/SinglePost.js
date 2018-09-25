@@ -39,7 +39,7 @@ const styles = theme => ({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		width: '400px',
+		width: '600px',
 		marginTop: 80,
 	},
 	img:{

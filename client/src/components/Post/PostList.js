@@ -8,7 +8,14 @@ const styles = theme => ({
     flexGrow: 1,
     maxWidth: 862,
     margin: 'auto',
-    marginTop: 80
+    marginTop: 80,
+
+    '@media (max-width: 520px)': {
+      marginTop: 0,
+    },
+    '@media (max-width: 700px)': {
+      marginTop: 0,
+    }
   }
 })
 

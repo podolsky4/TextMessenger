@@ -51,6 +51,7 @@ const styles = (theme) => ({
           justifySelf: 'flex-start',
           margin: 'auto',
           width: 300,
+          marginTop: 22,
           flexDirection: 'column'
       },
   },
@@ -64,7 +65,8 @@ const styles = (theme) => ({
     minWidth: 400,
     borderRadius: 6,
     padding: '1em',
-    background: '#00897B'
+    background: '#00897B',
+
   },
   button: {
     margin: '2px 0',

@@ -79,7 +79,7 @@ public class UserServiceImpl extends SessionAware implements UserService {
       temporaryToken.setUser(save);
       temporaryTokenRepository.save(temporaryToken);
       emailService.sendEmailFromMethods(user.getEmail(), "repeated link to activate",
-              "http://localhost:3000/api/users/registered/", temporaryToken.getToken());
+              "http://18.232.156.81:9000/api/users/registered/", temporaryToken.getToken());
       return "your link is old, we send new link, please check your registration email";
     } else {
       return "this token is not valid";
@@ -97,7 +97,7 @@ public class UserServiceImpl extends SessionAware implements UserService {
     temporaryTokenRepository.save(tempToken);
     emailService.sendEmailFromMethods(user1.getEmail(),
             "confirmation link to create account at Text Messenger application",
-            "http://localhost:3000/registered/", tempToken.getToken());
+            "http://18.232.156.81:9000/registered/", tempToken.getToken());
     return userRepository.getOne(user.getId());
   }
 
@@ -194,7 +194,7 @@ public class UserServiceImpl extends SessionAware implements UserService {
     temporaryTokenRepository.save(tempToken);
     emailService.sendEmailFromMethods(userByEmail.getEmail(),
             "Follow the link to reset you password in the Text Messenger",
-            "http://localhost:3000/resetPassword/", tempToken.getToken());
+            "http://18.232.156.81:9000/resetPassword/", tempToken.getToken());
   }
 
   @Override

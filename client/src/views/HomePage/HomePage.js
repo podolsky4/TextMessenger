@@ -12,7 +12,7 @@ const styles = theme => ({
   homepage: {
     background: theme.palette.background.main,
     display: 'flex',
-    flexWrap: 'true',
+    flexWrap: 'wrap',
     alignItems: 'start',
     justifyContent: 'space-around',
     marginTop: 16

@@ -31,6 +31,9 @@ const styles = (theme) => ({
     justifyContent: 'space-evenly',
     padding: '32px',
     background: '#009688',
+    '@media (max-width: 700px)': {
+      marginTop: 0,
+    }
   },
   UserInfoCnt: {
     flexShrink: 1,
@@ -38,7 +41,10 @@ const styles = (theme) => ({
     flexGrow: 1,
     maxWidth: 'fit-content',
     margin: '80px auto 0',
-    textAlign: 'center'
+    textAlign: 'center',
+    '@media (max-width: 700px)': {
+      marginTop: 22,
+    }
   },
   userPostList2: {
     flexBasis: 1,
