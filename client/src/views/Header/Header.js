@@ -181,12 +181,12 @@ class Header extends React.Component {
 						</IconButton>
 						<IconButton aria-label={notification.length + "pending messages"} color="inherit" component={Link}
 												to='/notifications'>
-              {badge.length !== 0 &&
+
               <Badge badgeContent={badge.length} color='secondary'
                      classes={{badge: classes.badge}}>
                 <NotificationsIcon className={classes.icon}/>
               </Badge>
-              }
+
 						</IconButton>
 					</div>
 					{!noUser &&
