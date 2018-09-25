@@ -14,6 +14,7 @@ import RepeateIcon from '@material-ui/icons/Repeat'
 import ShowLikers from './components/Post/ShowLikers'
 import Retwee from './components/Post/Retwee'
 
+
 const styles = theme => ({
 	rt: {
 		transition: theme.transitions.create(['color'], {
@@ -79,6 +80,14 @@ class SinglePost extends React.Component {
   retweeti(){
       this.setState({flagRet:!this.state.flagRet})
   }
+
+  coment(){
+    this.setState({flagComment:!this.state.flagComment})
+  }
+
+  likersa(){
+    this.setState({flagLike:!this.state.flagLike})
+  }
   render () {
     const {currentPost, classes, usersWhoRetweet} = this.props
 
@@ -126,9 +135,9 @@ class SinglePost extends React.Component {
               <RepeateIcon/>
             </IconButton>
           </div>
-
           {this.state.flagLike && currentPost.likers.length === 0 ?
             <a className={classes.textSome}>Nothing to show</a>
+
             : <ShowLikers
               likers={currentPost.likers}
               flag={this.state.flagLike}/>
