@@ -109,9 +109,11 @@ class SinglePost extends React.Component {
               aria-label="Likes">
               <ThumbUpIcon/>
             </IconButton>
-            <Typography>
-              {currentPost.likers!==undefined && currentPost.likers.length}
-            </Typography>
+              {currentPost.likers !== undefined && currentPost.likers.length !== 0 &&
+              <Typography>
+                {currentPost.likers.length}
+              </Typography>
+              }
             </div>
             <div className={classes.likkkk}>
             <IconButton
@@ -123,9 +125,11 @@ class SinglePost extends React.Component {
             >
               <CommentIcon />
             </IconButton>
+              {currentPost.comments !== undefined && currentPost.comments.length !== 0 &&
               <Typography>
-                {currentPost.comments!==undefined && currentPost.comments.length}
+                {currentPost.comments.length}
               </Typography>
+              }
             </div>
             <div className={classes.likkkk}>
             <IconButton
@@ -139,9 +143,11 @@ class SinglePost extends React.Component {
             >
               <RepeateIcon/>
             </IconButton>
+              {usersWhoRetweet!==undefined && usersWhoRetweet.length!==0 &&
               <Typography>
-                {usersWhoRetweet!==undefined && usersWhoRetweet.length}
+              {usersWhoRetweet.length}
               </Typography>
+              }
             </div>
           </div>
           {this.state.flagLike && currentPost.likers.length === 0 ?
