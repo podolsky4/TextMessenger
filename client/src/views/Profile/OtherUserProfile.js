@@ -31,17 +31,16 @@ const styles = (theme) => ({
     justifyContent: 'space-evenly',
     padding: '32px',
     background: '#009688',
-      marginTop: 80,
   },
   UserInfoCnt: {
     flexShrink: 1,
     flexBasis: 1,
     flexGrow: 1,
     maxWidth: 'fit-content',
-    margin: '0 auto',
+    margin: '80px auto 0',
     textAlign: 'center'
   },
-  userPostList: {
+  userPostList2: {
     flexBasis: 1,
     flexGrow: 5,
     flexShrink: 1,
@@ -49,6 +48,7 @@ const styles = (theme) => ({
     maxWidth: 862,
     minWidth: 400,
     borderRadius: 6,
+    marginTop: 80,
     padding: '1em',
     background: '#00897B'
   }
@@ -99,11 +99,12 @@ class OtherUserProfile extends Component {
             {following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}
           </Button>
         </div>
+
         <PostList user={userFromPost}
                   posts={userPosts}
-                  className={classes.userPostList}
-                  classes
+                  className={classes.userPostList2}
         />
+
       </div>
     )
   }

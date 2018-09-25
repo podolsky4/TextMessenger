@@ -1,7 +1,7 @@
 body {
   display: block;
   padding: 10% 15%;
-  background-color: #009688 !important;
+  background-color: #00796b !important;
 }
 
 a {
@@ -17,6 +17,13 @@ a {
     color: #fff;
     text-decoration: none;
   }
+}
+
+.loaderApp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .postCreator {
@@ -45,15 +52,6 @@ textarea {
   padding: 10px;
   //border-radius: 15px;
   //background: #719fc7;
-}
-
-header {
-  //display: block;
-  //position: relative;
-  //width: auto;
-  //height: 44px;
-  //padding: 10px;
-  //border-bottom: 1px solid grey;
 }
 
 .logo {

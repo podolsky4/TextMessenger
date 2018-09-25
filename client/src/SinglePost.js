@@ -13,6 +13,7 @@ import CommentIcon from '@material-ui/icons/Comment'
 import RepeateIcon from '@material-ui/icons/Repeat'
 import ShowLikers from './components/Post/ShowLikers'
 import Retwee from './components/Post/Retwee'
+import Paper from '../node_modules/@material-ui/core/Paper/Paper'
 
 
 const styles = theme => ({
@@ -157,9 +158,10 @@ class SinglePost extends React.Component {
               likers={currentPost.likers}
               flag={this.state.flagLike}/>
           }
+          <div className="contCom" style={{width:'100%'}}>
           {this.state.flagComment &&
           currentPost.comments.length === 0 ?
-            <a>Nothing to show</a>
+            <Paper>Nothing to show</Paper>
             : <Comments comments={currentPost.comments}
                     post={currentPost}
                     user={currentPost.user}
@@ -167,6 +169,7 @@ class SinglePost extends React.Component {
                     flag={this.state.flagComment}
                     notInput={true}/>
           }
+          </div>
           {this.state.flagRet && usersWhoRetweet.length === 0 ? <a>Nothing to show</a> :
             <Retwee flag={this.state.flagRet} users={usersWhoRetweet}/>}
         </Card>
