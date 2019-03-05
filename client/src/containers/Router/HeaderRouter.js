@@ -6,16 +6,16 @@ class HeaderRouter extends Component {
 render() {
     return (
         <Switch>
-            <Route exact path='/' render={(props) => <Header location={'Home'} {...props} />}/>
-            <Route exact path='/feed' render={(props) => <Header location={'Feed'} {...props} />}/>
-            <Route exact path='/favorites' render={(props) => <Header location={'Home'} {...props} />}/>
-            <Route exact path='/dialogs/:dialogId' render={(props) => <Header location={'Home'} {...props} />}/>
-            <Route exact path='/post/:postId' render={(props) => <Header location={'Home'} {...props} />}/>
-            <Route exact path='/dialogs' render={(props) => <Header location={'Home'} {...props} />}/>
-            <Route exact path='/notifications' render={(props) => <Header location={'Home'} {...props} />}/>
-            <Route exact path='/login' render={(props) => <Header location={'Home'} {...props} />}/>
-            <Route exact path='/profile/:id' render={(props) => <Header location={'Home'} {...props} />}/>
-            <Route exact path='/confirm/registration/:id' render={(props) => <Header location={'Home'} {...props} />}/>
+            <Route exact path='/' render={(props) => <Header pageTitle={'Home'} {...props} />}/>
+            <Route exact path='/feed' render={(props) => <Header pageTitle={'Feed'} {...props} />}/>
+            <Route exact path='/favorites' render={(props) => <Header pageTitle={' Your Likes'} {...props} />}/>
+            <Route exact path='/dialogs/:dialogId' render={(props) => <Header pageTitle={'Your Dialogues'} {...props} />}/>
+            <Route exact path='/post/:postId' render={(props) => <Header pageTitle={'Post'} {...props} />}/>
+            <Route exact path='/dialogs' render={(props) => <Header pageTitle={'Your Dialogues'} {...props} />}/>
+            <Route exact path='/notifications' render={(props) => <Header pageTitle={'Your Notification'} {...props} />}/>
+            <Route exact path='/login' render={(props) => <Header pageTitle={'Home'} {...props} />}/>
+            <Route exact path='/profile/:userId' render={(props) => <Header pageTitle={'Profile'} {...props} />}/>
+            <Route exact path='/confirm/registration/:id' render={(props) => <Header pageTitle={'Home'} {...props} />}/>
             <Route path='*' component={Header}/>
         </Switch>
     )

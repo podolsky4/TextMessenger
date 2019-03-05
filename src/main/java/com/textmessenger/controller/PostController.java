@@ -3,6 +3,8 @@ package com.textmessenger.controller;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
 import com.textmessenger.model.entity.dto.PostToFront;
+import com.textmessenger.model.entity.dto.UserToFrontShort;
+import com.textmessenger.service.CommentService;
 import com.textmessenger.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,9 +28,20 @@ public class PostController {
 
   private final PostService postService;
 
+  private final CommentService commentService;
 
-  PostController(PostService postService) {
+
+  PostController(PostService postService, CommentService commentService) {
     this.postService = postService;
+    this.commentService = commentService;
+  }
+
+  @GetMapping("/retweeting/{id}")
+  public ResponseEntity getAllPostWhereParentIdIs(@PathVariable long id) {
+    return ResponseEntity.ok()
+            .body(UserToFrontShort
+                    .convertListUsersForFront(postService
+                            .getAllUsersFromPostsWhereParentId(id)));
   }
 
   @GetMapping("/{id}")
@@ -46,7 +59,7 @@ public class PostController {
     return ResponseEntity.ok().body(postService.getAll());
   }
 
-  @PostMapping("/user")
+  @PostMapping
   public ResponseEntity createPost(@RequestParam("content") String content,
                                    @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
     postService.createPost(content, file);
@@ -66,8 +79,16 @@ public class PostController {
   }
 
   @PostMapping("/user/{id}/post/{postId}")
-  public ResponseEntity retwitePost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
+  public ResponseEntity retweetPost(@PathVariable("id") User user, @PathVariable("postId") Long postId) {
     postService.retwitPost(user, postId);
     return Optional.of(ResponseEntity.ok()).orElse(ResponseEntity.badRequest()).build();
+  }
+
+  @DeleteMapping("/post/{id}")
+  public ResponseEntity deletePostAndAllItComments(@PathVariable("id") Post post) {
+    commentService.deleteAllCommentsUnderPost(post);
+    postService.deleteRetweetsByParentId(post.getId());
+    postService.deletePost(post);
+    return ResponseEntity.accepted().build();
   }
 }

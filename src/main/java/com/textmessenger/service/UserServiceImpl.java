@@ -3,21 +3,23 @@ package com.textmessenger.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.textmessenger.config.AmazonConfig;
-import com.textmessenger.constant.WebSocketType;
+import com.textmessenger.config.AsyncConfiguration;
 import com.textmessenger.model.entity.Notification;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.TemporaryToken;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.CredentialsPassword;
 import com.textmessenger.model.entity.dto.NotificationToFront;
 import com.textmessenger.model.entity.dto.UserToFrontShort;
 import com.textmessenger.repository.TemporaryTokenRepository;
 import com.textmessenger.repository.UserRepository;
-import com.textmessenger.security.UserPrincipal;
+import com.textmessenger.security.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,17 +32,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends SessionAware implements UserService {
+
   @Autowired
   PasswordEncoder passwordEncoder;
   private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
   private AmazonConfig s3;
   private final UserRepository userRepository;
   private final TemporaryTokenRepository temporaryTokenRepository;
-  private UserToFrontShort userToFront;
   private final EmailService emailService;
   private final NotificationService notificationService;
 
@@ -64,11 +67,8 @@ public class UserServiceImpl implements UserService {
       if (byToken.get().getExpiryDate().compareTo(new Date()) <= 0) {
         user.setEnabled(true);
         userRepository.save(user);
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(user.getEmail());
-        email.setSubject("Congratulation your account is activate");
-        email.setText("Enjoy our application");
-        emailService.sendEmail(email);
+        emailService.sendEmailFromMethods(user.getEmail(), "Congratulation your account is activate",
+                "Enjoy our application");
         temporaryTokenRepository.delete(byToken.get());
         return "your user is activate";
       }
@@ -78,11 +78,8 @@ public class UserServiceImpl implements UserService {
       User save = userRepository.save(user);
       temporaryToken.setUser(save);
       temporaryTokenRepository.save(temporaryToken);
-      SimpleMailMessage email = new SimpleMailMessage();
-      email.setTo(user.getEmail());
-      email.setSubject("repeated link to activate");
-      email.setText("http://localhost:3000/api/users/registered/" + temporaryToken.getToken());
-      emailService.sendEmail(email);
+      emailService.sendEmailFromMethods(user.getEmail(), "repeated link to activate",
+              "http://localhost:3000/api/users/registered/", temporaryToken.getToken());
       return "your link is old, we send new link, please check your registration email";
     } else {
       return "this token is not valid";
@@ -94,15 +91,13 @@ public class UserServiceImpl implements UserService {
     TemporaryToken tempToken = new TemporaryToken();
     tempToken.setToken(UUID.randomUUID().toString());
     tempToken.setExpiryDate(new Date());
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
     User user1 = userRepository.save(user);
     tempToken.setUser(user1);
     temporaryTokenRepository.save(tempToken);
-    SimpleMailMessage email = new SimpleMailMessage();
-    email.setTo(user1.getEmail());
-    email.setSubject("confirmation link to create account at Text Messenger application");
-    email.setText("http://localhost:3000/registered/" + tempToken.getToken());
-    emailService.sendEmail(email);
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    emailService.sendEmailFromMethods(user1.getEmail(),
+            "confirmation link to create account at Text Messenger application",
+            "http://localhost:3000/registered/", tempToken.getToken());
     return userRepository.getOne(user.getId());
   }
 
@@ -114,11 +109,6 @@ public class UserServiceImpl implements UserService {
   @Override
   public void updateUser(User user) {
     userRepository.save(user);
-  }
-
-  @Override
-  public void deleteUser(long id) {
-    userRepository.delete(userRepository.getOne(id));
   }
 
   @Override
@@ -174,37 +164,20 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Optional<List<User>> findUserByEmailOrLogin(User user) {
-    return Optional.of(userRepository
-            .findByEmailContainingIgnoreCaseOrLoginContainingIgnoreCase(user.getLogin(), user.getEmail()));
-  }
-
-  @Override
   public void deleteFromFollowing(Long user, Long newUser) {
     userRepository.getOne(user).getFollowing().remove(userRepository.getOne(newUser));
   }
 
   @Override
-  public User logIn(String email, String password) {
-    return userRepository.findUserByEmail(email);
-  }
-
-  @Override
-  public List<Notification> getAllNotificationByUserId(Long id) {
-    return userRepository.getOne(id).getNotifications();
-  }
-
-  @Override
   public UserToFrontShort getCurrentUser() {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
+    Object principal = SecurityContextHolder
             .getContext()
             .getAuthentication()
             .getPrincipal();
-    Optional<User> user = userRepository.findById(userPrincipal.getId());
-    if (user.isPresent()) {
-      return userToFront.convertUserForFront(user.get());
+    if (!"anonymousUser".equals(principal.toString())) {
+      return UserToFrontShort.convertUserForFront(getLoggedInUser());
     }
-    throw new UsernameNotFoundException("User not found!");
+    return new UserToFrontShort();
   }
 
   @Override
@@ -219,20 +192,14 @@ public class UserServiceImpl implements UserService {
     tempToken.setExpiryDate(new Date());
     tempToken.setUser(userByEmail);
     temporaryTokenRepository.save(tempToken);
-    SimpleMailMessage email = new SimpleMailMessage();
-    email.setTo(userByEmail.getEmail());
-    email.setSubject("Follow the link to reset you password in the Text Messenger");
-    email.setText("http://localhost:3000/resetPassword/" + tempToken.getToken());
-    emailService.sendEmail(email);
+    emailService.sendEmailFromMethods(userByEmail.getEmail(),
+            "Follow the link to reset you password in the Text Messenger",
+            "http://localhost:3000/resetPassword/", tempToken.getToken());
   }
 
   @Override
   public List<NotificationToFront> getAllNotificationByUser() {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    User one = userRepository.getOne(userPrincipal.getId());
+    User one = getLoggedInUser();
     List<Notification> notifications = one.getNotifications();
     notifications.sort((e1, e2) -> e2.getCreatedDate().compareTo(e1.getCreatedDate()));
     return NotificationToFront.convertListNotificationToFront(notifications);
@@ -263,11 +230,7 @@ public class UserServiceImpl implements UserService {
                                            String address,
                                            String date,
                                            MultipartFile file) throws IOException {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    User one = userRepository.getOne(userPrincipal.getId());
+    User one = getLoggedInUser();
     if (firstName != "undefined") { //NOSONAR
       one.setFirstName(firstName);
     }
@@ -301,30 +264,34 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User getCurrentUserFull() {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    return userRepository.getOne(userPrincipal.getId());
+    return getLoggedInUser();
   }
 
   @Override
   public String updatePasswordInitByUser(String oldPassword, String newPassword) {
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
-    Optional<User> user = userRepository.findById(userPrincipal.getId());
-    if (user.isPresent()) {
-      User temp = user.get();
-      if (passwordEncoder.matches(oldPassword, userPrincipal.getPassword())) {
-        temp.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(temp);
-        return "Password changed successfully";
-      } else {
-        return "Current password is not valid";
-      }
+
+    User temp = getLoggedInUser();
+    if (passwordEncoder.matches(oldPassword, temp.getPassword())) {
+      temp.setPassword(passwordEncoder.encode(newPassword));
+      userRepository.save(temp);
+      return "Password changed successfully";
+    } else {
+      return "Current password is not valid";
     }
-    return "Current password is not valid";
   }
+
+  @Override
+  @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
+  public CompletableFuture<Page<User>> findAll(final Pageable pageable) {
+    return userRepository.findAllBy(pageable);
+  }
+
+  @Override
+  @Async(AsyncConfiguration.TASK_EXECUTOR_SERVICE)
+  public CompletableFuture<Optional<User>> findOneById(final long id) {
+    return userRepository
+            .findOneById(id)
+            .thenApply(Optional::ofNullable);
+  }
+
 }

@@ -1,10 +1,10 @@
-import {LOAD_COMMENTS, ADD_CURRENT, LOAD_FAVORITES, LOAD_POSTS, LOADING_COMMENTS, ADD_TO_POSTS_PAGE, NO_FETCH_LIST_IS_EMPTY} from './types'
+import {LOAD_COMMENTS, LOAD_USERS_FROM_PARENT, ADD_CURRENT, LOAD_FAVORITES, LOAD_POSTS, LOADING_COMMENTS, ADD_TO_POSTS_PAGE, NO_FETCH_LIST_IS_EMPTY} from './types'
 import {endReLoader, startLoader, startReLoader, stopLoader} from './loaderActions'
 import FetchData from './serviceAction'
 
 export const createPostWithOrWithOutImage = (data) => dispatch => {
   dispatch(startReLoader())
-  fetch(`/api/posts/user`, {
+  fetch(`/api/posts`, {
     method: 'POST',
     headers: {
       'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
@@ -65,6 +65,11 @@ export const loadPosts = () => dispatch => {
     .then(res => res.json())
     .then(data => dispatch({type: LOAD_POSTS, payload: data}))
     .then(() => dispatch(stopLoader('LOADING_POST')))
+}
+export  const usersFromPostsWhereParent = (id) =>dispatch=>{
+  FetchData.get(`/api/posts/retweeting/${id}`)
+    .then(res => res.json())
+    .then(data => dispatch({type:LOAD_USERS_FROM_PARENT, payload:data}))
 }
 export const loadPagePost = (page, size, callback) => dispatch => {
   dispatch(startLoader('LOADING_POST'))

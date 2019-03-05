@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {cleanUserSearch, createDialog, loadDialog, loadMessages} from '../../actions/dialogActions'
-import Dialog from '../Dialog'
+import Dialog from './Dialog'
 import './Dialogs.css'
 import Chat from './Chat'
-import SearchUser from '../SearchUser'
+import SearchUser from './SearchUser'
 import {Redirect} from 'react-router-dom'
 
 import {withStyles} from '@material-ui/core/styles'
@@ -32,15 +32,24 @@ const styles = theme => ({
     justifyContent: 'space-between',
     padding: '32px',
     background: '#009688',
-    minHeight: '96vh'
+    minHeight: '96vh',
+      '@media (max-width: 715px)': {
+          flexDirection: 'column',
+      }
   },
   dialogs: {
+    marginTop: 80,
     flexShrink: 1,
     flexBasis: 1,
     flexGrow: 1,
-    margin: '0 auto',
-    maxWidth: 520,
-    padding: '0 1%'
+    maxWidth: 480,
+    minWidth: 240,
+    margin: '0 auto 0 auto',
+      '@media (max-width: 1300px)': {
+          flexDirection: 'column',
+          maxWidth: 300,
+          minWidth: 280,
+      },
   },
   paper: {
     width: '100%',
@@ -53,7 +62,7 @@ const styles = theme => ({
     lineHeight: 1,
     background: theme.palette.secondary.main,
     fontSize: 12,
-      alignItems:'center',
+    alignItems:'center',
   },
   rightIcon: {
     marginLeft: theme.spacing.unit
@@ -92,7 +101,7 @@ class Dialogs extends Component {
   }
 
   handleCreateDialog = e => {
-    e.preventDefault()
+        e.preventDefault()
     if (this.state.flag) {
       this.setState({newDialog: true, flag: false})
     } else if (this.state.userList) {
@@ -119,7 +128,11 @@ class Dialogs extends Component {
       dialogId: dialogId
     })
   };
-
+closeable (e){
+    const {cleanUserSearch} = this.props
+    cleanUserSearch()
+    this.setState({newDialog: false})
+}
   render () {
     const {user, dialogs, loadDialog, classes, match} = this.props
     const {newDialog, exist, dialog, dialogId} = this.state
@@ -162,7 +175,7 @@ class Dialogs extends Component {
             new Dialog
           </Button>
           {newDialog &&
-          <Button onClick={() => this.setState({newDialog: false})}
+          <Button onClick={(e) => this.closeable(e)}
                   variant="outlined" type="close" color="primary" style={{marginLeft: '6px'}}>
             close
           </Button>

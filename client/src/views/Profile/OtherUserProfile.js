@@ -1,11 +1,13 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {addFollowing, deleteFollowing, getFollowing} from '../../actions/userActions'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { addFollowing, deleteFollowing, getFollowing } from '../../actions/userActions'
 import Loader from '../../components/Loader/Loader'
 import PropTypes from 'prop-types'
 import CurrentUserInfo from './CurrentUserInfo'
-import {withStyles} from '@material-ui/core/styles/index'
+import { withStyles } from '@material-ui/core/styles/index'
 import PostList from '../../components/Post/PostList'
+import FetchData from '../../actions/serviceAction'
+import Button from '@material-ui/core/Button'
 
 const styles = (theme) => ({
   ChangeUserProfileInfoCard: {
@@ -28,15 +30,17 @@ const styles = (theme) => ({
     alignItems: 'flex-start',
     justifyContent: 'space-evenly',
     padding: '32px',
-    background: '#009688'
+    background: '#009688',
   },
   UserInfoCnt: {
     flexShrink: 1,
     flexBasis: 1,
     flexGrow: 1,
-    maxWidth: 'fit-content'
+    maxWidth: 'fit-content',
+    margin: '80px auto 0',
+    textAlign: 'center'
   },
-  userPostList: {
+  userPostList2: {
     flexBasis: 1,
     flexGrow: 5,
     flexShrink: 1,
@@ -44,6 +48,7 @@ const styles = (theme) => ({
     maxWidth: 862,
     minWidth: 400,
     borderRadius: 6,
+    marginTop: 80,
     padding: '1em',
     background: '#00897B'
   }
@@ -58,21 +63,12 @@ class OtherUserProfile extends Component {
     }
   }
 
-  componentWillMount () {
-    const {currentUser, loadFollowing, user} = this.props
+  componentDidMount () {
+    const {currentUser} = this.props
     if (this.state.userFromPost.length === 0) {
-      fetch(`/api/users/${currentUser}`,
-        {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        })
+      FetchData.get(`/api/users/${currentUser}`)
         .then(res => res.json())
         .then(data => this.setState({userFromPost: data}))
-        .then(loadFollowing(user.id))
     }
   }
 
@@ -84,7 +80,7 @@ class OtherUserProfile extends Component {
     } else {
       addToFollowing(user.id, this.state.userFromPost.id)
     }
-  };
+  }
 
   render () {
     const {userFromPost} = this.state
@@ -95,23 +91,21 @@ class OtherUserProfile extends Component {
     return (
       <div className={classes.ProfileCnt}>
         <div className={classes.UserInfoCnt}>
-          {/* <h1>{userFromPost.login}</h1> */}
-          {/* <h1>{userFromPost.lastName}</h1> */}
-          {/* <h1>{userFromPost.firstName}</h1> */}
-          {/* <h1>{userFromPost.email}</h1> */}
           <CurrentUserInfo user={userFromPost}/>
-          <button
-            onClick={e => this.handleFollowing(e)}>{following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}
-          </button>
-
+          <Button variant="contained"
+                  color="primary"
+                  onClick={e => this.handleFollowing(e)}
+          >
+            {following.some(u => u.id === +currentUser) ? 'Unfolow' : 'Following'}
+          </Button>
         </div>
+
         <PostList user={userFromPost}
                   posts={userPosts}
-                  className={classes.userPostList}
-                  classes
+                  className={classes.userPostList2}
         />
-      </div>
 
+      </div>
     )
   }
 }

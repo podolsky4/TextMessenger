@@ -57,10 +57,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/api/users/login", "/console", "http://localhost:9000/healthcheck",
+            .antMatchers("/api/users/login", "/console", "/static/**", "/*",
                     "/api/users/user", "/api/users/registered/**", "/api/users/resetPassword/**",
-                    "/api/users/forgotpassword", "/api/users/changePassword", "/api/users/changePassword",
-                    "/console/*", "/static/**")
+                    "/api/users/forgotpassword", "/api/users/changePassword", "/console/*", "/actuator/**",
+                    "/login", "/logout", "/assets/**", "/instances", "/**/*.css", "/img/**", "/third-party/**")
             .permitAll()
             .anyRequest()
             .authenticated();

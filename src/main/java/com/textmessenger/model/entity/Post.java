@@ -45,6 +45,7 @@ public class Post extends BaseEntity {
 
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments = new ArrayList<>();
+
   @ManyToMany(mappedBy = "favorites")
   private List<User> likers = new ArrayList<>();
 

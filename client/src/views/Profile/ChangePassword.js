@@ -14,21 +14,28 @@ import Loader from '../../components/Loader/Loader'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 
 const styles = theme => ({
-    paper: {
-        height:'calc(100vh - 168px)',
-        marginTop: theme.spacing.unit * 5,
+    paperPassword: {
+        // marginTop: theme.spacing.unit * 5,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        maxWidth: 400,
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
         background: theme.palette.primary.accentOpacity,
-        marginLeft: '35%',
+        margin: '0 10%',
+        '@media (max-width: 700px)': {
+            justifyItems: 'center',
+            justifySelf: 'flex-start',
+            maxWidth: 300,
+            marginLeft: "auto",
+            margin: '0 0%',
+        },
     },
-    center: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-    },
+    // center: {
+    //     display: 'flex',
+    //     flexDirection: 'column',
+    //     alignItems: 'center'
+    // },
     avatar: {
         margin: theme.spacing.unit,
         backgroundColor: theme.palette.secondary.main
@@ -41,7 +48,7 @@ const styles = theme => ({
   },
   changeB: {
     marginTop: theme.spacing.unit * 2,
-    marginBototm: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
     '&#change': {
       marginTop: theme.spacing.unit * 4
       }
@@ -103,7 +110,7 @@ class ChangePassword extends Component {
     render () {
         const {classes, fetching, changeUser} = this.props
         return <React.Fragment>
-                <Paper className={classes.paper}>
+                <Paper className={classes.paperPassword} elevation={0}>
                     <Avatar className={classes.avatar}>
                         <LockIcon/>
                     </Avatar>

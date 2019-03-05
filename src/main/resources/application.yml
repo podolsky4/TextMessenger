@@ -1,16 +1,36 @@
 ws:
   path: /queue/messages
+
+application:
+  async:
+    core-pool-size: 10
+    max-pool-size: 50
+    queue-capacity: 10000
 ###
 #   Server port
 ###
 server:
-  port: 9000
+  port: 9001
 
+logging:
+  level:
+    ROOT: ERROR
+    org.springframework: ERROR
+    org.springframework.data: ERROR
+    org.springframework.web: ERROR
+    org.springframework.security: ERROR
+    com.textmessenger.App: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: /target/LOG/application.log
 ###
 #   Mail Settings
 ###
-
+#
 spring:
+  application:
+    name: textmessanger
   ###
   #   Database Settings
   ###
@@ -42,5 +62,7 @@ spring:
       settings:
         trace: true
         web-allow-others: true
-
+  flyway:
+    baseline-version: 1
+    baseline-on-migrate: true
 

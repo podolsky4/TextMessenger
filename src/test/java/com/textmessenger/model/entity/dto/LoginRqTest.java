@@ -1,6 +1,5 @@
-package com.textmessenger;
+package com.textmessenger.model.entity.dto;
 
-import com.textmessenger.model.entity.dto.LoginRq;
 import org.hibernate.validator.HibernateValidator;
 import org.junit.Before;
 import org.junit.Test;

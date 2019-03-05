@@ -3,57 +3,48 @@ package com.textmessenger.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.textmessenger.config.AmazonConfig;
-import com.textmessenger.constant.WebSocketType;
 import com.textmessenger.model.entity.Post;
 import com.textmessenger.model.entity.User;
+import com.textmessenger.model.entity.WebSocketType;
 import com.textmessenger.model.entity.dto.PostToFront;
 import com.textmessenger.repository.PostRepository;
-import com.textmessenger.repository.UserRepository;
-import com.textmessenger.security.UserPrincipal;
+import com.textmessenger.security.SessionAware;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @Transactional
-public class PostServiceImpl implements PostService {
+public class PostServiceImpl extends SessionAware implements PostService {
   private static final String BUCKET = AmazonConfig.BUCKET_NAME;//NOSONAR
   private AmazonConfig s3;
   private final PostRepository postRepository;
-  private final UserRepository userRepository;
   private final NotificationService notificationService;
 
 
   PostServiceImpl(PostRepository postRepository,
-                  UserRepository userRepository,
                   AmazonConfig s3,
                   NotificationService notificationService) {
     this.postRepository = postRepository;
-    this.userRepository = userRepository;
     this.s3 = s3;
     this.notificationService = notificationService;
   }
 
   @Override
   public void createPost(String content, MultipartFile file) throws IOException {
-    // get user from token
-    UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder
-            .getContext()
-            .getAuthentication()
-            .getPrincipal();
     // create post and set content & user
     Post post = new Post();
     post.setContent(content);
-    User one = userRepository.getOne(userPrincipal.getId());
+    User one = getLoggedInUser();
     post.setUser(one);
     // Amazon logic
     if (file != null) {
@@ -98,11 +89,6 @@ public class PostServiceImpl implements PostService {
     return PostToFront.convertListPostsToResponse(posts.getContent());
   }
 
-  @Override
-  public List<Post> getUserPost(User user) {
-    return postRepository.findPostsByUser(user);
-  }
-
   private Sort orderBy() {
     return new Sort(Sort.Direction.DESC, "createdDate");
   }
@@ -116,7 +102,6 @@ public class PostServiceImpl implements PostService {
     notificationService.createSome(WebSocketType.NEW_RETWEET.toString(), user1, user, original);
     retweet.setUser(user);
     postRepository.save(retweet);
-
   }
 
   @Override
@@ -125,7 +110,15 @@ public class PostServiceImpl implements PostService {
   }
 
   @Override
-  public PostToFront getPostToFrontById(long id) {
-    return PostToFront.convertPostToFront(postRepository.findById(id).get());
+  public void deleteRetweetsByParentId(long parentId) {
+    postRepository.deletePostsByParentId(parentId);
+  }
+
+  @Override
+  public List<User> getAllUsersFromPostsWhereParentId(long id) {
+    List<Post> allByParent = postRepository.findAllByParent(postRepository.getOne(id));
+    List<User> res = new ArrayList<>();
+    allByParent.forEach(post -> res.add(post.getUser()));
+    return res;
   }
 }

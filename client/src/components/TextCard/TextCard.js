@@ -13,7 +13,8 @@ const styles = theme => ({
     width: '60%',
     marginTop: theme.spacing.unit * 1,
     background: 'rgba(0, 0, 0, 0.4)',
-    color: 'white'
+    color: 'white',
+    overflow:'hidden'
   },
   heading: {
     color: 'rgba(255, 255, 255, 0.92)'
@@ -51,8 +52,8 @@ const TextCard = (props) => {
         <b>Contributors</b>
         <ul>
           <li>Andrew Koziulia - <em>mentor</em></li>
-          <li>Igor Fandorin</li>
-          <li>Illya Fefelov <em>full.iron</em></li>
+          <li>Igor Gavrilyk</li>
+          <li>Illya Fefelov</li>
           <li>Igor Rudenko</li>
           <li>Kostyantyn Matlayev</li>
           <li>Yuri Podolsky</li>
@@ -62,10 +63,5 @@ const TextCard = (props) => {
 
   )
 }
-
-// TextCard.propTypes = {
-//     classes: PropTypes.object.isRequired,
-//     text: PropTypes.string,
-// };
 
 export default withStyles(styles)(TextCard)

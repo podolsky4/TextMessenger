@@ -5,28 +5,17 @@ import TextCard from '../../components/TextCard/TextCard'
 
 import {withStyles} from '@material-ui/core/styles'
 import connect from 'react-redux/es/connect/connect'
-import classNames from 'classnames'
 import {Redirect} from 'react-router-dom'
 
 
 const styles = theme => ({
-  root: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    width: '100%',
-    height: '100vh'
-  },
-  cont: {
-    background: 'rgba(61, 33, 67, 0.28)'
-  },
   homepage: {
-    background: '#00796B',
+    background: theme.palette.background.main,
     display: 'flex',
-    flexDirection: 'row',
     flexWrap: 'true',
     alignItems: 'start',
-    justifyContent: 'flex-start'
+    justifyContent: 'space-around',
+    marginTop: 16
   }
 })
 
@@ -46,7 +35,7 @@ class HomePage extends Component {
     }
 
     return (
-      <div className={classNames(classes.homepage, classes.root, classes.cont)}>
+      <div className={classes.homepage}>
         <TextCard
           text="TextMessenger проект предполагает создание приложения с использованием всех знаний, которые мы получили во время курса. Результатом станет адаптивное веб-приложение, развернутое на AWS."/>
         {!user.id && <SignIn />}
